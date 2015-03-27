@@ -6,4 +6,5 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:fitsSystemWindows="true"
     />

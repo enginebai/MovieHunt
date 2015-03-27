@@ -1,9 +1,27 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:choiceMode="singleChoice"
-          android:divider="@android:color/transparent"
-          android:dividerHeight="0dp"
-          android:background="#cccc"
-          tools:context=".NavigationDrawerFragment"/>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:choiceMode="singleChoice"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0dp"
+    android:background="#cccc"
+    tools:context=".NavigationDrawerFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:id="@+id/image_user_photo"
+            android:contentDescription="@null"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+
+            />
+    </RelativeLayout>
+
+</ScrollView>
