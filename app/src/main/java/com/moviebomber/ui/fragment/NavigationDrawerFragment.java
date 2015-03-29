@@ -1,8 +1,9 @@
-package com.moviebomber;
+package com.moviebomber.ui.fragment;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -18,10 +19,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moviebomber.R;
+import com.moviebomber.adapter.MenuAdapter;
+import com.moviebomber.model.MenuSection;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -56,8 +70,21 @@ public class NavigationDrawerFragment extends Fragment {
 	@InjectView(R.id.image_user_cover)
 	ImageView mImageUserCover;
 
+	@InjectView(R.id.image_user_photo)
+	CircleImageView mImageUserPhoto;
+
+	@InjectView(R.id.image_user_switcher)
+	ImageView mImageUserSwitcher;
+
+	@InjectView(R.id.text_username)
+	TextView mTextUsername;
+
+	@InjectView(R.id.text_email)
+	TextView mTextEmail;
+
 	@InjectView(R.id.list_menu)
 	ListView mDrawerListView;
+
 	private View mFragmentContainerView;
 
 	private int mCurrentSelectedPosition = 0;
@@ -95,27 +122,36 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-//		mDrawerListView = (ListView) inflater.inflate(
-//				R.layout.fragment_navigation_drawer, container, false);
-//		mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				selectItem(position);
-//			}
-//		});
-//		mDrawerListView.setAdapter(new ArrayAdapter<>(
-//				getActivity(),
-//				android.R.layout.simple_list_item_activated_1,
-//				android.R.id.text1,
-//				new String[]{
-//						getString(R.string.title_section1),
-//						getString(R.string.title_section2),
-//						getString(R.string.title_section3),
-//				}));
-//		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-//		return mDrawerListView;
-		return inflater.inflate(
+		View fragmentNaviDrawer = inflater.inflate(
 				R.layout.fragment_navigation_drawer, container, false);
+		ButterKnife.inject(this, fragmentNaviDrawer);
+		this.setupMenu();
+		return fragmentNaviDrawer;
+	}
+
+	private void setupMenu() {
+		List<MenuSection> menuList = new ArrayList<>();
+		Resources res = this.getResources();
+		menuList.add(new MenuSection(R.drawable.ic_movie_black_48dp, res.getString(R.string.menu_movie_list)));
+		menuList.add(new MenuSection(R.drawable.ic_local_movies_black_48dp, res.getString(R.string.menu_theater_list)));
+		menuList.add(new MenuSection(R.drawable.ic_favorite_black_48dp, res.getString(R.string.menu_favorite)));
+		menuList.add(new MenuSection(R.drawable.ic_search_black_48dp, res.getString(R.string.menu_search)));
+		menuList.add(new MenuSection(R.drawable.ic_settings_black_48dp, res.getString(R.string.menu_setting)));
+		menuList.add(new MenuSection(R.drawable.ic_thumb_up_black_48dp, res.getString(R.string.menu_comment)));
+
+		mDrawerListView.setAdapter(new MenuAdapter(getActivity(), R.id.list_item, menuList));
+		mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				selectItem(position);
+			}
+		});
+		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		Picasso.with(getActivity())
+				// FIXME: replace real user photo
+				.load("https://www.facebook.com/photo.php?fbid=873966605982179&l=520603f1d4")
+				.error(getResources().getDrawable(R.drawable.user_photo))
+				.into(this.mImageUserPhoto);
 	}
 
 	public boolean isDrawerOpen() {

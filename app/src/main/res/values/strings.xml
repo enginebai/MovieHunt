@@ -17,4 +17,16 @@
     <string name="font_roboto_regular">sans-serif</string>
     <string name="default_username">電影別雷開發者</string>
     <string name="default_email">moviebomber@gmail.com</string>
+
+    <!-- menu -->
+    <string name="menu_movie_list">電影列表</string>
+    <string name="menu_theater_list">影院列表</string>
+    <string name="menu_favorite">我的最愛</string>
+    <string name="menu_track">追蹤清單</string>
+    <string name="menu_account">帳號</string>
+    <string name="menu_search">搜尋</string>
+    <string name="menu_feedback">意見回饋</string>
+    <string name="menu_comment">撰寫評論</string>
+    <string name="menu_setting">設定</string>
+
 </resources>

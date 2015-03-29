@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navigation_drawer_selection_height"
+    app:mrl_rippleColor="@color/primary"
+    app:mrl_rippleHover="true"
+    app:mrl_rippleInAdapter="true"
+    app:mrl_ripplePersistent="true">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/image_menu_icon"
+            android:contentDescription="@null"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="72dp"
+            android:layout_marginStart="72dp"
+            android:id="@+id/text_menu"
+            android:fontFamily="@string/font_roboto_medium"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginEnd="@dimen/navi_drawer_margin_left_right"
+            android:id="@+id/text_menu_notification"
+            android:textSize="14sp"
+            android:fontFamily="@string/font_roboto_regular"
+            android:textColor="@android:color/black"/>
+    </RelativeLayout>
+
+</com.balysv.materialripple.MaterialRippleLayout>

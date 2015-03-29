@@ -1,4 +1,4 @@
-package com.moviebomber;
+package com.moviebomber.ui.activity;
 
 import android.app.Activity;
 import android.os.Build;
@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.moviebomber.ui.fragment.NavigationDrawerFragment;
+import com.moviebomber.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
