@@ -5,11 +5,13 @@
                 android:layout_height="match_parent">
 
     <com.rey.material.widget.ProgressView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:pv_progressMode="indeterminate"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        app:pv_autostart = "true"
         app:pv_circular="true"
-        app:pv_autostart="true"
+        app:pv_progressStyle="@style/ColorsCircularProgressDrawableStyle"
+        app:pv_progressMode="indeterminate"
         android:layout_centerInParent="true"
         android:id="@+id/progress_view"/>
     <TextView

@@ -43,7 +43,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 	@Override
 	public void onBindViewHolder(MovieListItemHolder holder, int position) {
-
+		MovieListI
 	}
 
 	@Override

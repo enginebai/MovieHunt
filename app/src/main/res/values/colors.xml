@@ -11,4 +11,11 @@
     <color name="divider">#B6B6B6</color>
 
     <color name="text_gray_background">#55000000</color>
+    
+    <array name="progress_colors">
+        <item>@color/primary</item>
+        <item>@color/accent</item>
+        <item>@android:color/holo_orange_light</item>
+        <item>@android:color/holo_blue_bright</item>
+    </array>
 </resources>

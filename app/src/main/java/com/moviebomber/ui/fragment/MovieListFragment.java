@@ -118,6 +118,7 @@ public class MovieListFragment extends Fragment {
 				List<MovieListItem> movieList = new ArrayList<>();
 				if (mAdapter == null)
 					mAdapter = new MovieListAdapter(movieList);
+				mListMovie.setAdapter(mAdapter);
 				mAdapter.getMovieList().addAll(movieList);
 				mAdapter.notifyDataSetChanged();
 				mCurrentPage++;

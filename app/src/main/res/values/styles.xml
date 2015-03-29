@@ -16,4 +16,9 @@
         <item name="color">@android:color/white</item>
     </style>
 
+    <style name="CircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress"/>
+    <style name="ColorsCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColors">@array/progress_colors</item>
+    </style>
+
 </resources>
