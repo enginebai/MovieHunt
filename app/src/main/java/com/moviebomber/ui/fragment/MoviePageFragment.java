@@ -9,25 +9,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.moviebomber.R;
+import com.moviebomber.adapter.MoviePagerAdapter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MoviePageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MoviePageFragment extends Fragment {
+public class MoviePageFragment extends Fragment implements MaterialTabListener {
 
-	private static final int[] TABS = {R.string.tab_movie_thisweek,
+	public static final int[] TABS = {R.string.tab_movie_thisweek,
 			R.string.tab_movie_intheater, R.string.tab_movie_comingsoon};
 	@InjectView(R.id.tab_movie_list)
 	MaterialTabHost mTabMoviewList;
 
 	@InjectView(R.id.pager_movie)
 	ViewPager mPagerMovie;
+
+	private MoviePagerAdapter mAdapter;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -64,9 +69,41 @@ public class MoviePageFragment extends Fragment {
 
 	private void initView(View rootView) {
 		ButterKnife.inject(this, rootView);
-		for (int i = 0; i < 3; i++) {
+		this.mAdapter = new MoviePagerAdapter(getFragmentManager(), getActivity());
+		this.mPagerMovie.setAdapter(this.mAdapter);
+		this.mPagerMovie.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+				mTabMoviewList.setSelectedNavigationItem(position);
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+
+			}
+		});
+		for (int i = 0; i < mAdapter.getCount(); i++) {
 			this.mTabMoviewList.addTab(this.mTabMoviewList.newTab()
 					.setText(getActivity().getResources().getString(TABS[i])));
 		}
+	}
+
+	@Override
+	public void onTabSelected(MaterialTab materialTab) {
+		this.mPagerMovie.setCurrentItem(materialTab.getPosition());
+	}
+
+	@Override
+	public void onTabReselected(MaterialTab materialTab) {
+
+	}
+
+	@Override
+	public void onTabUnselected(MaterialTab materialTab) {
 	}
 }

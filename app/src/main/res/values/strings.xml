@@ -17,6 +17,9 @@
     <string name="font_roboto_regular">sans-serif</string>
     <string name="default_username">電影別雷開發者</string>
     <string name="default_email">moviebomber@gmail.com</string>
+    <string name="loading">載入中，請稍等&#8230;</string>
+    <string name="test_movie_name">Star Wars星際大戰首部曲</string>
+    <string name="test_release_date">2015/03/17上映</string>
 
     <!-- menu -->
     <string name="menu_movie_list">電影列表</string>

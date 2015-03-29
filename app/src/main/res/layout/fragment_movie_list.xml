@@ -1,0 +1,14 @@
+<com.malinskiy.superrecyclerview.SuperRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="2dp"
+    app:layout_progress="@layout/progress"
+    app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
+    app:recyclerClipToPadding="false"
+    app:scrollbarStyle="insideOverlay"
+    tools:context="com.moviebomber.ui.fragment.MovieListFragment"
+    android:id="@+id/list_movie"
+    />

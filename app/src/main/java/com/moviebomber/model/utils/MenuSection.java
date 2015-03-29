@@ -1,4 +1,4 @@
-package com.moviebomber.model;
+package com.moviebomber.model.utils;
 
 /**
  * This class represents the menu section in navigation drawer.

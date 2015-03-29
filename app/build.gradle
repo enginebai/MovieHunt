@@ -21,6 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':superRecyclerView')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.balysv:material-ripple:1.0.1'
@@ -28,4 +29,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.2'
     compile 'com.github.rey5137:material:1.0.0'
     compile 'it.neokree:MaterialTabs:0.11'
+    compile 'com.loopj.android:android-async-http:1.4.6'
+    compile 'com.orhanobut:logger:1.4'
 }

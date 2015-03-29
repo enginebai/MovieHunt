@@ -9,4 +9,6 @@
     <color name="text">#FFFFFF</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <color name="text_gray_background">#55000000</color>
 </resources>

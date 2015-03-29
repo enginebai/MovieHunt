@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.moviebomber.R;
 import com.moviebomber.adapter.MenuAdapter;
-import com.moviebomber.model.MenuSection;
+import com.moviebomber.model.utils.MenuSection;
 
 import java.util.ArrayList;
 import java.util.List;
