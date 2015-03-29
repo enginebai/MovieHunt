@@ -11,4 +11,10 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- global -->
+    <string name="font_roboto_medium">sans-serif-medium</string>
+    <string name="font_roboto_regular">sans-serif</string>
+    <string name="default_username">電影別雷開發者</string>
+    <string name="default_email">moviebomber@gmail.com</string>
 </resources>

@@ -1,4 +1,4 @@
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +11,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/navi_drawer_user_height"
+        android:id="@+id/layout_menu_header">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navi_drawer_user_height"
+            android:id="@+id/image_user_cover"
+            android:contentDescription="@null"
+            android:background="?attr/colorPrimary"/>
 
         <ImageView
             android:layout_width="64dp"
@@ -20,8 +28,60 @@
             android:contentDescription="@null"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-
+            android:layout_margin="@dimen/navi_drawer_photo_margin"
+            android:layout_marginLeft="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
+            android:background="?attr/colorAccent"
             />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_below="@id/image_user_photo"
+            android:layout_marginLeft="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginRight="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginEnd="@dimen/navi_drawer_margin_left_right">
+
+            <TextView
+                android:id="@+id/text_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_username"
+                android:fontFamily="@string/font_roboto_medium"
+                android:textSize="14sp"
+                android:textColor="@color/text"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_email"
+                android:text="@string/default_email"
+                android:layout_below="@id/text_username"
+                android:fontFamily="@string/font_roboto_regular"
+                android:textSize="14sp"
+                android:textColor="@color/text"
+                android:layout_marginTop="3dp"
+                />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/image_user_switcher"
+                android:contentDescription="@null"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@id/text_email"
+                android:src="@drawable/abc_spinner_mtrl_am_alpha"
+                />
+        </RelativeLayout>
     </RelativeLayout>
 
-</ScrollView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_menu"
+        android:layout_below="@id/layout_menu_header"
+        />
+</RelativeLayout>
