@@ -29,4 +29,9 @@
     <string name="menu_comment">撰寫評論</string>
     <string name="menu_setting">設定</string>
 
+    <!-- movie page/list -->
+    <string name="tab_movie_thisweek">本週新片</string>
+    <string name="tab_movie_intheater">上映中</string>
+    <string name="tab_movie_comingsoon">即將上映</string>
+
 </resources>

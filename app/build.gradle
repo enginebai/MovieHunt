@@ -26,4 +26,6 @@ dependencies {
     compile 'com.balysv:material-ripple:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:1.2.2'
+    compile 'com.github.rey5137:material:1.0.0'
+    compile 'it.neokree:MaterialTabs:0.11'
 }

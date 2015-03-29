@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.moviebomber.R;
 import com.moviebomber.adapter.MenuAdapter;
 import com.moviebomber.model.MenuSection;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,11 +146,6 @@ public class NavigationDrawerFragment extends Fragment {
 			}
 		});
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-		Picasso.with(getActivity())
-				// FIXME: replace real user photo
-				.load("https://www.facebook.com/photo.php?fbid=873966605982179&l=520603f1d4")
-				.error(getResources().getDrawable(R.drawable.user_photo))
-				.into(this.mImageUserPhoto);
 	}
 
 	public boolean isDrawerOpen() {

@@ -1,10 +1,10 @@
 package com.moviebomber.ui.activity;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -17,8 +17,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.moviebomber.ui.fragment.NavigationDrawerFragment;
 import com.moviebomber.R;
+import com.moviebomber.ui.fragment.MoviePageFragment;
+import com.moviebomber.ui.fragment.NavigationDrawerFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -67,28 +68,26 @@ public class MainActivity extends ActionBarActivity
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-				.commit();
-	}
-
-	public void onSectionAttached(int number) {
-		switch (number) {
-			case 1:
-				mTitle = getString(R.string.title_section1);
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		Fragment fragment;
+		String fragmentTag;
+		switch (position) {
+			case 0:
+				fragment = MoviePageFragment.newInstance();
+				fragmentTag = MoviePageFragment.class.getSimpleName();
 				break;
-			case 2:
-				mTitle = getString(R.string.title_section2);
-				break;
-			case 3:
-				mTitle = getString(R.string.title_section3);
-				break;
+			default:
+				fragment = PlaceholderFragment.newInstance(position + 1);
+				fragmentTag = PlaceholderFragment.class.getSimpleName();
 		}
+		fragmentTransaction
+				.replace(R.id.container, fragment, fragmentTag)
+				.commit();
 	}
 
 	public void restoreActionBar() {
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setTitle(mTitle);
 	}
@@ -152,13 +151,6 @@ public class MainActivity extends ActionBarActivity
 		                         Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 			return rootView;
-		}
-
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(
-					getArguments().getInt(ARG_SECTION_NUMBER));
 		}
 	}
 
