@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 	@Override
 	public void onBindViewHolder(MovieListItemHolder holder, int position) {
-		MovieListI
+		MovieListItem movieItem = this.mMovieList.get(position);
+		holder.mTextMovieName.setText(movieItem.getTitle());
+		Picasso.with(holder.mImageMovieCover.getContext())
+				.load(movieItem.getCover())
+				.into(holder.mImageMovieCover);
 	}
 
 	@Override

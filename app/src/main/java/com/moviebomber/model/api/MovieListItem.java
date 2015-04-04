@@ -9,6 +9,11 @@ public class MovieListItem {
 	private String title;
 	private String cover;
 
+	public MovieListItem(String title, String cover) {
+		this.title = title;
+		this.cover = cover;
+	}
+
 	public String getTitle() {
 		return title;
 	}

@@ -116,6 +116,14 @@ public class MovieListFragment extends Fragment {
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				super.onSuccess(statusCode, headers, response);
 				List<MovieListItem> movieList = new ArrayList<>();
+
+				String[] titles = {"玩命關頭7", "星際大戰", "魔戒", "變形金剛", "哈比人",
+				"功夫熊貓", "決戰時刻", "小鬼當家", "絕地戰警", "星際迷航"};
+				String api_host = "http://c63.us.to/photo/5487/";
+				for (int i = 1; i <= titles.length; i++)
+					movieList.add(new MovieListItem(
+							titles[i - 1], api_host + String.valueOf(i) + ".jpg"));
+
 				if (mAdapter == null)
 					mAdapter = new MovieListAdapter(movieList);
 				mListMovie.setAdapter(mAdapter);

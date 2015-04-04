@@ -18,11 +18,11 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:id="@+id/image_movie_cover"
                 android:contentDescription="@null"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:src="@drawable/user_cover"/>
             <TextView
                 android:id="@+id/text_movie_name"
@@ -35,7 +35,7 @@
                 android:text="@string/test_movie_name"
                 android:gravity="center_vertical"
                 android:padding="8dp"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:background="@color/text_gray_background"/>
             </RelativeLayout>
         </LinearLayout>
