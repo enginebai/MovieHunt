@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -141,7 +142,7 @@ public class MovieListFragment extends Fragment {
 				List<MovieListItem> movieList = new ArrayList<>();
 				Gson gson = new Gson();
 				if (mAdapter == null) {
-					mAdapter = new MovieListAdapter(movieList);
+					mAdapter = new MovieListAdapter(new ArrayList<MovieListItem>());
 					mListMovie.setAdapter(mAdapter);
 				}
 				mListMovie.getSwipeToRefresh().setRefreshing(false);
@@ -154,15 +155,24 @@ public class MovieListFragment extends Fragment {
 //							titles[i - 1], api_host + String.valueOf(i) + ".jpg"));
 				try {
 					JSONArray objects = response.getJSONArray(ApiTask.RESPONSE_OBJECTS);
-					for (int i = 0; i < objects.length(); i++)
-						movieList.add(gson.fromJson(objects.getJSONObject(i).toString(), MovieListItem.class));
-					mAdapter.getMovieList().addAll(movieList);
+					if (objects.length() > 0) {
+						for (int i = 0; i < objects.length(); i++)
+							movieList.add(gson.fromJson(objects.getJSONObject(i).toString(), MovieListItem.class));
+						mAdapter.getMovieList().addAll(movieList);
+					} else {
+						if (mAdapter.getMovieList().size() <= 0)
+							Toast.makeText(getActivity(), getResources().getString(R.string.warn_no_movies),
+									Toast.LENGTH_SHORT).show();
+						else
+							Toast.makeText(getActivity(), getResources().getString(R.string.warn_no_more_movies),
+									Toast.LENGTH_SHORT).show();
+						return;
+					}
 				}
 				catch (JSONException e) {
 					this.onFailure(statusCode, headers, e, response);
 				}
 
-				mAdapter.getMovieList().addAll(movieList);
 				mAdapter.notifyDataSetChanged();
 				mCurrentPage++;
 			}

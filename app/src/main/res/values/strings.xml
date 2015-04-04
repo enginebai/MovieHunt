@@ -34,5 +34,7 @@
     <string name="tab_movie_thisweek">本週新片</string>
     <string name="tab_movie_intheater">上映中</string>
     <string name="tab_movie_comingsoon">即將上映</string>
+    <string name="warn_no_more_movies">沒有更多電影囉!</string>
+    <string name="warn_no_movies">目前沒有任何電影!</string>
 
 </resources>
