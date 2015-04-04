@@ -1,5 +1,8 @@
 package com.moviebomber.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
+import com.moviebomber.ui.activity.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,8 +27,10 @@ import butterknife.InjectView;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieListItemHolder> {
 
 	private List<MovieListItem> mMovieList = new ArrayList<>();
+	private Context mContext;
 
-	public MovieListAdapter(List<MovieListItem> mMovieList) {
+	public MovieListAdapter(Context context, List<MovieListItem> mMovieList) {
+		this.mContext = context;
 		this.mMovieList = mMovieList;
 	}
 
@@ -51,6 +57,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		Picasso.with(holder.mImageMovieCover.getContext())
 				.load(thumbnailUrl)
 				.into(holder.mImageMovieCover);
+		holder.mCardMovie.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
+				mContext.startActivity(movieDetail);
+			}
+		});
 	}
 
 	@Override
@@ -59,6 +72,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 	}
 
 	class MovieListItemHolder extends RecyclerView.ViewHolder {
+		@InjectView(R.id.card_movie_list_item)
+		CardView mCardMovie;
+
 		@InjectView(R.id.image_movie_cover)
 		ImageView mImageMovieCover;
 

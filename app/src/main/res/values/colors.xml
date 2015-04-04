@@ -9,6 +9,7 @@
     <color name="text">#FFFFFF</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+    <color name="white_pressed">#f1f1f1</color>
 
     <integer-array name="colors">
         <item>@color/primary</item>

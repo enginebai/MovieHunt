@@ -16,6 +16,11 @@
         <item name="color">@android:color/white</item>
     </style>
 
+    <style name="ToolbarOverlay">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
     <style name="CircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress"/>
     <style name="ColorsCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
         <item name="cpd_strokeColors">@array/progress_colors</item>
@@ -35,4 +40,8 @@
         <item name="spb_generate_background_with_colors">false</item>
     </style>
 
+    <style name="FloatingActionBarTextMenu">
+        <item name="android:background">@color/primary_text</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

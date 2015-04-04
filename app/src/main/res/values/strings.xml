@@ -36,5 +36,9 @@
     <string name="tab_movie_comingsoon">即將上映</string>
     <string name="warn_no_more_movies">沒有更多電影囉!</string>
     <string name="warn_no_movies">目前沒有任何電影!</string>
+    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
