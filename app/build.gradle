@@ -31,4 +31,5 @@ dependencies {
     compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'com.orhanobut:logger:1.4'
+    compile 'com.google.code.gson:gson:2.3.1'
 }

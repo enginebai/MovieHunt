@@ -1,6 +1,7 @@
 package com.moviebomber.ui.fragment;
 
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.malinskiy.superrecyclerview.OnMoreListener;
@@ -17,11 +19,17 @@ import com.moviebomber.R;
 import com.moviebomber.adapter.MovieListAdapter;
 import com.moviebomber.model.api.ApiTask;
 import com.moviebomber.model.api.MovieListItem;
+import com.moviebomber.model.utils.MovieListTab;
+import com.moviebomber.model.utils.Query;
 import com.orhanobut.logger.Logger;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,8 +101,8 @@ public class MovieListFragment extends Fragment {
 		this.mListMovie.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-
 				mCurrentPage = 1;
+				loadMovies();
 			}
 		});
 		this.mListMovie.setupMoreListener(new OnMoreListener() {
@@ -102,7 +110,6 @@ public class MovieListFragment extends Fragment {
 			public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
 				mListMovie.showMoreProgress();
 				loadMovies();
-				mListMovie.hideMoreProgress();
 			}
 		}, 1);
 	}
@@ -115,33 +122,78 @@ public class MovieListFragment extends Fragment {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				super.onSuccess(statusCode, headers, response);
+				Logger.json(ApiTask.API_LOG_TAG, response.toString());
 				List<MovieListItem> movieList = new ArrayList<>();
-
-				String[] titles = {"玩命關頭7", "星際大戰", "魔戒", "變形金剛", "哈比人",
-				"功夫熊貓", "決戰時刻", "小鬼當家", "絕地戰警", "星際迷航"};
-				String api_host = "http://c63.us.to/photo/5487/";
-				for (int i = 1; i <= titles.length; i++)
-					movieList.add(new MovieListItem(
-							titles[i - 1], api_host + String.valueOf(i) + ".jpg"));
-
+				Gson gson = new Gson();
 				if (mAdapter == null)
 					mAdapter = new MovieListAdapter(movieList);
+
+//				String[] titles = {"玩命關頭7", "星際大戰", "魔戒", "變形金剛", "哈比人",
+//				"功夫熊貓", "決戰時刻", "小鬼當家", "絕地戰警", "星際迷航"};
+//				String api_host = "http://c63.us.to/photo/5487/";
+//				for (int i = 1; i <= titles.length; i++)
+//					movieList.add(new MovieListItem(
+//							titles[i - 1], api_host + String.valueOf(i) + ".jpg"));
+				try {
+					JSONArray objects = response.getJSONArray(ApiTask.RESPONSE_OBJECTS);
+					for (int i = 0; i < objects.length(); i++)
+						movieList.add(gson.fromJson(objects.getJSONObject(i).toString(), MovieListItem.class));
+					mAdapter.getMovieList().addAll(movieList);
+				}
+				catch (JSONException e) {
+					this.onFailure(statusCode, headers, e, response);
+				}
+
 				mListMovie.setAdapter(mAdapter);
 				mAdapter.getMovieList().addAll(movieList);
 				mAdapter.notifyDataSetChanged();
 				mCurrentPage++;
+				mListMovie.getSwipeToRefresh().setRefreshing(false);
+				mListMovie.hideMoreProgress();
 			}
 
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 				super.onFailure(statusCode, headers, throwable, errorResponse);
+				// TODO: fail to get movie list
+				Logger.e((Exception)throwable);
+
+				mListMovie.getSwipeToRefresh().setRefreshing(false);
+				mListMovie.hideMoreProgress();
 			}
 		});
 	}
 
 	private String formatMovieListRequest() {
-		// FIXME: replace the real url
-		return "http://shareba.com/api.php";
-	}
+		JSONObject q = new JSONObject();
 
+		try {
+			JSONArray filters = new JSONArray();
+			JSONObject filter = new JSONObject();
+			filter.put(Query.PARAM_NAME, Query.FIELD_RELEASE_STATUS);
+			filter.put(Query.PARAM_OP, Query.OPERATOR_EQUAL);
+			filter.put(Query.PARAM_VAL, MovieListTab.values()[this.mCurrentTab]);
+			filters.put(filter);
+			JSONArray orderBy = new JSONArray();
+			JSONObject dateSort = new JSONObject();
+			dateSort.put(Query.PARAM_FIELD, Query.FIELD_RELEASE_DATE);
+			dateSort.put(Query.PARAM_DIRECTION, Query.OPERATOR_DESC);
+			orderBy.put(dateSort);
+			q.put(Query.PARAM_FILTERS, filters);
+			q.put(Query.PARAM_ORDER_BY, orderBy);
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		Resources res = this.getActivity().getResources();
+		try {
+			return String.format("%s%s%s?q=%s", res.getString(R.string.host),
+					res.getString(R.string.api_root), res.getString(R.string.api_movie_list),
+					URLEncoder.encode(q.toString(), "UTF8"));
+		}
+		catch (UnsupportedEncodingException e) {
+			return "";
+		}
+	}
 }

@@ -45,9 +45,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 	@Override
 	public void onBindViewHolder(MovieListItemHolder holder, int position) {
 		MovieListItem movieItem = this.mMovieList.get(position);
-		holder.mTextMovieName.setText(movieItem.getTitle());
+		holder.mTextMovieName.setText(movieItem.getTitleChinese());
+		String thumbnailUrl = movieItem.getThumbnailUrl();
+		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
 		Picasso.with(holder.mImageMovieCover.getContext())
-				.load(movieItem.getCover())
+				.load(thumbnailUrl)
 				.into(holder.mImageMovieCover);
 	}
 

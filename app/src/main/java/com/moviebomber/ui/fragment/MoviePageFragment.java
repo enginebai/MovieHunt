@@ -89,6 +89,7 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener {
 		});
 		for (int i = 0; i < mAdapter.getCount(); i++) {
 			this.mTabMoviewList.addTab(this.mTabMoviewList.newTab()
+					.setTabListener(this)
 					.setText(getActivity().getResources().getString(TABS[i])));
 		}
 	}

@@ -7,9 +7,8 @@ package com.moviebomber.model.utils;
  */
 public enum MovieListTab {
 	THIS_WEEK("thisweek"),
-	IN_THEATER("intheater"),
+	IN_THEATER("intheaters"),
 	COMING_SOON("comingsoon");
-
 	MovieListTab(String name) {
 		this.mName = name;
 	}
