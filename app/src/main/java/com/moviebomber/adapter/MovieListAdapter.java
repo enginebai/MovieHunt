@@ -47,7 +47,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		MovieListItem movieItem = this.mMovieList.get(position);
 		holder.mTextMovieName.setText(movieItem.getTitleChinese());
 		String thumbnailUrl = movieItem.getThumbnailUrl();
-		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
+		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost2");
 		Picasso.with(holder.mImageMovieCover.getContext())
 				.load(thumbnailUrl)
 				.into(holder.mImageMovieCover);
@@ -55,9 +55,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 	@Override
 	public int getItemCount() {
-		// FIXME:
-		return 10;
-//		return this.mMovieList.size();
+		return this.mMovieList.size();
 	}
 
 	class MovieListItemHolder extends RecyclerView.ViewHolder {

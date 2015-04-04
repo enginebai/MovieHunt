@@ -12,6 +12,7 @@ public class Query {
 	public static final String PARAM_ORDER_BY = "order_by";
 	public static final String PARAM_FIELD = "field";
 	public static final String PARAM_DIRECTION = "direction";
+	public static final String PARAM_PAGE = "page";
 
 	public static final String FIELD_RELEASE_STATUS = "release_status";
 	public static final String FIELD_RELEASE_DATE = "release_date";

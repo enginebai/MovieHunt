@@ -10,6 +10,11 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
 
+    <integer-array name="colors">
+        <item>@color/primary</item>
+        <item>@color/accent</item>
+    </integer-array>
+
     <color name="text_gray_background">#55000000</color>
     
     <array name="progress_colors">

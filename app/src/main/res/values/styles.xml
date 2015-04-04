@@ -21,4 +21,18 @@
         <item name="cpd_strokeColors">@array/progress_colors</item>
     </style>
 
+    <style name="GoogleNowProgressBar" parent="SmoothProgressBar">
+        <item name="spb_stroke_separator_length">8dp</item>
+        <item name="spb_sections_count">2</item>
+        <item name="spb_speed">1.7</item>
+        <item name="spb_progressiveStart_speed">2</item>
+        <item name="spb_progressiveStop_speed">3.4</item>
+        <item name="spb_interpolator">spb_interpolator_acceleratedecelerate</item>
+        <item name="spb_mirror_mode">true</item>
+        <item name="spb_reversed">true</item>
+        <item name="spb_colors">@array/colors</item>
+        <item name="spb_progressiveStart_activated">true</item>
+        <item name="spb_generate_background_with_colors">false</item>
+    </style>
+
 </resources>

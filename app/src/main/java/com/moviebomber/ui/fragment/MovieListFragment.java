@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.moviebomber.R;
 import com.moviebomber.adapter.MovieListAdapter;
@@ -51,6 +51,8 @@ public class MovieListFragment extends Fragment {
 	private MovieListAdapter mAdapter;
 	private int mCurrentTab = 0;
 	private int mCurrentPage = 1;
+	private boolean mLoadingMore = false;
+	private boolean mShouldLoadMore = false;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -84,37 +86,50 @@ public class MovieListFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_movie_list, container, false);
 		this.initView(rootView);
-		this.loadMovies();
+		this.loadMovieList();
 		return rootView;
 	}
 
 	private void initView(View rootView) {
 		ButterKnife.inject(this, rootView);
-		this.mListMovie.setRefreshingColorResources(
+		this.mListMovie.getSwipeToRefresh().setColorSchemeResources(
 				R.color.primary,
 				R.color.accent,
-				android.R.color.holo_orange_light,
-				android.R.color.holo_blue_bright);
-		LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+				android.R.color.holo_orange_dark);
+		final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
 		layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 		this.mListMovie.setLayoutManager(layoutManager);
 		this.mListMovie.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
+				if (mAdapter != null)
+					mAdapter.getMovieList().clear();
 				mCurrentPage = 1;
-				loadMovies();
+				loadMovieList();
 			}
 		});
-		this.mListMovie.setupMoreListener(new OnMoreListener() {
+		this.mListMovie.setOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
-			public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-				mListMovie.showMoreProgress();
-				loadMovies();
+			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+				super.onScrollStateChanged(recyclerView, newState);
+				if (mShouldLoadMore && newState == RecyclerView.SCROLL_STATE_IDLE && !mLoadingMore) {
+					mListMovie.showMoreProgress();
+					loadMovieList();
+				}
 			}
-		}, 1);
+
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
+				int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+				int visibleItemCount = layoutManager.getChildCount();
+				int totalItemCount = layoutManager.getItemCount();
+				mShouldLoadMore = (firstVisibleItem + visibleItemCount == totalItemCount);
+			}
+		});
 	}
 
-	private void loadMovies() {
+	private void loadMovieList() {
 		AsyncHttpClient httpClient = new AsyncHttpClient();
 		String url = formatMovieListRequest();
 		Logger.d(ApiTask.API_LOG_TAG, url);
@@ -125,9 +140,12 @@ public class MovieListFragment extends Fragment {
 				Logger.json(ApiTask.API_LOG_TAG, response.toString());
 				List<MovieListItem> movieList = new ArrayList<>();
 				Gson gson = new Gson();
-				if (mAdapter == null)
+				if (mAdapter == null) {
 					mAdapter = new MovieListAdapter(movieList);
-
+					mListMovie.setAdapter(mAdapter);
+				}
+				mListMovie.getSwipeToRefresh().setRefreshing(false);
+				mListMovie.hideMoreProgress();
 //				String[] titles = {"玩命關頭7", "星際大戰", "魔戒", "變形金剛", "哈比人",
 //				"功夫熊貓", "決戰時刻", "小鬼當家", "絕地戰警", "星際迷航"};
 //				String api_host = "http://c63.us.to/photo/5487/";
@@ -144,12 +162,9 @@ public class MovieListFragment extends Fragment {
 					this.onFailure(statusCode, headers, e, response);
 				}
 
-				mListMovie.setAdapter(mAdapter);
 				mAdapter.getMovieList().addAll(movieList);
 				mAdapter.notifyDataSetChanged();
 				mCurrentPage++;
-				mListMovie.getSwipeToRefresh().setRefreshing(false);
-				mListMovie.hideMoreProgress();
 			}
 
 			@Override
@@ -188,9 +203,10 @@ public class MovieListFragment extends Fragment {
 
 		Resources res = this.getActivity().getResources();
 		try {
-			return String.format("%s%s%s?q=%s", res.getString(R.string.host),
+			return String.format("%s%s%s?q=%s&%s=%d", res.getString(R.string.host),
 					res.getString(R.string.api_root), res.getString(R.string.api_movie_list),
-					URLEncoder.encode(q.toString(), "UTF8"));
+					URLEncoder.encode(q.toString(), "UTF8"),
+					Query.PARAM_PAGE, this.mCurrentPage);
 		}
 		catch (UnsupportedEncodingException e) {
 			return "";

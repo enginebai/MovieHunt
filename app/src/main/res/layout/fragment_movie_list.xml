@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="2dp"
     app:layout_progress="@layout/progress"
+    app:layout_moreProgress="@layout/footer_progress"
     app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
     app:recyclerClipToPadding="false"
     app:scrollbarStyle="insideOverlay"
