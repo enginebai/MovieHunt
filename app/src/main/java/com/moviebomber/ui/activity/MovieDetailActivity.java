@@ -1,5 +1,6 @@
 package com.moviebomber.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -23,7 +25,7 @@ import org.json.JSONObject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MovieDetailActivity extends ActionBarActivity {
+public class MovieDetailActivity extends ActionBarActivity implements View.OnClickListener{
 
 	public static final String EXTRA_MOVIE_ID = "MOVIE_ID";
 
@@ -46,6 +48,8 @@ public class MovieDetailActivity extends ActionBarActivity {
 	@InjectView(R.id.text_actors)
 	TextView mTextActors;
 
+	@InjectView(R.id.fab_actions)
+	FloatingActionsMenu fabActionsMenu;
 	@InjectView(R.id.fab_comment)
 	FloatingActionButton fabComment;
 	@InjectView(R.id.fab_photo)
@@ -71,7 +75,10 @@ public class MovieDetailActivity extends ActionBarActivity {
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
 			this.queryMovieDetail();
-			this.setupEvent();
+			this.fabComment.setOnClickListener(this);
+			this.fabPhoto.setOnClickListener(this);
+			this.fabShare.setOnClickListener(this);
+			this.fabTrailer.setOnClickListener(this);
 		}
 	}
 
@@ -96,10 +103,13 @@ public class MovieDetailActivity extends ActionBarActivity {
 	}
 
 	private void displayMovieDetail(MovieInfo movieInfo) {
-		if (movieInfo.getPhotoList().size() > 0)
+		if (movieInfo.getPhotoList().size() > 0) {
+			String url = movieInfo.getPhotoList().get(0).getUrl();
+			url = url.replace("mpho3", "mpho");
 			Picasso.with(this.mImage.getContext())
-					.load(movieInfo.getPhotoList().get(0).getUrl())
+					.load(url)
 					.into(this.mImage);
+		}
 		this.mTextTitleChinese.setText(movieInfo.getTitleChinese());
 		this.mTextReleaseDate.setText(movieInfo.getReleaseDate());
 		this.mTextDescription.setText(movieInfo.getDescription());
@@ -111,33 +121,25 @@ public class MovieDetailActivity extends ActionBarActivity {
 			this.mTextActors.setText(movieInfo.getActorList().get(0).getActorName());
 	}
 
-	private void setupEvent() {
-		this.fabComment.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-		this.fabPhoto.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-		this.fabTrailer.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-		this.fabShare.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+			case R.id.fab_comment:
+				break;
+			case R.id.fab_share:
+				break;
+			case R.id.fab_trailer:
+				break;
+			case R.id.fab_photo:
+				Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
+				photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
+						mMovieInfo.getPhotoList());
+				startActivity(photoList);
+				break;
+		}
+		this.fabActionsMenu.collapse();
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

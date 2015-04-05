@@ -4,7 +4,9 @@ package com.moviebomber.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GenreList {
+import java.io.Serializable;
+
+public class GenreList implements Serializable{
 
     @Expose
     private String genre;

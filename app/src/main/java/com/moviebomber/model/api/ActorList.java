@@ -4,7 +4,9 @@ package com.moviebomber.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ActorList {
+import java.io.Serializable;
+
+public class ActorList implements Serializable{
 
     @SerializedName("actor_name")
     @Expose

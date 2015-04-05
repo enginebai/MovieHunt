@@ -4,19 +4,19 @@ package com.moviebomber.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MovieInfo {
+public class MovieInfo implements Serializable{
 
 	public static final String TABLE_NAME = "movie_info";
 
     @SerializedName("actor_list")
     @Expose
-    private List<ActorList> actorList = new ArrayList<ActorList>();
+    private ArrayList<ActorList> actorList = new ArrayList<ActorList>();
     @SerializedName("content_rating")
     @Expose
-    private Object contentRating;
+    private String contentRating;
     @Expose
     private String description;
     @Expose
@@ -27,21 +27,21 @@ public class MovieInfo {
     private String film;
     @SerializedName("genre_list")
     @Expose
-    private List<GenreList> genreList = new ArrayList<GenreList>();
+    private ArrayList<GenreList> genreList = new ArrayList<GenreList>();
     @Expose
     private Integer id;
     @SerializedName("imdb_url")
     @Expose
-    private Object imdbUrl;
+    private String imdbUrl;
     @SerializedName("official_website")
     @Expose
     private String officialWebsite;
     @SerializedName("photo_list")
     @Expose
-    private List<PhotoList> photoList = new ArrayList<PhotoList>();
+    private ArrayList<PhotoList> photoList = new ArrayList<PhotoList>();
     @SerializedName("photo_list_url")
     @Expose
-    private Object photoListUrl;
+    private String photoListUrl;
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
@@ -59,10 +59,10 @@ public class MovieInfo {
     private String titleEnglish;
     @SerializedName("trailer_list")
     @Expose
-    private List<TrailerList> trailerList = new ArrayList<TrailerList>();
+    private ArrayList<TrailerList> trailerList = new ArrayList<TrailerList>();
     @SerializedName("trailer_list_url")
     @Expose
-    private Object trailerListUrl;
+    private String trailerListUrl;
     @SerializedName("yahoo_detail_id")
     @Expose
     private String yahooDetailId;
@@ -75,7 +75,7 @@ public class MovieInfo {
      * @return
      *     The actorList
      */
-    public List<ActorList> getActorList() {
+    public ArrayList<ActorList> getActorList() {
         return actorList;
     }
 
@@ -84,7 +84,7 @@ public class MovieInfo {
      * @param actorList
      *     The actor_list
      */
-    public void setActorList(List<ActorList> actorList) {
+    public void setActorList(ArrayList<ActorList> actorList) {
         this.actorList = actorList;
     }
 
@@ -93,7 +93,7 @@ public class MovieInfo {
      * @return
      *     The contentRating
      */
-    public Object getContentRating() {
+    public String getContentRating() {
         return contentRating;
     }
 
@@ -102,7 +102,7 @@ public class MovieInfo {
      * @param contentRating
      *     The content_rating
      */
-    public void setContentRating(Object contentRating) {
+    public void setContentRating(String contentRating) {
         this.contentRating = contentRating;
     }
 
@@ -183,7 +183,7 @@ public class MovieInfo {
      * @return
      *     The genreList
      */
-    public List<GenreList> getGenreList() {
+    public ArrayList<GenreList> getGenreList() {
         return genreList;
     }
 
@@ -192,7 +192,7 @@ public class MovieInfo {
      * @param genreList
      *     The genre_list
      */
-    public void setGenreList(List<GenreList> genreList) {
+    public void setGenreList(ArrayList<GenreList> genreList) {
         this.genreList = genreList;
     }
 
@@ -219,7 +219,7 @@ public class MovieInfo {
      * @return
      *     The imdbUrl
      */
-    public Object getImdbUrl() {
+    public String getImdbUrl() {
         return imdbUrl;
     }
 
@@ -228,7 +228,7 @@ public class MovieInfo {
      * @param imdbUrl
      *     The imdb_url
      */
-    public void setImdbUrl(Object imdbUrl) {
+    public void setImdbUrl(String imdbUrl) {
         this.imdbUrl = imdbUrl;
     }
 
@@ -255,7 +255,7 @@ public class MovieInfo {
      * @return
      *     The photoList
      */
-    public List<PhotoList> getPhotoList() {
+    public ArrayList<PhotoList> getPhotoList() {
         return photoList;
     }
 
@@ -264,7 +264,7 @@ public class MovieInfo {
      * @param photoList
      *     The photo_list
      */
-    public void setPhotoList(List<PhotoList> photoList) {
+    public void setPhotoList(ArrayList<PhotoList> photoList) {
         this.photoList = photoList;
     }
 
@@ -273,7 +273,7 @@ public class MovieInfo {
      * @return
      *     The photoListUrl
      */
-    public Object getPhotoListUrl() {
+    public String getPhotoListUrl() {
         return photoListUrl;
     }
 
@@ -282,7 +282,7 @@ public class MovieInfo {
      * @param photoListUrl
      *     The photo_list_url
      */
-    public void setPhotoListUrl(Object photoListUrl) {
+    public void setPhotoListUrl(String photoListUrl) {
         this.photoListUrl = photoListUrl;
     }
 
@@ -381,7 +381,7 @@ public class MovieInfo {
      * @return
      *     The trailerList
      */
-    public List<TrailerList> getTrailerList() {
+    public ArrayList<TrailerList> getTrailerList() {
         return trailerList;
     }
 
@@ -390,7 +390,7 @@ public class MovieInfo {
      * @param trailerList
      *     The trailer_list
      */
-    public void setTrailerList(List<TrailerList> trailerList) {
+    public void setTrailerList(ArrayList<TrailerList> trailerList) {
         this.trailerList = trailerList;
     }
 
@@ -399,7 +399,7 @@ public class MovieInfo {
      * @return
      *     The trailerListUrl
      */
-    public Object getTrailerListUrl() {
+    public String getTrailerListUrl() {
         return trailerListUrl;
     }
 
@@ -408,7 +408,7 @@ public class MovieInfo {
      * @param trailerListUrl
      *     The trailer_list_url
      */
-    public void setTrailerListUrl(Object trailerListUrl) {
+    public void setTrailerListUrl(String trailerListUrl) {
         this.trailerListUrl = trailerListUrl;
     }
 

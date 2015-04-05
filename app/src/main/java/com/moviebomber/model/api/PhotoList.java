@@ -1,10 +1,15 @@
 
 package com.moviebomber.model.api;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PhotoList {
+import java.io.Serializable;
+
+public class PhotoList implements Serializable, Parcelable{
 
     @Expose
     private Integer id;
@@ -108,4 +113,39 @@ public class PhotoList {
         this.url = url;
     }
 
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeValue(this.id);
+		dest.writeValue(this.movieId);
+		dest.writeString(this.name);
+		dest.writeString(this.path);
+		dest.writeString(this.url);
+	}
+
+	public PhotoList() {
+	}
+
+	private PhotoList(Parcel in) {
+		this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.movieId = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.name = in.readString();
+		this.path = in.readString();
+		this.url = in.readString();
+	}
+
+	public static final Creator<PhotoList> CREATOR = new Creator<PhotoList>() {
+		public PhotoList createFromParcel(Parcel source) {
+			return new PhotoList(source);
+		}
+
+		public PhotoList[] newArray(int size) {
+			return new PhotoList[size];
+		}
+	};
 }

@@ -53,7 +53,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		final MovieListItem movieItem = this.mMovieList.get(position);
 		holder.mTextMovieName.setText(movieItem.getTitleChinese());
 		String thumbnailUrl = movieItem.getThumbnailUrl();
-		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost2");
+		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
 		Picasso.with(holder.mImageMovieCover.getContext())
 				.load(thumbnailUrl)
 				.into(holder.mImageMovieCover);

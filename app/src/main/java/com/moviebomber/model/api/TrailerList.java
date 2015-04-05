@@ -4,7 +4,9 @@ package com.moviebomber.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TrailerList {
+import java.io.Serializable;
+
+public class TrailerList implements Serializable{
 
     @Expose
     private Integer id;

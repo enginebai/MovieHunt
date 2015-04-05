@@ -14,4 +14,8 @@
     <dimen name="navigation_drawer_gradient_height">56dp</dimen>
     <dimen name="navigation_drawer_selection_height">48dp</dimen>
 
+    <!-- photo list -->
+    <dimen name="item_photo_height_small">150dp</dimen>
+    <dimen name="item_photo_height_tall">220dp</dimen>
+
 </resources>

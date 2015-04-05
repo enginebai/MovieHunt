@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.jpardogo.listbuddies.lib.adapters.CircularLoopAdapter;
 import com.moviebomber.R;
+import com.moviebomber.model.api.PhotoList;
 import com.moviebomber.utils.ScaleToFitWidhtHeigthTransform;
 import com.squareup.picasso.Picasso;
 
@@ -22,11 +23,11 @@ import butterknife.InjectView;
  */
 public class PhotoListAdapter extends CircularLoopAdapter {
 
-	private List<String> mPhotoUrlList = new ArrayList<>();
+	private List<PhotoList> mPhotoUrlList = new ArrayList<>();
 	private Context mContext;
 	private int mRowHeight;
 
-	public PhotoListAdapter(Context context, int rowHeight, List<String> photoUrlList) {
+	public PhotoListAdapter(Context context, int rowHeight, List<PhotoList> photoUrlList) {
 		this.mContext = context;
 		this.mRowHeight = rowHeight;
 		this.mPhotoUrlList = photoUrlList;
@@ -37,7 +38,7 @@ public class PhotoListAdapter extends CircularLoopAdapter {
 	}
 
 	@Override
-	public String getItem(int position) {
+	public PhotoList getItem(int position) {
 		return this.mPhotoUrlList.get(this.getCircularPosition(position));
 	}
 
@@ -52,7 +53,9 @@ public class PhotoListAdapter extends CircularLoopAdapter {
 			holder = (ViewHolder) convertView.getTag();
 
 		holder.mImage.setMinimumHeight(mRowHeight);
-		Picasso.with(this.mContext).load(this.getItem(position)).transform(
+		String url = this.getItem(position).getUrl();
+		url = url.replace("mpho3", "mpho2");
+		Picasso.with(this.mContext).load(url).transform(
 				new ScaleToFitWidhtHeigthTransform(mRowHeight, true)).into(holder.mImage);
 		return convertView;
 	}
