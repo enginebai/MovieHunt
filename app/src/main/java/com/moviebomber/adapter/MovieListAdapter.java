@@ -50,7 +50,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 	@Override
 	public void onBindViewHolder(MovieListItemHolder holder, int position) {
-		MovieListItem movieItem = this.mMovieList.get(position);
+		final MovieListItem movieItem = this.mMovieList.get(position);
 		holder.mTextMovieName.setText(movieItem.getTitleChinese());
 		String thumbnailUrl = movieItem.getThumbnailUrl();
 		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost2");
@@ -61,6 +61,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 			@Override
 			public void onClick(View v) {
 				Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
+				movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movieItem.getId());
 				mContext.startActivity(movieDetail);
 			}
 		});
