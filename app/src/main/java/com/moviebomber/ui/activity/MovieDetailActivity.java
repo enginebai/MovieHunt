@@ -5,9 +5,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -44,6 +46,15 @@ public class MovieDetailActivity extends ActionBarActivity {
 	@InjectView(R.id.text_actors)
 	TextView mTextActors;
 
+	@InjectView(R.id.fab_comment)
+	FloatingActionButton fabComment;
+	@InjectView(R.id.fab_photo)
+	FloatingActionButton fabPhoto;
+	@InjectView(R.id.fab_trailer)
+	FloatingActionButton fabTrailer;
+	@InjectView(R.id.fab_share)
+	FloatingActionButton fabShare;
+
 	private int mMovieId;
 	private MovieInfo mMovieInfo;
 
@@ -60,6 +71,7 @@ public class MovieDetailActivity extends ActionBarActivity {
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
 			this.queryMovieDetail();
+			this.setupEvent();
 		}
 	}
 
@@ -97,6 +109,33 @@ public class MovieDetailActivity extends ActionBarActivity {
 		this.mTextDirector.setText(movieInfo.getDirector());
 		if (movieInfo.getActorList().size() > 0)
 			this.mTextActors.setText(movieInfo.getActorList().get(0).getActorName());
+	}
+
+	private void setupEvent() {
+		this.fabComment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		this.fabPhoto.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		this.fabTrailer.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+		this.fabShare.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
 	}
 
 

@@ -1,0 +1,18 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.moviebomber.ui.activity.PhotoListActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/user_photo"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"/>
+    <com.jpardogo.listbuddies.lib.views.ListBuddiesLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
