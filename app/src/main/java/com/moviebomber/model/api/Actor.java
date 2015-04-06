@@ -6,17 +6,34 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class TrailerList implements Serializable{
+public class Actor implements Serializable{
 
+    @SerializedName("actor_name")
+    @Expose
+    private String actorName;
     @Expose
     private Integer id;
     @SerializedName("movie_id")
     @Expose
     private Integer movieId;
-    @Expose
-    private String title;
-    @Expose
-    private String url;
+
+    /**
+     * 
+     * @return
+     *     The actorName
+     */
+    public String getActorName() {
+        return actorName;
+    }
+
+    /**
+     * 
+     * @param actorName
+     *     The actor_name
+     */
+    public void setActorName(String actorName) {
+        this.actorName = actorName;
+    }
 
     /**
      * 
@@ -52,42 +69,6 @@ public class TrailerList implements Serializable{
      */
     public void setMovieId(Integer movieId) {
         this.movieId = movieId;
-    }
-
-    /**
-     * 
-     * @return
-     *     The title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * 
-     * @param title
-     *     The title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * 
-     * @return
-     *     The url
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
-     * 
-     * @param url
-     *     The url
-     */
-    public void setUrl(String url) {
-        this.url = url;
     }
 
 }

@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import com.jpardogo.listbuddies.lib.views.ListBuddiesLayout;
 import com.moviebomber.R;
 import com.moviebomber.adapter.PhotoListAdapter;
-import com.moviebomber.model.api.PhotoList;
+import com.moviebomber.model.api.Photo;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class PhotoListActivity extends ActionBarActivity implements
 	@InjectView(R.id.list_photo)
 	ListBuddiesLayout mListPhoto;
 
-	private List<PhotoList> mPhotoList;
+	private List<Photo> mPhotoList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,11 @@ public class PhotoListActivity extends ActionBarActivity implements
 		ButterKnife.inject(this);
 		this.mPhotoList = this.getIntent().getParcelableArrayListExtra(EXTRA_PHOTO_LIST);
 		PhotoListAdapter adapterLeft = new PhotoListAdapter(this,
-				this.getResources().getDimensionPixelOffset(R.dimen.item_photo_height_small),
-				this.mPhotoList.subList(0, 2));
+				this.getResources().getDimensionPixelOffset(R.dimen.item_photo_height_tall),
+				this.mPhotoList.subList(0, this.mPhotoList.size() / 2));
 		PhotoListAdapter adapterRight = new PhotoListAdapter(this,
 				this.getResources().getDimensionPixelOffset(R.dimen.item_photo_height_small),
-				this.mPhotoList.subList(3, 5));
+				this.mPhotoList.subList(this.mPhotoList.size() / 2, this.mPhotoList.size()));
 		this.mListPhoto.setAdapters(adapterLeft, adapterRight);
 		this.mListPhoto.setOnItemClickListener(this);
 	}
@@ -68,6 +68,5 @@ public class PhotoListActivity extends ActionBarActivity implements
 
 	@Override
 	public void onBuddyItemClicked(AdapterView<?> adapterView, View view, int i, int i2, long l) {
-
 	}
 }

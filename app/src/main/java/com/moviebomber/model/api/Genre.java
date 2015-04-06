@@ -6,11 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ActorList implements Serializable{
+public class Genre implements Serializable{
 
-    @SerializedName("actor_name")
     @Expose
-    private String actorName;
+    private String genre;
     @Expose
     private Integer id;
     @SerializedName("movie_id")
@@ -20,19 +19,19 @@ public class ActorList implements Serializable{
     /**
      * 
      * @return
-     *     The actorName
+     *     The genre
      */
-    public String getActorName() {
-        return actorName;
+    public String getGenre() {
+        return genre;
     }
 
     /**
      * 
-     * @param actorName
-     *     The actor_name
+     * @param genre
+     *     The genre
      */
-    public void setActorName(String actorName) {
-        this.actorName = actorName;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     /**

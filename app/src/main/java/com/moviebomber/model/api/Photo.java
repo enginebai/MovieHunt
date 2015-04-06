@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class PhotoList implements Serializable, Parcelable{
+public class Photo implements Serializable, Parcelable{
 
     @Expose
     private Integer id;
@@ -128,10 +128,10 @@ public class PhotoList implements Serializable, Parcelable{
 		dest.writeString(this.url);
 	}
 
-	public PhotoList() {
+	public Photo() {
 	}
 
-	private PhotoList(Parcel in) {
+	private Photo(Parcel in) {
 		this.id = (Integer) in.readValue(Integer.class.getClassLoader());
 		this.movieId = (Integer) in.readValue(Integer.class.getClassLoader());
 		this.name = in.readString();
@@ -139,13 +139,13 @@ public class PhotoList implements Serializable, Parcelable{
 		this.url = in.readString();
 	}
 
-	public static final Creator<PhotoList> CREATOR = new Creator<PhotoList>() {
-		public PhotoList createFromParcel(Parcel source) {
-			return new PhotoList(source);
+	public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+		public Photo createFromParcel(Parcel source) {
+			return new Photo(source);
 		}
 
-		public PhotoList[] newArray(int size) {
-			return new PhotoList[size];
+		public Photo[] newArray(int size) {
+			return new Photo[size];
 		}
 	};
 }

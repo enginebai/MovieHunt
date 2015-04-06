@@ -3,6 +3,8 @@ package com.moviebomber.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * This class is used to store the response of movie list query API.
  * Created by engine on 15/3/29.
@@ -22,6 +24,9 @@ public class MovieListItem {
 	@SerializedName("title_chinese")
 	@Expose
 	private String titleChinese;
+	@SerializedName("photo_list")
+	@Expose
+	private ArrayList<Photo> photoLists;
 
 	/**
 	 *
@@ -113,4 +118,11 @@ public class MovieListItem {
 		this.titleChinese = titleChinese;
 	}
 
+	public ArrayList<Photo> getPhotoLists() {
+		return photoLists;
+	}
+
+	public void setPhotoLists(ArrayList<Photo> photoLists) {
+		this.photoLists = photoLists;
+	}
 }

@@ -12,7 +12,8 @@
     <string name="default_email">moviebomber@gmail.com</string>
     <string name="loading">載入中，請稍等&#8230;</string>
     <string name="test_movie_name">Star Wars星際大戰首部曲</string>
-    <string name="test_release_date">2015/03/17上映</string>
+    <string name="test_release_date">2015/03/17</string>
+    <string name="test_duration">2小時18分</string>
 
     <!-- api -->
     <string name="host">http://c63.us.to:5000</string>

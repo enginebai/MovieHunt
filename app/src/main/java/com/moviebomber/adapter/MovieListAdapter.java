@@ -54,9 +54,19 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		holder.mTextMovieName.setText(movieItem.getTitleChinese());
 		String thumbnailUrl = movieItem.getThumbnailUrl();
 		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
-		Picasso.with(holder.mImageMovieCover.getContext())
+		Picasso.with(holder.mImagePoster.getContext())
 				.load(thumbnailUrl)
-				.into(holder.mImageMovieCover);
+				.into(holder.mImagePoster);
+		if (movieItem.getPhotoLists().size() > 0) {
+			String coverUrl = movieItem.getPhotoLists().get(
+					(int)(Math.random() * movieItem.getPhotoLists().size())).getUrl();
+			coverUrl = coverUrl.replace("mpho3", "mpho");
+			Picasso.with(holder.mImageMovieCover.getContext())
+					.load(coverUrl).into(holder.mImageMovieCover);
+		}
+		holder.mTextDuration.setText(movieItem.getDuration());
+		holder.mTextReleaseDate.setText(movieItem.getReleaseDate());
+
 		holder.mCardMovie.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -79,8 +89,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		@InjectView(R.id.image_movie_cover)
 		ImageView mImageMovieCover;
 
+		@InjectView(R.id.image_movie_poster)
+		ImageView mImagePoster;
+
 		@InjectView(R.id.text_movie_name)
 		TextView mTextMovieName;
+
+		@InjectView(R.id.text_release_date)
+				TextView mTextReleaseDate;
+		@InjectView(R.id.text_duration)
+				TextView mTextDuration;
 
 		MovieListItemHolder(View itemView) {
 			super(itemView);

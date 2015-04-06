@@ -13,7 +13,7 @@ public class MovieInfo implements Serializable{
 
     @SerializedName("actor_list")
     @Expose
-    private ArrayList<ActorList> actorList = new ArrayList<ActorList>();
+    private ArrayList<Actor> actorList = new ArrayList<Actor>();
     @SerializedName("content_rating")
     @Expose
     private String contentRating;
@@ -27,7 +27,7 @@ public class MovieInfo implements Serializable{
     private String film;
     @SerializedName("genre_list")
     @Expose
-    private ArrayList<GenreList> genreList = new ArrayList<GenreList>();
+    private ArrayList<Genre> genreList = new ArrayList<Genre>();
     @Expose
     private Integer id;
     @SerializedName("imdb_url")
@@ -38,7 +38,7 @@ public class MovieInfo implements Serializable{
     private String officialWebsite;
     @SerializedName("photo_list")
     @Expose
-    private ArrayList<PhotoList> photoList = new ArrayList<PhotoList>();
+    private ArrayList<Photo> photoList = new ArrayList<Photo>();
     @SerializedName("photo_list_url")
     @Expose
     private String photoListUrl;
@@ -59,7 +59,7 @@ public class MovieInfo implements Serializable{
     private String titleEnglish;
     @SerializedName("trailer_list")
     @Expose
-    private ArrayList<TrailerList> trailerList = new ArrayList<TrailerList>();
+    private ArrayList<Trailer> trailerList = new ArrayList<Trailer>();
     @SerializedName("trailer_list_url")
     @Expose
     private String trailerListUrl;
@@ -75,7 +75,7 @@ public class MovieInfo implements Serializable{
      * @return
      *     The actorList
      */
-    public ArrayList<ActorList> getActorList() {
+    public ArrayList<Actor> getActorList() {
         return actorList;
     }
 
@@ -84,7 +84,7 @@ public class MovieInfo implements Serializable{
      * @param actorList
      *     The actor_list
      */
-    public void setActorList(ArrayList<ActorList> actorList) {
+    public void setActorList(ArrayList<Actor> actorList) {
         this.actorList = actorList;
     }
 
@@ -183,7 +183,7 @@ public class MovieInfo implements Serializable{
      * @return
      *     The genreList
      */
-    public ArrayList<GenreList> getGenreList() {
+    public ArrayList<Genre> getGenreList() {
         return genreList;
     }
 
@@ -192,7 +192,7 @@ public class MovieInfo implements Serializable{
      * @param genreList
      *     The genre_list
      */
-    public void setGenreList(ArrayList<GenreList> genreList) {
+    public void setGenreList(ArrayList<Genre> genreList) {
         this.genreList = genreList;
     }
 
@@ -255,7 +255,7 @@ public class MovieInfo implements Serializable{
      * @return
      *     The photoList
      */
-    public ArrayList<PhotoList> getPhotoList() {
+    public ArrayList<Photo> getPhotoList() {
         return photoList;
     }
 
@@ -264,7 +264,7 @@ public class MovieInfo implements Serializable{
      * @param photoList
      *     The photo_list
      */
-    public void setPhotoList(ArrayList<PhotoList> photoList) {
+    public void setPhotoList(ArrayList<Photo> photoList) {
         this.photoList = photoList;
     }
 
@@ -381,7 +381,7 @@ public class MovieInfo implements Serializable{
      * @return
      *     The trailerList
      */
-    public ArrayList<TrailerList> getTrailerList() {
+    public ArrayList<Trailer> getTrailerList() {
         return trailerList;
     }
 
@@ -390,7 +390,7 @@ public class MovieInfo implements Serializable{
      * @param trailerList
      *     The trailer_list
      */
-    public void setTrailerList(ArrayList<TrailerList> trailerList) {
+    public void setTrailerList(ArrayList<Trailer> trailerList) {
         this.trailerList = trailerList;
     }
 

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.jpardogo.listbuddies.lib.adapters.CircularLoopAdapter;
 import com.moviebomber.R;
-import com.moviebomber.model.api.PhotoList;
+import com.moviebomber.model.api.Photo;
 import com.moviebomber.utils.ScaleToFitWidhtHeigthTransform;
 import com.squareup.picasso.Picasso;
 
@@ -23,11 +23,11 @@ import butterknife.InjectView;
  */
 public class PhotoListAdapter extends CircularLoopAdapter {
 
-	private List<PhotoList> mPhotoUrlList = new ArrayList<>();
+	private List<Photo> mPhotoUrlList = new ArrayList<>();
 	private Context mContext;
 	private int mRowHeight;
 
-	public PhotoListAdapter(Context context, int rowHeight, List<PhotoList> photoUrlList) {
+	public PhotoListAdapter(Context context, int rowHeight, List<Photo> photoUrlList) {
 		this.mContext = context;
 		this.mRowHeight = rowHeight;
 		this.mPhotoUrlList = photoUrlList;
@@ -38,7 +38,7 @@ public class PhotoListAdapter extends CircularLoopAdapter {
 	}
 
 	@Override
-	public PhotoList getItem(int position) {
+	public Photo getItem(int position) {
 		return this.mPhotoUrlList.get(this.getCircularPosition(position));
 	}
 
