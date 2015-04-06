@@ -2,6 +2,8 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +23,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="190dp"
                 android:id="@+id/image_movie_cover"
                 android:contentDescription="@null"
                 android:adjustViewBounds="true"
@@ -100,16 +102,28 @@
                     <TextView
                         style="@style/BomberCountTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/text_good_bomber"
                         />
 
                     <TextView
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="140"
                         android:textColor="@android:color/holo_blue_dark"/>
+                    <com.github.lzyzsd.circleprogress.ArcProgress
+                        style="@style/ArcProgressBomberRate"
+                        android:id="@+id/progress_good_bomber"
+                        android:background="@android:color/white"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:layout_gravity="center_horizontal"
+                        app:arc_progress="95"
+                        app:arc_unfinished_color="@color/divider"
+                        app:arc_finished_color="@android:color/holo_blue_dark"
+                        app:arc_text_color="@android:color/holo_blue_dark"
+                        />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -127,16 +141,29 @@
                     <TextView
                         style="@style/BomberCountTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/text_normal_bomber"
                         />
 
                     <TextView
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textColor="@android:color/holo_orange_dark"
-                        android:text="20"/>
+                        android:text="10"/>
+
+                    <com.github.lzyzsd.circleprogress.ArcProgress
+                        style="@style/ArcProgressBomberRate"
+                        android:id="@+id/progress_normal_bomber"
+                        android:background="@android:color/white"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:layout_gravity="center_horizontal"
+                        app:arc_progress="4"
+                        app:arc_unfinished_color="@color/divider"
+                        app:arc_finished_color="@android:color/holo_orange_dark"
+                        app:arc_text_color="@android:color/holo_orange_dark"
+                        />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -155,19 +182,42 @@
                     <TextView
                         style="@style/BomberCountTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/text_bad_bomber"
                         />
 
                     <TextView
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textColor="@android:color/holo_red_dark"
-                        android:text="7"/>
+                        android:text="2"/>
+                    <com.github.lzyzsd.circleprogress.ArcProgress
+                        style="@style/ArcProgressBomberRate"
+                        android:id="@+id/progress_bad_bomber"
+                        android:background="@android:color/white"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:layout_gravity="center_horizontal"
+                        custom:arc_progress="1"
+                        custom:arc_unfinished_color="@color/divider"
+                        custom:arc_finished_color="@android:color/holo_red_dark"
+                        custom:arc_text_color="@android:color/holo_red_dark"
+                        />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_confirm_friend_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_order"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:textAppearanceMedium"
+            app:ripple="@style/RaiseWaveButtonRippleStyle"
+            android:layout_margin="10dp"
+            />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

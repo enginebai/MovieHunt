@@ -40,6 +40,10 @@
     <string name="tab_movie_comingsoon">即將上映</string>
     <string name="warn_no_more_movies">沒有更多電影囉!</string>
     <string name="warn_no_movies">目前沒有任何電影!</string>
+    <string name="arc_good_bomber">推薦</string>
+    <string name="arc_normal_bomber">普通</string>
+    <string name="arc_bad_bomber">爛片</string>
+    <string name="button_order">立即訂票</string>
 
     <!-- movie detail -->
     <string name="fab_share">分享</string>

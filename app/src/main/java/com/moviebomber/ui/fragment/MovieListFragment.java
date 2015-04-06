@@ -194,7 +194,7 @@ public class MovieListFragment extends Fragment {
 			JSONArray orderBy = new JSONArray();
 			JSONObject dateSort = new JSONObject();
 			dateSort.put(Query.PARAM_FIELD, Query.FIELD_RELEASE_DATE);
-			dateSort.put(Query.PARAM_DIRECTION, Query.OPERATOR_DESC);
+//			dateSort.put(Query.PARAM_DIRECTION, Query.OPERATOR_DESC);
 			orderBy.put(dateSort);
 			q.put(Query.PARAM_FILTERS, filters);
 			q.put(Query.PARAM_ORDER_BY, orderBy);

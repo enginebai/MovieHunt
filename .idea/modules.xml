@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MovieBomber.iml" filepath="$PROJECT_DIR$/MovieBomber.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MovieBomber-android.iml" filepath="$PROJECT_DIR$/MovieBomber-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/floatingActionButton/floatingActionButton.iml" filepath="$PROJECT_DIR$/floatingActionButton/floatingActionButton.iml" />
       <module fileurl="file://$PROJECT_DIR$/superRecyclerView/superRecyclerView.iml" filepath="$PROJECT_DIR$/superRecyclerView/superRecyclerView.iml" />
