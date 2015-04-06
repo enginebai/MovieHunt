@@ -34,9 +34,9 @@
                 android:id="@+id/image_movie_poster"
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="180dp"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="170dp"/>
 
             <TextView
                 android:id="@+id/text_movie_name"
@@ -45,7 +45,7 @@
                 android:textColor="@color/primary_text"
                 android:fontFamily="@string/font_roboto_medium"
                 android:textStyle="bold"
-                android:textAppearance="?android:textAppearanceMedium"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:text="@string/test_movie_name"
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@id/image_movie_poster"
@@ -60,7 +60,10 @@
                 tools:text="@string/test_release_date"
                 android:layout_alignLeft="@id/text_movie_name"
                 android:layout_below="@id/text_movie_name"
-                android:padding="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:drawableLeft="@drawable/abc_btn_check_to_on_mtrl_015"
+                android:gravity="center_vertical"
                 />
 
             <TextView
@@ -70,18 +73,22 @@
                 tools:text="@string/test_duration"
                 android:layout_below="@id/text_release_date"
                 android:layout_alignLeft="@id/text_release_date"
-                android:padding="8dp"/>
+                android:paddingLeft="8dp"
+                android:drawableLeft="@drawable/abc_btn_check_to_on_mtrl_000"
+                android:gravity="center_vertical"
+                />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
 
             <android.support.v7.widget.CardView
                 style="@style/MovieListItemCard"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/card_good_bomber">
 
@@ -94,7 +101,6 @@
                         style="@style/BomberCountTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:text="@string/text_good_bomber"
                         />
 
@@ -102,14 +108,14 @@
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="140"/>
+                        android:text="140"
+                        android:textColor="@android:color/holo_blue_dark"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 style="@style/MovieListItemCard"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/card_normal_bomber">
 
@@ -122,24 +128,24 @@
                         style="@style/BomberCountTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/text_good_bomber"
+                        android:text="@string/text_normal_bomber"
                         />
 
                     <TextView
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="140"/>
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:text="20"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 style="@style/MovieListItemCard"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/card_bad_bomber">
+                android:id="@+id/card_bad_bomber"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -150,16 +156,15 @@
                         style="@style/BomberCountTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/text_good_bomber"
+                        android:text="@string/text_bad_bomber"
                         />
 
                     <TextView
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="140"/>
+                        android:textColor="@android:color/holo_red_dark"
+                        android:text="7"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

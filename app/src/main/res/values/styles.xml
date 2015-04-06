@@ -33,10 +33,22 @@
     </style>
     <style name="BomberCountTitle">
         <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@string/font_roboto_medium</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:layout_weight">1</item>
         <!-- TODO -->
-    </style>
+    </style>nore
     <style name="BomberCountContent">
         <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@string/font_roboto_regular</item>
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_weight">0.5</item>
         <!-- TODO -->
     </style>
 
