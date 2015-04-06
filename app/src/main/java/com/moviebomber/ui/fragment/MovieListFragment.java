@@ -137,8 +137,7 @@ public class MovieListFragment extends Fragment {
 		httpClient.get(url, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				super.onSuccess(statusCode, headers, response);
-				Logger.json(ApiTask.API_LOG_TAG, response.toString());
+//				Logger.json(ApiTask.API_LOG_TAG, response.toString());
 				List<MovieListItem> movieList = new ArrayList<>();
 				Gson gson = new Gson();
 				if (mAdapter == null) {
@@ -147,12 +146,6 @@ public class MovieListFragment extends Fragment {
 				}
 				mListMovie.getSwipeToRefresh().setRefreshing(false);
 				mListMovie.hideMoreProgress();
-//				String[] titles = {"玩命關頭7", "星際大戰", "魔戒", "變形金剛", "哈比人",
-//				"功夫熊貓", "決戰時刻", "小鬼當家", "絕地戰警", "星際迷航"};
-//				String api_host = "http://c63.us.to/photo/5487/";
-//				for (int i = 1; i <= titles.length; i++)
-//					movieList.add(new MovieListItem(
-//							titles[i - 1], api_host + String.valueOf(i) + ".jpg"));
 				try {
 					JSONArray objects = response.getJSONArray(ApiTask.RESPONSE_OBJECTS);
 					if (objects.length() > 0) {
@@ -179,7 +172,6 @@ public class MovieListFragment extends Fragment {
 
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				super.onFailure(statusCode, headers, throwable, errorResponse);
 				// TODO: fail to get movie list
 				Logger.e((Exception)throwable);
 

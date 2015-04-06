@@ -26,6 +26,20 @@
         <item name="cpd_strokeColors">@array/progress_colors</item>
     </style>
 
+    <style name="MovieListItemCard" parent="CardView">
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <style name="BomberCountTitle">
+        <item name="android:gravity">center</item>
+        <!-- TODO -->
+    </style>
+    <style name="BomberCountContent">
+        <item name="android:gravity">center</item>
+        <!-- TODO -->
+    </style>
+
     <style name="GoogleNowProgressBar" parent="SmoothProgressBar">
         <item name="spb_stroke_separator_length">8dp</item>
         <item name="spb_sections_count">2</item>

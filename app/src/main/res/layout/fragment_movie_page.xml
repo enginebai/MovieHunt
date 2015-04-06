@@ -6,19 +6,27 @@
                 android:layout_height="match_parent"
                 tools:context="com.moviebomber.ui.fragment.MoviePageFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:background="@color/primary"/>
+
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/tab_movie_list"
         android:layout_height="48dp"
         android:layout_width="match_parent"
         app:textColor="@color/text"
         app:primaryColor="?attr/colorPrimary"
-        app:accentColor="@color/accent"/>
+        app:accentColor="@android:color/white"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_movie"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_below="@id/tab_movie_list"/>
+        android:layout_below="@id/tab_movie_list"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
@@ -27,8 +35,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        fab:fab_addButtonColorNormal="@color/accent"
-        fab:fab_addButtonColorPressed="@color/accent_light"
+        fab:fab_addButtonColorNormal="@color/primary"
+        fab:fab_addButtonColorPressed="@color/primary_light"
         fab:fab_addButtonPlusIconColor="@android:color/white"
         fab:fab_labelStyle="@style/FloatingActionBarTextMenu"
         android:layout_marginBottom="16dp"
