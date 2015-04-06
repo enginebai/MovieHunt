@@ -64,8 +64,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 			Picasso.with(holder.mImageMovieCover.getContext())
 					.load(coverUrl).into(holder.mImageMovieCover);
 		}
-		holder.mTextDuration.setText(movieItem.getDuration());
-		holder.mTextReleaseDate.setText(movieItem.getReleaseDate());
+		holder.mTextDuration.setText(this.mContext.getResources().getString(R.string.text_duration)
+				+ ": " + movieItem.getDuration());
+		holder.mTextReleaseDate.setText(this.mContext.getResources().getString(R.string.text_release_date)
+				+ ": " + movieItem.getReleaseDate());
 
 		holder.mCardMovie.setOnClickListener(new View.OnClickListener() {
 			@Override
