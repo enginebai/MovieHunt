@@ -76,6 +76,7 @@
                 android:layout_below="@id/text_release_date"
                 android:layout_alignLeft="@id/text_release_date"
                 android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:drawableLeft="@drawable/abc_btn_check_to_on_mtrl_000"
                 android:gravity="center_vertical"
                 />
