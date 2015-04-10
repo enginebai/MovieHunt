@@ -19,4 +19,5 @@ public class Query {
 
 	public static final String OPERATOR_EQUAL = "==";
 	public static final String OPERATOR_DESC = "desc";
+	public static final String OPERATOR_ASC = "asc";
 }

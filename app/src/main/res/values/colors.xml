@@ -22,7 +22,6 @@
     <array name="progress_colors">
         <item>@color/primary</item>
         <item>@color/accent</item>
-        <item>@android:color/holo_orange_light</item>
-        <item>@android:color/holo_blue_bright</item>
+        <item>@android:color/holo_orange_dark</item>
     </array>
 </resources>

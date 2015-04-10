@@ -132,7 +132,10 @@ public class MovieListFragment extends Fragment {
 
 	private void loadMovieList() {
 		AsyncHttpClient httpClient = new AsyncHttpClient();
-		String url = formatMovieListRequest();
+		String order = Query.OPERATOR_DESC;
+		if (this.mCurrentTab == 2) // coming soon
+			order = Query.OPERATOR_ASC;
+		String url = formatMovieListRequest(order);
 		Logger.d(ApiTask.API_LOG_TAG, url);
 		httpClient.get(url, new JsonHttpResponseHandler() {
 			@Override
@@ -181,7 +184,7 @@ public class MovieListFragment extends Fragment {
 		});
 	}
 
-	private String formatMovieListRequest() {
+	private String formatMovieListRequest(String order) {
 		JSONObject q = new JSONObject();
 
 		try {
@@ -194,7 +197,7 @@ public class MovieListFragment extends Fragment {
 			JSONArray orderBy = new JSONArray();
 			JSONObject dateSort = new JSONObject();
 			dateSort.put(Query.PARAM_FIELD, Query.FIELD_RELEASE_DATE);
-			dateSort.put(Query.PARAM_DIRECTION, Query.OPERATOR_DESC);
+			dateSort.put(Query.PARAM_DIRECTION, order);
 			orderBy.put(dateSort);
 			q.put(Query.PARAM_FILTERS, filters);
 			q.put(Query.PARAM_ORDER_BY, orderBy);
