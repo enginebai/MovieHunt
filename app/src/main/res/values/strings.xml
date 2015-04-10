@@ -17,11 +17,13 @@
     <string name="text_good_bomber">好雷</string>
     <string name="text_normal_bomber">普雷</string>
     <string name="text_bad_bomber">負雷</string>
+    <string name="photo_resize">500</string>
 
     <!-- api -->
-    <string name="host">http://c63.us.to:5000</string>
+    <string name="api_host">http://c63.us.to:5000</string>
     <string name="api_root">/api/moviebomber</string>
     <string name="api_movie_list">/list/movie_info</string>
+    <string name="photo_root">http://c63.us.to/moviebomber</string>
 
     <!-- menu -->
     <string name="menu_movie_list">電影列表</string>

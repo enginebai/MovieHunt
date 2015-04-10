@@ -84,7 +84,7 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 
 	private void queryMovieDetail() {
 		AsyncHttpClient httpClient = new AsyncHttpClient();
-		httpClient.get(String.format("%s%s/%s/%d", this.getResources().getString(R.string.host),
+		httpClient.get(String.format("%s%s/%s/%d", this.getResources().getString(R.string.api_host),
 				this.getResources().getString(R.string.api_root),
 				MovieInfo.TABLE_NAME, this.mMovieId), new JsonHttpResponseHandler() {
 			@Override

@@ -1,5 +1,6 @@
 package com.moviebomber.ui.activity;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -116,6 +117,16 @@ public class MainActivity extends ActionBarActivity
 		//noinspection SimplifiableIfStatement
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public static String getResizePhoto(Context context, String path) {
+		String extension = path.substring(path.lastIndexOf("."), path.length());
+		StringBuilder photoUrl;
+		photoUrl = new StringBuilder();
+		photoUrl.append(context.getResources().getString(R.string.photo_root)).append("/")
+				.append(path.substring(0, path.lastIndexOf("."))).append("_")
+				.append(context.getResources().getString(R.string.photo_resize)).append(extension);
+		return photoUrl.toString();
 	}
 
 	/**

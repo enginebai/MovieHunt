@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
+import com.moviebomber.ui.activity.MainActivity;
 import com.moviebomber.ui.activity.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
 
@@ -52,17 +53,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 	public void onBindViewHolder(MovieListItemHolder holder, int position) {
 		final MovieListItem movieItem = this.mMovieList.get(position);
 		holder.mTextMovieName.setText(movieItem.getTitleChinese());
-		String thumbnailUrl = movieItem.getThumbnailUrl();
-		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
+		String thumbnailPath = movieItem.getThumbnailPath();
+
+//		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
 		Picasso.with(holder.mImagePoster.getContext())
-				.load(thumbnailUrl)
+				.load(MainActivity.getResizePhoto(this.mContext, thumbnailPath))
 				.into(holder.mImagePoster);
 		if (movieItem.getPhotoLists().size() > 0) {
 			String coverUrl = movieItem.getPhotoLists().get(
-					(int)(Math.random() * movieItem.getPhotoLists().size())).getUrl();
-			coverUrl = coverUrl.replace("mpho3", "mpho");
+					(int) (Math.random() * movieItem.getPhotoLists().size())).getPath();
+//			coverUrl = coverUrl.replace("mpho3", "mpho");
 			Picasso.with(holder.mImageMovieCover.getContext())
-					.load(coverUrl).into(holder.mImageMovieCover);
+					.load(MainActivity.getResizePhoto(this.mContext, coverUrl)).into(holder.mImageMovieCover);
 		}
 		holder.mTextDuration.setText(this.mContext.getResources().getString(R.string.text_duration)
 				+ ": " + movieItem.getDuration());
@@ -98,9 +100,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		TextView mTextMovieName;
 
 		@InjectView(R.id.text_release_date)
-				TextView mTextReleaseDate;
+		TextView mTextReleaseDate;
 		@InjectView(R.id.text_duration)
-				TextView mTextDuration;
+		TextView mTextDuration;
 
 		MovieListItemHolder(View itemView) {
 			super(itemView);

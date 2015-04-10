@@ -51,6 +51,9 @@ public class MovieInfo implements Serializable{
     @SerializedName("thumbnail_url")
     @Expose
     private String thumbnailUrl;
+	@SerializedName("thumbnail_path")
+	@Expose
+	private String thumbnailPath;
     @SerializedName("title_chinese")
     @Expose
     private String titleChinese;
@@ -448,4 +451,11 @@ public class MovieInfo implements Serializable{
         this.yahooDetailUrl = yahooDetailUrl;
     }
 
+	public String getThumbnailPath() {
+		return thumbnailPath;
+	}
+
+	public void setThumbnailPath(String thumbnailPath) {
+		this.thumbnailPath = thumbnailPath;
+	}
 }

@@ -18,9 +18,9 @@ public class MovieListItem {
 	@SerializedName("release_date")
 	@Expose
 	private String releaseDate;
-	@SerializedName("thumbnail_url")
+	@SerializedName("thumbnail_path")
 	@Expose
-	private String thumbnailUrl;
+	private String thumbnailPath;
 	@SerializedName("title_chinese")
 	@Expose
 	private String titleChinese;
@@ -85,19 +85,19 @@ public class MovieListItem {
 	/**
 	 *
 	 * @return
-	 * The thumbnailUrl
+	 * The thumbnailPath
 	 */
-	public String getThumbnailUrl() {
-		return thumbnailUrl;
+	public String getThumbnailPath() {
+		return thumbnailPath;
 	}
 
 	/**
 	 *
-	 * @param thumbnailUrl
+	 * @param thumbnailPath
 	 * The thumbnail_url
 	 */
-	public void setThumbnailUrl(String thumbnailUrl) {
-		this.thumbnailUrl = thumbnailUrl;
+	public void setThumbnailPath(String thumbnailPath) {
+		this.thumbnailPath = thumbnailPath;
 	}
 
 	/**
