@@ -36,5 +36,5 @@ dependencies {
     compile project(':floatingActionButton')
     compile 'com.jpardogo.listbuddies:library:1.1.1'
     compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-    compile 'com.github.rey5137:material:1.0.0'
+    compile 'com.github.rey5137:material:1.1.0'
 }

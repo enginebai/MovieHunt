@@ -85,7 +85,7 @@
     </style>
 
     <style name="RaiseWaveButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
-        <item name="rd_background">@color/accent</item>
+        <item name="android:background">@color/accent</item>
         <item name="rd_rippleColor">@color/accent_light</item>
         <item name="rd_leftPadding">1dp</item>
         <item name="rd_topPadding">1dp</item>

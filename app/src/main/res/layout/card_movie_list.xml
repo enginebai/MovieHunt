@@ -209,15 +209,15 @@
         </LinearLayout>
 
         <com.rey.material.widget.Button
-            android:id="@+id/button_confirm_friend_request"
+            android:id="@+id/button_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_order"
             android:textColor="@android:color/white"
             android:textAppearance="?android:textAppearanceMedium"
-            app:ripple="@style/RaiseWaveButtonRippleStyle"
-            android:layout_margin="10dp"
-            />
+            style="@style/RaiseWaveButtonRippleStyle"
+            app:rd_enable="true"
+            android:layout_margin="5dp"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
