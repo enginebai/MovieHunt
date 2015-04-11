@@ -18,10 +18,15 @@
     </integer-array>
 
     <color name="half_transparent">#55000000</color>
-    
+
     <array name="progress_colors">
         <item>@color/primary</item>
         <item>@color/accent</item>
         <item>@android:color/holo_orange_dark</item>
     </array>
+
+    <color name="ripple_orange_light">#FFD180</color>
+    <color name="ripple_red_light">#EF9A9A</color>
+    <color name="ripple_blue_light">#81D4FA</color>
+    <color name="ripple_pink_light">#F6A5C1</color>
 </resources>

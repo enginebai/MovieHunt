@@ -89,24 +89,32 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:fontFamily">@string/font_roboto_medium</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:padding">16dp</item>
         <item name="android:drawablePadding">8dp</item>
+        <item name="android:background">@null</item>
+        <item name="rd_rippleType">wave</item>
+        <item name="rd_enable">true</item>
     </style>
     <style name="MovieDetailTitle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:fontFamily">@string/font_roboto_medium</item>
+        <item name="android:textColor">@color/primary</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
     </style>
 
     <style name="MovieDetailContent" parent="MovieDetailTitle">
-        <item name="android:padding">16dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@null</item>
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
     <style name="RaiseWaveButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">

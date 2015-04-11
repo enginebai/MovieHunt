@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -14,6 +15,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieInfo;
+import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
@@ -38,10 +40,10 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 	TextView mTextDescription;
 	@InjectView(R.id.text_duration)
 	TextView mTextDuration;
-//	@InjectView(R.id.text_genre)
-//	TextView mTextGenre;
-//	@InjectView(R.id.text_director)
-//	TextView mTextDirector;
+	@InjectView(R.id.layout_genre)
+	LinearLayout mViewGenre;
+	@InjectView(R.id.text_director)
+	TextView mTextDirector;
 //	@InjectView(R.id.text_actors)
 //	TextView mTextActors;
 
@@ -55,6 +57,12 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 //	FloatingActionButton fabTrailer;
 //	@InjectView(R.id.fab_share)
 //	FloatingActionButton fabShare;
+	@InjectView(R.id.button_photo)
+	Button mButtonPhoto;
+	@InjectView(R.id.button_trailer)
+	Button mButtonTrailer;
+	@InjectView(R.id.button_comment)
+	Button mButtonComment;
 
 	private int mMovieId;
 	private MovieInfo mMovieInfo;
@@ -69,7 +77,7 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			this.getSupportActionBar().setTitle("");
 		}
-
+//		this.setupButtonIcon();
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
 			this.queryMovieDetail();
@@ -112,12 +120,18 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 		this.mTextReleaseDate.setText(this.getResources().getString(R.string.text_release_date) +
 				": " + movieInfo.getReleaseDate());
 		this.mTextDescription.setText(movieInfo.getDescription().length() > 30 ?
-		movieInfo.getDescription().substring(0, 50) + "..." : movieInfo.getDescription());
+		movieInfo.getDescription().substring(0, 100) + "..." : movieInfo.getDescription());
 		this.mTextDuration.setText(this.getResources().getString(R.string.text_duration) +
 				": " + movieInfo.getDuration());
-//		if (movieInfo.getGenreList().size() > 0)
-//		this.mTextGenre.setText(movieInfo.getGenreList().get(0).getGenre());
-//		this.mTextDirector.setText(movieInfo.getDirector());
+//		if (movieInfo.getGenreList().size() > 0) {
+//			for (Genre genre : movieInfo.getGenreList()) {
+//				View viewGenre = LayoutInflater.from(this).inflate(R.layout.item_genre, null);
+//				TextView textGenre = (TextView) viewGenre.findViewById(R.id.text_genre);
+//				textGenre.setText(genre.getGenre());
+//				this.mViewGenre.addView(textGenre);
+//			}
+//		}
+		this.mTextDirector.setText(movieInfo.getDirector());
 //		if (movieInfo.getActorList().size() > 0)
 //			this.mTextActors.setText(movieInfo.getActorList().get(0).getActorName());
 	}
@@ -160,4 +174,13 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 
 		return super.onOptionsItemSelected(item);
 	}
+
+//	private void setupButtonIcon() {
+//		IconicFontDrawable icon = new IconicFontDrawable(this);
+//		icon.setIcon("gmd-dashboard");
+//		icon.setIconColor(this.getResources().getColor(android.R.color.holo_blue_light));
+//		icon.setBounds(0, 0, 64, 64);
+//		mButtonPhoto.setCompoundDrawables(icon, icon, null, null);
+//
+//	}
 }

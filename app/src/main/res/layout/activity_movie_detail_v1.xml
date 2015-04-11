@@ -25,6 +25,7 @@
             layout="@layout/toolbar_overlay"
             android:id="@+id/toolbar"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,35 +71,26 @@
                     android:id="@+id/button_photo"
                     android:text="@string/fab_photo"
                     android:drawableTop="@drawable/ic_dashboard_black_36dp"
-                    android:background="@null"
-                    app:rd_rippleType="wave"
-                    android:textColor="@color/secondary_text"
-                    app:rd_rippleColor="@color/accent_light"
-                    app:rd_enable="true"
+                    android:textColor="@android:color/holo_blue_dark"
+                    app:rd_rippleColor="@color/ripple_blue_light"
                     />
 
                 <com.rey.material.widget.Button
                     style="@style/MovieDetailButton"
                     android:text="@string/fab_trailer"
-                    android:drawableTop="@drawable/ic_local_movies_black_36dp"
                     android:id="@+id/button_trailer"
-                    android:background="@null"
-                    app:rd_rippleType="wave"
-                    android:textColor="@color/secondary_text"
-                    app:rd_rippleColor="@color/accent_light"
-                    app:rd_enable="true"
+                    android:drawableTop="@drawable/ic_local_movies_black_36dp"
+                    android:textColor="@android:color/holo_orange_dark"
+                    app:rd_rippleColor="@color/ripple_orange_light"
                     />
 
                 <com.rey.material.widget.Button
                     style="@style/MovieDetailButton"
                     android:text="@string/fab_comment"
-                    android:drawableTop="@drawable/ic_thumbs_up_down_black_36dp"
                     android:id="@+id/button_comment"
-                    android:background="@null"
-                    app:rd_rippleType="wave"
-                    android:textColor="@color/secondary_text"
-                    app:rd_rippleColor="@color/accent_light"
-                    app:rd_enable="true"
+                    android:drawableTop="@drawable/ic_thumbs_up_down_black_36dp"
+                    android:textColor="@android:color/holo_red_dark"
+                    app:rd_rippleColor="@color/ripple_red_light"
                     />
 
             </LinearLayout>
@@ -111,21 +103,88 @@
                 android:background="@android:color/darker_gray"/>
 
             <TextView
+                style="@style/MovieDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_genre"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/layout_genre">
+                <include
+                    android:id="@+id/text_genre"
+                    layout="@layout/item_genre"/>
+                </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                style="@style/MovieDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_actors"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_actors"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                style="@style/MovieDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_director"/>
+
+            <TextView
+                style="@style/MovieDetailContent"
+                android:id="@+id/text_director"
+                tools:text="@string/test_movie_name"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                style="@style/MovieDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_description"
+                />
+
+            <TextView
                 style="@style/MovieDetailContent"
                 android:id="@+id/text_description"
                 tools:text="@string/test_description"
                 />
 
             <com.rey.material.widget.Button
+                style="@style/MovieDetailButton"
                 android:id="@+id/button_order"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_more"
                 android:textColor="@color/accent"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:background="@null"
-                app:rd_style="@style/Material.Drawable.Ripple.Wave.Light"
-                app:rd_enable="true"
+                app:rd_rippleColor="@color/ripple_pink_light"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginBottom="8dp"/>

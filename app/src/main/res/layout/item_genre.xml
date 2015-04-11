@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    style="@style/MovieDetailContent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_genre"
+    android:text="@string/test_movie_name"
+    android:textColor="@android:color/black"
+    android:background="@color/dim_foreground_disabled_material_dark"
+    android:shadowColor="@android:color/black"
+    android:shadowDx="1"
+    android:shadowDy="1"
+    android:shadowRadius="1"
+    android:padding="8dp"/>

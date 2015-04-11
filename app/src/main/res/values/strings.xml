@@ -55,11 +55,11 @@
     <string name="fab_comment">評論</string>
     <string name="fab_order">訂票</string>
     <string name="text_release_date">上映日期</string>
-    <string name="text_description">介紹</string>
+    <string name="text_description">劇情簡介</string>
     <string name="text_duration">片長</string>
     <string name="text_genre">類型</string>
     <string name="text_director">導演</string>
-    <string name="text_actors">演員</string>
+    <string name="text_actors">領銜主演</string>
     <string name="text_more">閱讀更多</string>
     <string name="title_activity_photo_list">PhotoListActivity</string>
 
