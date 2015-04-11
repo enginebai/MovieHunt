@@ -1,6 +1,5 @@
 package com.moviebomber.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,8 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -41,23 +38,23 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 	TextView mTextDescription;
 	@InjectView(R.id.text_duration)
 	TextView mTextDuration;
-	@InjectView(R.id.text_genre)
-	TextView mTextGenre;
-	@InjectView(R.id.text_director)
-	TextView mTextDirector;
-	@InjectView(R.id.text_actors)
-	TextView mTextActors;
+//	@InjectView(R.id.text_genre)
+//	TextView mTextGenre;
+//	@InjectView(R.id.text_director)
+//	TextView mTextDirector;
+//	@InjectView(R.id.text_actors)
+//	TextView mTextActors;
 
-	@InjectView(R.id.fab_actions)
-	FloatingActionsMenu fabActionsMenu;
-	@InjectView(R.id.fab_comment)
-	FloatingActionButton fabComment;
-	@InjectView(R.id.fab_photo)
-	FloatingActionButton fabPhoto;
-	@InjectView(R.id.fab_trailer)
-	FloatingActionButton fabTrailer;
-	@InjectView(R.id.fab_share)
-	FloatingActionButton fabShare;
+//	@InjectView(R.id.fab_actions)
+//	FloatingActionsMenu fabActionsMenu;
+//	@InjectView(R.id.fab_comment)
+//	FloatingActionButton fabComment;
+//	@InjectView(R.id.fab_photo)
+//	FloatingActionButton fabPhoto;
+//	@InjectView(R.id.fab_trailer)
+//	FloatingActionButton fabTrailer;
+//	@InjectView(R.id.fab_share)
+//	FloatingActionButton fabShare;
 
 	private int mMovieId;
 	private MovieInfo mMovieInfo;
@@ -75,10 +72,10 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
 			this.queryMovieDetail();
-			this.fabComment.setOnClickListener(this);
-			this.fabPhoto.setOnClickListener(this);
-			this.fabShare.setOnClickListener(this);
-			this.fabTrailer.setOnClickListener(this);
+//			this.fabComment.setOnClickListener(this);
+//			this.fabPhoto.setOnClickListener(this);
+//			this.fabShare.setOnClickListener(this);
+//			this.fabTrailer.setOnClickListener(this);
 		}
 	}
 
@@ -114,31 +111,31 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 		this.mTextReleaseDate.setText(movieInfo.getReleaseDate());
 		this.mTextDescription.setText(movieInfo.getDescription());
 		this.mTextDuration.setText(movieInfo.getDuration());
-		if (movieInfo.getGenreList().size() > 0)
-		this.mTextGenre.setText(movieInfo.getGenreList().get(0).getGenre());
-		this.mTextDirector.setText(movieInfo.getDirector());
-		if (movieInfo.getActorList().size() > 0)
-			this.mTextActors.setText(movieInfo.getActorList().get(0).getActorName());
+//		if (movieInfo.getGenreList().size() > 0)
+//		this.mTextGenre.setText(movieInfo.getGenreList().get(0).getGenre());
+//		this.mTextDirector.setText(movieInfo.getDirector());
+//		if (movieInfo.getActorList().size() > 0)
+//			this.mTextActors.setText(movieInfo.getActorList().get(0).getActorName());
 	}
 
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
-			case R.id.fab_comment:
-				break;
-			case R.id.fab_share:
-				break;
-			case R.id.fab_trailer:
-				break;
-			case R.id.fab_photo:
-				Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
-				photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
-						mMovieInfo.getPhotoList());
-				startActivity(photoList);
-				break;
+//			case R.id.fab_comment:
+//				break;
+//			case R.id.fab_share:
+//				break;
+//			case R.id.fab_trailer:
+//				break;
+//			case R.id.fab_photo:
+//				Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
+//				photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
+//						mMovieInfo.getPhotoList());
+//				startActivity(photoList);
+//				break;
 		}
-		this.fabActionsMenu.collapse();
+//		this.fabActionsMenu.collapse();
 	}
 
 	@Override

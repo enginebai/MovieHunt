@@ -17,138 +17,116 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="300dp"
             android:id="@+id/image_photo"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
             android:src="@drawable/user_cover_a"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_photo"
-            android:background="@color/primary"
-            android:id="@+id/layout_title">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_title_chinese"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:fontFamily="@string/font_roboto_medium"
-                android:textColor="@android:color/white"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp"
-                tools:text="@string/test_movie_name"
-                android:gravity="center_vertical"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_release_date"
-                tools:text="@string/test_release_date"
-                android:textColor="@android:color/white"
-                android:paddingBottom="8dp"
-                android:layout_alignLeft="@id/text_title_chinese"
-                android:layout_below="@id/text_title_chinese"
-                android:drawableLeft="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_duration"
-                tools:text="@string/test_duration"
-                android:textColor="@android:color/white"
-                android:layout_below="@id/text_release_date"
-                android:layout_alignLeft="@id/text_release_date"
-                android:drawableLeft="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
-                android:drawablePadding="8dp"
-                android:paddingBottom="16dp"
-                android:gravity="center_vertical"
-                />
-        </RelativeLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@id/layout_title">
+            android:layout_below="@id/image_photo"
+            android:id="@+id/layout_movie_content"
+            >
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="72dp"
+                android:background="@color/primary"
+                android:orientation="vertical"
+                android:id="@+id/layout_title"
                 >
 
                 <TextView
-                    style="@style/MovieDetailTitle"
-                    android:id="@+id/title_description"
-                    android:text="@string/text_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_release_date"
+                    tools:text="@string/test_release_date"
+                    android:textColor="@android:color/white"
+                    android:drawableLeft="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
                     />
 
                 <TextView
-                    style="@style/MovieDetailContent"
-                    android:id="@+id/text_description"
-                    tools:text="@string/test_description"
-                    android:layout_below="@id/title_description"/>
-            </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_duration"
+                    tools:text="@string/test_duration"
+                    android:textColor="@android:color/white"
+                    android:drawableLeft="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    />
+            </LinearLayout>
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
+                <TextView
+                    style="@style/MovieDetailButton"
+                    android:text="@string/fab_photo"
+                    android:drawableTop="@drawable/ic_thumb_up_black_48dp"
+                    android:id="@+id/button_photo"/>
+
+                <TextView
+                    style="@style/MovieDetailButton"
+                    android:text="@string/fab_trailer"
+                    android:drawableTop="@drawable/ic_local_movies_black_48dp"
+                    android:id="@+id/button_trailer"/>
+
+                <TextView
+                    style="@style/MovieDetailButton"
+                    android:text="@string/fab_comment"
+                    android:drawableTop="@drawable/ic_favorite_black_48dp"
+                    android:id="@+id/button_comment"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp">
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray"/>
 
-                <TableRow>
-
-
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        style="@style/MovieDetailTitle"
-                        android:text="@string/text_genre"/>
-
-                    <TextView
-                        style="@style/MovieDetailContent"
-                        android:id="@+id/text_genre"/>
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        style="@style/MovieDetailTitle"
-                        android:text="@string/text_director"/>
-
-                    <TextView
-                        style="@style/MovieDetailContent"
-                        android:id="@+id/text_director"/>
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        style="@style/MovieDetailTitle"
-                        android:text="@string/text_actors"/>
-
-                    <TextView
-                        style="@style/MovieDetailContent"
-                        android:id="@+id/text_actors"/>
-                </TableRow>
-
-            </TableLayout>
+            <TextView
+                style="@style/MovieDetailContent"
+                android:id="@+id/text_description"
+                tools:text="@string/test_description"
+                />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_title_chinese"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:fontFamily="@string/font_roboto_medium"
+            android:textColor="@android:color/white"
+            android:background="@color/text_gray_background"
+            android:padding="16dp"
+            tools:text="@string/test_movie_name"
+            android:gravity="center_vertical"
+            android:layout_above="@id/layout_movie_content"/>
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/pink_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/abc_btn_rating_star_off_mtrl_alpha"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_colorPressed="@color/accent_light"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="265dp"/>
     </RelativeLayout>
 </ScrollView>
