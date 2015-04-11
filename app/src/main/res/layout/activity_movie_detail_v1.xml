@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             xmlns:fab="http://schemas.android.com/apk/res-auto"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -10,10 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            layout="@layout/toolbar"
-            android:id="@+id/toolbar"
-            style="@style/ToolbarOverlay"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -24,7 +21,10 @@
             android:src="@drawable/user_cover_a"
             />
 
-
+        <include
+            layout="@layout/toolbar_overlay"
+            android:id="@+id/toolbar"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,26 +43,19 @@
                 >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/MovieDetailList"
                     android:id="@+id/text_release_date"
                     tools:text="@string/test_release_date"
-                    android:textColor="@android:color/white"
-                    android:drawableLeft="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
-                    android:gravity="center_vertical"
-                    android:padding="8dp"
+                    android:layout_marginTop="4dp"
+                    android:drawableLeft="@drawable/ic_event_white_24dp"
                     />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/MovieDetailList"
                     android:id="@+id/text_duration"
                     tools:text="@string/test_duration"
-                    android:textColor="@android:color/white"
-                    android:drawableLeft="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
-                    android:drawablePadding="8dp"
-                    android:gravity="center_vertical"
-                    android:padding="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:drawableLeft="@drawable/ic_schedule_white_24dp"
                     />
             </LinearLayout>
 
@@ -72,23 +65,42 @@
                 android:orientation="horizontal"
                 >
 
-                <TextView
+                <com.rey.material.widget.Button
                     style="@style/MovieDetailButton"
+                    android:id="@+id/button_photo"
                     android:text="@string/fab_photo"
-                    android:drawableTop="@drawable/ic_thumb_up_black_48dp"
-                    android:id="@+id/button_photo"/>
+                    android:drawableTop="@drawable/ic_dashboard_black_36dp"
+                    android:background="@null"
+                    app:rd_rippleType="wave"
+                    android:textColor="@color/secondary_text"
+                    app:rd_rippleColor="@color/accent_light"
+                    app:rd_enable="true"
+                    />
 
-                <TextView
+                <com.rey.material.widget.Button
                     style="@style/MovieDetailButton"
                     android:text="@string/fab_trailer"
-                    android:drawableTop="@drawable/ic_local_movies_black_48dp"
-                    android:id="@+id/button_trailer"/>
+                    android:drawableTop="@drawable/ic_local_movies_black_36dp"
+                    android:id="@+id/button_trailer"
+                    android:background="@null"
+                    app:rd_rippleType="wave"
+                    android:textColor="@color/secondary_text"
+                    app:rd_rippleColor="@color/accent_light"
+                    app:rd_enable="true"
+                    />
 
-                <TextView
+                <com.rey.material.widget.Button
                     style="@style/MovieDetailButton"
                     android:text="@string/fab_comment"
-                    android:drawableTop="@drawable/ic_favorite_black_48dp"
-                    android:id="@+id/button_comment"/>
+                    android:drawableTop="@drawable/ic_thumbs_up_down_black_36dp"
+                    android:id="@+id/button_comment"
+                    android:background="@null"
+                    app:rd_rippleType="wave"
+                    android:textColor="@color/secondary_text"
+                    app:rd_rippleColor="@color/accent_light"
+                    app:rd_enable="true"
+                    />
+
             </LinearLayout>
 
             <View
@@ -103,16 +115,31 @@
                 android:id="@+id/text_description"
                 tools:text="@string/test_description"
                 />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/button_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_more"
+                android:textColor="@color/accent"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:background="@null"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave.Light"
+                app:rd_enable="true"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="8dp"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/text_title_chinese"
-            android:textAppearance="?android:textAppearanceLarge"
             android:fontFamily="@string/font_roboto_medium"
             android:textColor="@android:color/white"
-            android:background="@color/text_gray_background"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:background="@color/half_transparent"
             android:padding="16dp"
             tools:text="@string/test_movie_name"
             android:gravity="center_vertical"

@@ -62,11 +62,12 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_movie_detail);
+		setContentView(R.layout.activity_movie_detail_v1);
 		ButterKnife.inject(this);
 		this.setSupportActionBar(this.mToolbar);
 		if (this.getSupportActionBar() != null) {
 			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			this.getSupportActionBar().setTitle("");
 		}
 
 		if (getIntent() != null) {
@@ -108,9 +109,12 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 					.into(this.mImage);
 		}
 		this.mTextTitleChinese.setText(movieInfo.getTitleChinese());
-		this.mTextReleaseDate.setText(movieInfo.getReleaseDate());
-		this.mTextDescription.setText(movieInfo.getDescription());
-		this.mTextDuration.setText(movieInfo.getDuration());
+		this.mTextReleaseDate.setText(this.getResources().getString(R.string.text_release_date) +
+				": " + movieInfo.getReleaseDate());
+		this.mTextDescription.setText(movieInfo.getDescription().length() > 30 ?
+		movieInfo.getDescription().substring(0, 50) + "..." : movieInfo.getDescription());
+		this.mTextDuration.setText(this.getResources().getString(R.string.text_duration) +
+				": " + movieInfo.getDuration());
 //		if (movieInfo.getGenreList().size() > 0)
 //		this.mTextGenre.setText(movieInfo.getGenreList().get(0).getGenre());
 //		this.mTextDirector.setText(movieInfo.getDirector());

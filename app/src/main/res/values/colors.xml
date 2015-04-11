@@ -17,7 +17,7 @@
         <item>@color/accent</item>
     </integer-array>
 
-    <color name="text_gray_background">#55000000</color>
+    <color name="half_transparent">#55000000</color>
     
     <array name="progress_colors">
         <item>@color/primary</item>

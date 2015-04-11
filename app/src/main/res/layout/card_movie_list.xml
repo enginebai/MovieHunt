@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:id="@+id/card_movie_list_item"
     android:layout_margin="5dp"
-    card_view:cardCornerRadius="8dp"
+    card_view:cardCornerRadius="4dp"
     card_view:cardPreventCornerOverlap="false">
 
     <LinearLayout
@@ -62,9 +62,9 @@
                 tools:text="@string/test_release_date"
                 android:layout_alignLeft="@id/text_movie_name"
                 android:layout_below="@id/text_movie_name"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:drawableLeft="@drawable/abc_btn_check_to_on_mtrl_015"
+                android:padding="8dp"
+                android:drawableLeft="@drawable/ic_event_black_24dp"
+                android:drawablePadding="4dp"
                 android:gravity="center_vertical"
                 />
 
@@ -77,7 +77,8 @@
                 android:layout_alignLeft="@id/text_release_date"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:drawableLeft="@drawable/abc_btn_check_to_on_mtrl_000"
+                android:drawableLeft="@drawable/ic_schedule_black_24dp"
+                android:drawablePadding="4dp"
                 android:gravity="center_vertical"
                 />
         </RelativeLayout>
@@ -216,6 +217,7 @@
             android:text="@string/button_order"
             android:textColor="@android:color/white"
             android:textAppearance="?android:textAppearanceMedium"
+            android:background="@color/accent"
             style="@style/RaiseWaveButtonRippleStyle"
             app:rd_enable="true"
             android:layout_margin="5dp"/>

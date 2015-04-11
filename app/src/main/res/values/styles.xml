@@ -72,15 +72,27 @@
         <item name="android:textColor">@color/primary_text</item>
     </style>
 
+    <style name="MovieDetailList">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">12dp</item>
+    </style>
     <style name="MovieDetailButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:fontFamily">@string/font_roboto_medium</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:padding">16dp</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
     <style name="MovieDetailTitle">
         <item name="android:layout_height">wrap_content</item>
@@ -94,10 +106,10 @@
 
     <style name="MovieDetailContent" parent="MovieDetailTitle">
         <item name="android:padding">16dp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
     <style name="RaiseWaveButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
-        <item name="android:background">@color/accent</item>
         <item name="rd_rippleColor">@color/accent_light</item>
         <item name="rd_leftPadding">1dp</item>
         <item name="rd_topPadding">1dp</item>

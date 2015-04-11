@@ -60,6 +60,7 @@
     <string name="text_genre">類型</string>
     <string name="text_director">導演</string>
     <string name="text_actors">演員</string>
+    <string name="text_more">閱讀更多</string>
     <string name="title_activity_photo_list">PhotoListActivity</string>
 
     <string name="hello_world">Hello world!</string>
