@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -24,6 +26,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieInfo;
 import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
@@ -73,6 +76,9 @@ public class MovieDetailActivity extends ActionBarActivity
 //	FloatingActionButton fabTrailer;
 //	@InjectView(R.id.fab_share)
 //	FloatingActionButton fabShare;
+	@InjectView(R.id.fab_order)
+	FloatingActionButton mFabOrder;
+	boolean mIsFabOrderShow = true;
 	@InjectView(R.id.button_photo)
 	Button mButtonPhoto;
 	@InjectView(R.id.button_trailer)
@@ -236,6 +242,24 @@ public class MovieDetailActivity extends ActionBarActivity
 
 		// handle image parallex scroll
 		ViewHelper.setTranslationY(this.mImage, scrollY / 4);
+
+		// translate FAB
+
+//		System.out.printf("%d, %d\n", scrollY, this.mToolbar.getHeight());
+		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+		if (scrollY < mToolbar.getHeight() + metrics.density * 70) {
+			if (!this.mIsFabOrderShow) {
+				ViewPropertyAnimator.animate(this.mFabOrder).cancel();
+				ViewPropertyAnimator.animate(this.mFabOrder).scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
+				this.mIsFabOrderShow = true;
+			}
+		} else {
+			if (this.mIsFabOrderShow) {
+				ViewPropertyAnimator.animate(this.mFabOrder).cancel();
+				ViewPropertyAnimator.animate(this.mFabOrder).scaleX(0f).scaleY(0f).setDuration(150).start();
+				this.mIsFabOrderShow = false;
+			}
+		}
 	}
 
 	@Override
@@ -247,6 +271,8 @@ public class MovieDetailActivity extends ActionBarActivity
 	public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
 	}
+
+
 
 	//	private void setupButtonIcon() {
 //		IconicFontDrawable icon = new IconicFontDrawable(this);
