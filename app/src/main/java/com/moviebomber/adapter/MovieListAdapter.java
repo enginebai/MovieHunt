@@ -59,6 +59,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		Picasso.with(holder.mImagePoster.getContext())
 				.load(MainActivity.getResizePhoto(this.mContext, thumbnailPath))
 				.into(holder.mImagePoster);
+//		LabelView label = new LabelView(this.mContext);
+//		label.setText("POP");
+//		label.setTextColor(this.mContext.getResources().getColor(android.R.color.white));
+//		label.setBackgroundColor(this.mContext.getResources().getColor(R.color.accent_light));
+//		label.setTargetView(holder.mImageMovieCover, 10, LabelView.Gravity.LEFT_TOP);
 		if (movieItem.getPhotoLists().size() > 0) {
 			String coverUrl = movieItem.getPhotoLists().get(
 					(int) (Math.random() * movieItem.getPhotoLists().size())).getPath();

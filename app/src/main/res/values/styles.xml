@@ -36,21 +36,26 @@
         <item name="android:fontFamily">@string/font_roboto_medium</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingTop">4dp</item>
         <!-- TODO -->
     </style>nore
     <style name="BomberCountContent">
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@string/font_roboto_regular</item>
-        <item name="android:textAppearance">?android:textAppearanceLarge</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">36sp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
         <!-- TODO -->
     </style>
     <style name="ArcProgressBomberRate">
         <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="arc_unfinished_color">@color/divider</item>
+        <item name="arc_text_size">28sp</item>
+        <item name="arc_suffix_text_padding">0dp</item>
     </style>
 
     <style name="GoogleNowProgressBar" parent="SmoothProgressBar">

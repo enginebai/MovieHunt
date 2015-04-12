@@ -21,9 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- origin height = 190 -->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="170dp"
                 android:id="@+id/image_movie_cover"
                 android:contentDescription="@null"
                 android:adjustViewBounds="true"
@@ -38,7 +39,8 @@
                 android:scaleType="fitCenter"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="170dp"/>
+                android:layout_marginTop="140dp"/>
+            <!-- origin marginTop = 170 -->
 
             <TextView
                 android:id="@+id/text_movie_name"
@@ -52,8 +54,8 @@
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@id/image_movie_poster"
                 android:layout_below="@id/image_movie_cover"
-                android:padding="8dp"
-                android:layout_marginTop="4dp"/>
+                android:layout_margin="8dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -62,7 +64,6 @@
                 tools:text="@string/test_release_date"
                 android:layout_alignLeft="@id/text_movie_name"
                 android:layout_below="@id/text_movie_name"
-                android:padding="8dp"
                 android:drawableLeft="@drawable/ic_event_black_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
@@ -75,8 +76,6 @@
                 tools:text="@string/test_duration"
                 android:layout_below="@id/text_release_date"
                 android:layout_alignLeft="@id/text_release_date"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:drawableLeft="@drawable/ic_schedule_black_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
@@ -117,12 +116,7 @@
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_good_bomber"
-                        android:background="@android:color/white"
-                        android:layout_width="84dp"
-                        android:layout_height="84dp"
-                        android:layout_gravity="center_horizontal"
                         app:arc_progress="95"
-                        app:arc_unfinished_color="@color/divider"
                         app:arc_finished_color="@android:color/holo_blue_dark"
                         app:arc_text_color="@android:color/holo_blue_dark"
                         />
@@ -157,12 +151,7 @@
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_normal_bomber"
-                        android:background="@android:color/white"
-                        android:layout_width="84dp"
-                        android:layout_height="84dp"
-                        android:layout_gravity="center_horizontal"
                         app:arc_progress="4"
-                        app:arc_unfinished_color="@color/divider"
                         app:arc_finished_color="@android:color/holo_orange_dark"
                         app:arc_text_color="@android:color/holo_orange_dark"
                         />
@@ -197,12 +186,7 @@
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_bad_bomber"
-                        android:background="@android:color/white"
-                        android:layout_width="84dp"
-                        android:layout_height="84dp"
-                        android:layout_gravity="center_horizontal"
                         custom:arc_progress="1"
-                        custom:arc_unfinished_color="@color/divider"
                         custom:arc_finished_color="@android:color/holo_red_dark"
                         custom:arc_text_color="@android:color/holo_red_dark"
                         />
@@ -214,13 +198,14 @@
             android:id="@+id/button_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/button_order"
             android:textColor="@android:color/white"
             android:textAppearance="?android:textAppearanceMedium"
             android:background="@color/accent"
             style="@style/RaiseWaveButtonRippleStyle"
             app:rd_enable="true"
-            android:layout_margin="5dp"/>
+            android:layout_margin="4dp"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
