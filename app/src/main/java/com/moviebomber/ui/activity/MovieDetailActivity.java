@@ -1,20 +1,28 @@
 package com.moviebomber.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieInfo;
+import com.nineoldandroids.view.ViewHelper;
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
@@ -24,12 +32,15 @@ import org.json.JSONObject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MovieDetailActivity extends ActionBarActivity implements View.OnClickListener{
+public class MovieDetailActivity extends ActionBarActivity
+		implements View.OnClickListener, ObservableScrollViewCallbacks{
 
 	public static final String EXTRA_MOVIE_ID = "MOVIE_ID";
 
 	@InjectView(R.id.toolbar)
 	Toolbar mToolbar;
+	@InjectView(R.id.scroll)
+	ObservableScrollView mScrollView;
 	@InjectView(R.id.image_photo)
 	ImageView mImage;
 	@InjectView(R.id.text_title_chinese)
@@ -66,10 +77,16 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 
 	private int mMovieId;
 	private MovieInfo mMovieInfo;
+	private int mParallaxImageHeight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			Window w = getWindow(); // in Activity's onCreate() for instance
+			w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+			w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		}
 		setContentView(R.layout.activity_movie_detail_v1);
 		ButterKnife.inject(this);
 		this.setSupportActionBar(this.mToolbar);
@@ -77,6 +94,10 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			this.getSupportActionBar().setTitle("");
 		}
+
+		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, this.getResources().getColor(R.color.primary)));
+		this.mScrollView.setScrollViewCallbacks(this);
+		this.mParallaxImageHeight = this.getResources().getDimensionPixelOffset(R.dimen.parallax_image_height);
 //		this.setupButtonIcon();
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
@@ -125,10 +146,11 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 				": " + movieInfo.getDuration());
 //		if (movieInfo.getGenreList().size() > 0) {
 //			for (Genre genre : movieInfo.getGenreList()) {
-//				View viewGenre = LayoutInflater.from(this).inflate(R.layout.item_genre, null);
-//				TextView textGenre = (TextView) viewGenre.findViewById(R.id.text_genre);
+//				View viewGenre = LayoutInflater.from(this).inflate(R.layout.item_genre, null, false);
+//				CardView cardGenreLabel = (CardView) viewGenre.findViewById(R.id.card_genre_label);
+//				TextView textGenre = (TextView) cardGenreLabel.findViewById(R.id.text_genre);
 //				textGenre.setText(genre.getGenre());
-//				this.mViewGenre.addView(textGenre);
+//				this.mViewGenre.addView(cardGenreLabel);
 //			}
 //		}
 		this.mTextDirector.setText(movieInfo.getDirector());
@@ -175,7 +197,27 @@ public class MovieDetailActivity extends ActionBarActivity implements View.OnCli
 		return super.onOptionsItemSelected(item);
 	}
 
-//	private void setupButtonIcon() {
+	@Override
+	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+		int primaryColor = this.getResources().getColor(R.color.primary);
+		float alpha = 1 - (float)Math.max(0, mParallaxImageHeight - scrollY) / mParallaxImageHeight;
+		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, primaryColor));
+
+		// handle image parallex scroll
+		ViewHelper.setTranslationY(this.mImage, scrollY / 3);
+	}
+
+	@Override
+	public void onDownMotionEvent() {
+
+	}
+
+	@Override
+	public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+
+	}
+
+	//	private void setupButtonIcon() {
 //		IconicFontDrawable icon = new IconicFontDrawable(this);
 //		icon.setIcon("gmd-dashboard");
 //		icon.setIconColor(this.getResources().getColor(android.R.color.holo_blue_light));

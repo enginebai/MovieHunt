@@ -113,7 +113,7 @@
 
     <style name="MovieDetailContent" parent="MovieDetailTitle">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
-        <item name="android:textColor">@null</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:layout_marginTop">0dp</item>
     </style>
 
