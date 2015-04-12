@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -50,12 +51,16 @@ public class MovieDetailActivity extends ActionBarActivity
 	TextView mTextDescription;
 	@InjectView(R.id.text_duration)
 	TextView mTextDuration;
-	@InjectView(R.id.text_genres)
-	TextView mTextGenres;
 	@InjectView(R.id.text_director)
 	TextView mTextDirector;
 	@InjectView(R.id.text_actors)
 	TextView mTextActors;
+	@InjectView(R.id.view_genre1)
+	ViewStub mViewGenre1;
+	@InjectView(R.id.view_genre2)
+	ViewStub mViewGenre2;
+	@InjectView(R.id.view_genre3)
+	ViewStub mViewGenre3;
 
 //	@InjectView(R.id.fab_actions)
 //	FloatingActionsMenu fabActionsMenu;
@@ -153,19 +158,25 @@ public class MovieDetailActivity extends ActionBarActivity
 //			}
 //		}
 		if (movieInfo.getGenreList().size() > 0) {
-			StringBuilder genres = new StringBuilder();
-			for (int i = 0; i < movieInfo.getGenreList().size(); i++) {
-				genres.append(movieInfo.getGenreList().get(i).getGenre());
-				if (i < movieInfo.getGenreList().size() - 1)
-					genres.append("\t");
-			}
-			this.mTextGenres.setText(genres.toString());
+			View genreView = this.mViewGenre1.inflate();
+			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
+			textGenre.setText(movieInfo.getGenreList().get(0).getGenre());
+		}
+		if (movieInfo.getGenreList().size() > 1) {
+			View genreView = this.mViewGenre2.inflate();
+			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
+			textGenre.setText(movieInfo.getGenreList().get(1).getGenre());
+		}
+		if (movieInfo.getGenreList().size() > 2) {
+			View genreView = this.mViewGenre2.inflate();
+			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
+			textGenre.setText(movieInfo.getGenreList().get(2).getGenre());
 		}
 		this.mTextDirector.setText(movieInfo.getDirector());
 		if (movieInfo.getActorList().size() > 0) {
 			StringBuilder actors = new StringBuilder();
 			for (int i = 0; i < movieInfo.getActorList().size(); i++) {
-				actors.append(String.format("%d. %s", i, movieInfo.getActorList().get(i).getActorName()));
+				actors.append(String.format("%d. %s", i + 1, movieInfo.getActorList().get(i).getActorName()));
 				if (i < movieInfo.getActorList().size() - 1)
 					actors.append("\n");
 			}

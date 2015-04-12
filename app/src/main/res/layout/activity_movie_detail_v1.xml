@@ -110,11 +110,32 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_genre"/>
 
-                <TextView
-                    style="@style/MovieDetailContent"
-                    android:id="@+id/text_genres"
-                    tools:text="@string/test_movie_name"
-                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    >
+                    <ViewStub
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/view_genre1"
+                        android:layout="@layout/item_genre"/>
+                    <ViewStub
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:id="@+id/view_genre2"
+                        android:layout="@layout/item_genre"/>
+                    <ViewStub
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:id="@+id/view_genre3"
+                        android:layout="@layout/item_genre"/>
+                    </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
