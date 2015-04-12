@@ -65,5 +65,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_trailer">TrailerActivity</string>
+
+    <string name="button_trailer_more">搜尋更多預告片</string>
 
 </resources>

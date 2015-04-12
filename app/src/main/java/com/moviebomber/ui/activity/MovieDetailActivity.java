@@ -106,7 +106,8 @@ public class MovieDetailActivity extends ActionBarActivity
 			this.getSupportActionBar().setTitle("");
 		}
 
-		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, this.getResources().getColor(R.color.primary)));
+		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0,
+				this.getResources().getColor(R.color.primary)));
 		this.mScrollView.setScrollViewCallbacks(this);
 		this.mParallaxImageHeight = this.getResources().getDimensionPixelOffset(R.dimen.parallax_image_height);
 //		this.setupButtonIcon();
@@ -202,14 +203,22 @@ public class MovieDetailActivity extends ActionBarActivity
 //				break;
 //			case R.id.fab_share:
 //				break;
-//			case R.id.fab_trailer:
-//				break;
+			case R.id.button_trailer:
+				if (!mMovieInfo.getTrailerList().isEmpty()) {
+					Intent trailerIntent = new Intent(this, TrailerActivity.class);
+					trailerIntent.putParcelableArrayListExtra(TrailerActivity.EXTRA_TRAILER_LIST,
+							mMovieInfo.getTrailerList());
+					startActivity(trailerIntent);
+				}
+				break;
 			case R.id.button_photo:
-				Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
-				photoList.putExtra(PhotoListActivity.EXTRA_POSTER, mMovieInfo.getThumbnailPath());
-				photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
-						mMovieInfo.getPhotoList());
-				startActivity(photoList);
+				if (!mMovieInfo.getPhotoList().isEmpty()) {
+					Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
+					photoList.putExtra(PhotoListActivity.EXTRA_POSTER, mMovieInfo.getThumbnailPath());
+					photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
+							mMovieInfo.getPhotoList());
+					startActivity(photoList);
+				}
 				break;
 		}
 //		this.fabActionsMenu.collapse();
