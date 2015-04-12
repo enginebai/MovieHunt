@@ -34,8 +34,6 @@
                 android:layout_below="@id/image_photo"
                 android:id="@+id/layout_movie_content"
                 >
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,20 +110,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_genre"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/layout_genre"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
-
-                    <include
-                        layout="@layout/item_genre"/>
-
-                    <include
-                        layout="@layout/item_genre"/>
-                </LinearLayout>
+                <TextView
+                    style="@style/MovieDetailContent"
+                    android:id="@+id/text_genres"
+                    tools:text="@string/test_movie_name"
+                    />
 
                 <View
                     android:layout_width="match_parent"
@@ -139,14 +128,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/text_actors"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/layout_actors"
-                    android:orientation="vertical">
-                </LinearLayout>
-
+                <TextView
+                    style="@style/MovieDetailContent"
+                    android:id="@+id/text_actors"
+                    tools:text="@string/test_movie_name"
+                    />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"

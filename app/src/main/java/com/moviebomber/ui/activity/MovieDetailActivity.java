@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
@@ -51,12 +50,12 @@ public class MovieDetailActivity extends ActionBarActivity
 	TextView mTextDescription;
 	@InjectView(R.id.text_duration)
 	TextView mTextDuration;
-	@InjectView(R.id.layout_genre)
-	LinearLayout mViewGenre;
+	@InjectView(R.id.text_genres)
+	TextView mTextGenres;
 	@InjectView(R.id.text_director)
 	TextView mTextDirector;
-//	@InjectView(R.id.text_actors)
-//	TextView mTextActors;
+	@InjectView(R.id.text_actors)
+	TextView mTextActors;
 
 //	@InjectView(R.id.fab_actions)
 //	FloatingActionsMenu fabActionsMenu;
@@ -153,9 +152,25 @@ public class MovieDetailActivity extends ActionBarActivity
 //				this.mViewGenre.addView(cardGenreLabel);
 //			}
 //		}
+		if (movieInfo.getGenreList().size() > 0) {
+			StringBuilder genres = new StringBuilder();
+			for (int i = 0; i < movieInfo.getGenreList().size(); i++) {
+				genres.append(movieInfo.getGenreList().get(i).getGenre());
+				if (i < movieInfo.getGenreList().size() - 1)
+					genres.append("\t");
+			}
+			this.mTextGenres.setText(genres.toString());
+		}
 		this.mTextDirector.setText(movieInfo.getDirector());
-//		if (movieInfo.getActorList().size() > 0)
-//			this.mTextActors.setText(movieInfo.getActorList().get(0).getActorName());
+		if (movieInfo.getActorList().size() > 0) {
+			StringBuilder actors = new StringBuilder();
+			for (int i = 0; i < movieInfo.getActorList().size(); i++) {
+				actors.append(String.format("%d. %s", i, movieInfo.getActorList().get(i).getActorName()));
+				if (i < movieInfo.getActorList().size() - 1)
+					actors.append("\n");
+			}
+			this.mTextActors.setText(actors.toString());
+		}
 	}
 
 	@Override
@@ -200,11 +215,11 @@ public class MovieDetailActivity extends ActionBarActivity
 	@Override
 	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
 		int primaryColor = this.getResources().getColor(R.color.primary);
-		float alpha = 1 - (float)Math.max(0, mParallaxImageHeight - scrollY) / mParallaxImageHeight;
+		float alpha = 1 - (float)Math.max(0, mParallaxImageHeight - 1.5 * scrollY) / mParallaxImageHeight;
 		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, primaryColor));
 
 		// handle image parallex scroll
-		ViewHelper.setTranslationY(this.mImage, scrollY / 3);
+		ViewHelper.setTranslationY(this.mImage, scrollY / 4);
 	}
 
 	@Override
