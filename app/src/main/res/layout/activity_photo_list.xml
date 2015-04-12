@@ -4,10 +4,11 @@
                 android:layout_height="match_parent"
                 tools:context="com.moviebomber.ui.activity.PhotoListActivity">
 
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/user_photo"
+        android:id="@+id/photo_background"
         android:scaleType="centerCrop"
         android:contentDescription="@null"/>
     <com.jpardogo.listbuddies.lib.views.ListBuddiesLayout
@@ -15,4 +16,7 @@
         android:id="@+id/list_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <include
+        layout="@layout/toolbar_overlay"
+        android:id="@+id/toolbar"/>
 </RelativeLayout>

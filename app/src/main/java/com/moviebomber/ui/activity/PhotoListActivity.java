@@ -2,15 +2,18 @@ package com.moviebomber.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.jpardogo.listbuddies.lib.views.ListBuddiesLayout;
 import com.moviebomber.R;
 import com.moviebomber.adapter.PhotoListAdapter;
 import com.moviebomber.model.api.Photo;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,8 +23,13 @@ import butterknife.InjectView;
 public class PhotoListActivity extends ActionBarActivity implements
 		ListBuddiesLayout.OnBuddyItemClickListener {
 
+	public static final String EXTRA_POSTER = "POSTER";
 	public static final String EXTRA_PHOTO_LIST = "PHOTO_LIST";
 
+	@InjectView(R.id.toolbar)
+	Toolbar mToolbar;
+	@InjectView(R.id.photo_background)
+	ImageView mPhotoBackground;
 	@InjectView(R.id.list_photo)
 	ListBuddiesLayout mListPhoto;
 
@@ -32,6 +40,14 @@ public class PhotoListActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_photo_list);
 		ButterKnife.inject(this);
+		this.setSupportActionBar(this.mToolbar);
+		if (this.getSupportActionBar() != null) {
+			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			this.getSupportActionBar().setTitle("");
+		}
+		Picasso.with(this).load(
+				MainActivity.getResizePhoto(this, this.getIntent().getStringExtra(EXTRA_POSTER)))
+				.into(this.mPhotoBackground);
 		this.mPhotoList = this.getIntent().getParcelableArrayListExtra(EXTRA_PHOTO_LIST);
 		PhotoListAdapter adapterLeft = new PhotoListAdapter(this,
 				this.getResources().getDimensionPixelOffset(R.dimen.item_photo_height_tall),

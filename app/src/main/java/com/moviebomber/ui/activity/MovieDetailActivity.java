@@ -1,5 +1,6 @@
 package com.moviebomber.ui.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -106,6 +107,9 @@ public class MovieDetailActivity extends ActionBarActivity
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
 			this.queryMovieDetail();
+			this.mButtonPhoto.setOnClickListener(this);
+			this.mButtonTrailer.setOnClickListener(this);
+			this.mButtonComment.setOnClickListener(this);
 //			this.fabComment.setOnClickListener(this);
 //			this.fabPhoto.setOnClickListener(this);
 //			this.fabShare.setOnClickListener(this);
@@ -135,8 +139,8 @@ public class MovieDetailActivity extends ActionBarActivity
 
 	private void displayMovieDetail(MovieInfo movieInfo) {
 		if (movieInfo.getPhotoList().size() > 0) {
-			String url = movieInfo.getPhotoList().get(0).getUrl();
-			url = url.replace("mpho3", "mpho");
+			int index = (int)(Math.random() * movieInfo.getPhotoList().size());
+			String url = movieInfo.getPhotoList().get(index).getUrl();
 			Picasso.with(this.mImage.getContext())
 					.load(url)
 					.into(this.mImage);
@@ -194,12 +198,13 @@ public class MovieDetailActivity extends ActionBarActivity
 //				break;
 //			case R.id.fab_trailer:
 //				break;
-//			case R.id.fab_photo:
-//				Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
-//				photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
-//						mMovieInfo.getPhotoList());
-//				startActivity(photoList);
-//				break;
+			case R.id.button_photo:
+				Intent photoList = new Intent(MovieDetailActivity.this, PhotoListActivity.class);
+				photoList.putExtra(PhotoListActivity.EXTRA_POSTER, mMovieInfo.getThumbnailPath());
+				photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
+						mMovieInfo.getPhotoList());
+				startActivity(photoList);
+				break;
 		}
 //		this.fabActionsMenu.collapse();
 	}
