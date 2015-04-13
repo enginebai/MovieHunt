@@ -6,6 +6,7 @@
               android:layout_height="match_parent">
 
     <com.google.android.youtube.player.YouTubeThumbnailView
+        android:id="@+id/image_trailer_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
@@ -13,6 +14,7 @@
         android:src="@drawable/user_cover_a"
         android:scaleType="centerCrop"/>
     <TextView
+        android:id="@+id/text_trailer_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.5"

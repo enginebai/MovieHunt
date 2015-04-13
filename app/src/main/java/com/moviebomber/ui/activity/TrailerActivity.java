@@ -11,14 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.moviebomber.R;
 import com.moviebomber.model.api.Trailer;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -34,9 +40,10 @@ public class TrailerActivity extends ActionBarActivity {
 	ImageView mImageTrailer;
 	@InjectView(R.id.text_trailer_title)
 	TextView mTextTitle;
+	@InjectView(R.id.list_trailer)
+	ListView mListTrailer;
 
-	private List<Trailer> mTrailerList;
-	private YouTubeThumbnailLoader mThumbnailLoader;
+	private Map<View, YouTubeThumbnailLoader> mListThumbnailLoaderMap = new HashMap<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,14 @@ public class TrailerActivity extends ActionBarActivity {
 			this.getSupportActionBar().setTitle("");
 		}
 		if (this.getIntent() != null) {
-			this.mTrailerList = this.getIntent().getParcelableArrayListExtra(EXTRA_TRAILER_LIST);
+			List<Trailer> mTrailerList = this.getIntent().getParcelableArrayListExtra(EXTRA_TRAILER_LIST);
+			List<Trailer> newTrailerList = new ArrayList<>();
+			// filter playerlist or user
+			for (Trailer t : mTrailerList) {
+				if (t.getUrl().contains("v="))
+					newTrailerList.add(t);
+			}
+			this.mListTrailer.setAdapter(new TrailerAdatper(this, R.layout.item_trailer, newTrailerList));
 		}
 	}
 
@@ -76,26 +90,50 @@ public class TrailerActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	class TrailerAdatper extends ArrayAdapter<Trailer> {
+	class TrailerAdatper extends ArrayAdapter<Trailer> implements YouTubeThumbnailView.OnInitializedListener {
 		TrailerAdatper(Context context, int resource, List<Trailer> objects) {
 			super(context, resource, objects);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder;
+			final ViewHolder holder;
+			String videoUrl = this.getItem(position).getUrl();
+			Logger.wtf(videoUrl);
+			String id = videoUrl.split("=")[1];
 			if (convertView == null) {
 				convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trailer, parent, false);
 				holder = new ViewHolder(convertView);
+				holder.mImageTrailer.setTag(id);
+				holder.mImageTrailer.initialize(KEY, this);
 				convertView.setTag(holder);
-			} else
-				holder = (ViewHolder)convertView.getTag();
-
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+				YouTubeThumbnailLoader loader = mListThumbnailLoaderMap.get(holder.mImageTrailer);
+				if (loader == null) {
+					holder.mImageTrailer.setTag(id);
+				} else {
+					loader.setVideo(id);
+				}
+			}
+			holder.mTextTitle.setText(this.getItem(position).getTitle());
 			return convertView;
 		}
 
+		@Override
+		public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+			String videoId = (String)youTubeThumbnailView.getTag();
+			mListThumbnailLoaderMap.put(youTubeThumbnailView, youTubeThumbnailLoader);
+			youTubeThumbnailLoader.setVideo(videoId);
+		}
+
+		@Override
+		public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+		}
+
 		class ViewHolder {
-			@InjectView(R.id.image_trailer)
+			@InjectView(R.id.image_trailer_thumbnail)
 			YouTubeThumbnailView mImageTrailer;
 			@InjectView(R.id.text_trailer_title)
 			TextView mTextTitle;
