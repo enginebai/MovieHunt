@@ -29,4 +29,8 @@
     <color name="ripple_red_light">#EF9A9A</color>
     <color name="ripple_blue_light">#81D4FA</color>
     <color name="ripple_pink_light">#F6A5C1</color>
+
+    <color name="good_bomber">#fe81ab</color>
+    <color name="normal_bomber">#b677d7</color>
+    <color name="bad_bomber">#6372c2</color>
 </resources>

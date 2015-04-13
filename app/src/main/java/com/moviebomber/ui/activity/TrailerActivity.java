@@ -1,13 +1,20 @@
 package com.moviebomber.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.moviebomber.R;
 import com.moviebomber.model.api.Trailer;
 
@@ -29,6 +36,7 @@ public class TrailerActivity extends ActionBarActivity {
 	TextView mTextTitle;
 
 	private List<Trailer> mTrailerList;
+	private YouTubeThumbnailLoader mThumbnailLoader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,5 +76,34 @@ public class TrailerActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	
+	class TrailerAdatper extends ArrayAdapter<Trailer> {
+		TrailerAdatper(Context context, int resource, List<Trailer> objects) {
+			super(context, resource, objects);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trailer, parent, false);
+				holder = new ViewHolder(convertView);
+				convertView.setTag(holder);
+			} else
+				holder = (ViewHolder)convertView.getTag();
+
+			return convertView;
+		}
+
+		class ViewHolder {
+			@InjectView(R.id.image_trailer)
+			YouTubeThumbnailView mImageTrailer;
+			@InjectView(R.id.text_trailer_title)
+			TextView mTextTitle;
+
+			ViewHolder(View itemView) {
+				ButterKnife.inject(this, itemView);
+			}
+		}
+	}
+
 }

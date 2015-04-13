@@ -259,13 +259,13 @@ public class MovieDetailActivity extends ActionBarActivity
 		if (scrollY < mToolbar.getHeight() + metrics.density * 70) {
 			if (!this.mIsFabOrderShow) {
 				ViewPropertyAnimator.animate(this.mFabOrder).cancel();
-				ViewPropertyAnimator.animate(this.mFabOrder).scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
+				ViewPropertyAnimator.animate(this.mFabOrder).scaleX(1.0f).scaleY(1.0f).setDuration(200).start();
 				this.mIsFabOrderShow = true;
 			}
 		} else {
 			if (this.mIsFabOrderShow) {
 				ViewPropertyAnimator.animate(this.mFabOrder).cancel();
-				ViewPropertyAnimator.animate(this.mFabOrder).scaleX(0f).scaleY(0f).setDuration(150).start();
+				ViewPropertyAnimator.animate(this.mFabOrder).scaleX(0f).scaleY(0f).setDuration(200).start();
 				this.mIsFabOrderShow = false;
 			}
 		}

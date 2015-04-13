@@ -73,7 +73,7 @@
                         android:id="@+id/button_photo"
                         android:text="@string/fab_photo"
                         android:drawableTop="@drawable/ic_dashboard_black_36dp"
-                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColor="@color/good_bomber"
                         app:rd_rippleColor="@color/ripple_blue_light"
                         />
 
@@ -82,7 +82,7 @@
                         android:text="@string/fab_trailer"
                         android:id="@+id/button_trailer"
                         android:drawableTop="@drawable/ic_local_movies_black_36dp"
-                        android:textColor="@android:color/holo_orange_dark"
+                        android:textColor="@color/normal_bomber"
                         app:rd_rippleColor="@color/ripple_orange_light"
                         />
 
@@ -91,7 +91,7 @@
                         android:text="@string/fab_comment"
                         android:id="@+id/button_comment"
                         android:drawableTop="@drawable/ic_thumbs_up_down_black_36dp"
-                        android:textColor="@android:color/holo_red_dark"
+                        android:textColor="@color/bad_bomber"
                         app:rd_rippleColor="@color/ripple_red_light"
                         />
 

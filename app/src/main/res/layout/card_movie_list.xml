@@ -112,13 +112,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="140"
-                        android:textColor="@android:color/holo_blue_dark"/>
+                        android:textColor="@color/good_bomber"/>
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_good_bomber"
                         app:arc_progress="95"
-                        app:arc_finished_color="@android:color/holo_blue_dark"
-                        app:arc_text_color="@android:color/holo_blue_dark"
+                        app:arc_finished_color="@color/good_bomber"
+                        app:arc_text_color="@color/good_bomber"
                         />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -145,15 +145,15 @@
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/holo_orange_dark"
+                        android:textColor="@color/normal_bomber"
                         android:text="10"/>
 
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_normal_bomber"
                         app:arc_progress="4"
-                        app:arc_finished_color="@android:color/holo_orange_dark"
-                        app:arc_text_color="@android:color/holo_orange_dark"
+                        app:arc_finished_color="@color/normal_bomber"
+                        app:arc_text_color="@color/normal_bomber"
                         />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -181,14 +181,14 @@
                         style="@style/BomberCountContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/holo_red_dark"
+                        android:textColor="@color/bad_bomber"
                         android:text="2"/>
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_bad_bomber"
                         custom:arc_progress="1"
-                        custom:arc_finished_color="@android:color/holo_red_dark"
-                        custom:arc_text_color="@android:color/holo_red_dark"
+                        custom:arc_finished_color="@color/bad_bomber"
+                        custom:arc_text_color="@color/bad_bomber"
                         />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
