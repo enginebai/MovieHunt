@@ -100,6 +100,7 @@ public class TrailerActivity extends ActionBarActivity {
 
 			}
 		});
+		this.mTextTitle.setText(trailer.getTitle().replace("- YouTube", "").trim());
 	}
 
 
@@ -151,7 +152,7 @@ public class TrailerActivity extends ActionBarActivity {
 					loader.setVideo(id);
 				}
 			}
-			holder.mTextTitle.setText(this.getItem(position).getTitle());
+			holder.mTextTitle.setText(this.getItem(position).getTitle().replace("- YouTube", "").trim());
 			return convertView;
 		}
 

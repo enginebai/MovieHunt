@@ -10,24 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.youtube.player.YouTubeThumbnailView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/image_trailer"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/user_cover"
-            android:scaleType="centerCrop"
-            />
-
-
         <RelativeLayout
-            android:id="@+id/layout_trailer_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="64dp"
-            android:layout_below="@id/image_trailer"
-            android:background="#616161">
-
+            android:id="@+id/layout_trailer_header">
+            <com.google.android.youtube.player.YouTubeThumbnailView
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:id="@+id/image_trailer"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/user_cover"
+                android:scaleType="centerCrop"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,41 +31,42 @@
                 android:textStyle="bold"
                 android:fontFamily="@string/font_roboto_medium"
                 android:textColor="@color/text"
-                android:textSize="24sp"
-                android:layout_margin="16dp"/>
-        </RelativeLayout>
-
+                android:textSize="22sp"
+                android:layout_alignBottom="@id/image_trailer"
+                android:layout_margin="16dp"
+                />
+            </RelativeLayout>
         <com.rey.material.widget.Button
             android:id="@+id/button_trailer_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="@string/button_trailer_more"
-            android:textColor="@color/accent"
-            android:background="@null"
+            android:textColor="@color/accent_light"
+            android:background="@android:color/black"
             android:textAppearance="?android:textAppearanceMedium"
             style="@style/RaiseWaveButtonRippleStyle"
             app:rd_enable="true"
-            android:layout_margin="4dp"/>
+            android:padding="4dp"/>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_icon="@drawable/abc_btn_rating_star_off_mtrl_alpha"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/white_pressed"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="165dp"/>
 
         <ListView
             android:id="@+id/list_trailer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout_trailer_title"
+            android:layout_below="@id/layout_trailer_header"
             android:layout_above="@id/button_trailer_more"
             tools:listitem="@layout/item_trailer"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/right_arrow"
+            fab:fab_colorNormal="@android:color/holo_red_light"
+            fab:fab_colorPressed="@color/white_pressed"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="245dp"/>
     </RelativeLayout>
 
     <include

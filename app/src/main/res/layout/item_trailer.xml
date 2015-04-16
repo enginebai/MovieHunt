@@ -3,22 +3,24 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:background="@android:color/black">
 
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/image_trailer_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
+        android:layout_height="96dp"
         android:padding="8dp"
         android:layout_weight="1"
         android:src="@drawable/user_cover_a"
-        android:scaleType="centerCrop"/>
+        android:scaleType="fitCenter"/>
     <TextView
         android:id="@+id/text_trailer_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.4"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
         tools:text="@string/test_movie_name"
+        android:textColor="@android:color/white"
         android:gravity="center"
         android:padding="8dp"
         />
