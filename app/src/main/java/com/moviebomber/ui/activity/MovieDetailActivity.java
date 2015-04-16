@@ -208,6 +208,8 @@ public class MovieDetailActivity extends ActionBarActivity
 					Intent trailerIntent = new Intent(this, TrailerActivity.class);
 					trailerIntent.putParcelableArrayListExtra(TrailerActivity.EXTRA_TRAILER_LIST,
 							mMovieInfo.getTrailerList());
+					trailerIntent.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
+							mMovieInfo.getPhotoList());
 					startActivity(trailerIntent);
 				}
 				break;

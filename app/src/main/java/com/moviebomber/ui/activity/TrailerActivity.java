@@ -1,6 +1,7 @@
 package com.moviebomber.ui.activity;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +39,7 @@ public class TrailerActivity extends ActionBarActivity {
 	@InjectView(R.id.toolbar)
 	Toolbar mToolbar;
 	@InjectView(R.id.image_trailer)
-	ImageView mImageTrailer;
+	YouTubeThumbnailView mImageTrailer;
 	@InjectView(R.id.text_trailer_title)
 	TextView mTextTitle;
 	@InjectView(R.id.list_trailer)
@@ -49,6 +51,11 @@ public class TrailerActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trailer);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			Window w = getWindow(); // in Activity's onCreate() for instance
+			w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+			w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		}
 		ButterKnife.inject(this);
 		this.setSupportActionBar(this.mToolbar);
 		if (this.getSupportActionBar() != null) {
@@ -63,8 +70,36 @@ public class TrailerActivity extends ActionBarActivity {
 				if (t.getUrl().contains("v="))
 					newTrailerList.add(t);
 			}
-			this.mListTrailer.setAdapter(new TrailerAdatper(this, R.layout.item_trailer, newTrailerList));
+			if (newTrailerList.size() > 0) {
+				this.setupHeader(newTrailerList.get(0));
+				this.mListTrailer.setAdapter(new TrailerAdatper(this, R.layout.item_trailer, newTrailerList.subList(1, newTrailerList.size())));
+			}
 		}
+	}
+
+	private void setupHeader(final Trailer trailer) {
+		this.mImageTrailer.initialize(KEY, new YouTubeThumbnailView.OnInitializedListener() {
+			@Override
+			public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+				youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+					@Override
+					public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+
+					}
+
+					@Override
+					public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+
+					}
+				});
+				youTubeThumbnailLoader.setVideo(trailer.getUrl().split("=")[1]);
+			}
+
+			@Override
+			public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+			}
+		});
 	}
 
 
@@ -143,5 +178,4 @@ public class TrailerActivity extends ActionBarActivity {
 			}
 		}
 	}
-
 }
