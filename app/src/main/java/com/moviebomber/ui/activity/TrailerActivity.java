@@ -22,6 +22,7 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.moviebomber.R;
 import com.moviebomber.model.api.Trailer;
 import com.orhanobut.logger.Logger;
+import com.rey.material.widget.Button;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,10 +39,6 @@ public class TrailerActivity extends ActionBarActivity {
 
 	@InjectView(R.id.toolbar)
 	Toolbar mToolbar;
-	@InjectView(R.id.image_trailer)
-	YouTubeThumbnailView mImageTrailer;
-	@InjectView(R.id.text_trailer_title)
-	TextView mTextTitle;
 	@InjectView(R.id.list_trailer)
 	ListView mListTrailer;
 
@@ -71,14 +68,19 @@ public class TrailerActivity extends ActionBarActivity {
 					newTrailerList.add(t);
 			}
 			if (newTrailerList.size() > 0) {
-				this.setupHeader(newTrailerList.get(0));
 				this.mListTrailer.setAdapter(new TrailerAdatper(this, R.layout.item_trailer, newTrailerList.subList(1, newTrailerList.size())));
+				this.setupHeader(newTrailerList.get(0));
+				View footerView = LayoutInflater.from(this).inflate(R.layout.footer_trailer_button, null);
+				Button buttonSearchMore = (Button) footerView.findViewById(R.id.button_trailer_more);
+				this.mListTrailer.addFooterView(footerView);
 			}
 		}
 	}
 
 	private void setupHeader(final Trailer trailer) {
-		this.mImageTrailer.initialize(KEY, new YouTubeThumbnailView.OnInitializedListener() {
+		View headerView = LayoutInflater.from(this).inflate(R.layout.header_trailer, null);
+		YouTubeThumbnailView imageTrailer = (YouTubeThumbnailView)headerView.findViewById(R.id.image_trailer);
+		imageTrailer.initialize(KEY, new YouTubeThumbnailView.OnInitializedListener() {
 			@Override
 			public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 				youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
@@ -100,7 +102,9 @@ public class TrailerActivity extends ActionBarActivity {
 
 			}
 		});
-		this.mTextTitle.setText(trailer.getTitle().replace("- YouTube", "").trim());
+		TextView textTitle = (TextView)headerView.findViewById(R.id.text_trailer_title);
+		textTitle.setText(trailer.getTitle().replace("- YouTube", "").trim());
+		this.mListTrailer.addHeaderView(headerView);
 	}
 
 

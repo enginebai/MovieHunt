@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <com.rey.material.widget.Button
+        android:id="@+id/button_trailer_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_trailer_more"
+        android:textColor="@color/accent_light"
+        android:background="@android:color/black"
+        android:textAppearance="?android:textAppearanceMedium"
+        app:rd_rippleColor="@android:color/white"
+        app:rd_enable="true"
+        android:padding="4dp"/>
+</LinearLayout>

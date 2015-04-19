@@ -4,7 +4,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@android:color/black">
+              android:background="@color/primary_material_dark">
 
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/image_trailer_thumbnail"
