@@ -29,7 +29,7 @@
         android:padding="16dp"
         />
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_order"
+        android:id="@+id/fab_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_icon="@drawable/right_arrow"

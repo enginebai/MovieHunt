@@ -40,6 +40,7 @@ public class MovieDetailActivity extends ActionBarActivity
 		implements View.OnClickListener, ObservableScrollViewCallbacks{
 
 	public static final String EXTRA_MOVIE_ID = "MOVIE_ID";
+	public static final String EXTRA_MOVIE_NAME = "MOVIE_NAME";
 
 	@InjectView(R.id.toolbar)
 	Toolbar mToolbar;
@@ -210,6 +211,7 @@ public class MovieDetailActivity extends ActionBarActivity
 							mMovieInfo.getTrailerList());
 					trailerIntent.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
 							mMovieInfo.getPhotoList());
+					trailerIntent.putExtra(EXTRA_MOVIE_NAME, mMovieInfo.getTitleChinese());
 					startActivity(trailerIntent);
 				}
 				break;
