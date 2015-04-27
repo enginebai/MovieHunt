@@ -27,6 +27,13 @@ public class MovieListItem {
 	@SerializedName("photo_list")
 	@Expose
 	private ArrayList<Photo> photoLists;
+	@SerializedName("article_list")
+	@Expose
+	private ArrayList<Article> articleList;
+
+	private int goodBomber = 0;
+	private int normalBomber = 0;
+	private int badBomber = 0;
 
 	/**
 	 *
@@ -124,5 +131,33 @@ public class MovieListItem {
 
 	public void setPhotoLists(ArrayList<Photo> photoLists) {
 		this.photoLists = photoLists;
+	}
+
+	public ArrayList<Article> getArticleList() {
+		return articleList;
+	}
+
+	public void setArticleList(ArrayList<Article> articleList) {
+		this.articleList = articleList;
+		for (Article a : this.articleList) {
+			if (a.getBomberStatus().equals(Article.BomberStatus.GOOD.toString()))
+				this.goodBomber++;
+			else if (a.getBomberStatus().equals(Article.BomberStatus.NORMAL.toString()))
+				this.normalBomber++;
+			else if (a.getBomberStatus().equals(Article.BomberStatus.BAD.toString()))
+				this.badBomber++;
+		}
+	}
+
+	public int getGoodBomber() {
+		return goodBomber;
+	}
+
+	public int getNormalBomber() {
+		return normalBomber;
+	}
+
+	public int getBadBomber() {
+		return badBomber;
 	}
 }

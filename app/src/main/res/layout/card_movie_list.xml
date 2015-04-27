@@ -109,9 +109,10 @@
 
                     <TextView
                         style="@style/BomberCountContent"
+                        android:id="@+id/text_good_bomber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="140"
+                        tools:text="140"
                         android:textColor="@color/good_bomber"/>
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
@@ -143,10 +144,11 @@
 
                     <TextView
                         style="@style/BomberCountContent"
+                        android:id="@+id/text_normal_bomber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/normal_bomber"
-                        android:text="10"/>
+                        tools:text="10"/>
 
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
@@ -179,10 +181,11 @@
 
                     <TextView
                         style="@style/BomberCountContent"
+                        android:id="@+id/text_bad_bomber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/bad_bomber"
-                        android:text="2"/>
+                        tools:text="2"/>
                     <com.github.lzyzsd.circleprogress.ArcProgress
                         style="@style/ArcProgressBomberRate"
                         android:id="@+id/progress_bad_bomber"

@@ -180,7 +180,7 @@ public class MovieDetailActivity extends ActionBarActivity
 			textGenre.setText(movieInfo.getGenreList().get(1).getGenre());
 		}
 		if (movieInfo.getGenreList().size() > 2) {
-			View genreView = this.mViewGenre2.inflate();
+			View genreView = this.mViewGenre3.inflate();
 			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
 			textGenre.setText(movieInfo.getGenreList().get(2).getGenre());
 		}

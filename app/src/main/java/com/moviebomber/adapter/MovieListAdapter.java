@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.ui.activity.MainActivity;
@@ -84,6 +85,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 				mContext.startActivity(movieDetail);
 			}
 		});
+
+		holder.mTextGoodBomber.setText(String.valueOf(movieItem.getGoodBomber()));
+		holder.mTextNormalBomber.setText(String.valueOf(movieItem.getNormalBomber()));
+		holder.mTextBadBomber.setText(String.valueOf(movieItem.getBadBomber()));
 	}
 
 	@Override
@@ -108,6 +113,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		TextView mTextReleaseDate;
 		@InjectView(R.id.text_duration)
 		TextView mTextDuration;
+		@InjectView(R.id.text_good_bomber)
+		TextView mTextGoodBomber;
+		@InjectView(R.id.progress_good_bomber)
+		ArcProgress mProgressGoodBomber;
+		@InjectView(R.id.text_normal_bomber)
+		TextView mTextNormalBomber;
+		@InjectView(R.id.progress_normal_bomber)
+		ArcProgress mProgressNormalBomber;
+		@InjectView(R.id.text_bad_bomber)
+		TextView mTextBadBomber;
+		@InjectView(R.id.progress_bad_bomber)
+		ArcProgress mProgressBadBomber;
 
 		MovieListItemHolder(View itemView) {
 			super(itemView);
