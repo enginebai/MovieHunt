@@ -139,25 +139,29 @@ public class MovieListItem {
 
 	public void setArticleList(ArrayList<Article> articleList) {
 		this.articleList = articleList;
-		for (Article a : this.articleList) {
-			if (a.getBomberStatus().equals(Article.BomberStatus.GOOD.toString()))
-				this.goodBomber++;
-			else if (a.getBomberStatus().equals(Article.BomberStatus.NORMAL.toString()))
-				this.normalBomber++;
-			else if (a.getBomberStatus().equals(Article.BomberStatus.BAD.toString()))
-				this.badBomber++;
-		}
 	}
 
 	public int getGoodBomber() {
 		return goodBomber;
 	}
 
+	public void setGoodBomber(int goodBomber) {
+		this.goodBomber = goodBomber;
+	}
+
 	public int getNormalBomber() {
 		return normalBomber;
 	}
 
+	public void setNormalBomber(int normalBomber) {
+		this.normalBomber = normalBomber;
+	}
+
 	public int getBadBomber() {
 		return badBomber;
+	}
+
+	public void setBadBomber(int badBomber) {
+		this.badBomber = badBomber;
 	}
 }

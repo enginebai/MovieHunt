@@ -19,6 +19,7 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.moviebomber.R;
 import com.moviebomber.adapter.MovieListAdapter;
 import com.moviebomber.model.api.ApiTask;
+import com.moviebomber.model.api.Article;
 import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.model.utils.MovieListTab;
 import com.moviebomber.model.utils.Query;
@@ -152,8 +153,24 @@ public class MovieListFragment extends Fragment {
 				try {
 					JSONArray objects = response.getJSONArray(ApiTask.RESPONSE_OBJECTS);
 					if (objects.length() > 0) {
-						for (int i = 0; i < objects.length(); i++)
-							movieList.add(gson.fromJson(objects.getJSONObject(i).toString(), MovieListItem.class));
+						for (int i = 0; i < objects.length(); i++) {
+							MovieListItem item = gson.fromJson(objects.getJSONObject(i).toString(), MovieListItem.class);
+							int goodBomber = 0;
+							int normalBomber = 0;
+							int badBomber = 0;
+							for (Article a : item.getArticleList()) {
+								if (a.getBomberStatus().equals(Article.BomberStatus.GOOD.toString()))
+									goodBomber++;
+								else if (a.getBomberStatus().equals(Article.BomberStatus.NORMAL.toString()))
+									normalBomber++;
+								else if (a.getBomberStatus().equals(Article.BomberStatus.BAD.toString()))
+									badBomber++;
+							}
+							item.setGoodBomber(goodBomber);
+							item.setNormalBomber(normalBomber);
+							item.setBadBomber(badBomber);
+							movieList.add(item);
+						}
 						mAdapter.getMovieList().addAll(movieList);
 					} else {
 						if (mAdapter.getMovieList().size() <= 0)
