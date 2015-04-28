@@ -89,6 +89,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		holder.mTextGoodBomber.setText(String.valueOf(movieItem.getGoodBomber()));
 		holder.mTextNormalBomber.setText(String.valueOf(movieItem.getNormalBomber()));
 		holder.mTextBadBomber.setText(String.valueOf(movieItem.getBadBomber()));
+		holder.mProgressGoodBomber.setProgress((int)(movieItem.getGoodRate() * 100));
+		holder.mProgressNormalBomber.setProgress((int)(movieItem.getNormalRate() * 100));
+		holder.mProgressBadBomber.setProgress((int)(movieItem.getBadRate() * 100));
 	}
 
 	@Override

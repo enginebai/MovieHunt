@@ -32,8 +32,11 @@ public class MovieListItem {
 	private ArrayList<Article> articleList;
 
 	private int goodBomber = 0;
+	private float goodRate = 0.0f;
 	private int normalBomber = 0;
+	private float normalRate = 0.0f;
 	private int badBomber = 0;
+	private float badRate = 0.0f;
 
 	/**
 	 *
@@ -163,5 +166,29 @@ public class MovieListItem {
 
 	public void setBadBomber(int badBomber) {
 		this.badBomber = badBomber;
+	}
+
+	public float getGoodRate() {
+		return goodRate;
+	}
+
+	public void setGoodRate(float goodRate) {
+		this.goodRate = goodRate;
+	}
+
+	public float getNormalRate() {
+		return normalRate;
+	}
+
+	public void setNormalRate(float normalRate) {
+		this.normalRate = normalRate;
+	}
+
+	public float getBadRate() {
+		return badRate;
+	}
+
+	public void setBadRate(float badRate) {
+		this.badRate = badRate;
 	}
 }

@@ -55,6 +55,7 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="arc_unfinished_color">@color/divider</item>
         <item name="arc_text_size">28sp</item>
+        <item name="arc_suffix_text_size">12sp</item>
         <item name="arc_suffix_text_padding">0dp</item>
     </style>
 

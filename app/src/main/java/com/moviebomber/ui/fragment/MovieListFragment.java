@@ -158,6 +158,7 @@ public class MovieListFragment extends Fragment {
 							int goodBomber = 0;
 							int normalBomber = 0;
 							int badBomber = 0;
+							int totalBomber = 0;
 							for (Article a : item.getArticleList()) {
 								if (a.getBomberStatus().equals(Article.BomberStatus.GOOD.toString()))
 									goodBomber++;
@@ -169,6 +170,10 @@ public class MovieListFragment extends Fragment {
 							item.setGoodBomber(goodBomber);
 							item.setNormalBomber(normalBomber);
 							item.setBadBomber(badBomber);
+							totalBomber = (goodBomber + normalBomber + badBomber);
+							item.setGoodRate((float)goodBomber / (float)totalBomber);
+							item.setNormalRate((float)normalBomber / (float)totalBomber);
+							item.setBadRate((float)badBomber / (float)totalBomber);
 							movieList.add(item);
 						}
 						mAdapter.getMovieList().addAll(movieList);
