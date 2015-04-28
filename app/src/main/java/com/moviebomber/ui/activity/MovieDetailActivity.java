@@ -224,6 +224,11 @@ public class MovieDetailActivity extends ActionBarActivity
 					startActivity(photoList);
 				}
 				break;
+
+			case R.id.button_comment:
+				Intent intent = new Intent(MovieDetailActivity.this, CommentActivity.class);
+				startActivity(intent);
+				break;
 		}
 //		this.fabActionsMenu.collapse();
 	}

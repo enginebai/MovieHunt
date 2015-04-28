@@ -32,8 +32,6 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener {
 	@InjectView(R.id.pager_movie)
 	ViewPager mPagerMovie;
 
-	private MoviePagerAdapter mAdapter;
-
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
@@ -62,8 +60,8 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener {
 
 	private void initView(View rootView) {
 		ButterKnife.inject(this, rootView);
-		this.mAdapter = new MoviePagerAdapter(getFragmentManager(), getActivity());
-		this.mPagerMovie.setAdapter(this.mAdapter);
+		MoviePagerAdapter mAdapter = new MoviePagerAdapter(getFragmentManager(), getActivity());
+		this.mPagerMovie.setAdapter(mAdapter);
 		this.mPagerMovie.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

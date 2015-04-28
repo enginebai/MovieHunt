@@ -48,6 +48,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.moviebomber.ui.activity.MovieDetailActivity" />
         </activity>
+        <activity
+            android:name=".ui.activity.CommentActivity"
+            android:label="@string/title_activity_comment"
+            android:parentActivityName=".ui.activity.MovieDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.moviebomber.ui.activity.MovieDetailActivity" />
+        </activity>
     </application>
 
 </manifest>

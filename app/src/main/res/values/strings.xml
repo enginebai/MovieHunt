@@ -68,5 +68,12 @@
     <string name="title_activity_trailer">TrailerActivity</string>
 
     <string name="button_trailer_more">搜尋更多預告片</string>
+    <string name="title_activity_comment">CommentActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tab_comment_ptt">PTT電影版</string>
+    <string name="tab_comment_yahoo">Yahoo電影短評</string>
 
 </resources>
