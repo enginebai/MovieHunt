@@ -1,13 +1,19 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.moviebomber.ui.fragment.PttCommentFragment">
+             tools:context="com.moviebomber.ui.fragment.PttCommentFragment"
+             >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+        android:id="@+id/list_comment"
+        tools:listitem="@layout/item_ptt_comment"
+        tools:listheader="@layout/header_ptt_comment"
+        android:background="@android:color/black"
+        android:divider="@android:color/white"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="true"
+        />
+</RelativeLayout>

@@ -25,6 +25,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieInfo;
+import com.moviebomber.ui.fragment.PttCommentFragment;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.rey.material.widget.Button;
@@ -227,6 +228,8 @@ public class MovieDetailActivity extends ActionBarActivity
 
 			case R.id.button_comment:
 				Intent intent = new Intent(MovieDetailActivity.this, CommentActivity.class);
+				intent.putParcelableArrayListExtra(PttCommentFragment.EXTRA_PTT_COMMENTS,
+						mMovieInfo.getArticleList());
 				startActivity(intent);
 				break;
 		}

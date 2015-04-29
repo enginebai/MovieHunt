@@ -1,12 +1,17 @@
 package com.moviebomber.model.api;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by engine on 15/4/28.
  */
-public class Article {
+public class Article implements Serializable, Parcelable{
 
 	public enum BomberStatus {
 		GOOD("good"), NORMAL("normal"), BAD("bad");
@@ -37,7 +42,7 @@ public class Article {
 	private String bomberStatus;
 	@SerializedName("hush_count")
 	@Expose
-	private Object hushCount;
+	private Integer hushCount;
 	@Expose
 	private Integer id;
 	@SerializedName("movie_id")
@@ -45,7 +50,7 @@ public class Article {
 	private Integer movieId;
 	@SerializedName("push_count")
 	@Expose
-	private Object pushCount;
+	private Integer pushCount;
 	@Expose
 	private String title;
 	@SerializedName("update_time")
@@ -140,7 +145,7 @@ public class Article {
 	 * @param hushCount
 	 * The hush_count
 	 */
-	public void setHushCount(Object hushCount) {
+	public void setHushCount(Integer hushCount) {
 		this.hushCount = hushCount;
 	}
 
@@ -185,7 +190,7 @@ public class Article {
 	 * @return
 	 * The pushCount
 	 */
-	public Object getPushCount() {
+	public Integer getPushCount() {
 		return pushCount;
 	}
 
@@ -194,7 +199,7 @@ public class Article {
 	 * @param pushCount
 	 * The push_count
 	 */
-	public void setPushCount(Object pushCount) {
+	public void setPushCount(Integer pushCount) {
 		this.pushCount = pushCount;
 	}
 
@@ -252,4 +257,51 @@ public class Article {
 		this.url = url;
 	}
 
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.articleAuthor);
+		dest.writeString(this.articleDate);
+		dest.writeString(this.articleId);
+		dest.writeString(this.bomberStatus);
+		dest.writeValue(this.hushCount);
+		dest.writeValue(this.id);
+		dest.writeValue(this.movieId);
+		dest.writeValue(this.pushCount);
+		dest.writeString(this.title);
+		dest.writeString(this.updateTime);
+		dest.writeString(this.url);
+	}
+
+	public Article() {
+	}
+
+	private Article(Parcel in) {
+		this.articleAuthor = in.readString();
+		this.articleDate = in.readString();
+		this.articleId = in.readString();
+		this.bomberStatus = in.readString();
+		this.hushCount = (Integer)in.readValue(Integer.class.getClassLoader());
+		this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.movieId = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.pushCount = (Integer)in.readValue(Integer.class.getClassLoader());
+		this.title = in.readString();
+		this.updateTime = in.readString();
+		this.url = in.readString();
+	}
+
+	public static final Creator<Article> CREATOR = new Creator<Article>() {
+		public Article createFromParcel(Parcel source) {
+			return new Article(source);
+		}
+
+		public Article[] newArray(int size) {
+			return new Article[size];
+		}
+	};
 }

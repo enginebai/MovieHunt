@@ -12,8 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.moviebomber.R;
+import com.moviebomber.model.api.Article;
 import com.moviebomber.ui.fragment.PttCommentFragment;
 import com.moviebomber.ui.fragment.YahooCommentFragment;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,6 +35,8 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 	@InjectView(R.id.pager_comment)
 	ViewPager mPagerComment;
 
+	private ArrayList<Article> mArticleList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +46,9 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 		if (this.getSupportActionBar() != null) {
 			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+
+		if (getIntent().getParcelableArrayListExtra(PttCommentFragment.EXTRA_PTT_COMMENTS) != null)
+			this.mArticleList = getIntent().getParcelableArrayListExtra(PttCommentFragment.EXTRA_PTT_COMMENTS);
 
 		CommentPagerAdapter adapter = new CommentPagerAdapter(this.getSupportFragmentManager(), this);
 		this.mPagerComment.setAdapter(adapter);
@@ -116,7 +124,7 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 		@Override
 		public Fragment getItem(int position) {
 			if (position == 0)
-				return PttCommentFragment.newInstance();
+				return PttCommentFragment.newInstance(mArticleList);
 			else
 				return YahooCommentFragment.newInstance();
 		}
