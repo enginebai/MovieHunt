@@ -2,6 +2,7 @@ package com.moviebomber.ui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import com.github.pavlospt.CircleView;
 import com.moviebomber.R;
 import com.moviebomber.model.api.Article;
-import com.moviebomber.ui.view.WebViewDialog;
+import com.moviebomber.ui.activity.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +81,9 @@ public class PttCommentFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Article article = mArticleList.get(position);
-				WebViewDialog dialog = new WebViewDialog(getActivity(), article.getUrl());
-				dialog.show();
+				Intent intent = new Intent(getActivity(), WebViewActivity.class);
+				intent.putExtra(WebViewActivity.EXTRA_URL, article.getUrl());
+				startActivity(intent);
 			}
 		});
 		this.setupHeader();

@@ -56,6 +56,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.moviebomber.ui.activity.MovieDetailActivity" />
         </activity>
+        <activity
+            android:name=".ui.activity.WebViewActivity"
+            android:label="@string/title_activity_web_view">
+        </activity>
     </application>
 
 </manifest>

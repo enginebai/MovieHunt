@@ -72,5 +72,6 @@
 
     <string name="tab_comment_ptt">PTT電影版</string>
     <string name="tab_comment_yahoo">Yahoo電影短評</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
 
 </resources>
