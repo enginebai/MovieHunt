@@ -203,7 +203,36 @@ public class MovieListItem implements Comparable<MovieListItem> {
 		public static Comparator<MovieListItem> Latest = new Comparator<MovieListItem>() {
 			@Override
 			public int compare(MovieListItem o1, MovieListItem o2) {
-				return 0;
+				if (o1.getReleaseDate().before(o2.getReleaseDate()))
+					return 1;
+				else if (o1.getReleaseDate().equals(o2.getReleaseDate()))
+					return 0;
+				else
+					return -1;
+			}
+		};
+
+		public static Comparator<MovieListItem> Oldest = new Comparator<MovieListItem>() {
+			@Override
+			public int compare(MovieListItem o1, MovieListItem o2) {
+				if (o1.getReleaseDate().after(o2.getReleaseDate()))
+					return 1;
+				else if (o1.getReleaseDate().equals(o2.getReleaseDate()))
+					return 0;
+				else
+					return -1;
+			}
+		};
+
+		public static Comparator<MovieListItem> Bomber = new Comparator<MovieListItem>() {
+			@Override
+			public int compare(MovieListItem o1, MovieListItem o2) {
+				if (o1.getGoodBomber() > o2.getGoodBomber())
+					return -1;
+				else if (o1.getGoodBomber() == o2.getGoodBomber())
+					return 0;
+				else
+					return 1;
 			}
 		};
 	}

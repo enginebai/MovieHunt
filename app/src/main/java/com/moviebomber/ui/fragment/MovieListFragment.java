@@ -34,6 +34,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -56,6 +58,8 @@ public class MovieListFragment extends Fragment {
 	private int mCurrentPage = 1;
 	private boolean mLoadingMore = false;
 	private boolean mShouldLoadMore = false;
+
+	private Comparator<MovieListItem> mComparator = MovieListItem.Comparators.Latest;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -176,6 +180,7 @@ public class MovieListFragment extends Fragment {
 							item.setBadRate((float)badBomber / (float)totalBomber);
 							movieList.add(item);
 						}
+						Collections.sort(movieList, mComparator);
 						mAdapter.getMovieList().addAll(movieList);
 					} else {
 						if (mAdapter.getMovieList().size() <= 0)
