@@ -17,8 +17,10 @@ import com.moviebomber.ui.activity.MainActivity;
 import com.moviebomber.ui.activity.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -74,8 +76,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		}
 		holder.mTextDuration.setText(this.mContext.getResources().getString(R.string.text_duration)
 				+ ": " + movieItem.getDuration());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.TAIWAN);
 		holder.mTextReleaseDate.setText(this.mContext.getResources().getString(R.string.text_release_date)
-				+ ": " + movieItem.getReleaseDate());
+				+ ": " + dateFormat.format(movieItem.getReleaseDate()));
 
 		holder.mCardMovie.setOnClickListener(new View.OnClickListener() {
 			@Override

@@ -44,6 +44,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="56dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:titleText="title"
         app:titleSize="16sp"
         app:subtitleText=""

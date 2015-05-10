@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -143,7 +144,7 @@ public class MovieListFragment extends Fragment {
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 //				Logger.json(ApiTask.API_LOG_TAG, response.toString());
 				List<MovieListItem> movieList = new ArrayList<>();
-				Gson gson = new Gson();
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 				if (mAdapter == null) {
 					mAdapter = new MovieListAdapter(getActivity(), new ArrayList<MovieListItem>());
 					mListMovie.setAdapter(mAdapter);

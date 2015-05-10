@@ -1,1 +1,1 @@
-include ':app', ':superRecyclerView', ':floatingActionButton'
+include ':app', ':superRecyclerView'

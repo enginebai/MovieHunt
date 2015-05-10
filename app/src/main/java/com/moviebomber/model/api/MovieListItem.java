@@ -4,12 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 
 /**
  * This class is used to store the response of movie list query API.
  * Created by engine on 15/3/29.
  */
-public class MovieListItem {
+public class MovieListItem implements Comparable<MovieListItem> {
 
 	@Expose
 	private String duration;
@@ -17,7 +19,7 @@ public class MovieListItem {
 	private Integer id;
 	@SerializedName("release_date")
 	@Expose
-	private String releaseDate;
+	private Date releaseDate;
 	@SerializedName("thumbnail_path")
 	@Expose
 	private String thumbnailPath;
@@ -79,7 +81,7 @@ public class MovieListItem {
 	 * @return
 	 * The releaseDate
 	 */
-	public String getReleaseDate() {
+	public Date getReleaseDate() {
 		return releaseDate;
 	}
 
@@ -88,7 +90,7 @@ public class MovieListItem {
 	 * @param releaseDate
 	 * The release_date
 	 */
-	public void setReleaseDate(String releaseDate) {
+	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
@@ -190,5 +192,19 @@ public class MovieListItem {
 
 	public void setBadRate(float badRate) {
 		this.badRate = badRate;
+	}
+
+	@Override
+	public int compareTo(MovieListItem another) {
+		return 0;
+	}
+
+	public static class Comparators {
+		public static Comparator<MovieListItem> Latest = new Comparator<MovieListItem>() {
+			@Override
+			public int compare(MovieListItem o1, MovieListItem o2) {
+				return 0;
+			}
+		};
 	}
 }
