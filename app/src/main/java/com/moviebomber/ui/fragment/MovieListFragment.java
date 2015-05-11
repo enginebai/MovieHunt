@@ -20,7 +20,6 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.moviebomber.R;
 import com.moviebomber.adapter.MovieListAdapter;
 import com.moviebomber.model.api.ApiTask;
-import com.moviebomber.model.api.Article;
 import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.model.utils.MovieListTab;
 import com.moviebomber.model.utils.Query;
@@ -34,8 +33,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -58,8 +55,7 @@ public class MovieListFragment extends Fragment {
 	private int mCurrentPage = 1;
 	private boolean mLoadingMore = false;
 	private boolean mShouldLoadMore = false;
-
-	private Comparator<MovieListItem> mComparator = MovieListItem.Comparators.Latest;
+	private MoviePageFragment.SortBy mSortBy = MoviePageFragment.SortBy.LASTEST;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -136,13 +132,24 @@ public class MovieListFragment extends Fragment {
 		});
 	}
 
-	private void loadMovieList() {
-		AsyncHttpClient httpClient = new AsyncHttpClient();
-		String order = Query.OPERATOR_DESC;
-		if (this.mCurrentTab == 2) // coming soon
+	public void loadMovieList() {
+		String order;
+		String url = "";
+		if (this.mSortBy == MoviePageFragment.SortBy.LASTEST) {
+			if (this.mCurrentTab == 2) // coming soon
+				order = Query.OPERATOR_ASC;
+			else
+				order = Query.OPERATOR_DESC;
+			url = formatMovieListRequest(Query.FIELD_RELEASE_DATE, order);
+		} else if (this.mSortBy == MoviePageFragment.SortBy.OLDEST) {
 			order = Query.OPERATOR_ASC;
-		String url = formatMovieListRequest(order);
+			url = formatMovieListRequest(Query.FIELD_RELEASE_DATE, order);
+		} else if (this.mSortBy == MoviePageFragment.SortBy.BOMBER) {
+			order = Query.OPERATOR_DESC;
+			url = formatMovieListRequest(Query.FIELD_GOOD_BOMBER, order);
+		}
 		Logger.d(ApiTask.API_LOG_TAG, url);
+		AsyncHttpClient httpClient = new AsyncHttpClient();
 		httpClient.get(url, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -160,27 +167,13 @@ public class MovieListFragment extends Fragment {
 					if (objects.length() > 0) {
 						for (int i = 0; i < objects.length(); i++) {
 							MovieListItem item = gson.fromJson(objects.getJSONObject(i).toString(), MovieListItem.class);
-							int goodBomber = 0;
-							int normalBomber = 0;
-							int badBomber = 0;
-							for (Article a : item.getArticleList()) {
-								if (a.getBomberStatus().equals(Article.BomberStatus.GOOD.toString()))
-									goodBomber++;
-								else if (a.getBomberStatus().equals(Article.BomberStatus.NORMAL.toString()))
-									normalBomber++;
-								else if (a.getBomberStatus().equals(Article.BomberStatus.BAD.toString()))
-									badBomber++;
-							}
-							item.setGoodBomber(goodBomber);
-							item.setNormalBomber(normalBomber);
-							item.setBadBomber(badBomber);
-							int totalBomber = (goodBomber + normalBomber + badBomber);
-							item.setGoodRate((float)goodBomber / (float)totalBomber);
-							item.setNormalRate((float)normalBomber / (float)totalBomber);
-							item.setBadRate((float)badBomber / (float)totalBomber);
+							int totalBomber =
+									(item.getGoodBomber() + item.getNormalBomber() + item.getBadBomber());
+							item.setGoodRate((float)item.getGoodBomber() / (float)totalBomber);
+							item.setNormalRate((float)item.getNormalBomber() / (float)totalBomber);
+							item.setBadRate((float)item.getBadBomber() / (float)totalBomber);
 							movieList.add(item);
 						}
-						Collections.sort(movieList, mComparator);
 						mAdapter.getMovieList().addAll(movieList);
 					} else {
 						if (mAdapter.getMovieList().size() <= 0)
@@ -211,9 +204,8 @@ public class MovieListFragment extends Fragment {
 		});
 	}
 
-	private String formatMovieListRequest(String order) {
+	private String formatMovieListRequest(String orderField, String orderDirection) {
 		JSONObject q = new JSONObject();
-
 		try {
 			JSONArray filters = new JSONArray();
 			JSONObject filter = new JSONObject();
@@ -223,8 +215,8 @@ public class MovieListFragment extends Fragment {
 			filters.put(filter);
 			JSONArray orderBy = new JSONArray();
 			JSONObject dateSort = new JSONObject();
-			dateSort.put(Query.PARAM_FIELD, Query.FIELD_RELEASE_DATE);
-			dateSort.put(Query.PARAM_DIRECTION, order);
+			dateSort.put(Query.PARAM_FIELD, orderField);
+			dateSort.put(Query.PARAM_DIRECTION, orderDirection);
 			orderBy.put(dateSort);
 			q.put(Query.PARAM_FILTERS, filters);
 			q.put(Query.PARAM_ORDER_BY, orderBy);
@@ -243,5 +235,9 @@ public class MovieListFragment extends Fragment {
 		catch (UnsupportedEncodingException e) {
 			return "";
 		}
+	}
+
+	public void setSortBy(MoviePageFragment.SortBy mSortBy) {
+		this.mSortBy = mSortBy;
 	}
 }

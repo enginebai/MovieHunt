@@ -47,6 +47,9 @@
     <string name="arc_normal_bomber">普通</string>
     <string name="arc_bad_bomber">爛片</string>
     <string name="button_order">立即訂票</string>
+    <string name="fab_sort_lastest">依日期(新到舊)排序</string>
+    <string name="fab_sort_bomber">依好雷數排序</string>
+    <string name="fab_sort_oldest">依日期(舊到新)排序</string>
 
     <!-- movie detail -->
     <string name="fab_share">分享</string>

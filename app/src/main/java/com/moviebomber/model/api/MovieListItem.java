@@ -4,14 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 
 /**
  * This class is used to store the response of movie list query API.
  * Created by engine on 15/3/29.
  */
-public class MovieListItem implements Comparable<MovieListItem> {
+public class MovieListItem {
 
 	@Expose
 	private String duration;
@@ -32,12 +31,18 @@ public class MovieListItem implements Comparable<MovieListItem> {
 	@SerializedName("article_list")
 	@Expose
 	private ArrayList<Article> articleList;
+	@SerializedName("good_bomber")
+	@Expose
+	private int goodBomber;
+	@SerializedName("normal_bomber")
+	@Expose
+	private int normalBomber;
+	@SerializedName("bad_bomber")
+	@Expose
+	private int badBomber;
 
-	private int goodBomber = 0;
 	private float goodRate = 0.0f;
-	private int normalBomber = 0;
 	private float normalRate = 0.0f;
-	private int badBomber = 0;
 	private float badRate = 0.0f;
 
 	/**
@@ -194,46 +199,4 @@ public class MovieListItem implements Comparable<MovieListItem> {
 		this.badRate = badRate;
 	}
 
-	@Override
-	public int compareTo(MovieListItem another) {
-		return 0;
-	}
-
-	public static class Comparators {
-		public static Comparator<MovieListItem> Latest = new Comparator<MovieListItem>() {
-			@Override
-			public int compare(MovieListItem o1, MovieListItem o2) {
-				if (o1.getReleaseDate().before(o2.getReleaseDate()))
-					return 1;
-				else if (o1.getReleaseDate().equals(o2.getReleaseDate()))
-					return 0;
-				else
-					return -1;
-			}
-		};
-
-		public static Comparator<MovieListItem> Oldest = new Comparator<MovieListItem>() {
-			@Override
-			public int compare(MovieListItem o1, MovieListItem o2) {
-				if (o1.getReleaseDate().after(o2.getReleaseDate()))
-					return 1;
-				else if (o1.getReleaseDate().equals(o2.getReleaseDate()))
-					return 0;
-				else
-					return -1;
-			}
-		};
-
-		public static Comparator<MovieListItem> Bomber = new Comparator<MovieListItem>() {
-			@Override
-			public int compare(MovieListItem o1, MovieListItem o2) {
-				if (o1.getGoodBomber() > o2.getGoodBomber())
-					return -1;
-				else if (o1.getGoodBomber() == o2.getGoodBomber())
-					return 0;
-				else
-					return 1;
-			}
-		};
-	}
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.moviebomber.R;
 import com.moviebomber.adapter.MoviePagerAdapter;
 
@@ -22,15 +23,30 @@ import it.neokree.materialtabs.MaterialTabListener;
  * Use the {@link MoviePageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MoviePageFragment extends Fragment implements MaterialTabListener {
+public class MoviePageFragment extends Fragment implements MaterialTabListener, View.OnClickListener {
 
 	public static final int[] TABS = {R.string.tab_movie_thisweek,
 			R.string.tab_movie_intheater, R.string.tab_movie_comingsoon};
+
+	public enum SortBy {
+		LASTEST,
+		OLDEST,
+		BOMBER;
+	}
+
 	@InjectView(R.id.tab_movie_list)
 	MaterialTabHost mTabMoviewList;
-
 	@InjectView(R.id.pager_movie)
 	ViewPager mPagerMovie;
+	@InjectView(R.id.fab_sort_lastest)
+	FloatingActionButton mFabLastest;
+	@InjectView(R.id.fab_sort_oldest)
+	FloatingActionButton mFabOldest;
+	@InjectView(R.id.fab_sort_bomber)
+	FloatingActionButton mFabBomber;
+
+	private MoviePagerAdapter mAdapter;
+	private int mCurrentTab = 0;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -60,7 +76,7 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener {
 
 	private void initView(View rootView) {
 		ButterKnife.inject(this, rootView);
-		MoviePagerAdapter mAdapter = new MoviePagerAdapter(getFragmentManager(), getActivity());
+		mAdapter = new MoviePagerAdapter(getFragmentManager(), getActivity());
 		this.mPagerMovie.setAdapter(mAdapter);
 		this.mPagerMovie.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -71,6 +87,9 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener {
 			@Override
 			public void onPageSelected(int position) {
 				mTabMoviewList.setSelectedNavigationItem(position);
+				MovieListFragment fragment = (MovieListFragment) mAdapter.instantiateItem(mPagerMovie, position);
+				fragment.loadMovieList();
+				mCurrentTab = position;
 			}
 
 			@Override
@@ -83,11 +102,35 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener {
 					.setTabListener(this)
 					.setText(getActivity().getResources().getString(TABS[i])));
 		}
+		this.mFabLastest.setOnClickListener(this);
+		this.mFabOldest.setOnClickListener(this);
+		this.mFabBomber.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		MovieListFragment fragment = (MovieListFragment)mAdapter.instantiateItem(mPagerMovie,
+				this.mCurrentTab);
+		switch (v.getId()) {
+			case R.id.fab_sort_lastest:
+				fragment.setSortBy(SortBy.LASTEST);
+				break;
+			case R.id.fab_sort_oldest:
+				fragment.setSortBy(SortBy.OLDEST);
+				break;
+			case R.id.fab_sort_bomber:
+				fragment.setSortBy(SortBy.BOMBER);
+				break;
+		}
+		
+		fragment.loadMovieList();
 	}
 
 	@Override
 	public void onTabSelected(MaterialTab materialTab) {
-		this.mPagerMovie.setCurrentItem(materialTab.getPosition());
+		int position = materialTab.getPosition();
+		this.mPagerMovie.setCurrentItem(position);
+		this.mCurrentTab = position;
 	}
 
 	@Override

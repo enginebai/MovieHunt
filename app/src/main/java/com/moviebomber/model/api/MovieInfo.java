@@ -75,6 +75,15 @@ public class MovieInfo implements Serializable{
 	@SerializedName("article_list")
 	@Expose
 	private ArrayList<Article> articleList;
+    @SerializedName("good_bomber")
+    @Expose
+    private int goodBomber;
+    @SerializedName("normal_bomber")
+    @Expose
+    private int normalBomber;
+    @SerializedName("bad_bomber")
+    @Expose
+    private int badBomber;
 
     /**
      * 
@@ -469,4 +478,28 @@ public class MovieInfo implements Serializable{
 	public void setArticleList(ArrayList<Article> articleList) {
 		this.articleList = articleList;
 	}
+
+    public int getNormalBomber() {
+        return normalBomber;
+    }
+
+    public void setNormalBomber(int normalBomber) {
+        this.normalBomber = normalBomber;
+    }
+
+    public int getGoodBomber() {
+        return goodBomber;
+    }
+
+    public void setGoodBomber(int goodBomber) {
+        this.goodBomber = goodBomber;
+    }
+
+    public int getBadBomber() {
+        return badBomber;
+    }
+
+    public void setBadBomber(int badBomber) {
+        this.badBomber = badBomber;
+    }
 }

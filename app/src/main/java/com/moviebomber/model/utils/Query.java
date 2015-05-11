@@ -16,6 +16,7 @@ public class Query {
 
 	public static final String FIELD_RELEASE_STATUS = "release_status";
 	public static final String FIELD_RELEASE_DATE = "release_date";
+	public static final String FIELD_GOOD_BOMBER = "good_bomber";
 
 	public static final String OPERATOR_EQUAL = "==";
 	public static final String OPERATOR_DESC = "desc";
