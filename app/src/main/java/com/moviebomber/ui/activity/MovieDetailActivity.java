@@ -260,6 +260,12 @@ public class MovieDetailActivity extends ActionBarActivity
 		int primaryColor = this.getResources().getColor(R.color.primary);
 		float alpha = 1 - (float)Math.max(0, mParallaxImageHeight - 1.5 * scrollY) / mParallaxImageHeight;
 		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, primaryColor));
+		if (mMovieInfo != null) {
+			if (alpha > 0.95)
+				this.mToolbar.setTitle(mMovieInfo.getTitleChinese());
+			else
+				this.mToolbar.setTitle("");
+		}
 
 		// handle image parallex scroll
 		ViewHelper.setTranslationY(this.mImage, scrollY / 4);
