@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.moviebomber.R;
 import com.moviebomber.adapter.MoviePagerAdapter;
 
@@ -31,7 +32,7 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 	public enum SortBy {
 		LASTEST,
 		OLDEST,
-		BOMBER;
+		BOMBER
 	}
 
 	@InjectView(R.id.tab_movie_list)
@@ -44,6 +45,8 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 	FloatingActionButton mFabOldest;
 	@InjectView(R.id.fab_sort_bomber)
 	FloatingActionButton mFabBomber;
+	@InjectView(R.id.fab_menu_sort)
+	FloatingActionsMenu mFabMenuSort;
 
 	private MoviePagerAdapter mAdapter;
 	private int mCurrentTab = 0;
@@ -88,7 +91,7 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 			public void onPageSelected(int position) {
 				mTabMoviewList.setSelectedNavigationItem(position);
 				MovieListFragment fragment = (MovieListFragment) mAdapter.instantiateItem(mPagerMovie, position);
-				fragment.loadMovieList();
+				fragment.loadMovieList(true);
 				mCurrentTab = position;
 			}
 
@@ -122,8 +125,8 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 				fragment.setSortBy(SortBy.BOMBER);
 				break;
 		}
-		
-		fragment.loadMovieList();
+		mFabMenuSort.collapse();
+		fragment.loadMovieList(true);
 	}
 
 	@Override

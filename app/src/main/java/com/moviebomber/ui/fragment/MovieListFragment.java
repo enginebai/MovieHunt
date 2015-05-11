@@ -89,7 +89,7 @@ public class MovieListFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_movie_list, container, false);
 		this.initView(rootView);
-		this.loadMovieList();
+		this.loadMovieList(true);
 		return rootView;
 	}
 
@@ -108,7 +108,7 @@ public class MovieListFragment extends Fragment {
 				if (mAdapter != null)
 					mAdapter.getMovieList().clear();
 				mCurrentPage = 1;
-				loadMovieList();
+				loadMovieList(true);
 			}
 		});
 		this.mListMovie.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -117,7 +117,7 @@ public class MovieListFragment extends Fragment {
 				super.onScrollStateChanged(recyclerView, newState);
 				if (mShouldLoadMore && newState == RecyclerView.SCROLL_STATE_IDLE && !mLoadingMore) {
 					mListMovie.showMoreProgress();
-					loadMovieList();
+					loadMovieList(false);
 				}
 			}
 
@@ -132,7 +132,11 @@ public class MovieListFragment extends Fragment {
 		});
 	}
 
-	public void loadMovieList() {
+	public void loadMovieList(boolean cleanList) {
+		if (cleanList && mAdapter != null) {
+			mAdapter.getMovieList().clear();
+			this.mCurrentPage = 1;
+		}
 		String order;
 		String url = "";
 		if (this.mSortBy == MoviePageFragment.SortBy.LASTEST) {
