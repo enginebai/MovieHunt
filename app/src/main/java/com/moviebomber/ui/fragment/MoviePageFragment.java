@@ -47,6 +47,8 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 	FloatingActionButton mFabBomber;
 	@InjectView(R.id.fab_menu_sort)
 	FloatingActionsMenu mFabMenuSort;
+	@InjectView(R.id.fab_overlay)
+	View mFabOverlay;
 
 	private MoviePagerAdapter mAdapter;
 	private int mCurrentTab = 0;
@@ -105,10 +107,30 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 					.setTabListener(this)
 					.setText(getActivity().getResources().getString(TABS[i])));
 		}
+		this.mFabMenuSort.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+			@Override
+			public void onMenuExpanded() {
+				mFabOverlay.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onMenuCollapsed() {
+				mFabOverlay.setVisibility(View.GONE);
+			}
+		});
 		this.mFabLastest.setOnClickListener(this);
 		this.mFabOldest.setOnClickListener(this);
 		this.mFabBomber.setOnClickListener(this);
+		this.mFabOverlay.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mFabMenuSort.collapse();
+				mFabOverlay.setVisibility(View.GONE);
+			}
+		});
 	}
+
+
 
 	@Override
 	public void onClick(View v) {

@@ -97,8 +97,7 @@ public class MovieListFragment extends Fragment {
 		ButterKnife.inject(this, rootView);
 		this.mListMovie.getSwipeToRefresh().setColorSchemeResources(
 				R.color.primary,
-				R.color.accent,
-				android.R.color.holo_orange_dark);
+				R.color.accent);
 		final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
 		layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 		this.mListMovie.setLayoutManager(layoutManager);
@@ -133,6 +132,7 @@ public class MovieListFragment extends Fragment {
 	}
 
 	public void loadMovieList(boolean cleanList) {
+		this.mListMovie.getSwipeToRefresh().setRefreshing(true);
 		if (cleanList && mAdapter != null) {
 			mAdapter.getMovieList().clear();
 			this.mCurrentPage = 1;
@@ -201,7 +201,6 @@ public class MovieListFragment extends Fragment {
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 				// TODO: fail to get movie list
 				Logger.e((Exception)throwable);
-
 				mListMovie.getSwipeToRefresh().setRefreshing(false);
 				mListMovie.hideMoreProgress();
 			}

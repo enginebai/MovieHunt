@@ -24,7 +24,7 @@
             <!-- origin height = 190 -->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="180dp"
                 android:id="@+id/image_movie_cover"
                 android:contentDescription="@null"
                 android:adjustViewBounds="true"
@@ -39,7 +39,7 @@
                 android:scaleType="fitCenter"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="140dp"/>
+                android:layout_marginTop="145dp"/>
             <!-- origin marginTop = 170 -->
 
             <TextView

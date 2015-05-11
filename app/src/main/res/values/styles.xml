@@ -77,6 +77,13 @@
         <item name="android:background">@android:color/white</item>
         <item name="android:textColor">@color/primary_text</item>
     </style>
+    <style name="FAB">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fab_size">mini</item>
+        <item name="fab_colorNormal">@color/primary</item>
+        <item name="fab_colorPressed">@color/primary_light</item>
+    </style>
 
     <style name="MovieDetailList">
         <item name="android:layout_width">match_parent</item>

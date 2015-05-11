@@ -11,6 +11,7 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="white_pressed">#f1f1f1</color>
+    <color name="fab_overlay">#eef1f1f1</color>
 
     <integer-array name="colors">
         <item>@color/primary</item>
@@ -22,7 +23,6 @@
     <array name="progress_colors">
         <item>@color/primary</item>
         <item>@color/accent</item>
-        <item>@android:color/holo_orange_dark</item>
     </array>
 
     <color name="ripple_orange_light">#FFD180</color>

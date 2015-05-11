@@ -27,7 +27,12 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"/>
-
+    <View
+        android:id="@+id/fab_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/fab_overlay"/>
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_menu_sort"
         android:layout_width="wrap_content"
@@ -45,27 +50,24 @@
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_sort_lastest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@android:color/white"
+            style="@style/FAB"
             fab:fab_title="@string/fab_sort_lastest"
-            fab:fab_colorPressed="@color/white_pressed"/>
+            fab:fab_icon="@drawable/ic_vertical_align_top_white_24dp"
+            />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_sort_oldest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@android:color/white"
+            style="@style/FAB"
             fab:fab_title="@string/fab_sort_oldest"
-            fab:fab_colorPressed="@color/white_pressed"/>
+            fab:fab_icon="@drawable/ic_vertical_align_bottom_white_24dp"
+            />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_sort_bomber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@android:color/white"
+            style="@style/FAB"
             fab:fab_title="@string/fab_sort_bomber"
-            fab:fab_colorPressed="@color/white_pressed"/>
+            fab:fab_icon="@drawable/ic_format_line_spacing_white_24dp"
+            />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

@@ -228,7 +228,7 @@
                 fab:fab_colorPressed="@color/white_pressed"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="265dp"/>
+                android:layout_marginTop="295dp"/>
         </RelativeLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
