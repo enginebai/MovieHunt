@@ -28,8 +28,10 @@ import com.moviebomber.model.api.MovieInfo;
 import com.moviebomber.ui.fragment.PttCommentFragment;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.orhanobut.logger.Logger;
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
+import com.thedazzler.droidicon.IconicFontDrawable;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -67,6 +69,8 @@ public class MovieDetailActivity extends ActionBarActivity
 	ViewStub mViewGenre2;
 	@InjectView(R.id.view_genre3)
 	ViewStub mViewGenre3;
+	@InjectView(R.id.button_read_more)
+	Button mButtonReadMore;
 
 //	@InjectView(R.id.fab_actions)
 //	FloatingActionsMenu fabActionsMenu;
@@ -119,10 +123,7 @@ public class MovieDetailActivity extends ActionBarActivity
 			this.mButtonPhoto.setOnClickListener(this);
 			this.mButtonTrailer.setOnClickListener(this);
 			this.mButtonComment.setOnClickListener(this);
-//			this.fabComment.setOnClickListener(this);
-//			this.fabPhoto.setOnClickListener(this);
-//			this.fabShare.setOnClickListener(this);
-//			this.fabTrailer.setOnClickListener(this);
+			this.setupButtonIcon();
 		}
 	}
 
@@ -146,7 +147,7 @@ public class MovieDetailActivity extends ActionBarActivity
 		});
 	}
 
-	private void displayMovieDetail(MovieInfo movieInfo) {
+	private void displayMovieDetail(final MovieInfo movieInfo) {
 		if (movieInfo.getPhotoList().size() > 0) {
 			int index = (int)(Math.random() * movieInfo.getPhotoList().size());
 			String url = movieInfo.getPhotoList().get(index).getUrl();
@@ -157,8 +158,21 @@ public class MovieDetailActivity extends ActionBarActivity
 		this.mTextTitleChinese.setText(movieInfo.getTitleChinese());
 		this.mTextReleaseDate.setText(this.getResources().getString(R.string.text_release_date) +
 				": " + movieInfo.getReleaseDate());
-		this.mTextDescription.setText(movieInfo.getDescription().length() > 30 ?
+		this.mTextDescription.setText(movieInfo.getDescription().length() > 100 ?
 		movieInfo.getDescription().substring(0, 100) + "..." : movieInfo.getDescription());
+		this.mButtonReadMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Logger.wtf(String.valueOf(mTextDescription.getText().toString().length()));
+				if (mTextDescription.getText().toString().replace("...", "").length() > 100) {
+					mTextDescription.setText(movieInfo.getDescription().substring(0, 100) + "...");
+					mButtonReadMore.setText(getResources().getString(R.string.text_more));
+				} else {
+					mTextDescription.setText(movieInfo.getDescription());
+					mButtonReadMore.setText(getResources().getString(R.string.text_less));
+				}
+			}
+		});
 		this.mTextDuration.setText(this.getResources().getString(R.string.text_duration) +
 				": " + movieInfo.getDuration());
 //		if (movieInfo.getGenreList().size() > 0) {
@@ -261,10 +275,16 @@ public class MovieDetailActivity extends ActionBarActivity
 		float alpha = 1 - (float)Math.max(0, mParallaxImageHeight - 1.5 * scrollY) / mParallaxImageHeight;
 		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, primaryColor));
 		if (mMovieInfo != null) {
-			if (alpha > 0.95)
+			if (alpha > 0.95) {
 				this.mToolbar.setTitle(mMovieInfo.getTitleChinese());
-			else
+				this.mTextTitleChinese.setVisibility(View.INVISIBLE);
+//				ViewPropertyAnimator.animate(this.mTextTitleChinese).alpha(0.0f).setDuration(10).start();
+			}
+			else {
 				this.mToolbar.setTitle("");
+				this.mTextTitleChinese.setVisibility(View.VISIBLE);
+//				ViewPropertyAnimator.animate(this.mTextTitleChinese).alpha(1.0f).setDuration(10).start();
+			}
 		}
 
 		// handle image parallex scroll
@@ -301,12 +321,24 @@ public class MovieDetailActivity extends ActionBarActivity
 
 
 
-	//	private void setupButtonIcon() {
-//		IconicFontDrawable icon = new IconicFontDrawable(this);
-//		icon.setIcon("gmd-dashboard");
-//		icon.setIconColor(this.getResources().getColor(android.R.color.holo_blue_light));
-//		icon.setBounds(0, 0, 64, 64);
-//		mButtonPhoto.setCompoundDrawables(icon, icon, null, null);
-//
-//	}
+	private void setupButtonIcon() {
+		int iconSize = 72;
+		IconicFontDrawable goodBomberIcon = new IconicFontDrawable(this);
+		goodBomberIcon.setIcon("gmd-dashboard");
+		goodBomberIcon.setIconColor(this.getResources().getColor(android.R.color.black));
+		goodBomberIcon.setBounds(0, 0, iconSize, iconSize);
+		mButtonPhoto.setCompoundDrawables(null, goodBomberIcon, null, null);
+
+		IconicFontDrawable normalBomberIcon = new IconicFontDrawable(this);
+		normalBomberIcon.setIcon("gmd-local-movies");
+		normalBomberIcon.setIconColor(this.getResources().getColor(android.R.color.black));
+		normalBomberIcon.setBounds(0, 0, iconSize, iconSize);
+		mButtonTrailer.setCompoundDrawables(null, normalBomberIcon, null, null);
+
+		IconicFontDrawable badBomberIcon = new IconicFontDrawable(this);
+		badBomberIcon.setIcon("gmd-thumbs-up-down");
+		badBomberIcon.setIconColor(this.getResources().getColor(android.R.color.black));
+		badBomberIcon.setBounds(0, 0, iconSize, iconSize);
+		mButtonComment.setCompoundDrawables(null, badBomberIcon, null, null);
+	}
 }

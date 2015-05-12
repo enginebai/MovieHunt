@@ -12,7 +12,7 @@
         android:layout_height="96dp"
         android:padding="8dp"
         android:layout_weight="1"
-        android:src="@drawable/user_cover_a"
+        android:src="@drawable/img_empty"
         android:scaleType="fitCenter"/>
     <TextView
         android:id="@+id/text_trailer_title"

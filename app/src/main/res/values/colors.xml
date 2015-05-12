@@ -31,6 +31,9 @@
     <color name="ripple_pink_light">#F6A5C1</color>
 
     <color name="good_bomber">#fe81ab</color>
+    <color name="good_bomber_ripple">#F8BBD0</color>
     <color name="normal_bomber">#b677d7</color>
+    <color name="normal_bomber_ripple">#E1BEE7</color>
     <color name="bad_bomber">#6372c2</color>
+    <color name="bad_bomber_ripple">#D1C4E9</color>
 </resources>

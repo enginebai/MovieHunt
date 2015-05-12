@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
         android:contentDescription="@null"
-        android:background="@drawable/ic_format_line_spacing_white_24dp"
         />
 
 </com.jpardogo.listbuddies.lib.views.containers.FrameLayoutFeedback>
