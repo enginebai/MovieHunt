@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_trailer_more"
-        android:textColor="@color/accent_light"
-        android:background="@android:color/black"
+        android:textColor="@android:color/white"
         android:textAppearance="?android:textAppearanceMedium"
-        app:rd_rippleColor="@android:color/white"
+        android:background="@color/accent"
+        style="@style/RaiseWaveButtonRippleStyle"
         app:rd_enable="true"
         android:padding="4dp"/>
 </LinearLayout>

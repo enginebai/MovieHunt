@@ -4,7 +4,8 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/primary_material_dark">
+              android:background="@android:color/white"
+              >
 
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/image_trailer_thumbnail"
@@ -20,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.7"
         tools:text="@string/test_movie_name"
-        android:textColor="@android:color/white"
+        android:textColor="@color/primary_text"
         android:gravity="center"
         android:padding="8dp"
         />

@@ -16,16 +16,14 @@
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/parallax_image_height"
-        android:background="?attr/colorPrimary" />
+        android:background="@color/background_material_dark" />
 
     <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/list_trailer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_trailer"
-        android:divider="@android:color/white"
-        android:dividerHeight="1dp"
-        android:headerDividersEnabled="true"/>
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,6 +32,7 @@
 
         <TextView
             style="@style/MovieTitle"
+            android:textSize="20sp"
             tools:text="@string/test_movie_name"
             android:id="@+id/text_trailer_title"
             android:layout_width="match_parent"
@@ -42,6 +41,7 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:minHeight="?attr/actionBarSize"
+            android:background="@color/half_transparent"
             />
         <View
             android:layout_width="match_parent"
@@ -54,8 +54,9 @@
         android:id="@+id/fab_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_colorNormal="@color/youtube"
-        fab:fab_colorPressed="@color/white_pressed"
+        fab:fab_icon="@drawable/ic_play_arrow_white_36dp"
+        fab:fab_colorNormal="@color/wallet_hint_foreground_holo_dark"
+        fab:fab_colorPressed="@color/ripple_material_dark"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"

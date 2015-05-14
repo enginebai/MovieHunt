@@ -204,8 +204,10 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 		int maxTitleTranslationY = (int) (mImageCoverHeight - mTextTitle.getHeight() * scale);
 		int titleTranslationY = maxTitleTranslationY - scrollY;
 		ViewHelper.setTranslationY(mTextTitle, titleTranslationY);
-		ViewHelper.setTranslationY(mFabPlay, scrollY / 5);
-//				ScrollUtils.getFloat(-scrollY, minOverlayTranslationY, 0));
+		ViewHelper.setTranslationY(mFabPlay, scrollY / 4);
+
+		// change alpha of FAB
+		ViewHelper.setAlpha(mFabPlay, ScrollUtils.getFloat(1.0f - (float)scrollY / flexibleRange, 0, 1));
 	}
 
 	@Override
