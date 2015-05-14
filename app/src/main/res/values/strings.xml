@@ -63,7 +63,7 @@
     <string name="text_genre">類型</string>
     <string name="text_director">導演</string>
     <string name="text_actors">領銜主演</string>
-    <string name="text_more">閱讀更多</string>
+    <string name="text_more">展開簡介</string>
     <string name="text_less">收合簡介</string>
     <string name="title_activity_photo_list">PhotoListActivity</string>
 

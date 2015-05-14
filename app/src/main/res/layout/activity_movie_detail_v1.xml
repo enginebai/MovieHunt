@@ -211,15 +211,11 @@
             </LinearLayout>
 
             <TextView
+                style="@style/MovieTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/text_title_chinese"
-                android:fontFamily="@string/font_roboto_medium"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:textSize="24sp"
                 android:background="@color/half_transparent"
-                android:padding="16dp"
                 tools:text="@string/test_movie_name"
                 android:gravity="center_vertical"
                 android:layout_above="@id/layout_movie_content"/>

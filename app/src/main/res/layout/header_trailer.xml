@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-    <com.google.android.youtube.player.YouTubeThumbnailView
+    <ImageView
+        android:id="@+id/image_movie_cover"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:id="@+id/image_trailer"
-        android:layout_alignParentTop="true"
+        android:layout_height="@dimen/parallax_image_height"
         android:src="@drawable/img_empty"
         android:scaleType="centerCrop"
         />
@@ -18,24 +17,14 @@
         android:minHeight="64dp"
         android:id="@+id/text_trailer_title"
         android:layout_centerVertical="true"
-        android:text="@string/test_movie_name"
+        tools:text="@string/test_movie_name"
         android:textStyle="bold"
         android:fontFamily="@string/font_roboto_medium"
         android:textColor="@color/text"
-        android:background="@color/black"
+        android:background="@android:color/black"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@id/image_trailer"
         android:gravity="center_vertical"
         android:padding="16dp"
+        android:layout_alignBottom="@id/image_movie_cover"
         />
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        fab:fab_icon="@drawable/right_arrow"
-        fab:fab_colorNormal="@color/youtube"
-        fab:fab_colorPressed="@color/white_pressed"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="245dp"/>
 </RelativeLayout>

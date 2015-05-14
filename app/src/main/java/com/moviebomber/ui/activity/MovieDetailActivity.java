@@ -44,6 +44,9 @@ public class MovieDetailActivity extends ActionBarActivity
 
 	public static final String EXTRA_MOVIE_ID = "MOVIE_ID";
 	public static final String EXTRA_MOVIE_NAME = "MOVIE_NAME";
+	public static final String EXTRA_MOVIE_DETAIL = "MOVIE_DETAIL";
+	public static final String EXTRA_MOVIE_COVER = "MOVIE_COVER";
+	public static final String EXTRA_MOVIE_POSTER = "MOVIE_POSTER";
 
 	@InjectView(R.id.toolbar)
 	Toolbar mToolbar;
@@ -224,9 +227,11 @@ public class MovieDetailActivity extends ActionBarActivity
 					Intent trailerIntent = new Intent(this, TrailerActivity.class);
 					trailerIntent.putParcelableArrayListExtra(TrailerActivity.EXTRA_TRAILER_LIST,
 							mMovieInfo.getTrailerList());
+					int coverIndex = (int)(Math.random() * mMovieInfo.getPhotoList().size());
+					trailerIntent.putExtra(EXTRA_MOVIE_COVER, mMovieInfo.getPhotoList().get(coverIndex).getUrl());
 					trailerIntent.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
 							mMovieInfo.getPhotoList());
-					trailerIntent.putExtra(EXTRA_MOVIE_NAME, mMovieInfo.getTitleChinese());
+					trailerIntent.putExtra(EXTRA_MOVIE_DETAIL, mMovieInfo);
 					startActivity(trailerIntent);
 				}
 				break;

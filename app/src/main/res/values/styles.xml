@@ -85,6 +85,14 @@
         <item name="fab_colorPressed">@color/primary_light</item>
     </style>
 
+    <style name="MovieTitle">
+        <item name="android:fontFamily">@string/font_roboto_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
     <style name="MovieDetailList">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

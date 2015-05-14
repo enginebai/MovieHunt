@@ -5,27 +5,33 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.moviebomber.R;
+import com.moviebomber.model.api.MovieInfo;
 import com.moviebomber.model.api.Trailer;
+import com.nineoldandroids.view.ViewHelper;
+import com.orhanobut.logger.Logger;
 import com.rey.material.widget.Button;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,16 +41,26 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class TrailerActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class TrailerActivity extends ActionBarActivity implements AdapterView.OnItemClickListener,
+		ObservableScrollViewCallbacks {
 
 	public static final String EXTRA_TRAILER_LIST = "TRAILER";
 	private static final String KEY = "AIzaSyAbR9V_oVGtZ4AEd3Er2ntbwh5zStfAW_s";
 
-	@InjectView(R.id.toolbar)
-	Toolbar mToolbar;
 	@InjectView(R.id.list_trailer)
-	ListView mListTrailer;
+	ObservableListView mListTrailer;
+	@InjectView(R.id.fab_play)
+	FloatingActionButton mFabPlay;
+	@InjectView(R.id.image_movie_cover)
+	ImageView mImageCover;
+	@InjectView(R.id.overlay)
+	View mViewOverlay;
+	@InjectView(R.id.text_trailer_title)
+	TextView mTextTitle;
 
+	private int mImageCoverHeight;
+	private String mImageCoverUrl;
+	private MovieInfo mMovieInfo;
 	private TrailerAdapter mAdapter;
 
 	private Map<View, YouTubeThumbnailLoader> mListThumbnailLoaderMap = new HashMap<>();
@@ -59,14 +75,12 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 			w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 		}
 		ButterKnife.inject(this);
-		this.setSupportActionBar(this.mToolbar);
-		if (this.getSupportActionBar() != null) {
-			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			this.getSupportActionBar().setTitle("");
-		}
 		if (this.getIntent() != null) {
+			this.mImageCoverUrl = this.getIntent().getStringExtra(MovieDetailActivity.EXTRA_MOVIE_COVER);
+			this.mMovieInfo = this.getIntent().getParcelableExtra(MovieDetailActivity.EXTRA_MOVIE_DETAIL);
+			Logger.wtf(this.mMovieInfo.getTitleChinese());
 			List<Trailer> mTrailerList = this.getIntent().getParcelableArrayListExtra(EXTRA_TRAILER_LIST);
-			List<Trailer> newTrailerList = new ArrayList<>();
+			final List<Trailer> newTrailerList = new ArrayList<>();
 			// filter playerlist or user
 			for (Trailer t : mTrailerList) {
 				if (t.getUrl().contains("v="))
@@ -76,7 +90,15 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 				this.mAdapter = new TrailerAdapter(this, R.layout.item_trailer, newTrailerList.subList(1, newTrailerList.size()));
 				this.mListTrailer.setAdapter(mAdapter);
 				this.mListTrailer.setOnItemClickListener(this);
-				this.setupHeader(newTrailerList.get(0));
+//				this.setupHeader();
+				mFabPlay.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(TrailerActivity.this,
+								getVideoId(newTrailerList.get(0).getUrl()), true, false);
+						startActivity(intent);
+					}
+				});
 				View footerView = LayoutInflater.from(this).inflate(R.layout.footer_trailer_button, null);
 				Button buttonSearchMore = (Button) footerView.findViewById(R.id.button_trailer_more);
 				final String movieName = this.getIntent().getStringExtra(MovieDetailActivity.EXTRA_MOVIE_NAME);
@@ -90,6 +112,24 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 				this.mListTrailer.addFooterView(footerView);
 			}
 		}
+		this.mImageCoverHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
+		this.mListTrailer.setScrollViewCallbacks(this);
+
+		// Set padding view for ListView. This is the flexible space.
+		View paddingView = new View(this);
+		AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+				mImageCoverHeight);
+		paddingView.setLayoutParams(lp);
+		// This is required to disable header's list selector effect
+		paddingView.setClickable(true);
+		mListTrailer.addHeaderView(paddingView);
+		if (this.mImageCoverUrl != null) {
+			Picasso.with(mImageCover.getContext())
+					.load(this.mImageCoverUrl)
+					.into(mImageCover);
+		}
+		if (this.mMovieInfo != null)
+			mTextTitle.setText(this.mMovieInfo.getTitleChinese());
 	}
 
 	@Override
@@ -104,66 +144,78 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 		return url.split("=")[1];
 	}
 
-	private void setupHeader(final Trailer trailer) {
+	private void setupHeader() {
 		View headerView = LayoutInflater.from(this).inflate(R.layout.header_trailer, null);
-		YouTubeThumbnailView imageTrailer = (YouTubeThumbnailView)headerView.findViewById(R.id.image_trailer);
-		imageTrailer.initialize(KEY, new YouTubeThumbnailView.OnInitializedListener() {
-			@Override
-			public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-				youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
-					@Override
-					public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-
-					}
-
-					@Override
-					public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
-
-					}
-				});
-				youTubeThumbnailLoader.setVideo(trailer.getUrl().split("=")[1]);
-			}
-
-			@Override
-			public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-
-			}
-		});
+		ImageView imageCover = (ImageView)headerView.findViewById(R.id.image_movie_cover);
+		if (this.mImageCoverUrl != null) {
+			Picasso.with(imageCover.getContext())
+					.load(this.mImageCoverUrl)
+					.into(imageCover);
+		}
+//		YouTubeThumbnailView imageTrailer = (YouTubeThumbnailView)headerView.findViewById(R.id.image_trailer);
+//		imageTrailer.initialize(KEY, new YouTubeThumbnailView.OnInitializedListener() {
+//			@Override
+//			public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+//				youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+//					@Override
+//					public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+//
+//					}
+//
+//					@Override
+//					public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+//
+//					}
+//				});
+//				youTubeThumbnailLoader.setVideo(trailer.getUrl().split("=")[1]);
+//			}
+//
+//			@Override
+//			public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+//
+//			}
+//		});
 		TextView textTitle = (TextView)headerView.findViewById(R.id.text_trailer_title);
-		textTitle.setText(trailer.getTitle().replace("- YouTube", "").trim());
-		FloatingActionButton fabPlay = (FloatingActionButton)headerView.findViewById(R.id.fab_play);
-		fabPlay.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(TrailerActivity.this,
-						getVideoId(trailer.getUrl()), true, false);
-				startActivity(intent);
-			}
-		});
+		if (this.mMovieInfo != null)
+			textTitle.setText(this.mMovieInfo.getTitleChinese());
 		this.mListTrailer.addHeaderView(headerView);
 	}
 
-
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_trailer, menu);
-		return true;
+	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+		int actionbarSize = getResources().getDimensionPixelSize(R.dimen.actionbar_height);
+		float flexibleRange = mImageCoverHeight - actionbarSize;
+		int minOverlayTranslationY = actionbarSize - mViewOverlay.getHeight();
+
+		// translate over and image
+		ViewHelper.setTranslationY(mViewOverlay, ScrollUtils.getFloat(-scrollY, minOverlayTranslationY, 0));
+		ViewHelper.setTranslationY(mImageCover, ScrollUtils.getFloat(-scrollY / 2, minOverlayTranslationY, 0));
+
+		// Change alpha of overlay
+		ViewHelper.setAlpha(mViewOverlay, ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
+
+//		// Scale title text
+		float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, 0.3f);
+		ViewHelper.setPivotY(mTextTitle, 0);
+		ViewHelper.setScaleX(mTextTitle, scale);
+		ViewHelper.setScaleY(mTextTitle, scale);
+
+		// Translate title text
+		int maxTitleTranslationY = (int) (mImageCoverHeight - mTextTitle.getHeight() * scale);
+		int titleTranslationY = maxTitleTranslationY - scrollY;
+		ViewHelper.setTranslationY(mTextTitle, titleTranslationY);
+		ViewHelper.setTranslationY(mFabPlay, scrollY / 5);
+//				ScrollUtils.getFloat(-scrollY, minOverlayTranslationY, 0));
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
+	public void onDownMotionEvent() {
 
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
-		}
+	}
 
-		return super.onOptionsItemSelected(item);
+	@Override
+	public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+
 	}
 
 	class TrailerAdapter extends ArrayAdapter<Trailer> implements YouTubeThumbnailView.OnInitializedListener {

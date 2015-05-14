@@ -1,16 +1,64 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
+             xmlns:fab="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.moviebomber.ui.activity.TrailerActivity">
 
-    <ListView
+    <ImageView
+        android:id="@+id/image_movie_cover"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/parallax_image_height"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_empty" />
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/parallax_image_height"
+        android:background="?attr/colorPrimary" />
+
+    <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/list_trailer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/item_trailer"/>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_trailer"
+        android:divider="@android:color/white"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="true"/>
 
-    <include
-        layout="@layout/toolbar_overlay"
-        android:id="@+id/toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/MovieTitle"
+            tools:text="@string/test_movie_name"
+            android:id="@+id/text_trailer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:minHeight="?attr/actionBarSize"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/parallax_image_height"
+            android:background="@android:color/transparent" />
+
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="@color/youtube"
+        fab:fab_colorPressed="@color/white_pressed"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="bottom|right"/>
+
 </FrameLayout>

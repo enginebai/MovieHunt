@@ -40,13 +40,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         fab:fab_addButtonColorNormal="@color/primary"
         fab:fab_addButtonColorPressed="@color/primary_light"
         fab:fab_addButtonPlusIconColor="@android:color/white"
         fab:fab_labelStyle="@style/FloatingActionBarTextMenu"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp">
+        >
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_sort_lastest"

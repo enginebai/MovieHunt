@@ -1,13 +1,15 @@
 
 package com.moviebomber.model.api;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MovieInfo implements Serializable{
+public class MovieInfo implements Parcelable {
 
 	public static final String TABLE_NAME = "movie_info";
 
@@ -502,4 +504,82 @@ public class MovieInfo implements Serializable{
     public void setBadBomber(int badBomber) {
         this.badBomber = badBomber;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.actorList);
+        dest.writeString(this.contentRating);
+        dest.writeString(this.description);
+        dest.writeString(this.director);
+        dest.writeString(this.duration);
+        dest.writeString(this.film);
+        dest.writeSerializable(this.genreList);
+        dest.writeValue(this.id);
+        dest.writeString(this.imdbUrl);
+        dest.writeString(this.officialWebsite);
+        dest.writeSerializable(this.photoList);
+        dest.writeString(this.photoListUrl);
+        dest.writeString(this.releaseDate);
+        dest.writeString(this.releaseStatus);
+        dest.writeString(this.thumbnailUrl);
+        dest.writeString(this.thumbnailPath);
+        dest.writeString(this.titleChinese);
+        dest.writeString(this.titleEnglish);
+        dest.writeSerializable(this.trailerList);
+        dest.writeString(this.trailerListUrl);
+        dest.writeString(this.yahooDetailId);
+        dest.writeString(this.yahooDetailUrl);
+        dest.writeSerializable(this.articleList);
+        dest.writeInt(this.goodBomber);
+        dest.writeInt(this.normalBomber);
+        dest.writeInt(this.badBomber);
+    }
+
+    public MovieInfo() {
+    }
+
+    private MovieInfo(Parcel in) {
+        this.actorList = (ArrayList<Actor>) in.readSerializable();
+        this.contentRating = in.readString();
+        this.description = in.readString();
+        this.director = in.readString();
+        this.duration = in.readString();
+        this.film = in.readString();
+        this.genreList = (ArrayList<Genre>) in.readSerializable();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.imdbUrl = in.readString();
+        this.officialWebsite = in.readString();
+        this.photoList = (ArrayList<Photo>) in.readSerializable();
+        this.photoListUrl = in.readString();
+        this.releaseDate = in.readString();
+        this.releaseStatus = in.readString();
+        this.thumbnailUrl = in.readString();
+        this.thumbnailPath = in.readString();
+        this.titleChinese = in.readString();
+        this.titleEnglish = in.readString();
+        this.trailerList = (ArrayList<Trailer>) in.readSerializable();
+        this.trailerListUrl = in.readString();
+        this.yahooDetailId = in.readString();
+        this.yahooDetailUrl = in.readString();
+        this.articleList = (ArrayList<Article>) in.readSerializable();
+        this.goodBomber = in.readInt();
+        this.normalBomber = in.readInt();
+        this.badBomber = in.readInt();
+    }
+
+    public static final Creator<MovieInfo> CREATOR = new Creator<MovieInfo>() {
+        public MovieInfo createFromParcel(Parcel source) {
+            return new MovieInfo(source);
+        }
+
+        public MovieInfo[] newArray(int size) {
+            return new MovieInfo[size];
+        }
+    };
 }

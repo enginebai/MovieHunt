@@ -20,4 +20,6 @@
 
     <dimen name="parallax_image_height">330dp</dimen>
 
+    <dimen name="actionbar_height">56dp</dimen>
+    <dimen name="movie_title_size">24sp</dimen>
 </resources>
