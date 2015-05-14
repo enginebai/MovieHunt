@@ -251,6 +251,7 @@ public class MovieDetailActivity extends ActionBarActivity
 				Intent intent = new Intent(MovieDetailActivity.this, CommentActivity.class);
 				intent.putParcelableArrayListExtra(PttCommentFragment.EXTRA_PTT_COMMENTS,
 						mMovieInfo.getArticleList());
+				intent.putExtra(EXTRA_MOVIE_NAME, mMovieInfo.getTitleChinese());
 				startActivity(intent);
 				break;
 

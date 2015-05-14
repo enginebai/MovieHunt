@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -53,6 +52,7 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 		this.setSupportActionBar(this.mToolbar);
 		if (this.getSupportActionBar() != null) {
 			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			this.getSupportActionBar().setTitle(getIntent().getStringExtra(MovieDetailActivity.EXTRA_MOVIE_NAME));
 		}
 
 		if (getIntent().getParcelableArrayListExtra(PttCommentFragment.EXTRA_PTT_COMMENTS) != null)
@@ -99,13 +99,6 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_comment, menu);
-		return true;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
@@ -113,9 +106,6 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
-		}
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -139,7 +129,7 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 1;
 		}
 	}
 }
