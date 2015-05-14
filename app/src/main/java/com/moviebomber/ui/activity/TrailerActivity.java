@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -31,6 +30,7 @@ import com.moviebomber.model.api.Trailer;
 import com.nineoldandroids.view.ViewHelper;
 import com.orhanobut.logger.Logger;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -147,11 +147,11 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 	private void playTrailer(int position) {
 		Trailer trailer = this.mAdapter.getItem(position);
 		Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(this,
-				getVideoId(trailer.getUrl()), true, false);
+				getVideoId(trailer.getUrl()), true, true);
 		startActivity(intent);
 	}
 
-	private static String getVideoId(String url) {
+	public static String getVideoId(String url) {
 		return url.split("=")[1];
 	}
 

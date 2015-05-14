@@ -15,11 +15,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.google.android.youtube.player.YouTubeIntents;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -30,6 +30,7 @@ import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.orhanobut.logger.Logger;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 import com.thedazzler.droidicon.IconicFontDrawable;
 
@@ -127,6 +128,7 @@ public class MovieDetailActivity extends ActionBarActivity
 			this.mButtonTrailer.setOnClickListener(this);
 			this.mButtonComment.setOnClickListener(this);
 			this.setupButtonIcon();
+			this.mFabOrder.setOnClickListener(this);
 		}
 	}
 
@@ -250,6 +252,15 @@ public class MovieDetailActivity extends ActionBarActivity
 				intent.putParcelableArrayListExtra(PttCommentFragment.EXTRA_PTT_COMMENTS,
 						mMovieInfo.getArticleList());
 				startActivity(intent);
+				break;
+
+			case R.id.fab_order:
+				if (mMovieInfo.getTrailerList().size() >= 1) {
+					Intent trailerIntent = YouTubeIntents.createPlayVideoIntentWithOptions(this,
+							TrailerActivity.getVideoId(mMovieInfo.getTrailerList().get(0).getUrl()),
+							true, true);
+					startActivity(trailerIntent);
+				}
 				break;
 		}
 //		this.fabActionsMenu.collapse();
