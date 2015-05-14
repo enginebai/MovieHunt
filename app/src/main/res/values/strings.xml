@@ -19,6 +19,9 @@
     <string name="text_normal_bomber">普雷</string>
     <string name="text_bad_bomber">負雷</string>
     <string name="photo_resize">500</string>
+    <string name="text_padding">開發者知道各位電影愛好者有這些功能需求，目前正在趕工中，敬請期待，謝謝你們的支持！！</string>
+    <string name="button_blog">前往開發者部落格</string>
+    <string name="blog">http://enginebai.logdown.com</string>
 
     <!-- api -->
     <string name="api_host">http://c63.us.to:5000</string>
@@ -46,7 +49,7 @@
     <string name="arc_good_bomber">推薦</string>
     <string name="arc_normal_bomber">普通</string>
     <string name="arc_bad_bomber">爛片</string>
-    <string name="button_order">立即訂票</string>
+    <string name="button_order">觀看詳情</string>
     <string name="fab_sort_lastest">依日期(新到舊)排序</string>
     <string name="fab_sort_bomber">依好雷數排序</string>
     <string name="fab_sort_oldest">依日期(舊到新)排序</string>

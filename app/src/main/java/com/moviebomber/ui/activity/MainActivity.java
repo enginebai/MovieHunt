@@ -1,6 +1,8 @@
 package com.moviebomber.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import android.view.WindowManager;
 import com.moviebomber.R;
 import com.moviebomber.ui.fragment.MoviePageFragment;
 import com.moviebomber.ui.fragment.NavigationDrawerFragment;
+import com.rey.material.widget.Button;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 				fragmentTag = MoviePageFragment.class.getSimpleName();
 				break;
 			default:
-				fragment = PlaceholderFragment.newInstance(position + 1);
+				fragment = PlaceholderFragment.newInstance();
 				fragmentTag = PlaceholderFragment.class.getSimpleName();
 		}
 		fragmentTransaction
@@ -135,31 +138,40 @@ public class MainActivity extends AppCompatActivity
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		private static final String ARG_SECTION_NUMBER = "section_number";
+
+		@InjectView(R.id.button_blog)
+		Button mButtonBlog;
 
 		/**
 		 * Returns a new instance of this fragment for the given section
 		 * number.
 		 */
-		public static PlaceholderFragment newInstance(int sectionNumber) {
+		public static PlaceholderFragment newInstance() {
 			PlaceholderFragment fragment = new PlaceholderFragment();
 			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 			fragment.setArguments(args);
 			return fragment;
 		}
-
 		public PlaceholderFragment() {
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		                         Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+			View rootView = inflater.inflate(R.layout.fragment_padding, container, false);
+			ButterKnife.inject(this, rootView);
+			mButtonBlog.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+							getActivity().getResources().getString(R.string.blog)));
+					startActivity(intent);
+					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+					FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+					fragmentTransaction.replace(R.id.container, MoviePageFragment.newInstance())
+							.commit();
+				}
+			});
 			return rootView;
 		}
 	}
