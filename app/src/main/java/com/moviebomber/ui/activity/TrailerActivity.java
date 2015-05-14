@@ -120,6 +120,13 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 		AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
 				mImageCoverHeight);
 		paddingView.setLayoutParams(lp);
+		paddingView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mAdapter.getCount() >= 1)
+					playTrailer(0);
+			}
+		});
 		// This is required to disable header's list selector effect
 		paddingView.setClickable(true);
 		mListTrailer.addHeaderView(paddingView);
@@ -134,6 +141,10 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		playTrailer(position);
+	}
+
+	private void playTrailer(int position) {
 		Trailer trailer = this.mAdapter.getItem(position);
 		Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(this,
 				getVideoId(trailer.getUrl()), true, false);
