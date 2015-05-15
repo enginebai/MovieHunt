@@ -145,5 +145,10 @@
         <item name="rd_rightPadding">1dp</item>
         <item name="rd_bottomPadding">2dp</item>
     </style>
-
+	<style name="Ripple">
+		<item name="mrl_rippleOverlay">true</item>
+		<item name="mrl_rippleDuration">400</item>
+		<item name="mrl_rippleRoundedCorners">10dp</item>
+		<item name="mrl_rippleDelayClick">true</item>
+	</style>
 </resources>

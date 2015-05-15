@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.ui.activity.MainActivity;
 import com.moviebomber.ui.activity.MovieDetailActivity;
+import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -80,21 +82,31 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		holder.mTextReleaseDate.setText(this.mContext.getResources().getString(R.string.text_release_date)
 				+ ": " + dateFormat.format(movieItem.getReleaseDate()));
 
-		holder.mCardMovie.setOnClickListener(new View.OnClickListener() {
+		holder.mRipple.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
-				movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movieItem.getId());
-				mContext.startActivity(movieDetail);
+				showMovieDetail(movieItem.getId());
+			}
+		});
+		holder.mButtonOrder.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showMovieDetail(movieItem.getId());
 			}
 		});
 
 		holder.mTextGoodBomber.setText(String.valueOf(movieItem.getGoodBomber()));
 		holder.mTextNormalBomber.setText(String.valueOf(movieItem.getNormalBomber()));
 		holder.mTextBadBomber.setText(String.valueOf(movieItem.getBadBomber()));
-		holder.mProgressGoodBomber.setProgress((int)(movieItem.getGoodRate() * 100));
-		holder.mProgressNormalBomber.setProgress((int)(movieItem.getNormalRate() * 100));
-		holder.mProgressBadBomber.setProgress((int)(movieItem.getBadRate() * 100));
+		holder.mProgressGoodBomber.setProgress((int) (movieItem.getGoodRate() * 100));
+		holder.mProgressNormalBomber.setProgress((int) (movieItem.getNormalRate() * 100));
+		holder.mProgressBadBomber.setProgress((int) (movieItem.getBadRate() * 100));
+	}
+
+	private void showMovieDetail(int id) {
+		Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
+		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, id);
+		mContext.startActivity(movieDetail);
 	}
 
 	@Override
@@ -105,6 +117,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 	class MovieListItemHolder extends RecyclerView.ViewHolder {
 		@InjectView(R.id.card_movie_list_item)
 		CardView mCardMovie;
+		@InjectView(R.id.ripple)
+		MaterialRippleLayout mRipple;
 
 		@InjectView(R.id.image_movie_cover)
 		ImageView mImageMovieCover;
@@ -131,6 +145,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		TextView mTextBadBomber;
 		@InjectView(R.id.progress_bad_bomber)
 		ArcProgress mProgressBadBomber;
+		@InjectView(R.id.button_order)
+		Button mButtonOrder;
 
 		MovieListItemHolder(View itemView) {
 			super(itemView);

@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/image_movie_cover"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/parallax_image_height"
-        android:src="@drawable/img_empty"
-        android:scaleType="centerCrop"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="64dp"
-        android:id="@+id/text_trailer_title"
-        android:layout_centerVertical="true"
-        tools:text="@string/test_movie_name"
-        android:textStyle="bold"
-        android:fontFamily="@string/font_roboto_medium"
-        android:textColor="@color/text"
-        android:background="@android:color/black"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:layout_alignBottom="@id/image_movie_cover"
-        />
-</RelativeLayout>
+<com.balysv.materialripple.MaterialRippleLayout
+    android:id="@+id/ripple"
+    style="@style/Ripple"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:mrl_rippleBackground="@android:color/white"
+    app:mrl_rippleColor="@color/primary_material_dark"
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_movie_cover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/parallax_image_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_empty"
+            />
+
+        <TextView
+            android:id="@+id/text_trailer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/image_movie_cover"
+            android:layout_centerVertical="true"
+            android:background="@android:color/black"
+            android:fontFamily="@string/font_roboto_medium"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:padding="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text"
+            android:textStyle="bold"
+            tools:text="@string/test_movie_name"
+            />
+    </RelativeLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

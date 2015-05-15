@@ -228,6 +228,7 @@
                 app:fab_backgroundColor="@color/accent"
                 app:fab_elevation="4dp"
                 app:rd_rippleColor="@color/accent_light"
+                app:fab_animDuration="350"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="295dp"/>

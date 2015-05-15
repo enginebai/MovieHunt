@@ -1,29 +1,42 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             xmlns:fab="http://schemas.android.com/apk/res-auto"
              xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.moviebomber.ui.activity.TrailerActivity">
 
-    <ImageView
-        android:id="@+id/image_movie_cover"
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/ripple"
+        style="@style/Ripple"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/parallax_image_height"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_empty" />
+        app:mrl_rippleBackground="@android:color/white"
+        app:mrl_rippleColor="@color/primary_material_dark"
+        >
+
+        <ImageView
+            android:id="@+id/image_movie_cover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/parallax_image_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_empty"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
 
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/parallax_image_height"
-        android:background="@color/background_material_dark" />
+        android:background="@color/background_material_dark"/>
 
     <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/list_trailer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_trailer"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
         />
 
     <LinearLayout
@@ -32,38 +45,39 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/MovieTitle"
-            android:textSize="20sp"
-            tools:text="@string/test_movie_name"
             android:id="@+id/text_trailer_title"
+            style="@style/MovieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/half_transparent"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/half_transparent"
+            android:textSize="20sp"
+            tools:text="@string/test_movie_name"
             />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/parallax_image_height"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 
     <com.rey.material.widget.FloatingActionButton
-        style="@style/Material.Drawable.Ripple.Touch.Light"
         android:id="@+id/fab_play"
+        style="@style/Material.Drawable.Ripple.Touch.Light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fab_iconSrc="@drawable/ic_play_arrow_white_36dp"
-        app:fab_backgroundColor="@color/wallet_hint_foreground_holo_dark"
-        app:fab_elevation="4dp"
-        app:rd_rippleColor="@color/ripple_material_dark"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:fab_backgroundColor="@color/wallet_hint_foreground_holo_dark"
+        app:fab_elevation="4dp"
+        app:fab_iconSrc="@drawable/ic_play_arrow_white_36dp"
+        app:rd_rippleColor="@color/ripple_material_dark"
         />
 
 </FrameLayout>

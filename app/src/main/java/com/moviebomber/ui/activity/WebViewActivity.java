@@ -1,14 +1,11 @@
 package com.moviebomber.ui.activity;
 
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,7 +35,7 @@ public class WebViewActivity extends ActionBarActivity {
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			mProgressDialog = new MaterialDialog.Builder(view.getContext())
-					.title(R.string.app_name)
+					.title(getResources().getString(R.string.app_name_chinese))
 					.content(R.string.loading)
 					.progress(true, 0)
 					.show();

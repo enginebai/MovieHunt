@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@android:color/white"
-              >
+<com.balysv.materialripple.MaterialRippleLayout
+    android:id="@+id/ripple"
+    style="@style/Ripple"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:mrl_rippleBackground="@android:color/white"
+    app:mrl_rippleColor="@color/primary_material_dark"
+    >
 
-    <com.google.android.youtube.player.YouTubeThumbnailView
-        android:id="@+id/image_trailer_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:padding="8dp"
-        android:layout_weight="1"
-        android:src="@drawable/img_empty"
-        android:scaleType="fitCenter"/>
-    <TextView
-        android:id="@+id/text_trailer_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.7"
-        tools:text="@string/test_movie_name"
-        android:textColor="@color/primary_text"
-        android:gravity="center"
-        android:padding="8dp"
-        />
-</LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@android:color/white"
+                  android:orientation="horizontal">
+
+        <com.google.android.youtube.player.YouTubeThumbnailView
+            android:id="@+id/image_trailer_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_empty"/>
+
+        <TextView
+            android:id="@+id/text_trailer_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/primary_text"
+            tools:text="@string/test_movie_name"
+            />
+    </LinearLayout>
+</com.balysv.materialripple.MaterialRippleLayout>
