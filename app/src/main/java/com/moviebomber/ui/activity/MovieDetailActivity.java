@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -76,6 +77,8 @@ public class MovieDetailActivity extends ActionBarActivity
 	@InjectView(R.id.button_read_more)
 	Button mButtonReadMore;
 
+	private MaterialDialog mProgressDialog;
+
 //	@InjectView(R.id.fab_actions)
 //	FloatingActionsMenu fabActionsMenu;
 //	@InjectView(R.id.fab_comment)
@@ -133,6 +136,11 @@ public class MovieDetailActivity extends ActionBarActivity
 	}
 
 	private void queryMovieDetail() {
+		mProgressDialog = new MaterialDialog.Builder(this)
+				.title(getResources().getString(R.string.app_name_chinese))
+				.content(R.string.loading)
+				.progress(true, 0)
+				.show();
 		AsyncHttpClient httpClient = new AsyncHttpClient();
 		httpClient.get(String.format("%s%s/%s/%d", this.getResources().getString(R.string.api_host),
 				this.getResources().getString(R.string.api_root),
@@ -142,12 +150,16 @@ public class MovieDetailActivity extends ActionBarActivity
 				super.onSuccess(statusCode, headers, response);
 				Gson gson = new Gson();
 				mMovieInfo = gson.fromJson(response.toString(), MovieInfo.class);
+				if (mProgressDialog != null)
+					mProgressDialog.dismiss();
 				displayMovieDetail(mMovieInfo);
 			}
 
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 				super.onFailure(statusCode, headers, throwable, errorResponse);
+				if (mProgressDialog != null)
+					mProgressDialog.dismiss();
 			}
 		});
 	}
