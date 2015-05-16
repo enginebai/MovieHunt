@@ -84,6 +84,7 @@ public class PttCommentFragment extends Fragment {
 				Intent intent = new Intent(getActivity(), WebViewActivity.class);
 				intent.putExtra(WebViewActivity.EXTRA_URL, article.getUrl());
 				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
 		this.setupHeader();

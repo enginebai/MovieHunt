@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -104,10 +105,19 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-
+		if (id == android.R.id.home) {
+			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+		}
 		//noinspection SimplifiableIfStatement
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	}
 
 	class CommentPagerAdapter extends FragmentStatePagerAdapter {

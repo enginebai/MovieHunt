@@ -3,6 +3,7 @@ package com.moviebomber.ui.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -106,7 +107,6 @@ public class MovieDetailActivity extends ActionBarActivity
 	private int mMovieId;
 	private MovieInfo mMovieInfo;
 	private int mParallaxImageHeight;
-	private ShareActionProvider mShareActionProvider;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -256,6 +256,7 @@ public class MovieDetailActivity extends ActionBarActivity
 							mMovieInfo.getPhotoList());
 					trailerIntent.putExtra(EXTRA_MOVIE_DETAIL, mMovieInfo);
 					startActivity(trailerIntent);
+					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 				}
 				break;
 			case R.id.button_photo:
@@ -265,6 +266,7 @@ public class MovieDetailActivity extends ActionBarActivity
 					photoList.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
 							mMovieInfo.getPhotoList());
 					startActivity(photoList);
+					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 				}
 				break;
 
@@ -274,6 +276,7 @@ public class MovieDetailActivity extends ActionBarActivity
 						mMovieInfo.getArticleList());
 				intent.putExtra(EXTRA_MOVIE_NAME, mMovieInfo.getTitleChinese());
 				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 				break;
 
 			case R.id.fab_order:
@@ -293,7 +296,7 @@ public class MovieDetailActivity extends ActionBarActivity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_movie_detail, menu);
 		MenuItem shareItem = menu.findItem(R.id.menu_item_share);
-		this.mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+		ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
 		if (mShareActionProvider != null)
 			mShareActionProvider.setShareIntent(getShareIntent());
 		else {
@@ -310,7 +313,17 @@ public class MovieDetailActivity extends ActionBarActivity
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	}
 
 	private Intent getShareIntent() {

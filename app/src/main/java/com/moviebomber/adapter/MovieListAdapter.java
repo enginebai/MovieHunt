@@ -1,5 +1,6 @@
 package com.moviebomber.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -107,7 +108,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, id);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_NAME, name);
-		mContext.startActivity(movieDetail);
+		Activity activity = (Activity)mContext;
+		activity.startActivity(movieDetail);
+		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 
 	@Override

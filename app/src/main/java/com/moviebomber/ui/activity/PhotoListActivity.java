@@ -2,6 +2,7 @@ package com.moviebomber.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -73,7 +74,19 @@ public class PhotoListActivity extends ActionBarActivity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+
+		if (id == android.R.id.home) {
+			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+		}
 		return super.onOptionsItemSelected(item);
+	}
+
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	}
 
 	@Override

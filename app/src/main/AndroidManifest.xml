@@ -43,6 +43,7 @@
         <activity
             android:name=".ui.activity.TrailerActivity"
             android:label="@string/title_activity_trailer"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.activity.MovieDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -51,6 +52,7 @@
         <activity
             android:name=".ui.activity.CommentActivity"
             android:label="@string/title_activity_comment"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.activity.MovieDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
