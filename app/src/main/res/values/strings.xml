@@ -6,6 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- global -->
+    <string name="app_link">https://play.google.com/store/apps/details?id=com.moviebomber</string>
     <string name="font_roboto_medium">sans-serif-medium</string>
     <string name="font_roboto_regular">sans-serif</string>
     <string name="default_username">電影別雷開發者</string>
@@ -22,6 +23,7 @@
     <string name="text_padding">開發者知道各位電影愛好者有這些功能需求，目前正在趕工中，敬請期待，謝謝你們的支持！！</string>
     <string name="button_blog">前往開發者部落格</string>
     <string name="blog">http://enginebai.logdown.com</string>
+    <string name="share_message">我推薦你一起來看</string>
 
     <!-- api -->
     <string name="api_host">http://c63.us.to:5000</string>

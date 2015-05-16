@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':superRecyclerView')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
-    compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.google.android.gms:play-services:7.3.0'
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.balysv:material-ripple:1.0.1'
@@ -44,4 +44,5 @@ dependencies {
     compile 'com.github.pavlospt:circleview:1.2'
     compile 'com.afollestad:material-dialogs:0.7.3.1'
     compile 'com.getbase:floatingactionbutton:1.9.0'
+    compile 'com.github.asyl.animation:arcanimator:1.0.0'
 }

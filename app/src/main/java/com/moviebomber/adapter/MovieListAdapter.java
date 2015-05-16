@@ -85,13 +85,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		holder.mRipple.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showMovieDetail(movieItem.getId());
+				showMovieDetail(movieItem.getId(), movieItem.getTitleChinese());
 			}
 		});
 		holder.mButtonOrder.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showMovieDetail(movieItem.getId());
+				showMovieDetail(movieItem.getId(), movieItem.getTitleChinese());
 			}
 		});
 
@@ -103,9 +103,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		holder.mProgressBadBomber.setProgress((int) (movieItem.getBadRate() * 100));
 	}
 
-	private void showMovieDetail(int id) {
+	private void showMovieDetail(int id, String name) {
 		Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, id);
+		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_NAME, name);
 		mContext.startActivity(movieDetail);
 	}
 

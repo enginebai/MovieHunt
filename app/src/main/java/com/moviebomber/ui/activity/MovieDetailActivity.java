@@ -3,7 +3,9 @@ package com.moviebomber.ui.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
@@ -25,6 +28,7 @@ import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.moviebomber.R;
+import com.moviebomber.model.api.ApiTask;
 import com.moviebomber.model.api.MovieInfo;
 import com.moviebomber.ui.fragment.PttCommentFragment;
 import com.nineoldandroids.view.ViewHelper;
@@ -42,7 +46,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MovieDetailActivity extends ActionBarActivity
-		implements View.OnClickListener, ObservableScrollViewCallbacks{
+		implements View.OnClickListener, ObservableScrollViewCallbacks {
 
 	public static final String EXTRA_MOVIE_ID = "MOVIE_ID";
 	public static final String EXTRA_MOVIE_NAME = "MOVIE_NAME";
@@ -79,7 +83,7 @@ public class MovieDetailActivity extends ActionBarActivity
 
 	private MaterialDialog mProgressDialog;
 
-//	@InjectView(R.id.fab_actions)
+	//	@InjectView(R.id.fab_actions)
 //	FloatingActionsMenu fabActionsMenu;
 //	@InjectView(R.id.fab_comment)
 //	FloatingActionButton fabComment;
@@ -102,6 +106,7 @@ public class MovieDetailActivity extends ActionBarActivity
 	private int mMovieId;
 	private MovieInfo mMovieInfo;
 	private int mParallaxImageHeight;
+	private ShareActionProvider mShareActionProvider;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,15 +128,14 @@ public class MovieDetailActivity extends ActionBarActivity
 				this.getResources().getColor(R.color.primary)));
 		this.mScrollView.setScrollViewCallbacks(this);
 		this.mParallaxImageHeight = this.getResources().getDimensionPixelOffset(R.dimen.parallax_image_height);
-//		this.setupButtonIcon();
+		this.setupButtonIcon();
 		if (getIntent() != null) {
 			this.mMovieId = this.getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
-			this.queryMovieDetail();
 			this.mButtonPhoto.setOnClickListener(this);
 			this.mButtonTrailer.setOnClickListener(this);
 			this.mButtonComment.setOnClickListener(this);
-			this.setupButtonIcon();
 			this.mFabOrder.setOnClickListener(this);
+			this.queryMovieDetail();
 		}
 	}
 
@@ -140,6 +144,7 @@ public class MovieDetailActivity extends ActionBarActivity
 				.title(getResources().getString(R.string.app_name_chinese))
 				.content(R.string.loading)
 				.progress(true, 0)
+				.cancelable(false)
 				.show();
 		AsyncHttpClient httpClient = new AsyncHttpClient();
 		httpClient.get(String.format("%s%s/%s/%d", this.getResources().getString(R.string.api_host),
@@ -158,15 +163,19 @@ public class MovieDetailActivity extends ActionBarActivity
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 				super.onFailure(statusCode, headers, throwable, errorResponse);
+				Logger.e(ApiTask.API_LOG_TAG, (Exception) throwable);
 				if (mProgressDialog != null)
 					mProgressDialog.dismiss();
+				Toast.makeText(MovieDetailActivity.this, getResources().getString(R.string.test_description),
+						Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		});
 	}
 
 	private void displayMovieDetail(final MovieInfo movieInfo) {
 		if (movieInfo.getPhotoList().size() > 0) {
-			int index = (int)(Math.random() * movieInfo.getPhotoList().size());
+			int index = (int) (Math.random() * movieInfo.getPhotoList().size());
 			String url = movieInfo.getPhotoList().get(index).getUrl();
 			Picasso.with(this.mImage.getContext())
 					.load(url)
@@ -176,7 +185,7 @@ public class MovieDetailActivity extends ActionBarActivity
 		this.mTextReleaseDate.setText(this.getResources().getString(R.string.text_release_date) +
 				": " + movieInfo.getReleaseDate());
 		this.mTextDescription.setText(movieInfo.getDescription().length() > 100 ?
-		movieInfo.getDescription().substring(0, 100) + "..." : movieInfo.getDescription());
+				movieInfo.getDescription().substring(0, 100) + "..." : movieInfo.getDescription());
 		this.mButtonReadMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -203,17 +212,17 @@ public class MovieDetailActivity extends ActionBarActivity
 //		}
 		if (movieInfo.getGenreList().size() > 0) {
 			View genreView = this.mViewGenre1.inflate();
-			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
+			TextView textGenre = (TextView) genreView.findViewById(R.id.text_genre);
 			textGenre.setText(movieInfo.getGenreList().get(0).getGenre());
 		}
 		if (movieInfo.getGenreList().size() > 1) {
 			View genreView = this.mViewGenre2.inflate();
-			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
+			TextView textGenre = (TextView) genreView.findViewById(R.id.text_genre);
 			textGenre.setText(movieInfo.getGenreList().get(1).getGenre());
 		}
 		if (movieInfo.getGenreList().size() > 2) {
 			View genreView = this.mViewGenre3.inflate();
-			TextView textGenre = (TextView)genreView.findViewById(R.id.text_genre);
+			TextView textGenre = (TextView) genreView.findViewById(R.id.text_genre);
 			textGenre.setText(movieInfo.getGenreList().get(2).getGenre());
 		}
 		this.mTextDirector.setText(movieInfo.getDirector());
@@ -241,7 +250,7 @@ public class MovieDetailActivity extends ActionBarActivity
 					Intent trailerIntent = new Intent(this, TrailerActivity.class);
 					trailerIntent.putParcelableArrayListExtra(TrailerActivity.EXTRA_TRAILER_LIST,
 							mMovieInfo.getTrailerList());
-					int coverIndex = (int)(Math.random() * mMovieInfo.getPhotoList().size());
+					int coverIndex = (int) (Math.random() * mMovieInfo.getPhotoList().size());
 					trailerIntent.putExtra(EXTRA_MOVIE_COVER, mMovieInfo.getPhotoList().get(coverIndex).getUrl());
 					trailerIntent.putParcelableArrayListExtra(PhotoListActivity.EXTRA_PHOTO_LIST,
 							mMovieInfo.getPhotoList());
@@ -283,6 +292,15 @@ public class MovieDetailActivity extends ActionBarActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_movie_detail, menu);
+		MenuItem shareItem = menu.findItem(R.id.menu_item_share);
+		this.mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+		if (mShareActionProvider != null)
+			mShareActionProvider.setShareIntent(getShareIntent());
+		else {
+			mShareActionProvider = new ShareActionProvider(this);
+			mShareActionProvider.setShareIntent(getShareIntent());
+			MenuItemCompat.setActionProvider(shareItem, mShareActionProvider);
+		}
 		return true;
 	}
 
@@ -292,24 +310,32 @@ public class MovieDetailActivity extends ActionBarActivity
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-
 		return super.onOptionsItemSelected(item);
+	}
+
+	private Intent getShareIntent() {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_TEXT,
+				getResources().getString(R.string.share_message) +
+						"[" + this.getIntent().getStringExtra(EXTRA_MOVIE_NAME) + "]" +
+						" - from " + this.getResources().getString(R.string.app_name_chinese) + "app" +
+						"\n" + getResources().getString(R.string.app_link)
+				);
+		return intent;
 	}
 
 	@Override
 	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
 		int primaryColor = this.getResources().getColor(R.color.primary);
-		float alpha = 1 - (float)Math.max(0, mParallaxImageHeight - 1.5 * scrollY) / mParallaxImageHeight;
+		float alpha = 1 - (float) Math.max(0, mParallaxImageHeight - 1.5 * scrollY) / mParallaxImageHeight;
 		this.mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, primaryColor));
 		if (mMovieInfo != null) {
 			if (alpha > 0.95) {
 				this.mToolbar.setTitle(mMovieInfo.getTitleChinese());
 				this.mTextTitleChinese.setVisibility(View.INVISIBLE);
 //				ViewPropertyAnimator.animate(this.mTextTitleChinese).alpha(0.0f).setDuration(10).start();
-			}
-			else {
+			} else {
 				this.mToolbar.setTitle("");
 				this.mTextTitleChinese.setVisibility(View.VISIBLE);
 //				ViewPropertyAnimator.animate(this.mTextTitleChinese).alpha(1.0f).setDuration(10).start();
@@ -347,7 +373,6 @@ public class MovieDetailActivity extends ActionBarActivity
 	public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
 	}
-
 
 
 	private void setupButtonIcon() {
