@@ -62,6 +62,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		String thumbnailPath = movieItem.getThumbnailPath();
 
 //		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
+		holder.mImageMovieCover.setImageResource(R.drawable.img_empty);
 		Picasso.with(holder.mImagePoster.getContext())
 				.load(MainActivity.getResizePhoto(this.mContext, thumbnailPath))
 				.into(holder.mImagePoster);
