@@ -35,10 +35,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 	private List<MovieListItem> mMovieList = new ArrayList<>();
 	private Context mContext;
+	private boolean mShowBomberCount;
 
-	public MovieListAdapter(Context context, List<MovieListItem> mMovieList) {
+	public MovieListAdapter(Context context, List<MovieListItem> mMovieList, boolean showBomberCount) {
 		this.mContext = context;
 		this.mMovieList = mMovieList;
+		this.mShowBomberCount = showBomberCount;
 	}
 
 	public List<MovieListItem> getMovieList() {
@@ -52,7 +54,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 	@Override
 	public MovieListItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		return new MovieListItemHolder(LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.card_movie_list, parent, false));
+				.inflate(R.layout.card_movie_list, parent, false), this.mShowBomberCount);
 	}
 
 	@Override
@@ -109,7 +111,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, id);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_NAME, name);
-		Activity activity = (Activity)mContext;
+		Activity activity = (Activity) mContext;
 		activity.startActivity(movieDetail);
 		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
@@ -124,6 +126,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		CardView mCardMovie;
 		@InjectView(R.id.ripple)
 		MaterialRippleLayout mRipple;
+		@InjectView(R.id.layout_bomber_count)
+		View mLayoutBomberCount;
 
 		@InjectView(R.id.image_movie_cover)
 		ImageView mImageMovieCover;
@@ -153,9 +157,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 		@InjectView(R.id.button_order)
 		Button mButtonOrder;
 
-		MovieListItemHolder(View itemView) {
+		MovieListItemHolder(View itemView, boolean showBomberCount) {
 			super(itemView);
 			ButterKnife.inject(this, itemView);
+			if (showBomberCount)
+				this.mLayoutBomberCount.setVisibility(View.VISIBLE);
+			else
+				this.mLayoutBomberCount.setVisibility(View.GONE);
 		}
 	}
 }

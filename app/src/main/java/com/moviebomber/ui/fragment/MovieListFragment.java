@@ -161,7 +161,10 @@ public class MovieListFragment extends Fragment {
 				List<MovieListItem> movieList = new ArrayList<>();
 				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 				if (mAdapter == null) {
-					mAdapter = new MovieListAdapter(getActivity(), new ArrayList<MovieListItem>());
+					if (mCurrentTab == 2)
+						mAdapter = new MovieListAdapter(getActivity(), new ArrayList<MovieListItem>(), false);
+					else
+						mAdapter = new MovieListAdapter(getActivity(), new ArrayList<MovieListItem>(), true);
 					mListMovie.setAdapter(mAdapter);
 				}
 				mListMovie.getSwipeToRefresh().setRefreshing(false);
