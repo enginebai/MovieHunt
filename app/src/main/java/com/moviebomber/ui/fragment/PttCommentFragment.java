@@ -81,7 +81,11 @@ public class PttCommentFragment extends Fragment {
 			this.mListComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					Article article = mArticleList.get(position - 1);
+					// -1 for header view
+					position--;
+					if (position < 0 || position > mArticleList.size() - 1)
+						return;
+					Article article = mArticleList.get(position);
 					Intent intent = new Intent(getActivity(), WebViewActivity.class);
 					intent.putExtra(WebViewActivity.EXTRA_URL, article.getUrl());
 					startActivity(intent);

@@ -146,21 +146,28 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 
 	private void playTrailer(int position) {
 		try {
+			if (position < 0)
+				position = 0;
+			else if (position > this.mAdapter.getCount() - 1)
+				position = this.mAdapter.getCount() - 1;
+			Logger.wtf("System.out", String.valueOf(position));
 			Trailer trailer = this.mAdapter.getItem(position);
 			Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(this,
 					getVideoId(trailer.getUrl()), true, true);
 			startActivity(intent);
 		} catch (RuntimeException e) {
-			Logger.e(String.format("%d, %s\n",
+			Logger.e("System.out", String.format("%d, %d, %s\n",
+					position,
 					this.mMovieInfo.getId(),
-					this.mMovieInfo.getTitleChinese()
-					));
+					this.mMovieInfo.getTitleChinese()),
+					e
+			);
 			throw e;
 		}
 	}
 
 	public static String getVideoId(String url) {
-		Logger.wtf(url);
+		System.out.println(url);
 		return url.split("=")[1];
 	}
 
@@ -299,7 +306,7 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 
 		@Override
 		public int getCount() {
-			return super.getCount() + 1;
+			return super.getCount();
 		}
 
 		@Override
