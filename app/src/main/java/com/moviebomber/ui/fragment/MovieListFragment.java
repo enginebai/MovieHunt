@@ -204,6 +204,9 @@ public class MovieListFragment extends Fragment {
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 				// TODO: fail to get movie list
 				Logger.e((Exception)throwable);
+				Toast.makeText(mListMovie.getContext(),
+						mListMovie.getContext().getResources().getString(R.string.error_fail_to_load_list),
+						Toast.LENGTH_SHORT).show();
 				mListMovie.getSwipeToRefresh().setRefreshing(false);
 				mListMovie.hideMoreProgress();
 			}

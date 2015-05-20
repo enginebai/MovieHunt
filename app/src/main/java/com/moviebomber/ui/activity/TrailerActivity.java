@@ -80,7 +80,6 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 		if (this.getIntent() != null) {
 			this.mImageCoverUrl = this.getIntent().getStringExtra(MovieDetailActivity.EXTRA_MOVIE_COVER);
 			this.mMovieInfo = this.getIntent().getParcelableExtra(MovieDetailActivity.EXTRA_MOVIE_DETAIL);
-			Logger.wtf(this.mMovieInfo.getTitleChinese());
 			List<Trailer> mTrailerList = this.getIntent().getParcelableArrayListExtra(EXTRA_TRAILER_LIST);
 			final List<Trailer> newTrailerList = new ArrayList<>();
 			// filter playerlist or user
@@ -101,59 +100,67 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 						startActivity(intent);
 					}
 				});
+				this.mImageCoverHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
+				this.mListTrailer.setScrollViewCallbacks(this);
+
+				// Set padding view for ListView. This is the flexible space.
+				View paddingView = new View(this);
+				AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+						mImageCoverHeight);
+				paddingView.setLayoutParams(lp);
+				paddingView.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (mAdapter.getCount() >= 1)
+							playTrailer(0);
+					}
+				});
+				// This is required to disable header's list selector effect
+				paddingView.setClickable(true);
+				mListTrailer.addHeaderView(paddingView);
+				if (this.mImageCoverUrl != null) {
+					Picasso.with(mImageCover.getContext())
+							.load(this.mImageCoverUrl)
+							.into(mImageCover);
+				}
+				if (this.mMovieInfo != null)
+					mTextTitle.setText(this.mMovieInfo.getTitleChinese());
 				View footerView = LayoutInflater.from(this).inflate(R.layout.footer_trailer_button, null);
 				Button buttonSearchMore = (Button) footerView.findViewById(R.id.button_trailer_more);
-				final String movieName = this.getIntent().getStringExtra(MovieDetailActivity.EXTRA_MOVIE_NAME);
 				buttonSearchMore.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent = YouTubeIntents.createSearchIntent(TrailerActivity.this, movieName);
+						Intent intent = YouTubeIntents.createSearchIntent(TrailerActivity.this, mMovieInfo.getTitleChinese());
 						startActivity(intent);
 					}
 				});
 				this.mListTrailer.addFooterView(footerView);
 			}
 		}
-		this.mImageCoverHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
-		this.mListTrailer.setScrollViewCallbacks(this);
-
-		// Set padding view for ListView. This is the flexible space.
-		View paddingView = new View(this);
-		AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-				mImageCoverHeight);
-		paddingView.setLayoutParams(lp);
-		paddingView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mAdapter.getCount() >= 1)
-					playTrailer(0);
-			}
-		});
-		// This is required to disable header's list selector effect
-		paddingView.setClickable(true);
-		mListTrailer.addHeaderView(paddingView);
-		if (this.mImageCoverUrl != null) {
-			Picasso.with(mImageCover.getContext())
-					.load(this.mImageCoverUrl)
-					.into(mImageCover);
-		}
-		if (this.mMovieInfo != null)
-			mTextTitle.setText(this.mMovieInfo.getTitleChinese());
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		playTrailer(position);
+		playTrailer(position - 1);
 	}
 
 	private void playTrailer(int position) {
-		Trailer trailer = this.mAdapter.getItem(position);
-		Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(this,
-				getVideoId(trailer.getUrl()), true, true);
-		startActivity(intent);
+		try {
+			Trailer trailer = this.mAdapter.getItem(position);
+			Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(this,
+					getVideoId(trailer.getUrl()), true, true);
+			startActivity(intent);
+		} catch (RuntimeException e) {
+			Logger.e(String.format("%d, %s\n",
+					this.mMovieInfo.getId(),
+					this.mMovieInfo.getTitleChinese()
+					));
+			throw e;
+		}
 	}
 
 	public static String getVideoId(String url) {
+		Logger.wtf(url);
 		return url.split("=")[1];
 	}
 
@@ -288,6 +295,11 @@ public class TrailerActivity extends ActionBarActivity implements AdapterView.On
 			String videoId = (String)youTubeThumbnailView.getTag();
 			mListThumbnailLoaderMap.put(youTubeThumbnailView, youTubeThumbnailLoader);
 			youTubeThumbnailLoader.setVideo(videoId);
+		}
+
+		@Override
+		public int getCount() {
+			return super.getCount() + 1;
 		}
 
 		@Override

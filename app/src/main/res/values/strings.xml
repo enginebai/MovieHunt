@@ -25,6 +25,10 @@
     <string name="blog">http://enginebai.logdown.com</string>
     <string name="share_message">我推薦你一起來看</string>
 
+    <!-- error -->
+    <string name="error_fail_to_load_list">Oops!載入電影列表失敗!!</string>
+    <string name="error_fail_to_load_detail">Oops!無法載入電影資訊!!</string>
+
     <!-- api -->
     <string name="api_host">http://c63.us.to:5000</string>
     <string name="api_root">/api/moviebomber</string>

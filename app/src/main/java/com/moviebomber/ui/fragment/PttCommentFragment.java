@@ -77,16 +77,18 @@ public class PttCommentFragment extends Fragment {
 	private void initView(View rootView) {
 		ButterKnife.inject(this, rootView);
 		this.mListComment.setAdapter(new CommentAdapter(getActivity(), R.layout.item_ptt_comment, mArticleList));
-		this.mListComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Article article = mArticleList.get(position);
-				Intent intent = new Intent(getActivity(), WebViewActivity.class);
-				intent.putExtra(WebViewActivity.EXTRA_URL, article.getUrl());
-				startActivity(intent);
-				getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-			}
-		});
+		if (mArticleList.size() > 0) {
+			this.mListComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					Article article = mArticleList.get(position - 1);
+					Intent intent = new Intent(getActivity(), WebViewActivity.class);
+					intent.putExtra(WebViewActivity.EXTRA_URL, article.getUrl());
+					startActivity(intent);
+					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+				}
+			});
+		}
 		this.setupHeader();
 	}
 

@@ -166,7 +166,8 @@ public class MovieDetailActivity extends ActionBarActivity
 				Logger.e(ApiTask.API_LOG_TAG, (Exception) throwable);
 				if (mProgressDialog != null)
 					mProgressDialog.dismiss();
-				Toast.makeText(MovieDetailActivity.this, getResources().getString(R.string.test_description),
+				Toast.makeText(MovieDetailActivity.this,
+						getResources().getString(R.string.error_fail_to_load_detail),
 						Toast.LENGTH_SHORT).show();
 				finish();
 			}

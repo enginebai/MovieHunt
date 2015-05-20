@@ -158,13 +158,13 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		                         Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_padding, container, false);
+			final View rootView = inflater.inflate(R.layout.fragment_padding, container, false);
 			ButterKnife.inject(this, rootView);
 			mButtonBlog.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-							getActivity().getResources().getString(R.string.blog)));
+							"http://enginebai.logdown.com"));
 					startActivity(intent);
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
