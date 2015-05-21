@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.ui.activity.MainActivity;
@@ -31,11 +33,12 @@ import butterknife.InjectView;
 /**
  * Created by engine on 15/3/29.
  */
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieListItemHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 	private List<MovieListItem> mMovieList = new ArrayList<>();
 	private Context mContext;
 	private boolean mShowBomberCount;
+	private int mAdPosition = (int)(Math.random() * 3) + 1;
 
 	public MovieListAdapter(Context context, List<MovieListItem> mMovieList, boolean showBomberCount) {
 		this.mContext = context;
@@ -52,59 +55,84 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 	}
 
 	@Override
-	public MovieListItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		return new MovieListItemHolder(LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.card_movie_list, parent, false), this.mShowBomberCount);
+	public int getItemViewType(int position) {
+		if (position == mAdPosition)
+			return R.layout.card_ad;
+		else
+			return R.layout.card_movie_list;
 	}
 
 	@Override
-	public void onBindViewHolder(MovieListItemHolder holder, int position) {
-		final MovieListItem movieItem = this.mMovieList.get(position);
-		holder.mTextMovieName.setText(movieItem.getTitleChinese());
-		String thumbnailPath = movieItem.getThumbnailPath();
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		if (viewType == R.layout.card_movie_list)
+			return new MovieListItemHolder(LayoutInflater.from(parent.getContext())
+				.inflate(viewType, parent, false), this.mShowBomberCount);
+		else
+			return new AdHolder(LayoutInflater.from(parent.getContext())
+			.inflate(viewType, parent, false));
+	}
+
+	@Override
+	public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+		if (position == mAdPosition) {
+			AdHolder adHolder = (AdHolder)viewHolder;
+			AdRequest adRequest = new AdRequest.Builder().build();
+			adHolder.mAdView.loadAd(adRequest);
+		} else {
+			MovieListItemHolder holder = (MovieListItemHolder)viewHolder;
+			// correct for ad position
+			int p = position;
+			if (position > mAdPosition)
+				p--;
+			if (p < 0)
+				p = 0;
+			final MovieListItem movieItem = this.mMovieList.get(p);
+			holder.mTextMovieName.setText(movieItem.getTitleChinese());
+			String thumbnailPath = movieItem.getThumbnailPath();
 
 //		thumbnailUrl = thumbnailUrl.replace("mpost4", "mpost");
-		holder.mImageMovieCover.setImageResource(R.drawable.img_empty);
-		Picasso.with(holder.mImagePoster.getContext())
-				.load(MainActivity.getResizePhoto(this.mContext, thumbnailPath))
-				.into(holder.mImagePoster);
+			holder.mImageMovieCover.setImageResource(R.drawable.img_empty);
+			Picasso.with(holder.mImagePoster.getContext())
+					.load(MainActivity.getResizePhoto(this.mContext, thumbnailPath))
+					.into(holder.mImagePoster);
 //		LabelView label = new LabelView(this.mContext);
 //		label.setText("POP");
 //		label.setTextColor(this.mContext.getResources().getColor(android.R.color.white));
 //		label.setBackgroundColor(this.mContext.getResources().getColor(R.color.accent_light));
 //		label.setTargetView(holder.mImageMovieCover, 10, LabelView.Gravity.LEFT_TOP);
-		if (movieItem.getPhotoLists().size() > 0) {
-			String coverUrl = movieItem.getPhotoLists().get(
-					(int) (Math.random() * movieItem.getPhotoLists().size())).getPath();
+			if (movieItem.getPhotoLists().size() > 0) {
+				String coverUrl = movieItem.getPhotoLists().get(
+						(int) (Math.random() * movieItem.getPhotoLists().size())).getPath();
 //			coverUrl = coverUrl.replace("mpho3", "mpho");
-			Picasso.with(holder.mImageMovieCover.getContext())
-					.load(MainActivity.getResizePhoto(this.mContext, coverUrl)).into(holder.mImageMovieCover);
+				Picasso.with(holder.mImageMovieCover.getContext())
+						.load(MainActivity.getResizePhoto(this.mContext, coverUrl)).into(holder.mImageMovieCover);
+			}
+			holder.mTextDuration.setText(this.mContext.getResources().getString(R.string.text_duration)
+					+ ": " + movieItem.getDuration());
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.TAIWAN);
+			holder.mTextReleaseDate.setText(this.mContext.getResources().getString(R.string.text_release_date)
+					+ ": " + dateFormat.format(movieItem.getReleaseDate()));
+
+			holder.mRipple.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					showMovieDetail(movieItem.getId(), movieItem.getTitleChinese());
+				}
+			});
+			holder.mButtonOrder.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					showMovieDetail(movieItem.getId(), movieItem.getTitleChinese());
+				}
+			});
+
+			holder.mTextGoodBomber.setText(String.valueOf(movieItem.getGoodBomber()));
+			holder.mTextNormalBomber.setText(String.valueOf(movieItem.getNormalBomber()));
+			holder.mTextBadBomber.setText(String.valueOf(movieItem.getBadBomber()));
+			holder.mProgressGoodBomber.setProgress((int) (movieItem.getGoodRate() * 100));
+			holder.mProgressNormalBomber.setProgress((int) (movieItem.getNormalRate() * 100));
+			holder.mProgressBadBomber.setProgress((int) (movieItem.getBadRate() * 100));
 		}
-		holder.mTextDuration.setText(this.mContext.getResources().getString(R.string.text_duration)
-				+ ": " + movieItem.getDuration());
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.TAIWAN);
-		holder.mTextReleaseDate.setText(this.mContext.getResources().getString(R.string.text_release_date)
-				+ ": " + dateFormat.format(movieItem.getReleaseDate()));
-
-		holder.mRipple.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showMovieDetail(movieItem.getId(), movieItem.getTitleChinese());
-			}
-		});
-		holder.mButtonOrder.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showMovieDetail(movieItem.getId(), movieItem.getTitleChinese());
-			}
-		});
-
-		holder.mTextGoodBomber.setText(String.valueOf(movieItem.getGoodBomber()));
-		holder.mTextNormalBomber.setText(String.valueOf(movieItem.getNormalBomber()));
-		holder.mTextBadBomber.setText(String.valueOf(movieItem.getBadBomber()));
-		holder.mProgressGoodBomber.setProgress((int) (movieItem.getGoodRate() * 100));
-		holder.mProgressNormalBomber.setProgress((int) (movieItem.getNormalRate() * 100));
-		holder.mProgressBadBomber.setProgress((int) (movieItem.getBadRate() * 100));
 	}
 
 	private void showMovieDetail(int id, String name) {
@@ -118,7 +146,17 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 	@Override
 	public int getItemCount() {
-		return this.mMovieList.size();
+		return this.mMovieList.size() + 1; // +1 for admob
+	}
+
+	class AdHolder extends RecyclerView.ViewHolder {
+		@InjectView(R.id.adView)
+		AdView mAdView;
+
+		public AdHolder(View itemView) {
+			super(itemView);
+			ButterKnife.inject(this, itemView);
+		}
 	}
 
 	class MovieListItemHolder extends RecyclerView.ViewHolder {
