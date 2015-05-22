@@ -92,8 +92,8 @@ public class MoviePageFragment extends Fragment implements MaterialTabListener, 
 			@Override
 			public void onPageSelected(int position) {
 				mTabMoviewList.setSelectedNavigationItem(position);
-				MovieListFragment fragment = (MovieListFragment) mAdapter.instantiateItem(mPagerMovie, position);
-				fragment.loadMovieList(true);
+//				MovieListFragment fragment = (MovieListFragment) mAdapter.instantiateItem(mPagerMovie, position);
+//				fragment.loadMovieList(true);
 				mCurrentTab = position;
 			}
 
