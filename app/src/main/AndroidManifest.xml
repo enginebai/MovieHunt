@@ -71,6 +71,9 @@
         <activity android:name="com.google.android.gms.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
                   android:theme="@android:style/Theme.Translucent" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="9c5a16961ca7b5d55a40ca69f5dd7ed5c28df03d" />
     </application>
 
 </manifest>

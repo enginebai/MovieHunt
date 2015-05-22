@@ -74,7 +74,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-		if (position == mAdPosition) {
+		if (viewHolder instanceof AdHolder) {
 			AdHolder adHolder = (AdHolder)viewHolder;
 			AdRequest adRequest = new AdRequest.Builder().build();
 			adHolder.mAdView.loadAd(adRequest);

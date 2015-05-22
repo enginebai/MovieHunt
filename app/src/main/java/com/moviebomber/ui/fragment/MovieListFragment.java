@@ -134,7 +134,7 @@ public class MovieListFragment extends Fragment {
 	public void loadMovieList(boolean cleanList) {
 		this.mListMovie.getSwipeToRefresh().setRefreshing(true);
 		if (cleanList && mAdapter != null) {
-			mAdapter.getMovieList().clear();
+			this.mAdapter = null;
 			this.mCurrentPage = 1;
 		}
 		String order;
