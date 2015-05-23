@@ -1,24 +1,23 @@
 buildscript {
     repositories {
-        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
 
 repositories {
-    maven { url 'http://download.crashlytics.com/maven' }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "com.moviebomber"
         minSdkVersion 16
@@ -44,7 +43,6 @@ dependencies {
     compile 'com.balysv:material-ripple:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:1.2.2'
-    compile 'com.github.rey5137:material:1.0.0'
     compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'com.orhanobut:logger:1.4'
@@ -60,5 +58,7 @@ dependencies {
     compile 'com.afollestad:material-dialogs:0.7.3.1'
     compile 'com.getbase:floatingactionbutton:1.9.0'
     compile 'com.github.asyl.animation:arcanimator:1.0.0'
-    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {
+        transitive = true;
+    }
 }

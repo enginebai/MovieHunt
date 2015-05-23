@@ -15,100 +15,41 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-#-assumenosideeffects class android.util.Log {
-#     public static *** d(...);
-#}
-#
-#-assumenosideeffects class com.orhanobut.logger.Logger {
-#     public static *** d(...);
-#     public static *** wtf(...);
-#}
 
-##---------------Begin: proguard configuration common for all Android apps ----------
--optimizationpasses 5
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontskipnonpubliclibraryclassmembers
--dontpreverify
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
-
--allowaccessmodification
--keepattributes *Annotation*
--renamesourcefileattribute SourceFile
+# crashlytics
+-keep class com.crashlytics.** { *; }
 -keepattributes SourceFile,LineNumberTable
--repackageclasses ''
 
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
--keep public class * extends android.app.backup.BackupAgentHelper
--keep public class * extends android.preference.Preference
--keep public class com.android.vending.licensing.ILicensingService
--dontnote com.android.vending.licensing.ILicensingService
+# android.support.v7.widget.CardView
+#-keep class android.support.v7.widget.RoundRectDrawable { *; }
 
-# Explicitly preserve all serialization members. The Serializable interface
-# is only a marker interface, so it wouldn't save them.
--keepclassmembers class * implements java.io.Serializable {
-    static final long serialVersionUID;
-    private static final java.io.ObjectStreamField[] serialPersistentFields;
-    private void writeObject(java.io.ObjectOutputStream);
-    private void readObject(java.io.ObjectInputStream);
-    java.lang.Object writeReplace();
-    java.lang.Object readResolve();
-}
+# android.support.v7.appcompat
+-keep public class android.support.v7.widget.** { *; }
+#-keep public class android.support.v7.internal.widget.** { *; }
+#-keep public class android.support.v7.internal.view.menu.** { *; }
 
-# Preserve all native method names and the names of their classes.
--keepclasseswithmembernames class * {
-    native <methods>;
-}
+#-keep public class * extends android.support.v4.view.ActionProvider {
+#    public <init>(android.content.Context);
+#}
 
--keepclasseswithmembernames class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
+## GSON 2.2.4 specific rules ##
 
--keepclasseswithmembernames class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-}
-
-# Preserve static fields of inner classes of R classes that might be accessed
-# through introspection.
--keepclassmembers class **.R$* {
-  public static <fields>;
-}
-
-# Preserve the special static methods that are required in all enumeration classes.
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-
--keep public class * {
-    public protected *;
-}
-
--keep class * implements android.os.Parcelable {
-  public static final android.os.Parcelable$Creator *;
-}
-##---------------End: proguard configuration common for all Android apps ----------
-
-##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
 
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+-keepattributes EnclosingMethod
+
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
-#-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.stream.** { *; }
 
-# Application classes that will be serialized/deserialized over Gson
--keep class com.google.gson.examples.android.model.** { *; }
+# Picasso
+-dontwarn com.squareup.okhttp.**
 
-##---------------End: proguard configuration for Gson  ----------
-
-
-# for butterknife
+# Butter Knife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewInjector { *; }
@@ -121,4 +62,37 @@
     @butterknife.* <methods>;
 }
 
--dontwarn com.squareup.**
+## Google Play Services 4.3.23 specific rules ##
+## https://developer.android.com/google/play-services/setup.html#Proguard ##
+
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+## App model classes
+-keep class com.moviebomber.model.api.** { *; }
+
+## remove all logs
+-assumenosideeffects class * extends android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static *** v(...);
+    public static *** i(...);
+    public static *** w(...);
+    public static *** d(...);
+    public static *** e(...);
+    public static *** wtf(...);
+    public static *** json(...);
+}
