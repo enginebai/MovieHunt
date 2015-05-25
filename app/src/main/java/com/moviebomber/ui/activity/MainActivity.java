@@ -21,6 +21,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.moviebomber.R;
 import com.moviebomber.ui.fragment.MoviePageFragment;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity
 
 	@InjectView(R.id.toolbar)
 	Toolbar mToolbar;
+
+	private InterstitialAd interstitial;
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -70,6 +74,13 @@ public class MainActivity extends AppCompatActivity
 				R.id.navigation_drawer,
 				this.mToolbar,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
+		this.interstitial = new InterstitialAd(this);
+		this.interstitial.setAdUnitId(getResources().getString(R.string.interstitial_ad_unit_id));
+		// Create ad request.
+		AdRequest adRequest = new AdRequest.Builder().build();
+		// Begin loading your interstitial.
+		interstitial.loadAd(adRequest);
 	}
 
 	@Override
@@ -82,6 +93,14 @@ public class MainActivity extends AppCompatActivity
 	protected void onStop() {
 		super.onStop();
 		GoogleAnalytics.getInstance(this).reportActivityStop(this);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		if (interstitial.isLoaded()) {
+			interstitial.show();
+		}
 	}
 
 	@Override
