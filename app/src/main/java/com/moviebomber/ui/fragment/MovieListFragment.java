@@ -53,6 +53,7 @@ public class MovieListFragment extends Fragment {
 	private MovieListAdapter mAdapter;
 	private int mCurrentTab = 0;
 	private int mCurrentPage = 1;
+	private int mTotalPage = 0;
 	private boolean mLoadingMore = false;
 	private boolean mShouldLoadMore = false;
 	private MoviePageFragment.SortBy mSortBy = MoviePageFragment.SortBy.LASTEST;
@@ -114,9 +115,16 @@ public class MovieListFragment extends Fragment {
 			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 				super.onScrollStateChanged(recyclerView, newState);
-				if (mShouldLoadMore && newState == RecyclerView.SCROLL_STATE_IDLE && !mLoadingMore) {
-					mListMovie.showMoreProgress();
-					loadMovieList(false);
+				if (mShouldLoadMore && newState == RecyclerView.SCROLL_STATE_IDLE
+						&& !mLoadingMore) {
+					if (mCurrentPage < mTotalPage) {
+						mListMovie.showMoreProgress();
+						mCurrentPage++;
+						loadMovieList(false);
+					} else {
+						Toast.makeText(getActivity(), getResources().getString(R.string.warn_no_more_movies),
+								Toast.LENGTH_SHORT).show();
+					}
 				}
 			}
 
@@ -182,6 +190,8 @@ public class MovieListFragment extends Fragment {
 							movieList.add(item);
 						}
 						mAdapter.getMovieList().addAll(movieList);
+						mCurrentPage = response.getInt(ApiTask.RESPONSE_PAGE);
+						mTotalPage = response.getInt(ApiTask.RESPONSE_TOTAL_PAGES);
 					} else {
 						if (mAdapter.getMovieList().size() <= 0)
 							Toast.makeText(getActivity(), getResources().getString(R.string.warn_no_movies),
@@ -197,7 +207,6 @@ public class MovieListFragment extends Fragment {
 				}
 
 				mAdapter.notifyDataSetChanged();
-				mCurrentPage++;
 			}
 
 			@Override
