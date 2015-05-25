@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.moviebomber.R;
 import com.moviebomber.ui.fragment.MoviePageFragment;
 import com.moviebomber.ui.fragment.NavigationDrawerFragment;
@@ -69,6 +70,18 @@ public class MainActivity extends AppCompatActivity
 				R.id.navigation_drawer,
 				this.mToolbar,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		GoogleAnalytics.getInstance(this).reportActivityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		GoogleAnalytics.getInstance(this).reportActivityStop(this);
 	}
 
 	@Override

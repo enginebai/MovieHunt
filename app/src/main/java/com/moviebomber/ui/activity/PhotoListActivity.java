@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.jpardogo.listbuddies.lib.views.ListBuddiesLayout;
 import com.moviebomber.R;
 import com.moviebomber.adapter.PhotoListAdapter;
@@ -67,6 +68,18 @@ public class PhotoListActivity extends ActionBarActivity implements
 		this.mListPhoto.setOnItemClickListener(this);
 	}
 
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		GoogleAnalytics.getInstance(this).reportActivityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		GoogleAnalytics.getInstance(this).reportActivityStop(this);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

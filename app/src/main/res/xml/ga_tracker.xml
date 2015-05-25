@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <!-- The application name. Defaults to name specified for the application label -->
+  <string name="ga_appName">@string/app_name_chinese</string>
+
+  <!-- The application version. Defaults to android:versionName specified in the AndroidManifest.xml -->
+  <string name="ga_appVersion">1.0</string>
+
+  <!-- The dispatching period in seconds when Google Play services is
+       unavailable. The default period is 1800 seconds or 30 minutes -->
+  <integer name="ga_dispatchPeriod">1800</integer>
+
+  <!-- Enable dry run mode. Default is false -->
+  <bool name="ga_dryRun">false</bool>
+
+  <string name="ga_trackingId">UA-48608391-3</string>
+  <bool name="ga_autoActivityTracking">true</bool>
+  <bool name="ga_reportUncaughtExceptions">true</bool>
+
+  <!-- The screen names that will appear in reports -->
+  <screenName name="com.moviebomber.ui.activity.MainActivity">MainActivity</screenName>
+  <screenName name="com.moviebomber.ui.activity.MovieDetailActivity">MovieDetailActivity</screenName>
+  <screenName name="com.moviebomber.ui.activity.PhotoListActivity">PhotoListActivity</screenName>
+  <screenName name="com.moviebomber.ui.activity.TrailerActivity">TrailerActivity</screenName>
+  <screenName name="com.moviebomber.ui.activity.CommentActivity">CommentActivity</screenName>
+</resources>

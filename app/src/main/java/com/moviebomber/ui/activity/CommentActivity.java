@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.moviebomber.R;
 import com.moviebomber.model.api.Article;
 import com.moviebomber.ui.fragment.PttCommentFragment;
@@ -82,6 +83,18 @@ public class CommentActivity extends ActionBarActivity implements MaterialTabLis
 					.setTabListener(this)
 					.setText(this.getResources().getString(TABS[i])));
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		GoogleAnalytics.getInstance(this).reportActivityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		GoogleAnalytics.getInstance(this).reportActivityStop(this);
 	}
 
 	@Override

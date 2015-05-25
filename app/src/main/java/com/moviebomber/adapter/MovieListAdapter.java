@@ -15,10 +15,12 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
 import com.moviebomber.R;
 import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.ui.activity.MainActivity;
 import com.moviebomber.ui.activity.MovieDetailActivity;
+import com.moviebomber.utils.GAApplication;
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
@@ -136,6 +138,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 	}
 
 	private void showMovieDetail(int id, String name) {
+		GAApplication.getTracker(mContext).send(new HitBuilders.AppViewBuilder()
+				.build());
 		Intent movieDetail = new Intent(mContext, MovieDetailActivity.class);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, id);
 		movieDetail.putExtra(MovieDetailActivity.EXTRA_MOVIE_NAME, name);

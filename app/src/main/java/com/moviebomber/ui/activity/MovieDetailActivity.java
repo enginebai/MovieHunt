@@ -24,6 +24,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -139,6 +140,18 @@ public class MovieDetailActivity extends ActionBarActivity
 		}
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		GoogleAnalytics.getInstance(this).reportActivityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		GoogleAnalytics.getInstance(this).reportActivityStop(this);
+	}
+
 	private void queryMovieDetail() {
 		mProgressDialog = new MaterialDialog.Builder(this)
 				.title(getResources().getString(R.string.app_name_chinese))
@@ -152,7 +165,6 @@ public class MovieDetailActivity extends ActionBarActivity
 				MovieInfo.TABLE_NAME, this.mMovieId), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				super.onSuccess(statusCode, headers, response);
 				Gson gson = new Gson();
 				mMovieInfo = gson.fromJson(response.toString(), MovieInfo.class);
 				if (mProgressDialog != null)
@@ -162,7 +174,6 @@ public class MovieDetailActivity extends ActionBarActivity
 
 			@Override
 			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				super.onFailure(statusCode, headers, throwable, errorResponse);
 				Logger.e(ApiTask.API_LOG_TAG, (Exception) throwable);
 				if (mProgressDialog != null)
 					mProgressDialog.dismiss();

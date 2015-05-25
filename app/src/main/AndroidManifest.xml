@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <!-- Optional permission for reliable local dispatching on non-Google Play devices -->
+    <!-- add after using google analytics -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +18,9 @@
         tools:replace="icon, label" >
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version" />
+        <!-- Google Analytics Version v4 needs this value for easy tracking -->
+        <meta-data android:name="com.google.android.gms.analytics.globalConfigResource"
+                   android:resource="@xml/ga_tracker" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name_chinese"
@@ -74,6 +81,29 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="9c5a16961ca7b5d55a40ca69f5dd7ed5c28df03d" />
+
+        <!-- add for google analytics -->
+        <!-- Optionally, register AnalyticsReceiver and AnalyticsService to support background
+         dispatching on non-Google Play devices -->
+        <receiver android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+                  android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.google.android.gms.analytics.AnalyticsService"
+                 android:enabled="true"
+                 android:exported="false"/>
+
+        <!-- Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
+             installation campaign reporting -->
+        <receiver android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
     </application>
 
 </manifest>
