@@ -40,7 +40,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 	private List<MovieListItem> mMovieList = new ArrayList<>();
 	private Context mContext;
 	private boolean mShowBomberCount;
-	private int mAdPosition = (int)(Math.random() * 2) + 1;
+	private int mAdPosition = -1;
+//			(int)(Math.random() * 2) + 1;
 
 	public MovieListAdapter(Context context, List<MovieListItem> mMovieList, boolean showBomberCount) {
 		this.mContext = context;
@@ -84,10 +85,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 			MovieListItemHolder holder = (MovieListItemHolder)viewHolder;
 			// correct for ad position
 			int p = position;
-			if (position > mAdPosition)
-				p--;
-			if (p < 0)
-				p = 0;
+//			if (position > mAdPosition)
+//				p--;
+//			if (p < 0)
+//				p = 0;
 			final MovieListItem movieItem = this.mMovieList.get(p);
 			holder.mTextMovieName.setText(movieItem.getTitleChinese());
 			String thumbnailPath = movieItem.getThumbnailPath();
@@ -150,7 +151,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 	@Override
 	public int getItemCount() {
-		return this.mMovieList.size() + 1; // +1 for admob
+		return this.mMovieList.size();
+//				+ 1; // +1 for admob
 	}
 
 	class AdHolder extends RecyclerView.ViewHolder {
