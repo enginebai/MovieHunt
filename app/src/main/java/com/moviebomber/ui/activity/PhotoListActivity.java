@@ -6,10 +6,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -24,8 +22,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class PhotoListActivity extends ActionBarActivity implements
-		ListBuddiesLayout.OnBuddyItemClickListener {
+public class PhotoListActivity extends ActionBarActivity {
 
 	public static final String EXTRA_POSTER = "POSTER";
 	public static final String EXTRA_PHOTO_LIST = "PHOTO_LIST";
@@ -36,8 +33,6 @@ public class PhotoListActivity extends ActionBarActivity implements
 	ImageView mPhotoBackground;
 	@InjectView(R.id.list_photo)
 	ListBuddiesLayout mListPhoto;
-
-	private List<Photo> mPhotoList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +52,14 @@ public class PhotoListActivity extends ActionBarActivity implements
 		Picasso.with(this).load(
 				MainActivity.getResizePhoto(this, this.getIntent().getStringExtra(EXTRA_POSTER)))
 				.into(this.mPhotoBackground);
-		this.mPhotoList = this.getIntent().getParcelableArrayListExtra(EXTRA_PHOTO_LIST);
+		List<Photo> mPhotoList = this.getIntent().getParcelableArrayListExtra(EXTRA_PHOTO_LIST);
 		PhotoListAdapter adapterLeft = new PhotoListAdapter(this,
 				this.getResources().getDimensionPixelOffset(R.dimen.item_photo_height_tall),
-				this.mPhotoList.subList(0, this.mPhotoList.size() / 2));
+				mPhotoList.subList(0, mPhotoList.size() / 2));
 		PhotoListAdapter adapterRight = new PhotoListAdapter(this,
 				this.getResources().getDimensionPixelOffset(R.dimen.item_photo_height_small),
-				this.mPhotoList.subList(this.mPhotoList.size() / 2, this.mPhotoList.size()));
+				mPhotoList.subList(mPhotoList.size() / 2, mPhotoList.size()));
 		this.mListPhoto.setAdapters(adapterLeft, adapterRight);
-		this.mListPhoto.setOnItemClickListener(this);
 	}
 
 
@@ -95,14 +89,9 @@ public class PhotoListActivity extends ActionBarActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-	}
-
-	@Override
-	public void onBuddyItemClicked(AdapterView<?> adapterView, View view, int i, int i2, long l) {
 	}
 }

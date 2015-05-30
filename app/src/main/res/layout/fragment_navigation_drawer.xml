@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/navi_drawer_user_height"
             android:id="@+id/image_user_cover"
-            android:src="@drawable/user_cover_b"
+            android:src="@drawable/img_cover_material"
             android:scaleType="centerCrop"
             android:contentDescription="@null"
             android:background="?attr/colorPrimary"
