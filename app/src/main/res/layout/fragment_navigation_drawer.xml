@@ -8,6 +8,7 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="@android:color/white"
+    android:fitsSystemWindows="true"
     tools:context=".NavigationDrawerFragment">
 
     <RelativeLayout
