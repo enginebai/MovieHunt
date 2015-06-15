@@ -1,95 +1,98 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
-    android:background="@android:color/white"
     android:fitsSystemWindows="true"
     tools:context=".NavigationDrawerFragment">
 
     <RelativeLayout
+        android:id="@+id/layout_menu_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/navi_drawer_user_height"
-        android:id="@+id/layout_menu_header">
+        android:layout_height="@dimen/navi_drawer_user_height">
 
         <ImageView
+            android:id="@+id/image_user_cover"
             android:layout_width="match_parent"
             android:layout_height="@dimen/navi_drawer_user_height"
-            android:id="@+id/image_user_cover"
-            android:src="@drawable/img_cover_material"
-            android:scaleType="centerCrop"
-            android:contentDescription="@null"
             android:background="?attr/colorPrimary"
-            />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:id="@+id/image_user_photo"
-            android:src="@drawable/user_photo_star_wars"
             android:contentDescription="@null"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="@dimen/navi_drawer_photo_margin"
-            android:layout_marginLeft="@dimen/navi_drawer_margin_left_right"
-            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
-            app:border_width="2dp"
-            app:border_color="@android:color/white"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_cover_material"
             />
 
         <RelativeLayout
+            android:id="@+id/layout_navi_drawer_account"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_below="@id/image_user_photo"
+            android:layout_marginEnd="@dimen/navi_drawer_margin_left_right"
             android:layout_marginLeft="@dimen/navi_drawer_margin_left_right"
-            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
             android:layout_marginRight="@dimen/navi_drawer_margin_left_right"
-            android:layout_marginEnd="@dimen/navi_drawer_margin_left_right">
+            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
+            android:layout_alignParentBottom="true">
 
             <TextView
                 android:id="@+id/text_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/default_username"
                 android:fontFamily="@string/font_roboto_medium"
-                android:textSize="14sp"
+                android:text="@string/default_username"
                 android:textColor="@color/text"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 />
 
             <TextView
+                android:id="@+id/text_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_email"
-                android:text="@string/default_email"
                 android:layout_below="@id/text_username"
-                android:fontFamily="@string/font_roboto_regular"
-                android:textSize="14sp"
-                android:textColor="@color/text"
                 android:layout_marginTop="3dp"
+                android:fontFamily="@string/font_roboto_regular"
+                android:text="@string/default_email"
+                android:textColor="@color/text"
+                android:textSize="14sp"
                 />
 
             <ImageView
+                android:id="@+id/image_user_switcher"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:id="@+id/image_user_switcher"
-                android:contentDescription="@null"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBottom="@id/text_email"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
                 android:src="@drawable/abc_spinner_mtrl_am_alpha"
                 />
         </RelativeLayout>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_user_photo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginStart="@dimen/navi_drawer_margin_left_right"
+            android:layout_marginBottom="@dimen/navi_drawer_margin_left_right"
+            android:contentDescription="@null"
+            android:src="@drawable/user_photo_star_wars"
+            app:border_color="@android:color/white"
+            app:border_width="2dp"
+            android:layout_above="@id/layout_navi_drawer_account"
+            />
     </RelativeLayout>
 
     <ListView
+        android:id="@+id/list_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_menu"
         android:layout_below="@id/layout_menu_header"
         />
 </RelativeLayout>

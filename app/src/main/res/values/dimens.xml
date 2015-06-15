@@ -7,8 +7,9 @@
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">300dp</dimen>
 
-    <dimen name="navi_drawer_user_height">164dp</dimen>
-    <dimen name="navi_drawer_photo_margin">16dp</dimen>
+    <dimen name="navi_drawer_user_height">190dp</dimen>
+    <dimen name="navi_drawer_photo_margin">32dp</dimen>
+    <dimen name="navi_drawer_photo_margin_top">32dp</dimen>
     <dimen name="navi_drawer_margin_left_right">16dp</dimen>
     <dimen name="navigation_drawer_selection_text_margin_left">72dp</dimen>
     <dimen name="navigation_drawer_gradient_height">56dp</dimen>
