@@ -35,7 +35,7 @@
     <string name="api_host">http://c63.us.to:5000</string>
     <string name="api_root">/api/moviebomber</string>
     <string name="api_movie_list">/list/movie_info</string>
-    <string name="photo_root">http://c63.us.to:8080/moviebomber</string>
+    <string name="photo_root">http://c63.us.to/moviebomber</string>
 
     <!-- menu -->
     <string name="menu_movie_list">電影列表</string>

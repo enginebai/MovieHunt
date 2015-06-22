@@ -128,7 +128,7 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void setupMenu() {
-		List<MenuSection> menuList = new ArrayList<>();
+		final List<MenuSection> menuList = new ArrayList<>();
 		Resources res = this.getResources();
 		menuList.add(new MenuSection(R.drawable.ic_movie_black_48dp, res.getString(R.string.menu_movie_list)));
 		menuList.add(new MenuSection(R.drawable.ic_local_movies_black_48dp, res.getString(R.string.menu_theater_list)));

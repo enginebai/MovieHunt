@@ -21,6 +21,7 @@ import com.moviebomber.model.api.MovieListItem;
 import com.moviebomber.ui.activity.MainActivity;
 import com.moviebomber.ui.activity.MovieDetailActivity;
 import com.moviebomber.utils.GAApplication;
+import com.orhanobut.logger.Logger;
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
@@ -107,6 +108,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 				String coverUrl = movieItem.getPhotoLists().get(
 						(int) (Math.random() * movieItem.getPhotoLists().size())).getPath();
 //			coverUrl = coverUrl.replace("mpho3", "mpho");
+				Logger.wtf(MainActivity.getResizePhoto(this.mContext, coverUrl));
 				Picasso.with(holder.mImageMovieCover.getContext())
 						.load(MainActivity.getResizePhoto(this.mContext, coverUrl)).into(holder.mImageMovieCover);
 			}
