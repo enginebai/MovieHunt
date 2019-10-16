@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Versions.Android.sdk)
     defaultConfig {
-        applicationId = "com.enginebai.project.base"
-        minSdkVersion(23)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Versions.App.id
+        minSdkVersion(Versions.Android.minSdk)
+        targetSdkVersion(Versions.Android.sdk)
+        versionCode = Versions.App.versionCode
+        versionName = Versions.App.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,11 +25,11 @@ android {
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
-    implementation(Dependencies.kotlinStdLib)
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    implementation(Dependencies.Kotlin.stdLib)
+    implementation(Dependencies.AndroidX.appCompat)
+    implementation(Dependencies.AndroidX.coreKtx)
+    implementation(Dependencies.AndroidX.constraintLayout)
+    testImplementation(Dependencies.Test.junit)
+    androidTestImplementation(Dependencies.Test.runner)
+    androidTestImplementation(Dependencies.Test.espressoCore)
 }
