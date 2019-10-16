@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt
 
-import com.enginebai.moviehunt.base.BaseActivity
+import com.enginebai.base.view.BaseActivity
+
 
 class MainActivity : BaseActivity() {
 
