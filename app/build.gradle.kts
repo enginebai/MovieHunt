@@ -35,4 +35,13 @@ dependencies {
 
     implementation(Dependencies.rxJava)
     implementation(Dependencies.rxAndroid)
+
+    implementation(Dependencies.okhttp)
+    implementation(Dependencies.okhttpLogging)
+    implementation(Dependencies.Retrofit.core)
+    implementation(Dependencies.Retrofit.gsonConverter)
+    implementation(Dependencies.Retrofit.rxJavaAdapter)
+
+    implementation(Dependencies.Koin.android)
+    implementation(Dependencies.Koin.viewModel)
 }

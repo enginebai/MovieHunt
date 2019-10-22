@@ -7,7 +7,6 @@ object Dependencies {
 
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
 
     object Kotlin {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
@@ -31,5 +30,11 @@ object Dependencies {
         const val android = "org.koin:koin-android:${Versions.koin}"
         const val viewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
         const val test = "org.koin:koin-test:${Versions.koin}"
+    }
+
+    object Retrofit {
+        const val core = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+        const val rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     }
 }
