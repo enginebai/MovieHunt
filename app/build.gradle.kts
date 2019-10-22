@@ -32,4 +32,7 @@ dependencies {
     testImplementation(Dependencies.Test.junit)
     androidTestImplementation(Dependencies.Test.runner)
     androidTestImplementation(Dependencies.Test.espressoCore)
+
+    implementation(Dependencies.rxJava)
+    implementation(Dependencies.rxAndroid)
 }
