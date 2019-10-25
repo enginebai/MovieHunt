@@ -8,14 +8,14 @@ plugins {
     `kotlin-dsl`
 }
 
-gradlePlugin {
-    plugins {
-        register("config-plugin") {
-            id = "config"
-            implementationClass = "ConfigPlugin"
-        }
-    }
-}
+//gradlePlugin {
+//    plugins {
+//        register("config-plugin") {
+//            id = "config"
+//            implementationClass = "ConfigPlugin"
+//        }
+//    }
+//}
 
 dependencies {
     // Depend on the android gradle plugin, since we want to access it in our plugin

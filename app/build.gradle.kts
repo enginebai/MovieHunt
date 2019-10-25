@@ -2,10 +2,12 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
-    id("config")
+//    id("config")
 }
 
-apply(from = "../dependencies.gradle.kts")
+//apply(from = "../dependencies.gradle.kts")
+configAndroid()
+importCommonDependencies()
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))

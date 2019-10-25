@@ -1,17 +1,15 @@
 
 import com.android.build.gradle.BaseExtension
-import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 
-open class ConfigPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        target.configAndroid()
-    }
-}
+//open class ConfigPlugin : Plugin<Project> {
+//    override fun apply(target: Project) {
+//        target.configAndroid()
+//    }
+//}
 
-
-internal fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
+fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
     compileSdkVersion(Versions.Android.sdk)
     defaultConfig {
         applicationId = Versions.App.id

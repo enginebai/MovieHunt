@@ -1,5 +1,8 @@
-import org.gradle.api.Plugin
+
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getValue
+import org.gradle.kotlin.dsl.provideDelegate
 
 object Dependencies {
 
@@ -42,7 +45,21 @@ object Dependencies {
     }
 }
 
-open class DependenciesPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
+// apply common plugin
+fun Project.importCommonDependencies() {
+    dependencies {
+
+        // The two following syntax is applicable
+        // source: https://github.com/gradle/kotlin-dsl-samples/issues/843
+        "implementation"(Dependencies.Kotlin.stdLib)
+
+        "implementation"(Dependencies.rxJava)
+        "implementation"(Dependencies.rxAndroid)
+
+        val implementation by configurations
+        // val testImplementation by configurations
+        // val androidTestImplementation by configurations
+        implementation(Dependencies.Koin.android)
+        implementation(Dependencies.Koin.viewModel)
     }
 }
