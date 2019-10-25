@@ -10,9 +10,9 @@ plugins {
 
 //gradlePlugin {
 //    plugins {
-//        register("config-plugin") {
-//            id = "config"
-//            implementationClass = "ConfigPlugin"
+//        register("common-plugin") {
+//            id = "common-plugin"
+//            implementationClass = "CommonPlugin"
 //        }
 //    }
 //}

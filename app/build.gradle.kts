@@ -1,16 +1,13 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-//    id("config")
 }
 
 //apply(from = "../dependencies.gradle.kts")
+importCommonPlugins()
 configAndroid()
 importCommonDependencies()
 
 dependencies {
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
     implementation(Dependencies.AndroidX.appCompat)
     implementation(Dependencies.AndroidX.coreKtx)
     implementation(Dependencies.AndroidX.constraintLayout)

@@ -1,6 +1,7 @@
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.fileTree
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.provideDelegate
 
@@ -45,12 +46,19 @@ object Dependencies {
     }
 }
 
+fun Project.importCommonPlugins() {
+    plugins.apply("kotlin-android")
+    plugins.apply("kotlin-android-extensions")
+    plugins.apply("kotlin-kapt")
+}
+
 // apply common plugin
 fun Project.importCommonDependencies() {
     dependencies {
 
         // The two following syntax is applicable
         // source: https://github.com/gradle/kotlin-dsl-samples/issues/843
+        "implementation"(fileTree("dir" to "libs", "include" to listOf("*.jar")))
         "implementation"(Dependencies.Kotlin.stdLib)
 
         "implementation"(Dependencies.rxJava)
