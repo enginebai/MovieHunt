@@ -1,4 +1,3 @@
-
 object Versions {
     const val kotlin = "1.3.50"
 
@@ -21,7 +20,7 @@ object Versions {
     }
  
     object App {
-        const val id = "com.enginebai.project.base"
+        const val id = "com.enginebai.project"
         const val versionCode = 1
         const val versionName = "1.0.0"
     }

@@ -1,6 +1,9 @@
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+
 object Dependencies {
 
-    const val gradlePlugin = "com.android.tools.build:gradle:3.5.1"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:3.5.1"
 
     const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
@@ -36,5 +39,10 @@ object Dependencies {
         const val core = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
         const val rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+    }
+}
+
+open class DependenciesPlugin : Plugin<Project> {
+    override fun apply(target: Project) {
     }
 }
