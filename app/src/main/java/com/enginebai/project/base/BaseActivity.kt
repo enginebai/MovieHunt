@@ -26,4 +26,9 @@ abstract class BaseActivity : AppCompatActivity() {
     fun addDisposable(disposable: Disposable) {
         disposables.add(disposable)
     }
+
+    protected fun Disposable.disposeOnDestroy(): Disposable {
+        disposables.add(this)
+        return disposables
+    }
 }
