@@ -1,6 +1,7 @@
 package com.enginebai.base.di
 
 import com.enginebai.moviehunt.BuildConfig
+import com.enginebai.moviehunt.utils.ApiInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
@@ -19,8 +20,12 @@ val networkModule = module {
         }
     }
     single {
+        ApiInterceptor()
+    }
+    single {
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(get<Interceptor>())
+        builder.addInterceptor(get<ApiInterceptor>())
         builder.protocols(listOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
         builder.build()
     }
