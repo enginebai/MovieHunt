@@ -1,5 +1,6 @@
 package com.enginebai.base.di
 
+import com.enginebai.moviehunt.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
@@ -26,10 +27,9 @@ val networkModule = module {
 
     single<Converter.Factory> { GsonConverterFactory.create() }
     single<CallAdapter.Factory> { RxJava2CallAdapterFactory.create() }
-    single<Retrofit> {
-        // TODO: specify the base URL
+    single {
         Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(BuildConfig.API_ROOT)
             .addCallAdapterFactory(get())
             .addConverterFactory(get())
             .client(get())
