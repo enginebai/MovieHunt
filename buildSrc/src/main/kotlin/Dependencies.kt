@@ -49,6 +49,13 @@ object Dependencies {
         const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
         const val logger = "com.orhanobut:logger:${Versions.logger}"
     }
+
+    object Epoxy {
+        const val core = "com.airbnb.android:epoxy:${Versions.epoxy}"
+        const val processor = "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
+        const val databinding = "com.airbnb.android:epoxy-databinding:${Versions.epoxy}"
+        const val paging = "com.airbnb.android:epoxy-paging:${Versions.epoxy}"
+    }
 }
 
 fun Project.importCommonPlugins() {

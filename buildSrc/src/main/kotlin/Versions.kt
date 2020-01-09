@@ -12,6 +12,7 @@ object Versions {
     const val koin = "2.0.1"
     const val timber = "4.7.1"
     const val logger = "2.2.0"
+    const val epoxy = "3.9.0"
 
     const val junit = "4.12"
     const val espresso = "3.2.0"
