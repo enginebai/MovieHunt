@@ -44,6 +44,11 @@ object Dependencies {
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
         const val rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     }
+
+    object Logging {
+        const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+        const val logger = "com.orhanobut:logger:${Versions.logger}"
+    }
 }
 
 fun Project.importCommonPlugins() {
@@ -69,5 +74,7 @@ fun Project.importCommonDependencies() {
         // val androidTestImplementation by configurations
         implementation(Dependencies.Koin.android)
         implementation(Dependencies.Koin.viewModel)
+
+        implementation(Dependencies.Logging.timber)
     }
 }

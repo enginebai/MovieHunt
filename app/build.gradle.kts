@@ -20,4 +20,6 @@ dependencies {
     implementation(Dependencies.Retrofit.core)
     implementation(Dependencies.Retrofit.gsonConverter)
     implementation(Dependencies.Retrofit.rxJavaAdapter)
+
+    implementation(Dependencies.Logging.logger)
 }
