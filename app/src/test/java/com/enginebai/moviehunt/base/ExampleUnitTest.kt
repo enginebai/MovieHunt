@@ -1,4 +1,4 @@
-package com.enginebai.project.base
+package com.enginebai.moviehunt.base
 
 import org.junit.Test
 

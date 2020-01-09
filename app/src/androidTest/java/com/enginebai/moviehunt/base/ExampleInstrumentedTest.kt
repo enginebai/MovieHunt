@@ -1,4 +1,4 @@
-package com.enginebai.project.base
+package com.enginebai.moviehunt.base
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

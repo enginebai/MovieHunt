@@ -1,4 +1,4 @@
-package com.enginebai.base
+package com.enginebai.moviehunt
 
 import android.view.View
 import androidx.databinding.BindingAdapter
