@@ -1,8 +1,8 @@
 package com.enginebai.project
 
 import android.app.Application
-import com.enginebai.project.di.loggingModule
-import com.enginebai.project.di.networkModule
+import com.enginebai.base.di.loggingModule
+import com.enginebai.base.di.networkModule
 import com.orhanobut.logger.Logger
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext

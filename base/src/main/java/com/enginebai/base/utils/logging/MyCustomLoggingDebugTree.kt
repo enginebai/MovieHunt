@@ -1,4 +1,4 @@
-package com.enginebai.project.utils.logging
+package com.enginebai.base.utils.logging
 
 import android.util.Log
 import com.orhanobut.logger.Logger

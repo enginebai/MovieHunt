@@ -1,4 +1,4 @@
-package com.enginebai.project.base
+package com.enginebai.base.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

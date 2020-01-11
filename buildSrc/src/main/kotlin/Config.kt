@@ -12,7 +12,6 @@ import org.gradle.kotlin.dsl.getByType
 fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
     compileSdkVersion(Versions.Android.sdk)
     defaultConfig {
-        applicationId = Versions.App.id
         minSdkVersion(Versions.Android.minSdk)
         targetSdkVersion(Versions.Android.sdk)
         versionCode = Versions.App.versionCode
