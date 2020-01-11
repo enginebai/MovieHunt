@@ -1,7 +1,7 @@
 package com.enginebai.base.di
 
-import com.enginebai.moviehunt.BuildConfig
-import com.enginebai.moviehunt.utils.ApiInterceptor
+import com.enginebai.base.BuildConfig
+import com.enginebai.base.utils.ApiInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol

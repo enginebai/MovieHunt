@@ -12,6 +12,7 @@ object Dependencies {
     const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
 
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
 
@@ -89,6 +90,10 @@ fun Project.importCommonDependencies() {
 
         implementation(Dependencies.Logging.logger)
         implementation(Dependencies.Logging.timber)
+
+        implementation(Dependencies.Retrofit.core)
+        implementation(Dependencies.okhttp)
+        implementation(Dependencies.gson)
 
         testImplementation(Dependencies.Test.junit)
         androidTestImplementation(Dependencies.Test.runner)

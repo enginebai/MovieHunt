@@ -285,3 +285,4 @@ hs_err_pid*
 # lint/reports/
 
 buildSrc/src/main/kotlin/ApiKey.kt
+.idea/misc.xml

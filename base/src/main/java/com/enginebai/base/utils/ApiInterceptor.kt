@@ -1,6 +1,6 @@
-package com.enginebai.moviehunt.utils
+package com.enginebai.base.utils
 
-import com.enginebai.moviehunt.BuildConfig
+import com.enginebai.base.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
