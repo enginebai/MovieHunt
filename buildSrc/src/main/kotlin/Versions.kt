@@ -2,6 +2,7 @@ object Versions {
     const val kotlin = "1.3.50"
 
     const val androidX = "1.1.0"
+    const val paging = "2.1.1"
     const val constraintLayout = "1.1.3"
     const val lifecycle = "2.1.0"
 
@@ -24,7 +25,7 @@ object Versions {
     }
  
     object App {
-        const val id = "com.enginebai.project"
+        const val id = "com.enginebai.moviehunt"
         const val versionCode = 1
         const val versionName = "1.0.0"
     }

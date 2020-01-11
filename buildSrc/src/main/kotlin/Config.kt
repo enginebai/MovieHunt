@@ -4,7 +4,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 
 object Config {
-    const val apiRoot = "\"https://api.themoviedb.org/3\""
+    const val apiRoot = "\"https://api.themoviedb.org/3/\""
 }
 
 fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {

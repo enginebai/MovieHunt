@@ -57,6 +57,11 @@ object Dependencies {
         const val databinding = "com.airbnb.android:epoxy-databinding:${Versions.epoxy}"
         const val paging = "com.airbnb.android:epoxy-paging:${Versions.epoxy}"
     }
+
+    object Paging {
+        const val common = "androidx.paging:paging-common:${Versions.paging}"
+        const val rxjava2 = "androidx.paging:paging-rxjava2:${Versions.paging}"
+    }
 }
 
 fun Project.importCommonPlugins() {
@@ -94,6 +99,9 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.Retrofit.core)
         implementation(Dependencies.okhttp)
         implementation(Dependencies.gson)
+
+        implementation(Dependencies.Paging.common)
+        implementation(Dependencies.Paging.rxjava2)
 
         testImplementation(Dependencies.Test.junit)
         androidTestImplementation(Dependencies.Test.runner)
