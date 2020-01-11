@@ -7,6 +7,7 @@ object Versions {
 
     const val rxJava = "2.2.13"
     const val rxAndroid = "2.1.1"
+    const val gson = "2.8.6"
     const val okhttp = "4.2.1"
     const val retrofit = "2.6.2"
     const val koin = "2.0.1"
