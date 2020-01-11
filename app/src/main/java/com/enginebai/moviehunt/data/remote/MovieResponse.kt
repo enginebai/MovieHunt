@@ -29,7 +29,7 @@ data class MovieDetailResponse(
     @SerializedName("overview")
     val overview: String?,
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
     @SerializedName("genres")
     val genreList: List<Genre>?,
     @SerializedName("runtime")

@@ -17,7 +17,7 @@ data class PagingListing<T>(
     // the paged list for UI to observe
     val pagedList: Observable<PagedList<T>>,
     // the network request state to show progress or error
-    val networkState: BehaviorSubject<NetworkState>,
+    val networkState: BehaviorSubject<NetworkState>? = null,
     // the network request state for pull-to-refresh or first time refresh
-    val refreshState: BehaviorSubject<NetworkState>
+    val refreshState: BehaviorSubject<NetworkState>? = null
 )

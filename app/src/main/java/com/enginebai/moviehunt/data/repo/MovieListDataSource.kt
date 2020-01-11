@@ -2,14 +2,15 @@ package com.enginebai.moviehunt.data.repo
 
 import androidx.paging.PageKeyedDataSource
 import com.enginebai.base.utils.NetworkState
+import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListResponse
 import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class MovieListDataSource(private val listName: String) :
-    PageKeyedDataSource<Int, MovieListResponse>(), KoinComponent {
+class MovieListDataSource(private val movieList: String) :
+    PageKeyedDataSource<Int, MovieModel>(), KoinComponent {
 
     private val api: MovieApiService by inject()
     // nullable represents end of page
@@ -20,16 +21,16 @@ class MovieListDataSource(private val listName: String) :
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, MovieListResponse>
+        callback: LoadInitialCallback<Int, MovieModel>
     ) {
-        api.fetchMovieList(listName, currentPage)
+        api.fetchMovieList(movieList, currentPage)
             .doOnSubscribe {
                 networkState.onNext(NetworkState.LOADING)
                 initLoadState.onNext(NetworkState.LOADING)
             }
             .doOnSuccess {
                 it.results?.run {
-                    callback.onResult(it.results, null, calculateNextPage(it.totalPages))
+                    callback.onResult(it.results.mapToMovieModels(), null, calculateNextPage(it.totalPages))
                 }
                 networkState.onNext(NetworkState.IDLE)
                 initLoadState.onNext(NetworkState.IDLE)
@@ -43,20 +44,31 @@ class MovieListDataSource(private val listName: String) :
 
     override fun loadAfter(
         params: LoadParams<Int>,
-        callback: LoadCallback<Int, MovieListResponse>
+        callback: LoadCallback<Int, MovieModel>
     ) {
         if (null == currentPage || NetworkState.LOADING == networkState.value) return
-        api.fetchMovieList(listName, currentPage)
+        api.fetchMovieList(movieList, currentPage)
             .doOnSubscribe { networkState.onNext(NetworkState.LOADING) }
             .doOnSuccess {
                 it.results?.run {
-                    callback.onResult(it.results, calculateNextPage(it.totalPages))
+                    callback.onResult(it.results.mapToMovieModels(), calculateNextPage(it.totalPages))
                 }
                 networkState.onNext(NetworkState.IDLE)
             }
             .doOnError { networkState.onNext(NetworkState.ERROR) }
             .subscribe()
     }
+
+    private fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
+        this.map {
+            MovieModel(
+                id = it.id,
+                posterPath = it.posterPath,
+                title = it.title,
+                voteAverage = it.voteAverage,
+                voteCount = it.voteCount
+            )
+        }
 
     private fun calculateNextPage(totalPage: Int?): Int? {
         if (null != totalPage) {
@@ -69,7 +81,7 @@ class MovieListDataSource(private val listName: String) :
 
     override fun loadBefore(
         params: LoadParams<Int>,
-        callback: LoadCallback<Int, MovieListResponse>
+        callback: LoadCallback<Int, MovieModel>
     ) {
         // we don't need this.
     }
