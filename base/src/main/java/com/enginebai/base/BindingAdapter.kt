@@ -1,4 +1,4 @@
-package com.enginebai.project
+package com.enginebai.base
 
 import android.view.View
 import androidx.databinding.BindingAdapter

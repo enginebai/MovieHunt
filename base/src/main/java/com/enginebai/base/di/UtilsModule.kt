@@ -1,7 +1,7 @@
-package com.enginebai.project.di
+package com.enginebai.base.di
 
-import com.enginebai.project.BuildConfig
-import com.enginebai.project.utils.logging.MyCustomLoggingDebugTree
+import com.enginebai.base.BuildConfig
+import com.enginebai.base.utils.logging.MyCustomLoggingDebugTree
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.LogAdapter
 import org.koin.dsl.module

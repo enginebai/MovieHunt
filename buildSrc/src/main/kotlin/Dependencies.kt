@@ -77,11 +77,21 @@ fun Project.importCommonDependencies() {
         "implementation"(Dependencies.rxAndroid)
 
         val implementation by configurations
-        // val testImplementation by configurations
-        // val androidTestImplementation by configurations
+        val testImplementation by configurations
+        val androidTestImplementation by configurations
+
+        implementation(Dependencies.AndroidX.appCompat)
+        implementation(Dependencies.AndroidX.coreKtx)
+        implementation(Dependencies.AndroidX.constraintLayout)
+
         implementation(Dependencies.Koin.android)
         implementation(Dependencies.Koin.viewModel)
 
+        implementation(Dependencies.Logging.logger)
         implementation(Dependencies.Logging.timber)
+
+        testImplementation(Dependencies.Test.junit)
+        androidTestImplementation(Dependencies.Test.runner)
+        androidTestImplementation(Dependencies.Test.espressoCore)
     }
 }

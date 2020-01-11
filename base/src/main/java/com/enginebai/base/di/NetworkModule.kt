@@ -1,4 +1,4 @@
-package com.enginebai.project.di
+package com.enginebai.base.di
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

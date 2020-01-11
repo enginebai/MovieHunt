@@ -1,4 +1,4 @@
-package com.enginebai.project.base
+package com.enginebai.base.view
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
