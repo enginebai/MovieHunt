@@ -8,6 +8,7 @@ import org.gradle.kotlin.dsl.provideDelegate
 object Dependencies {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:3.5.1"
+    const val material = "com.google.android.material:material:${Versions.material}"
 
     const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
@@ -84,6 +85,7 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.AndroidX.appCompat)
         implementation(Dependencies.AndroidX.coreKtx)
         implementation(Dependencies.AndroidX.constraintLayout)
+        implementation(Dependencies.material)
 
         implementation(Dependencies.Koin.android)
         implementation(Dependencies.Koin.viewModel)
