@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MovieHunt</string>
+    <string name="vote_count" formatted="false">%s reviews</string>
 </resources>

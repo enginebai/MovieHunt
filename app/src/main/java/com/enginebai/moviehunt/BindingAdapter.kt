@@ -1,13 +1,22 @@
 package com.enginebai.moviehunt
 
-import android.view.View
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 
 object BindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("yourCustomAttribute")
-    fun setCustomAttribute(view: View, value: String) {
-        TODO("Please modify the function implementation for custom binding logic.")
+    @BindingAdapter(
+        value = ["imageUrl", "placeholder", "error"],
+        requireAll = false
+    )
+    fun loadImage(imageView: ImageView, imageUrl: String?, placeholder: Drawable?, error: Drawable?) {
+        Glide.with(imageView)
+            .load(imageUrl)
+            .placeholder(placeholder)
+            .error(error)
+            .into(imageView)
     }
 }

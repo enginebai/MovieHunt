@@ -62,6 +62,11 @@ object Dependencies {
         const val common = "androidx.paging:paging-common:${Versions.paging}"
         const val rxjava2 = "androidx.paging:paging-rxjava2:${Versions.paging}"
     }
+
+    object Glide {
+        const val core = "com.github.bumptech.glide:glide:${Versions.glide}"
+        const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    }
 }
 
 fun Project.importCommonPlugins() {

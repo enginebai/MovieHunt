@@ -13,7 +13,7 @@ enum class NetworkState {
 /**
  * It is used for UI to show a list and corresponding states and actions.
  */
-data class PagingListing<T>(
+data class Listing<T>(
     // the paged list for UI to observe
     val pagedList: Observable<PagedList<T>>,
     // the network request state to show progress or error

@@ -20,4 +20,7 @@ dependencies {
     "kapt"(Dependencies.Epoxy.processor)
 
     implementation(project(":base"))
+
+    implementation(Dependencies.Glide.core)
+    "kapt"(Dependencies.Glide.compiler)
 }
