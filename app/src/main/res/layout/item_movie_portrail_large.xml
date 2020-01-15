@@ -4,6 +4,9 @@
 
     <data>
         <variable
+            name="movieId"
+            type="String" />
+        <variable
             name="posterImage"
             type="String" />
         <variable
@@ -18,12 +21,16 @@
         <variable
             name="duration"
             type="String" />
+        <variable
+            name="clickListener"
+            type="com.enginebai.moviehunt.ui.movie.list.OnMovieClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onMovieClicked(movieId)}">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -49,7 +56,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textTitle"
             android:text="@{title}"
-            style="@style/TitleText"
+            style="@style/TitleText.Large"
             app:layout_constraintTop_toBottomOf="@+id/cardPoster"
             tools:text="Star Wars: IV"
             />
@@ -58,10 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:numStars="5"
-            android:stepSize="0.1"
-            android:isIndicator="true"
+            style="@style/RatingBar"
             android:rating="@{rating}"
             app:layout_constraintTop_toBottomOf="@+id/textTitle"
             app:layout_constraintStart_toStartOf="parent"

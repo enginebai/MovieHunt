@@ -12,9 +12,22 @@
     </style>
 
     <style name="TitleText">
-        <item name="android:textSize">@dimen/text_h3</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">start|center_vertical</item>
+    </style>
+
+    <style name="TitleText.Large">
+        <item name="android:textSize">@dimen/text_h3</item>
+    </style>
+
+    <style name="TitleText.Normal">
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">0.1</item>
+        <item name="android:isIndicator">true</item>
     </style>
     
     <style name="VoteCountText">
