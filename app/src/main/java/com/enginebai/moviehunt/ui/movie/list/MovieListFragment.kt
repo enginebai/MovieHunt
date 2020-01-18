@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
@@ -23,7 +24,7 @@ class MovieListFragment : BaseFragment(),
         super.onViewCreated(view, savedInstanceState)
 
         val controller =
-            MovieListController(this)
+            MovieListController(view.context, this)
         with (listMovie) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             setController(controller)
@@ -31,7 +32,6 @@ class MovieListFragment : BaseFragment(),
 
         viewModel.fetchMovieList(arguments?.getString(FIELD_MOVIE_LIST, "") ?: "")
         viewModel.movieList
-            .doOnError { it.printStackTrace() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { controller.submitList(it) }
@@ -40,7 +40,11 @@ class MovieListFragment : BaseFragment(),
         viewModel.networkState
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { Timber.d("Network state $it") }
+            .doOnNext {
+                Timber.d("Network state $it")
+                controller.loadingMore = (NetworkState.LOADING == it)
+                controller.requestModelBuild()
+            }
             .subscribe()
             .disposeOnDestroy()
     }

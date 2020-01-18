@@ -21,6 +21,7 @@ data class MovieModel(
 
 fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this.posterPath}"
 fun MovieModel.displayTitle(): String = this.title ?: DEFAULT_TEXT
+fun MovieModel.display5StarsRating(): Float = this.voteAverage?.div(2) ?: 0.0f
 fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: DEFAULT_TEXT
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: DEFAULT_TEXT
 fun MovieModel.displayReleaseDate(): String = this.releaseDate ?: DEFAULT_TEXT
