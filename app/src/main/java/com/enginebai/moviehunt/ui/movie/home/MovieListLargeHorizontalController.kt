@@ -1,11 +1,10 @@
-package com.enginebai.moviehunt.ui.movie.list
+package com.enginebai.moviehunt.ui.movie.home
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.enginebai.moviehunt.MoviePortrailLargeBindingModel_
-import com.enginebai.moviehunt.data.local.MovieModel
-import com.enginebai.moviehunt.utils.format
-import com.enginebai.moviehunt.utils.formatHourMinutes
+import com.enginebai.moviehunt.data.local.*
+import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 
 class MovieListLargeHorizontalController(
     private val clickListener: OnMovieClickListener? = null
@@ -15,11 +14,11 @@ class MovieListLargeHorizontalController(
         return item?.run {
             MoviePortrailLargeBindingModel_()
                 .id(this.id)
-                .posterImage(this.posterPath)
-                .title(this.title)
+                .posterImage(this.getPosterUrl())
+                .title(this.displayTitle())
                 .rating(this.voteAverage)
-                .voteCount(this.voteCount?.format() ?: "--")
-                .duration(this.runtime?.formatHourMinutes() ?: "--")
+                .voteCount(this.displayVoteCount())
+                .duration(this.displayDuration())
                 .clickListener(clickListener)
         } ?: run {
             MoviePortrailLargeBindingModel_()

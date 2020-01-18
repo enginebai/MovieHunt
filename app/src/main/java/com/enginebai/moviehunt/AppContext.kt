@@ -4,6 +4,8 @@ import android.app.Application
 import com.enginebai.base.di.loggingModule
 import com.enginebai.base.di.networkModule
 import com.enginebai.moviehunt.di.apiModule
+import com.enginebai.moviehunt.di.repoModule
+import com.enginebai.moviehunt.di.viewModelModule
 import com.orhanobut.logger.Logger
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
@@ -24,7 +26,7 @@ class AppContext : Application() {
         startKoin {
             androidLogger(level = Level.INFO)
             androidContext(this@AppContext)
-            modules(listOf(networkModule, apiModule, loggingModule))
+            modules(listOf(networkModule, apiModule, loggingModule, repoModule, viewModelModule))
         }
     }
 

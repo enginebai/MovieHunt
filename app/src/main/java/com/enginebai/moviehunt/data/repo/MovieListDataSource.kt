@@ -66,14 +66,15 @@ class MovieListDataSource(private val movieList: String) :
                 posterPath = it.posterPath,
                 title = it.title,
                 voteAverage = it.voteAverage,
-                voteCount = it.voteCount
+                voteCount = it.voteCount,
+                releaseDate = it.releaseDate
             )
         }
 
     private fun calculateNextPage(totalPage: Int?): Int? {
         if (null != totalPage) {
             if (totalPage > (currentPage ?: 1)) {
-                currentPage?.plus(1)
+                currentPage = currentPage?.plus(1)
             }
         }
         return currentPage

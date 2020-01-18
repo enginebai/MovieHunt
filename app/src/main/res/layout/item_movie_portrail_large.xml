@@ -23,7 +23,7 @@
             type="String" />
         <variable
             name="clickListener"
-            type="com.enginebai.moviehunt.ui.movie.list.OnMovieClickListener" />
+            type="com.enginebai.moviehunt.ui.movie.OnMovieClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

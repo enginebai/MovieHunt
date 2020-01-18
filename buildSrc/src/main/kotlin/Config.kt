@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.getByType
 
 object Config {
     const val apiRoot = "\"https://api.themoviedb.org/3/\""
+    const val imageApiRoot = "\"https://image.tmdb.org/t/p/\""
 }
 
 fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
@@ -20,6 +21,7 @@ fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
 
         buildConfigField("String", "API_ROOT", Config.apiRoot)
         buildConfigField("String", "TMDB_API_KEY", tmdbApiKey)
+        buildConfigField("String", "IMAGE_API_KEY", Config.imageApiRoot)
     }
 
     buildTypes {

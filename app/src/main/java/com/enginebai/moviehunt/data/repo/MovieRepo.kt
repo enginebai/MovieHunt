@@ -13,7 +13,8 @@ interface MovieRepo {
 class MovieRepoImpl : MovieRepo {
 
     override fun fetchMovieList(movieList: String): Listing<MovieModel> {
-        val dataSourceFactory = MovieListDataSourceFactory(movieList)
+        val dataSource = MovieListDataSource(movieList)
+        val dataSourceFactory = MovieListDataSourceFactory(dataSource)
         val pagedListConfig = PagedList.Config.Builder()
             .setPageSize(10)
             .setEnablePlaceholders(false)
@@ -23,8 +24,8 @@ class MovieRepoImpl : MovieRepo {
             .buildObservable()
         return Listing(
             pagedList = pagedList,
-            networkState = dataSourceFactory.dataSource.value?.networkState,
-            refreshState = dataSourceFactory.dataSource.value?.initLoadState
+            networkState = dataSource.networkState,
+            refreshState = dataSource.initLoadState
         )
     }
 }

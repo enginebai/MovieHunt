@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MovieHunt</string>
     <string name="vote_count" formatted="false">%s reviews</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="upcoming">Upcoming</string>
 </resources>

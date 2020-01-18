@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
@@ -26,8 +26,8 @@
 
     <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:numStars">5</item>
-        <item name="android:stepSize">0.1</item>
         <item name="android:isIndicator">true</item>
+        <item name="android:colorControlNormal">@color/grey</item>
     </style>
     
     <style name="VoteCountText">
@@ -39,5 +39,6 @@
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/grey</item>
         <item name="android:drawablePadding">@dimen/padding_tiny</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 </resources>
