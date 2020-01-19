@@ -24,8 +24,8 @@ class MovieRepoImpl : MovieRepo {
             .buildObservable()
         return Listing(
             pagedList = pagedList,
-            networkState = dataSource.networkState,
-            refreshState = dataSource.initLoadState
+            refreshState = dataSource.initLoadState,
+            loadMoreState = dataSource.loadMoreState
         )
     }
 }

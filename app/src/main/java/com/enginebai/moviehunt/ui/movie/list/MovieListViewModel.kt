@@ -20,14 +20,14 @@ class MovieListViewModel : BaseViewModel() {
             movieRepo.fetchMovieList(it)
         }.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .cache()
+        .share()
 
     val movieList: Observable<PagedList<MovieModel>>
         get() = fetchDataSource.flatMap { it.pagedList }
     val refreshState: Observable<NetworkState>
         get() = fetchDataSource.flatMap { it.refreshState }
     val networkState: Observable<NetworkState>
-        get() = fetchDataSource.flatMap { it.networkState }
+        get() = fetchDataSource.flatMap { it.loadMoreState }
 
     fun fetchMovieList(category: String) {
         listName.onNext(category)

@@ -19,17 +19,35 @@ class MovieListFragment : BaseFragment(),
     OnMovieClickListener {
 
     private val viewModel by sharedViewModel<MovieListViewModel>()
+    private lateinit var controller: MovieListController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
+        setupList()
+        subscribeDataChanges()
+    }
 
-        val controller =
-            MovieListController(view.context, this)
+    private fun setupToolbar() {
+        buttonBack.setOnClickListener { activity?.onBackPressed() }
+        textCategory.text = arguments?.getString(FIELD_TITLE)
+    }
+
+    private fun setupList() {
+        activity?.let {
+            controller = MovieListController(it, this)
+        }
         with (listMovie) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             setController(controller)
+            setItemSpacingRes(R.dimen.padding_small)
         }
+        swipeRefresh.setOnRefreshListener {
 
+        }
+    }
+
+    private fun subscribeDataChanges() {
         viewModel.fetchMovieList(arguments?.getString(FIELD_MOVIE_LIST, "") ?: "")
         viewModel.movieList
             .subscribeOn(Schedulers.io())
@@ -37,11 +55,14 @@ class MovieListFragment : BaseFragment(),
             .doOnNext { controller.submitList(it) }
             .subscribe()
             .disposeOnDestroy()
+        viewModel.refreshState
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { swipeRefresh.isRefreshing = (NetworkState.LOADING == it) }
+            .subscribe()
+            .disposeOnDestroy()
         viewModel.networkState
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
-                Timber.d("Network state $it")
                 controller.loadingMore = (NetworkState.LOADING == it)
                 controller.requestModelBuild()
             }

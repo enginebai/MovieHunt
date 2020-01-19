@@ -13,4 +13,5 @@
     <dimen name="text_small">12sp</dimen>
 
     <dimen name="corner">@dimen/padding_small</dimen>
+    <dimen name="toolbar">56dp</dimen>
 </resources>

@@ -1,12 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
+    <RelativeLayout
+        android:id="@+id/layoutToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listMovie"/>
+        android:layout_height="@dimen/toolbar"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonBack"
+            android:src="@drawable/arrow_left"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/padding_large"
+            android:background="?selectableItemBackground"
+            android:contentDescription="@string/app_name" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/textCategory"
+            style="@style/TitleText.Normal"
+            tools:text="Now Playing"
+            android:layout_marginStart="@dimen/padding_large"
+            android:layout_toEndOf="@+id/buttonBack"
+            />
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/swipeRefresh"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listMovie"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingBottom="@dimen/padding_small"
+            />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,8 +16,8 @@ enum class NetworkState {
 data class Listing<T>(
     // the paged list for UI to observe
     val pagedList: Observable<PagedList<T>>,
-    // the network request state to show progress or error
-    val networkState: BehaviorSubject<NetworkState>? = null,
     // the network request state for pull-to-refresh or first time refresh
-    val refreshState: BehaviorSubject<NetworkState>? = null
-)
+    val refreshState: BehaviorSubject<NetworkState>? = null,
+    // the network request state to show progress or error
+    val loadMoreState: BehaviorSubject<NetworkState>? = null
+    )

@@ -16,8 +16,8 @@ class MovieListDataSource(private val movieList: String) :
     // nullable represents end of page
     private var currentPage: Int? = 1
 
-    val networkState = BehaviorSubject.createDefault(NetworkState.IDLE)
     val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
+    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -25,18 +25,15 @@ class MovieListDataSource(private val movieList: String) :
     ) {
         api.fetchMovieList(movieList, currentPage)
             .doOnSubscribe {
-                networkState.onNext(NetworkState.LOADING)
                 initLoadState.onNext(NetworkState.LOADING)
             }
             .doOnSuccess {
                 it.results?.run {
                     callback.onResult(it.results.mapToMovieModels(), null, calculateNextPage(it.totalPages))
                 }
-                networkState.onNext(NetworkState.IDLE)
                 initLoadState.onNext(NetworkState.IDLE)
             }
             .doOnError {
-                networkState.onNext(NetworkState.ERROR)
                 initLoadState.onNext(NetworkState.ERROR)
             }
             .subscribe()
@@ -46,16 +43,16 @@ class MovieListDataSource(private val movieList: String) :
         params: LoadParams<Int>,
         callback: LoadCallback<Int, MovieModel>
     ) {
-        if (null == currentPage || NetworkState.LOADING == networkState.value) return
+        if (null == currentPage || NetworkState.LOADING == loadMoreState.value) return
         api.fetchMovieList(movieList, currentPage)
-            .doOnSubscribe { networkState.onNext(NetworkState.LOADING) }
+            .doOnSubscribe { loadMoreState.onNext(NetworkState.LOADING) }
             .doOnSuccess {
                 it.results?.run {
                     callback.onResult(it.results.mapToMovieModels(), calculateNextPage(it.totalPages))
                 }
-                networkState.onNext(NetworkState.IDLE)
+                loadMoreState.onNext(NetworkState.IDLE)
             }
-            .doOnError { networkState.onNext(NetworkState.ERROR) }
+            .doOnError { loadMoreState.onNext(NetworkState.ERROR) }
             .subscribe()
     }
 

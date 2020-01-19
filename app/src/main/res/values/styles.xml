@@ -17,11 +17,13 @@
     </style>
 
     <style name="TitleText.Large">
-        <item name="android:textSize">@dimen/text_h3</item>
+        <item name="android:textSize">@dimen/text_h2</item>
     </style>
 
     <style name="TitleText.Normal">
-        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:textSize">@dimen/text_h3</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
@@ -32,7 +34,6 @@
     
     <style name="VoteCountText">
         <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:gravity">end|center_vertical</item>
     </style>
 
     <style name="ContextText">

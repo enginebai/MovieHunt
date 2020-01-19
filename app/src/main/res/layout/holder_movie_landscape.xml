@@ -1,88 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideVerticalHalf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.55"/>
+        app:layout_constraintGuide_percent="0.55" />
 
-    <ImageView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPoster"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/imagePoster"
-        android:scaleType="centerCrop"
-        android:layout_marginStart="@dimen/padding_large"
-        android:src="@color/darkBlue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/padding_small"
+        app:cardCornerRadius="@dimen/corner"
+        app:layout_constraintDimensionRatio="16:12"
         app:layout_constraintEnd_toEndOf="@+id/guideVerticalHalf"
-        app:layout_constraintDimensionRatio="16:10"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
+        <ImageView
+            android:id="@+id/imagePoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@color/darkBlue" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textTitle"
-        style="@style/TitleText.Normal"
-        android:layout_marginStart="@dimen/padding_medium"
-        app:layout_constraintStart_toEndOf="@+id/imagePoster"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/padding_small"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Star Wars: IV"
-        />
-    
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        style="?android:attr/ratingBarStyleSmall"
-        android:theme="@style/RatingBar"
-        android:layout_marginTop="@dimen/padding_small"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle"
-        app:layout_constraintStart_toStartOf="@+id/textTitle"/>
+        app:layout_constraintStart_toEndOf="@+id/cardPoster"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textVoteCount"
-        style="@style/VoteCountText"
-        android:layout_marginTop="@dimen/padding_small"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar"
-        app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
-        tools:text="2.6k reviews"
-        />
+        <TextView
+            android:id="@+id/textTitle"
+            style="@style/TitleText.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Star Wars: IV" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textDuration"
-        style="@style/ContextText"
-        android:layout_marginTop="@dimen/padding_small"
-        android:drawableStart="@drawable/clock"
-        app:layout_constraintStart_toStartOf="@id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2h14m"
-        />
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:theme="@style/RatingBar" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textReleaseDate"
-        android:layout_marginTop="@dimen/padding_small"
-        android:drawableStart="@drawable/calendar"
-        style="@style/ContextText"
-        app:layout_constraintStart_toStartOf="@id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textDuration"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2019/12/31"
-        />
+        <TextView
+            android:id="@+id/textVoteCount"
+            style="@style/VoteCountText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_tiny"
+            tools:text="2.6k reviews" />
 
+        <TextView
+            android:id="@+id/textDuration"
+            style="@style/ContextText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:drawableStart="@drawable/clock"
+            tools:text="2h14m" />
+
+        <TextView
+            android:id="@+id/textReleaseDate"
+            style="@style/ContextText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:drawableStart="@drawable/calendar"
+            tools:text="2019/12/31" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

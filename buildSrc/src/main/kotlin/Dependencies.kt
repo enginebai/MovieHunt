@@ -25,7 +25,8 @@ object Dependencies {
         const val appCompat = "androidx.appcompat:appcompat:${Versions.androidX}"
         const val coreKtx = "androidx.core:core-ktx:${Versions.androidX}"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+        const val lifecycle = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
+        const val lifecycleLiveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     }
 
     object Test {
@@ -94,6 +95,8 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.AndroidX.appCompat)
         implementation(Dependencies.AndroidX.coreKtx)
         implementation(Dependencies.AndroidX.constraintLayout)
+        implementation(Dependencies.AndroidX.lifecycle)
+        implementation(Dependencies.AndroidX.lifecycleLiveDataKtx)
 
         implementation(Dependencies.Koin.android)
         implementation(Dependencies.Koin.viewModel)
