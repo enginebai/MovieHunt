@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.data.repo
 
+import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
@@ -9,15 +10,14 @@ import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class MovieListDataSource(private val movieList: String) :
+class MovieListDataSource(private val movieList: String,
+                          private val initLoadState: BehaviorSubject<NetworkState>,
+                          private val loadMoreState: BehaviorSubject<NetworkState>) :
     PageKeyedDataSource<Int, MovieModel>(), KoinComponent {
 
     private val api: MovieApiService by inject()
     // nullable represents end of page
     private var currentPage: Int? = 1
-
-    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
-    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -82,5 +82,17 @@ class MovieListDataSource(private val movieList: String) :
         callback: LoadCallback<Int, MovieModel>
     ) {
         // we don't need this.
+    }
+}
+
+class MovieListDataSourceFactory(private val movieList: String) : DataSource.Factory<Int, MovieModel>() {
+
+    val initLoadState = BehaviorSubject.createDefault<NetworkState>(NetworkState.IDLE)
+    val loadMoreState = BehaviorSubject.createDefault<NetworkState>(NetworkState.IDLE)
+    var dataSource: MovieListDataSource? = null
+
+    override fun create(): DataSource<Int, MovieModel> {
+        dataSource = MovieListDataSource(movieList, initLoadState, loadMoreState)
+        return dataSource!!
     }
 }

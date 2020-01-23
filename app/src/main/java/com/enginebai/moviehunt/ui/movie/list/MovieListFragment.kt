@@ -43,7 +43,7 @@ class MovieListFragment : BaseFragment(),
             setItemSpacingRes(R.dimen.padding_small)
         }
         swipeRefresh.setOnRefreshListener {
-
+            viewModel.refresh()
         }
     }
 

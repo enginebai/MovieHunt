@@ -19,5 +19,7 @@ data class Listing<T>(
     // the network request state for pull-to-refresh or first time refresh
     val refreshState: BehaviorSubject<NetworkState>? = null,
     // the network request state to show progress or error
-    val loadMoreState: BehaviorSubject<NetworkState>? = null
-    )
+    val loadMoreState: BehaviorSubject<NetworkState>? = null,
+    // refresh the whole data set and fetch it from scatch
+    val refresh: () -> Unit = {}
+)
