@@ -52,7 +52,9 @@ class MovieListFragment : BaseFragment(),
         viewModel.movieList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { controller.submitList(it) }
+            .doOnNext {
+                controller.submitList(it)
+            }
             .subscribe()
             .disposeOnDestroy()
         viewModel.refreshState

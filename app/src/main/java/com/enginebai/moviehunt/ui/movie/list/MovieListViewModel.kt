@@ -20,8 +20,7 @@ class MovieListViewModel : BaseViewModel() {
             movieRepo.fetchMovieList(it)
         }.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .share()
-    private var refreshListener: () -> Unit = {}
+        .cache()
 
     val movieList: Observable<PagedList<MovieModel>>
         get() = fetchDataSource.flatMap { it.pagedList }
@@ -30,20 +29,15 @@ class MovieListViewModel : BaseViewModel() {
     val networkState: Observable<NetworkState>
         get() = fetchDataSource.flatMap { it.loadMoreState }
 
-    init {
-        fetchDataSource
-            .map { it.refresh }
-            .doOnNext {
-                refreshListener = it
-            }.subscribe()
-            .disposeOnCleared()
-    }
-
     fun fetchMovieList(category: String) {
         listName.onNext(category)
     }
 
     fun refresh() {
-        refreshListener.invoke()
+        fetchDataSource
+            .map { it.refresh }
+            .doOnNext { it.invoke() }
+            .subscribe()
+            .disposeOnCleared()
     }
 }
