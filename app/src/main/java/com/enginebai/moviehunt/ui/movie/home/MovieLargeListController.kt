@@ -6,7 +6,7 @@ import com.enginebai.moviehunt.MoviePortrailLargeBindingModel_
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 
-class MovieListLargeHorizontalController(
+class MovieLargeListController(
     private val clickListener: OnMovieClickListener? = null
 ) : PagedListEpoxyController<MovieModel>() {
 
