@@ -1,27 +1,28 @@
 package com.enginebai.moviehunt.ui.movie.home
 
-import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.EpoxyModelGroup
 import com.enginebai.moviehunt.R
+import timber.log.Timber
 
 class MovieCategoryGroup(
-    category: String,
-    clickListener: CategoryHeaderHolder.OnHeaderClickListener? = null,
-    carouselController: EpoxyController
+    movieCategoryListing: MovieCategoryListing
 ) : EpoxyModelGroup(
     R.layout.group_movie_category,
-    buildModels(category, clickListener, carouselController)
+    buildModels(movieCategoryListing)
 ) {
     companion object {
         fun buildModels(
-            category: String,
-            clickListener: CategoryHeaderHolder.OnHeaderClickListener? = null,
-            carouselController: EpoxyController
+            categoryListing: MovieCategoryListing
         ): List<EpoxyModel<*>> {
+            Timber.d("$categoryListing")
             return listOf(
-                CategoryHeaderHolder_().id("$category-header").clickListener(clickListener),
-                MovieCarouselModel_().id("$category-list").epoxyController(carouselController)
+                CategoryHeaderHolder_()
+                    .id("${categoryListing.category}-header")
+                    .clickListener(categoryListing.headerClickListener),
+                MovieCarouselModel_()
+                    .id("${categoryListing.category}-list")
+                    .epoxyController(categoryListing.carouselController)
             )
         }
     }
