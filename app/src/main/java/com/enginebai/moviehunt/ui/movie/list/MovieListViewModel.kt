@@ -14,6 +14,8 @@ import org.koin.core.inject
 
 class MovieListViewModel : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()
+
+    // v1 architecture (from Google Android Architecture Components PagingWithNetworkSample Project)
     private val listName = BehaviorSubject.create<String>()
     private val fetchDataSource: Observable<Listing<MovieModel>> = listName
         .map {
@@ -39,5 +41,10 @@ class MovieListViewModel : BaseViewModel() {
             .doOnNext { it.invoke() }
             .subscribe()
             .disposeOnCleared()
+    }
+
+    // v2 architecture
+    fun fetchList(listName: String): Listing<MovieModel> {
+        return movieRepo.fetchMovieList(listName)
     }
 }

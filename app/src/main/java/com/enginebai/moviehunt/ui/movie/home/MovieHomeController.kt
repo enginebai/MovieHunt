@@ -1,7 +1,6 @@
 package com.enginebai.moviehunt.ui.movie.home
 
 import com.airbnb.epoxy.EpoxyController
-import timber.log.Timber
 
 class MovieHomeController : EpoxyController() {
 
@@ -13,7 +12,6 @@ class MovieHomeController : EpoxyController() {
 
     override fun buildModels() {
         categoryList.forEach {
-            Timber.d("Add $it")
             MovieCategoryGroup(it).addTo(this)
         }
     }

@@ -9,6 +9,8 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 import com.enginebai.moviehunt.ui.movie.list.MovieListFragment
 import com.enginebai.moviehunt.ui.movie.list.MovieListViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,13 +33,13 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
             }
             categoryListings.add(MovieCategoryListing(category, this, carouselController))
 
-//            movieViewModel.fetchMovieList(category)
-//            movieViewModel.movieList
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnNext { carouselController.submitList(it) }
-//                .subscribe()
-//                .disposeOnDestroy()
+            val listing = movieViewModel.fetchList(category)
+            listing.pagedList
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { carouselController.submitList(it) }
+                .subscribe()
+                .disposeOnDestroy()
         }
         val homeController = MovieHomeController().apply {
             this.categoryList = categoryListings

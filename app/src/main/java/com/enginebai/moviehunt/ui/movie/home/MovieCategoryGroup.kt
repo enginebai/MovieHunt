@@ -19,9 +19,11 @@ class MovieCategoryGroup(
             return listOf(
                 CategoryHeaderHolder_()
                     .id("${categoryListing.category}-header")
+                    .category(categoryListing.category)
                     .clickListener(categoryListing.headerClickListener),
                 MovieCarouselModel_()
                     .id("${categoryListing.category}-list")
+                    .models(emptyList()) // this is required
                     .epoxyController(categoryListing.carouselController)
             )
         }
