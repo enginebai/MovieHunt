@@ -20,11 +20,15 @@ class MovieCategoryGroup(
                 CategoryHeaderHolder_()
                     .id("${categoryListing.category}-header")
                     .category(categoryListing.category)
-                    .clickListener(categoryListing.headerClickListener),
+                    .title(categoryListing.title)
+                    .clickListener(categoryListing.headerClickListener)
+                ,
                 MovieCarouselModel_()
                     .id("${categoryListing.category}-list")
                     .models(emptyList()) // this is required
                     .epoxyController(categoryListing.carouselController)
+                    .paddingRes(R.dimen.padding_small)
+                    .numViewsToShowOnScreen(categoryListing.itemCountOnScreen)
             )
         }
     }

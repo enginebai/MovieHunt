@@ -13,6 +13,7 @@ import com.enginebai.moviehunt.R
 abstract class CategoryHeaderHolder : EpoxyModelWithHolder<CategoryHeaderHolder.Holder>() {
 
     @EpoxyAttribute var category = ""
+    @EpoxyAttribute var title = ""
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash) var clickListener: OnHeaderClickListener? = null
 
     interface OnHeaderClickListener {
@@ -20,7 +21,7 @@ abstract class CategoryHeaderHolder : EpoxyModelWithHolder<CategoryHeaderHolder.
     }
 
     override fun bind(holder: Holder) {
-        holder.textTitle.text = category
+        holder.textTitle.text = title
         holder.buttonViewAll.setOnClickListener { clickListener?.onViewAllClicked(category) }
     }
 
@@ -33,7 +34,7 @@ abstract class CategoryHeaderHolder : EpoxyModelWithHolder<CategoryHeaderHolder.
         lateinit var buttonViewAll: Button
 
         override fun bindView(itemView: View) {
-            textTitle = itemView.findViewById(R.id.textCategory)
+            textTitle = itemView.findViewById(R.id.textCategoryHeader)
             buttonViewAll = itemView.findViewById(R.id.buttonViewAll)
         }
     }

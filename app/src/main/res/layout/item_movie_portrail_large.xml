@@ -57,6 +57,7 @@
             android:id="@+id/textTitle"
             android:text="@{title}"
             style="@style/TitleText.Large"
+            android:layout_marginTop="@dimen/padding_tiny"
             app:layout_constraintTop_toBottomOf="@+id/cardPoster"
             tools:text="Star Wars: IV"
             />
@@ -67,6 +68,7 @@
             android:id="@+id/ratingBar"
             style="@style/RatingBar"
             android:rating="@{rating}"
+            android:layout_marginTop="@dimen/padding_small"
             app:layout_constraintTop_toBottomOf="@+id/textTitle"
             app:layout_constraintStart_toStartOf="parent"
             />
@@ -91,6 +93,7 @@
             android:id="@+id/textDuration"
             android:text="@{duration}"
             style="@style/ContextText"
+            android:layout_marginTop="@dimen/padding_small"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar"
             />
 

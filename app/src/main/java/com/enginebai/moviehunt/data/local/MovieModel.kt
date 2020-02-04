@@ -23,6 +23,7 @@ fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this
 fun MovieModel.displayTitle(): String = this.title ?: DEFAULT_TEXT
 fun MovieModel.display5StarsRating(): Float = this.voteAverage?.div(2) ?: 0.0f
 fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: DEFAULT_TEXT
-fun MovieModel.displayVotePercentage(): String = "${this.voteCount?.times(100) ?: DEFAULT_TEXT}%"
+// scale from 0-10 to 0-100%
+fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) ?: DEFAULT_TEXT}%"
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: DEFAULT_TEXT
 fun MovieModel.displayReleaseDate(): String = this.releaseDate ?: DEFAULT_TEXT

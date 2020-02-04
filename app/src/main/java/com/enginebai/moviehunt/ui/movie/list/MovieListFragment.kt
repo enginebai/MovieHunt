@@ -23,21 +23,31 @@ class MovieListFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupToolbar()
         setupList()
         subscribeDataChanges()
     }
 
     private fun setupToolbar() {
-        buttonBack.setOnClickListener { activity?.onBackPressed() }
-        textCategory.text = arguments?.getString(FIELD_TITLE)
+        activity?.run {
+            buttonBack.setOnClickListener { this.onBackPressed() }
+            Timber.d("${arguments?.getString(FIELD_LIST_CATEGORY)}")
+            textCategory.text = getString(
+                resources.getIdentifier(
+                    arguments?.getString(
+                        FIELD_LIST_CATEGORY
+                    ), "string", this.packageName
+                )
+            )
+        }
     }
 
     private fun setupList() {
         activity?.let {
             controller = MovieListController(it, this)
         }
-        with (listMovie) {
+        with(listMovie) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             setController(controller)
             setItemSpacingRes(R.dimen.padding_small)
@@ -48,7 +58,7 @@ class MovieListFragment : BaseFragment(),
     }
 
     private fun subscribeDataChanges() {
-        viewModel.fetchMovieList(arguments?.getString(FIELD_MOVIE_LIST, "") ?: "")
+        viewModel.fetchMovieList(arguments?.getString(FIELD_LIST_CATEGORY, "") ?: "")
         viewModel.movieList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -75,12 +85,11 @@ class MovieListFragment : BaseFragment(),
     override fun getLayoutId() = R.layout.fragment_movie_list
 
     companion object {
-        const val FIELD_TITLE = "title"
-        const val FIELD_MOVIE_LIST = "movieList"
+        const val FIELD_LIST_CATEGORY = "movieList"
 
-        fun newInstance(title: String, listCategory: String): MovieListFragment {
+        fun newInstance(listCategory: String): MovieListFragment {
             return MovieListFragment().apply {
-                arguments = bundleOf(FIELD_TITLE to title, FIELD_MOVIE_LIST to listCategory)
+                arguments = bundleOf(FIELD_LIST_CATEGORY to listCategory)
             }
         }
     }
