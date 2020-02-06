@@ -9,12 +9,14 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
+import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
 import com.enginebai.moviehunt.ui.movie.list.MovieListFragment
 import com.enginebai.moviehunt.ui.movie.list.MovieListViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickListener,
     OnMovieClickListener {
@@ -66,7 +68,11 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
     }
 
     override fun onMovieClicked(id: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Timber.d(id)
+        fragmentManager?.beginTransaction()
+            ?.add(R.id.fragmentContainer, MovieDetailFragment.newInstance(id))
+            ?.addToBackStack(MovieListFragment::class.java.simpleName)
+            ?.commit()
     }
 
     override fun onViewAllClicked(category: String) {

@@ -14,6 +14,7 @@ class MovieLargeListController(
         return item?.run {
             MoviePortrailLargeBindingModel_()
                 .id(this.id)
+                .movieId(this.id)
                 .posterImage(this.getPosterUrl())
                 .title(this.displayTitle())
                 .rating(this.voteAverage)

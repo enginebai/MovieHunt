@@ -27,3 +27,4 @@ fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: DEFAULT_
 fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) ?: DEFAULT_TEXT}%"
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: DEFAULT_TEXT
 fun MovieModel.displayReleaseDate(): String = this.releaseDate ?: DEFAULT_TEXT
+fun MovieModel.displayOverview(): String = this.overview ?: DEFAULT_TEXT
