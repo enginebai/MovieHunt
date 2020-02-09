@@ -64,6 +64,13 @@ object Dependencies {
         const val rxjava2 = "androidx.paging:paging-rxjava2:${Versions.paging}"
     }
 
+    object Room {
+        const val runtime = "androidx.room:room-runtime:${Versions.room}"
+        const val annotation = "androidx.room:room-compiler:${Versions.room}"
+        const val ktx = "androidx.room:room-ktx:${Versions.room}"
+        const val rxjava2 = "androidx.room:room-rxjava2:${Versions.room}"
+    }
+
     object Glide {
         const val core = "com.github.bumptech.glide:glide:${Versions.glide}"
         const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"

@@ -5,7 +5,7 @@ import androidx.paging.PageKeyedDataSource
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
-import com.enginebai.moviehunt.data.remote.MovieListResponse
+import com.enginebai.moviehunt.data.remote.mapToMovieModels
 import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -55,18 +55,6 @@ class MovieListDataSource(private val movieList: String,
             .doOnError { loadMoreState.onNext(NetworkState.ERROR) }
             .subscribe()
     }
-
-    private fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
-        this.map {
-            MovieModel(
-                id = it.id,
-                posterPath = it.posterPath,
-                title = it.title,
-                voteAverage = it.voteAverage,
-                voteCount = it.voteCount,
-                releaseDate = it.releaseDate
-            )
-        }
 
     private fun calculateNextPage(totalPage: Int?): Int? {
         if (null != totalPage) {

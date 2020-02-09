@@ -22,7 +22,6 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
     OnMovieClickListener {
 
     private val movieViewModel: MovieListViewModel by viewModel()
-    private val movieCategory = arrayOf("now_playing", "popular", "top_rated", "upcoming")
 
     override fun getLayoutId() = R.layout.fragment_movie_home
 
@@ -30,7 +29,7 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
         super.onViewCreated(view, savedInstanceState)
 
         val categoryListings = mutableListOf<MovieCategoryListing>()
-        movieCategory.forEachIndexed { index, category ->
+        MovieCategory.values().forEachIndexed { index, category ->
             val carouselController: PagedListEpoxyController<MovieModel>
             val itemsOnScreen: Float
             if (index == 0) {
@@ -42,15 +41,15 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
             }
             categoryListings.add(
                 MovieCategoryListing(
-                    category,
-                    getString(resources.getIdentifier(category, "string", view.context.packageName)),
+                    category.key,
+                    getString(category.strRes),
                     this,
                     carouselController,
                     itemsOnScreen
                 )
             )
 
-            val listing = movieViewModel.fetchList(category)
+            val listing = movieViewModel.fetchList(category.key)
             listing.pagedList
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
