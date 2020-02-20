@@ -12,16 +12,15 @@ import com.enginebai.moviehunt.R
 @EpoxyModelClass(layout = R.layout.header_movie_category)
 abstract class CategoryHeaderHolder : EpoxyModelWithHolder<CategoryHeaderHolder.Holder>() {
 
-    @EpoxyAttribute var category = ""
-    @EpoxyAttribute var title = ""
+    @EpoxyAttribute lateinit var category: MovieCategory
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash) var clickListener: OnHeaderClickListener? = null
 
     interface OnHeaderClickListener {
-        fun onViewAllClicked(category: String)
+        fun onViewAllClicked(category: MovieCategory)
     }
 
     override fun bind(holder: Holder) {
-        holder.textTitle.text = title
+        holder.textTitle.setText(category.strRes)
         holder.buttonViewAll.setOnClickListener { clickListener?.onViewAllClicked(category) }
     }
 

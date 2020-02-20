@@ -16,7 +16,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickListener,
     OnMovieClickListener {
@@ -41,15 +40,14 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
             }
             categoryListings.add(
                 MovieCategoryListing(
-                    category.key,
-                    getString(category.strRes),
+                    category,
                     this,
                     carouselController,
                     itemsOnScreen
                 )
             )
 
-            val listing = movieViewModel.fetchList(category.key)
+            val listing = movieViewModel.fetchList(category)
             listing.pagedList
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,15 +65,14 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
     }
 
     override fun onMovieClicked(id: String) {
-        Timber.d(id)
-        fragmentManager?.beginTransaction()
+        activity?.supportFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentContainer, MovieDetailFragment.newInstance(id))
             ?.addToBackStack(MovieListFragment::class.java.simpleName)
             ?.commit()
     }
 
-    override fun onViewAllClicked(category: String) {
-        fragmentManager?.beginTransaction()
+    override fun onViewAllClicked(category: MovieCategory) {
+        activity?.supportFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentContainer, MovieListFragment.newInstance(category))
             ?.addToBackStack(MovieListFragment::class.java.simpleName)
             ?.commit()

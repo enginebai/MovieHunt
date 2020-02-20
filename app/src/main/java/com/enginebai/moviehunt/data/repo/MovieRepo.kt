@@ -6,6 +6,7 @@ import com.enginebai.base.utils.Listing
 import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
+import com.enginebai.moviehunt.ui.movie.home.MovieCategory
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
@@ -14,8 +15,8 @@ import org.koin.core.inject
 const val DEFAULT_PAGE_SIZE = 10
 
 interface MovieRepo {
-    fun fetchMovieList(movieList: String, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
-    fun getMovieList(movieList: String, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
+    fun fetchMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
+    fun getMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
     fun fetchMovieDetail(movieId: String): Single<MovieModel>
 }
 
@@ -24,8 +25,8 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     private val movieApi: MovieApiService by inject()
     private val movieDao: MovieDao by inject()
 
-    override fun fetchMovieList(movieList: String, pageSize: Int): Listing<MovieModel> {
-        val dataSourceFactory = MovieListDataSourceFactory(movieList)
+    override fun fetchMovieList(category: MovieCategory, pageSize: Int): Listing<MovieModel> {
+        val dataSourceFactory = MovieListDataSourceFactory(category)
         val pagedListConfig = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setEnablePlaceholders(false)
@@ -41,13 +42,13 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
         )
     }
 
-    override fun getMovieList(movieList: String, pageSize: Int): Listing<MovieModel> {
-        val dataSourceFactory = movieDao.queryMovieListObservable()
+    override fun getMovieList(category: MovieCategory, pageSize: Int): Listing<MovieModel> {
+        val dataSourceFactory = movieDao.queryMovieListDataSource(category)
         val pagedListConfig = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setEnablePlaceholders(false)
             .build()
-        val boundaryCallback = MovieBoundaryCallback(movieList)
+        val boundaryCallback = MovieBoundar1yCallback(category)
         val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
             .setBoundaryCallback(boundaryCallback)
             .buildObservable()

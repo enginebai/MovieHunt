@@ -6,11 +6,12 @@ import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.mapToMovieModels
+import com.enginebai.moviehunt.ui.movie.home.MovieCategory
 import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class MovieListDataSource(private val movieList: String,
+class MovieListDataSource(private val category: MovieCategory,
                           private val initLoadState: BehaviorSubject<NetworkState>,
                           private val loadMoreState: BehaviorSubject<NetworkState>) :
     PageKeyedDataSource<Int, MovieModel>(), KoinComponent {
@@ -23,7 +24,7 @@ class MovieListDataSource(private val movieList: String,
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MovieModel>
     ) {
-        api.fetchMovieList(movieList, currentPage)
+        api.fetchMovieList(category.key, currentPage)
             .doOnSubscribe {
                 initLoadState.onNext(NetworkState.LOADING)
             }
@@ -44,7 +45,7 @@ class MovieListDataSource(private val movieList: String,
         callback: LoadCallback<Int, MovieModel>
     ) {
         if (null == currentPage || NetworkState.LOADING == loadMoreState.value) return
-        api.fetchMovieList(movieList, currentPage)
+        api.fetchMovieList(category.key, currentPage)
             .doOnSubscribe { loadMoreState.onNext(NetworkState.LOADING) }
             .doOnSuccess {
                 it.results?.run {
@@ -73,14 +74,14 @@ class MovieListDataSource(private val movieList: String,
     }
 }
 
-class MovieListDataSourceFactory(private val movieList: String) : DataSource.Factory<Int, MovieModel>() {
+class MovieListDataSourceFactory(private val category: MovieCategory) : DataSource.Factory<Int, MovieModel>() {
 
     val initLoadState = BehaviorSubject.createDefault<NetworkState>(NetworkState.IDLE)
     val loadMoreState = BehaviorSubject.createDefault<NetworkState>(NetworkState.IDLE)
     var dataSource: MovieListDataSource? = null
 
     override fun create(): DataSource<Int, MovieModel> {
-        dataSource = MovieListDataSource(movieList, initLoadState, loadMoreState)
+        dataSource = MovieListDataSource(category, initLoadState, loadMoreState)
         return dataSource!!
     }
 }

@@ -18,13 +18,12 @@ class MovieCategoryGroup(
             Timber.d("$categoryListing")
             return listOf(
                 CategoryHeaderHolder_()
-                    .id("${categoryListing.category}-header")
+                    .id("${categoryListing.category.key}-header")
                     .category(categoryListing.category)
-                    .title(categoryListing.title)
                     .clickListener(categoryListing.headerClickListener)
                 ,
                 MovieCarouselModel_()
-                    .id("${categoryListing.category}-list")
+                    .id("${categoryListing.category.key}-list")
                     .models(emptyList()) // this is required
                     .epoxyController(categoryListing.carouselController)
                     .paddingRes(R.dimen.padding_small)

@@ -6,6 +6,7 @@ import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.repo.MovieRepo
+import com.enginebai.moviehunt.ui.movie.home.MovieCategory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,8 +17,8 @@ class MovieListViewModel : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()
 
     // v1 architecture (from Google Android Architecture Components PagingWithNetworkSample Project)
-    private val listName = BehaviorSubject.create<String>()
-    private val fetchDataSource: Observable<Listing<MovieModel>> = listName
+    private val movieCategory = BehaviorSubject.create<MovieCategory>()
+    private val fetchDataSource: Observable<Listing<MovieModel>> = movieCategory
         .map {
             movieRepo.fetchMovieList(it)
         }.subscribeOn(Schedulers.io())
@@ -31,8 +32,8 @@ class MovieListViewModel : BaseViewModel() {
     val networkState: Observable<NetworkState>
         get() = fetchDataSource.flatMap { it.loadMoreState }
 
-    fun fetchMovieList(category: String) {
-        listName.onNext(category)
+    fun fetchMovieList(category: MovieCategory) {
+        movieCategory.onNext(category)
     }
 
     fun refresh() {
@@ -44,7 +45,7 @@ class MovieListViewModel : BaseViewModel() {
     }
 
     // v2 architecture
-    fun fetchList(listName: String): Listing<MovieModel> {
-        return movieRepo.fetchMovieList(listName)
+    fun fetchList(category: MovieCategory): Listing<MovieModel> {
+        return movieRepo.fetchMovieList(category)
     }
 }
