@@ -7,9 +7,10 @@ import org.koin.dsl.module
 
 val dbModule = module {
     single {
-        Room.inMemoryDatabaseBuilder(
+        Room.databaseBuilder(
             androidApplication(),
-            MovieDatabase::class.java
+            MovieDatabase::class.java,
+            MovieDatabase::class.java.simpleName
         ).fallbackToDestructiveMigration()
             .build()
     }

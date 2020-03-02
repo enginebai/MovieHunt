@@ -7,6 +7,7 @@ import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.ui.movie.home.MovieCategory
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
@@ -18,13 +19,14 @@ interface MovieRepo {
     fun fetchMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
     fun getMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
     fun fetchMovieDetail(movieId: String): Single<MovieModel>
+    fun clearMovieList(): Completable
 }
 
 class MovieRepoImpl : MovieRepo, KoinComponent {
 
     private val movieApi: MovieApiService by inject()
     private val movieDao: MovieDao by inject()
-    private val nextPageIndex: NextPageIndex by lazy { NextPageIndexImpl() }
+    private val nextPageIndex: NextPageIndex by lazy { IncrementalNextPage() }
 
     override fun fetchMovieList(category: MovieCategory, pageSize: Int): Listing<MovieModel> {
         val dataSourceFactory = MovieListDataSourceFactory(category)
@@ -76,5 +78,9 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                     runtime = response.runtime
                 )
             }
+    }
+
+    override fun clearMovieList(): Completable {
+        return movieDao.dropMovieListTable()
     }
 }

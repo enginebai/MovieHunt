@@ -4,6 +4,7 @@ import androidx.paging.DataSource
 import androidx.room.*
 import com.enginebai.moviehunt.data.remote.MovieListResponse
 import com.enginebai.moviehunt.ui.movie.home.MovieCategory
+import io.reactivex.Completable
 
 @Dao
 interface MovieDao {
@@ -58,4 +59,7 @@ interface MovieDao {
         WHERE movie_list.category = :category
     """)
     fun queryMovieListDataSource(category: MovieCategory): DataSource.Factory<Int, MovieModel>
+
+    @Query("DELETE FROM movie_list")
+    fun dropMovieListTable(): Completable
 }
