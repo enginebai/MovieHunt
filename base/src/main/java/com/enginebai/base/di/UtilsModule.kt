@@ -2,6 +2,7 @@ package com.enginebai.base.di
 
 import com.enginebai.base.BuildConfig
 import com.enginebai.base.utils.logging.MyCustomLoggingDebugTree
+import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.LogAdapter
 import org.koin.dsl.module
@@ -17,4 +18,8 @@ val loggingModule = module {
     }
 
     single<Timber.Tree> { MyCustomLoggingDebugTree() }
+}
+
+val gsonModule = module {
+    single { Gson() }
 }

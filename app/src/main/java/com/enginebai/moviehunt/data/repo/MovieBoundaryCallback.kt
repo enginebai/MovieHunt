@@ -6,7 +6,7 @@ import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.TmdbApiModel
-import com.enginebai.moviehunt.data.remote.mapToMovieModels
+import com.enginebai.moviehunt.ui.movie.home.MovieCategory
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +14,7 @@ import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class MovieBoundaryCallback(private val movieList: String) :
+class MovieBoundaryCallback(private val category: MovieCategory) :
     PagedList.BoundaryCallback<MovieModel>(), KoinComponent {
 
     private val movieApi: MovieApiService by inject()
@@ -27,17 +27,16 @@ class MovieBoundaryCallback(private val movieList: String) :
 
     override fun onZeroItemsLoaded() {
         currentPage = 1
-        movieApi.fetchMovieList(movieList, currentPage).subscribeRemoteDataSource(firstLoad = true)
+        movieApi.fetchMovieList(category.key, currentPage).subscribeRemoteDataSource(firstLoad = true)
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: MovieModel) {
-        movieApi.fetchMovieList(movieList, currentPage).subscribeRemoteDataSource(firstLoad = false)
+        movieApi.fetchMovieList(category.key, currentPage).subscribeRemoteDataSource(firstLoad = false)
     }
 
     private fun Single<TmdbApiModel>.subscribeRemoteDataSource(firstLoad: Boolean) {
         this.map {
-            val movieList = it.results?.mapToMovieModels() ?: emptyList()
-            movieDao.upsertList(movieList)
+            movieDao.upsertMovieListResponses(category, it.results ?: emptyList())
             calculateNextPage(it.totalPages)
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

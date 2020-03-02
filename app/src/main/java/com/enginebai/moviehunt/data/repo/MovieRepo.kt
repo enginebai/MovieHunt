@@ -48,7 +48,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
             .setPageSize(pageSize)
             .setEnablePlaceholders(false)
             .build()
-        val boundaryCallback = MovieBoundar1yCallback(category)
+        val boundaryCallback = MovieBoundaryCallback(category)
         val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
             .setBoundaryCallback(boundaryCallback)
             .buildObservable()

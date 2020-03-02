@@ -48,4 +48,8 @@ class MovieListViewModel : BaseViewModel() {
     fun fetchList(category: MovieCategory): Listing<MovieModel> {
         return movieRepo.fetchMovieList(category)
     }
+
+    fun getList(category: MovieCategory): Listing<MovieModel> {
+        return movieRepo.getMovieList(category, 30)
+    }
 }
