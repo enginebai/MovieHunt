@@ -24,6 +24,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
 
     private val movieApi: MovieApiService by inject()
     private val movieDao: MovieDao by inject()
+    private val nextPageIndex: NextPageIndex by lazy { NextPageIndexImpl() }
 
     override fun fetchMovieList(category: MovieCategory, pageSize: Int): Listing<MovieModel> {
         val dataSourceFactory = MovieListDataSourceFactory(category)
@@ -48,7 +49,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
             .setPageSize(pageSize)
             .setEnablePlaceholders(false)
             .build()
-        val boundaryCallback = MovieBoundaryCallback(category)
+        val boundaryCallback = MovieBoundaryCallback(category, nextPageIndex)
         val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
             .setBoundaryCallback(boundaryCallback)
             .buildObservable()
