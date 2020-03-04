@@ -28,28 +28,12 @@ class MockMovieApiService : MovieApiService, KoinComponent {
             {
                 "page": $page,
                 "total_results": 10000,
-                "total_pages": 5,
+                "total_pages": 1,
                 "results": [
-                    {
-                        "popularity": 29.278,
-                        "vote_count": 6173,
-                        "video": false,
-                        "poster_path": "/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg",
-                        "id": ${System.currentTimeMillis()},
-                        "adult": false,
-                        "backdrop_path": "/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg",
-                        "original_language": "en",
-                        "original_title": "Fantastic Beasts: The Crimes of Grindelwald",
-                        "genre_ids": [
-                            12,
-                            14,
-                            10751
-                        ],
-                        "title": "$page Fantastic Beasts: The Crimes of Grindelwald",
-                        "vote_average": 6.8,
-                        "overview": "Gellert Grindelwald .",
-                        "release_date": "2018-11-14"
-                    }
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis()}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 1. Fantastic Beasts: The Crimes of Grindelwald","vote_average":6,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis() + 1}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 2. Fantastic Beasts: The Crimes of Grindelwald","vote_average":1.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis() + 2}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 3. Fantastic Beasts: The Crimes of Grindelwald","vote_average":5.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis() + 3}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 4. Fantastic Beasts: The Crimes of Grindelwald","vote_average":9.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"}
                 ]
             }
         """.trimIndent()

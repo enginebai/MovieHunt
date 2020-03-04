@@ -3,14 +3,17 @@ package com.enginebai.moviehunt.ui.movie.list
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
 import com.enginebai.moviehunt.ui.movie.home.MovieCategory
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_list.*
@@ -32,7 +35,8 @@ class MovieListFragment : BaseFragment(),
 
         setupToolbar()
         setupList()
-        subscribeDataChanges()
+//        subscribeDataChanges()
+        subscribeDataChangesV2()
     }
 
     private fun setupToolbar() {
@@ -58,21 +62,41 @@ class MovieListFragment : BaseFragment(),
 
     private fun subscribeDataChanges() {
         viewModel.fetchMovieList(movieCategory)
-        viewModel.movieList
-            .subscribeOn(Schedulers.io())
+        subscribePagedList(viewModel.movieList)
+        subscribeRefreshState(viewModel.refreshState)
+        subscribeNetworkState(viewModel.networkState)
+    }
+
+    private fun subscribeDataChangesV2() {
+        val listing = viewModel.getList(movieCategory)
+        subscribePagedList(listing.pagedList)
+        listing.refreshState?.run {
+            subscribeRefreshState(this)
+        }
+        listing.loadMoreState?.run {
+            subscribeNetworkState(this)
+        }
+    }
+
+    private fun subscribePagedList(list: Observable<PagedList<MovieModel>>) {
+        list.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 controller.submitList(it)
             }
             .subscribe()
             .disposeOnDestroy()
-        viewModel.refreshState
-            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun subscribeRefreshState(state: Observable<NetworkState>) {
+        state.observeOn(AndroidSchedulers.mainThread())
             .doOnNext { swipeRefresh.isRefreshing = (NetworkState.LOADING == it) }
             .subscribe()
             .disposeOnDestroy()
-        viewModel.networkState
-            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun subscribeNetworkState(state: Observable<NetworkState>) {
+        state.observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 controller.loadingMore = (NetworkState.LOADING == it)
                 controller.requestModelBuild()
