@@ -31,10 +31,10 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
             val carouselController: PagedListEpoxyController<MovieModel>
             val itemsOnScreen: Float
             if (index == 0) {
-                carouselController = MovieLargeListController(this)
+                carouselController = MovieLargeListController(category, this)
                 itemsOnScreen = 1.7f
             } else {
-                carouselController = MovieNormalListController(this)
+                carouselController = MovieNormalListController(category, this)
                 itemsOnScreen = 3.05f
             }
             categoryListings.add(
@@ -46,7 +46,7 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
                 )
             )
 
-            val listing = movieViewModel.fetchList(category)
+            val listing = movieViewModel.getList(category)
             listing.pagedList
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -66,6 +66,11 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
                 movieViewModel.refresh()
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        movieViewModel.refresh()
     }
 
     override fun onMovieClicked(id: String) {

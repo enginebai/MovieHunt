@@ -14,6 +14,7 @@ const val DEFAULT_TEXT = "--"
 
 @Entity(
     tableName = "movie_list",
+    primaryKeys = ["category", "movie_id"],
     foreignKeys = [ForeignKey(
         entity = MovieModel::class,
         parentColumns = ["id"],
@@ -23,8 +24,6 @@ const val DEFAULT_TEXT = "--"
     )]
 )
 data class MovieListId(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
     val category: MovieCategory,
     @ColumnInfo(name = "movie_id")
     val movieId: String

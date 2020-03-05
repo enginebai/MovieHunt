@@ -30,10 +30,10 @@ class MockMovieApiService : MovieApiService, KoinComponent {
                 "total_results": 10000,
                 "total_pages": 1,
                 "results": [
-                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis()}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 1. Fantastic Beasts: The Crimes of Grindelwald","vote_average":6,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
-                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis() + 1}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 2. Fantastic Beasts: The Crimes of Grindelwald","vote_average":1.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
-                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis() + 2}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 3. Fantastic Beasts: The Crimes of Grindelwald","vote_average":5.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
-                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${System.currentTimeMillis() + 3}","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":" $page 4. Fantastic Beasts: The Crimes of Grindelwald","vote_average":9.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"}
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${movieList}${page}1","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":"$page 1. $movieList Fantastic Beasts: The Crimes of Grindelwald","vote_average":6,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${movieList}${page}2","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":"$page 2. $movieList Fantastic Beasts: The Crimes of Grindelwald","vote_average":1.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${movieList}${page}3","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":"$page 3. $movieList Fantastic Beasts: The Crimes of Grindelwald","vote_average":5.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"},
+                    {"popularity":29.278,"vote_count":6173,"video":false,"poster_path":"/fMMrl8fD9gRCFJvsx0SuFwkEOop.jpg","id":"${movieList}${page}4","adult":false,"backdrop_path":"/qrtRKRzoNkf5vemO9tJ2Y4DrHxQ.jpg","original_language":"en","original_title":"Fantastic Beasts: The Crimes of Grindelwald","genre_ids":[12,14,10751],"title":"$page 4. $movieList Fantastic Beasts: The Crimes of Grindelwald","vote_average":9.8,"overview":"Gellert Grindelwald .","release_date":"2018-11-14"}
                 ]
             }
         """.trimIndent()
@@ -52,18 +52,6 @@ class MockMovieApiService : MovieApiService, KoinComponent {
                     {
                         "id": 28,
                         "name": "Action"
-                    },
-                    {
-                        "id": 878,
-                        "name": "Science Fiction"
-                    },
-                    {
-                        "id": 35,
-                        "name": "Comedy"
-                    },
-                    {
-                        "id": 10751,
-                        "name": "Family"
                     }
                 ],
                 "homepage": "",
@@ -76,13 +64,7 @@ class MockMovieApiService : MovieApiService, KoinComponent {
                 "poster_path": "/aQvJ5WPzZgYVDrxLX4R6cLJCEaQ.jpg",
                 "release_date": "2020-02-12",
                 "revenue": 265493652,
-                "runtime": 99,
-                "spoken_languages": [
-                    {
-                        "iso_639_1": "en",
-                        "name": "English"
-                    }
-                ],
+                "runtime": 99
                 "status": "Released",
                 "tagline": "A Whole New Speed of Hero",
                 "title": "Sonic the Hedgehog",

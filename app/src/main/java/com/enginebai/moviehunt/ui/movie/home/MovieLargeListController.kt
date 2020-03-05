@@ -7,13 +7,14 @@ import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 
 class MovieLargeListController(
+    private val movieCategory: MovieCategory,
     private val clickListener: OnMovieClickListener? = null
 ) : PagedListEpoxyController<MovieModel>() {
 
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {
             MoviePortrailLargeBindingModel_()
-                .id(this.id)
+                .id("${movieCategory}${this.id}")
                 .movieId(this.id)
                 .posterImage(this.getPosterUrl())
                 .title(this.displayTitle())

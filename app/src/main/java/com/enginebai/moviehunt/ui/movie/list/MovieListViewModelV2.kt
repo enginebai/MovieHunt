@@ -15,6 +15,6 @@ class MovieListViewModelV2 : BaseViewModel() {
     }
 
     fun getList(category: MovieCategory): Listing<MovieModel> {
-        return movieRepo.getMovieList(category, 30)
+        return movieRepo.getMovieList(category)
     }
 }

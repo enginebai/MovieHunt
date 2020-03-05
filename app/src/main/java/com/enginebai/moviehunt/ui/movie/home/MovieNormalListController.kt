@@ -10,11 +10,14 @@ import com.enginebai.moviehunt.data.local.displayVotePercentage
 import com.enginebai.moviehunt.data.local.getPosterUrl
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 
-class MovieNormalListController(private val clickListener: OnMovieClickListener? = null) : PagedListEpoxyController<MovieModel>() {
+class MovieNormalListController(
+    private val movieCategory: MovieCategory,
+    private val clickListener: OnMovieClickListener? = null
+) : PagedListEpoxyController<MovieModel>() {
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {
             MoviePortrailNormalBindingModel_()
-                .id(this.id)
+                .id("${movieCategory}${this.id}")
                 .movieId(this.id)
                 .posterImage(this.getPosterUrl())
                 .title(this.displayTitle())

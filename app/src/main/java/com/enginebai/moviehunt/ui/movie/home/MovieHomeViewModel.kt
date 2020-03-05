@@ -17,6 +17,12 @@ class MovieHomeViewModel : BaseViewModel() {
         return listing
     }
 
+    fun getList(category: MovieCategory): Listing<MovieModel> {
+        val listing = movieRepo.getMovieList(category)
+        refreshTaskMap[category] = listing.refresh
+        return listing
+    }
+
     fun refresh() {
         refreshTaskMap.values.forEach {
             it.invoke()
