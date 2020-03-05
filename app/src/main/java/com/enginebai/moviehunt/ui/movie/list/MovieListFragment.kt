@@ -22,7 +22,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class MovieListFragment : BaseFragment(),
     OnMovieClickListener {
 
-    private val viewModel by sharedViewModel<MovieListViewModel>()
+    private val viewModelV1 by sharedViewModel<MovieListViewModelV1>()
+    private val viewModelV2 by sharedViewModel<MovieListViewModelV2>()
     private val movieCategory: MovieCategory by lazy {
         arguments?.getSerializable(
             FIELD_LIST_CATEGORY
@@ -35,8 +36,8 @@ class MovieListFragment : BaseFragment(),
 
         setupToolbar()
         setupList()
-//        subscribeDataChanges()
-        subscribeDataChangesV2()
+        subscribeDataChangesFromRemote()
+//        subscribeDataChangesFromLocal()
     }
 
     private fun setupToolbar() {
@@ -56,19 +57,19 @@ class MovieListFragment : BaseFragment(),
             setItemSpacingRes(R.dimen.padding_small)
         }
         swipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
+            viewModelV1.refresh()
         }
     }
 
-    private fun subscribeDataChanges() {
-        viewModel.fetchMovieList(movieCategory)
-        subscribePagedList(viewModel.movieList)
-        subscribeRefreshState(viewModel.refreshState)
-        subscribeNetworkState(viewModel.networkState)
+    private fun subscribeDataChangesFromRemote() {
+        viewModelV1.fetchMovieList(movieCategory)
+        subscribePagedList(viewModelV1.movieList)
+        subscribeRefreshState(viewModelV1.refreshState)
+        subscribeNetworkState(viewModelV1.networkState)
     }
 
-    private fun subscribeDataChangesV2() {
-        val listing = viewModel.getList(movieCategory)
+    private fun subscribeDataChangesFromLocal() {
+        val listing = viewModelV2.getList(movieCategory)
         subscribePagedList(listing.pagedList)
         listing.refreshState?.run {
             subscribeRefreshState(this)

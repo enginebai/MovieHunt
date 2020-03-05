@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.inject
 
-class MovieListViewModel : BaseViewModel() {
+class MovieListViewModelV1 : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()
 
     // v1 architecture (from Google Android Architecture Components PagingWithNetworkSample Project)
@@ -42,14 +42,5 @@ class MovieListViewModel : BaseViewModel() {
             .doOnNext { it.invoke() }
             .subscribe()
             .disposeOnCleared()
-    }
-
-    // v2 architecture
-    fun fetchList(category: MovieCategory): Listing<MovieModel> {
-        return movieRepo.fetchMovieList(category)
-    }
-
-    fun getList(category: MovieCategory): Listing<MovieModel> {
-        return movieRepo.getMovieList(category, 30)
     }
 }

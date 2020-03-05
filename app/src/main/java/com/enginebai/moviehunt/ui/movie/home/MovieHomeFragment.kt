@@ -11,7 +11,6 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
 import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
 import com.enginebai.moviehunt.ui.movie.list.MovieListFragment
-import com.enginebai.moviehunt.ui.movie.list.MovieListViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
@@ -20,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickListener,
     OnMovieClickListener {
 
-    private val movieViewModel: MovieListViewModel by viewModel()
+    private val movieViewModel: MovieHomeViewModel by viewModel()
 
     override fun getLayoutId() = R.layout.fragment_movie_home
 
@@ -47,9 +46,7 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
                 )
             )
 
-            val listing =
-                movieViewModel.getList(category)
-//                movieViewModel.fetchList(category)
+            val listing = movieViewModel.fetchList(category)
             listing.pagedList
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,6 +60,11 @@ class MovieHomeFragment : BaseFragment(), CategoryHeaderHolder.OnHeaderClickList
         with(listHome) {
             layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
             setController(homeController)
+        }
+        with(swipeRefreshHome) {
+            setOnRefreshListener {
+                movieViewModel.refresh()
+            }
         }
     }
 

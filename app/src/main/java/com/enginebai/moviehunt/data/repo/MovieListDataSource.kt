@@ -17,13 +17,13 @@ class MovieListDataSource(private val category: MovieCategory,
     PageKeyedDataSource<Int, MovieModel>(), KoinComponent {
 
     private val api: MovieApiService by inject()
-    // nullable represents end of page
-    private var currentPage: Int? = 1
+    private var currentPage: Int = -1
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MovieModel>
     ) {
+        currentPage = 1
         api.fetchMovieList(category.key, currentPage)
             .doOnSubscribe {
                 initLoadState.onNext(NetworkState.LOADING)
@@ -44,7 +44,7 @@ class MovieListDataSource(private val category: MovieCategory,
         params: LoadParams<Int>,
         callback: LoadCallback<Int, MovieModel>
     ) {
-        if (null == currentPage || NetworkState.LOADING == loadMoreState.value) return
+        if (NetworkState.LOADING == loadMoreState.value || -1 == currentPage) return
         api.fetchMovieList(category.key, currentPage)
             .doOnSubscribe { loadMoreState.onNext(NetworkState.LOADING) }
             .doOnSuccess {
@@ -59,8 +59,10 @@ class MovieListDataSource(private val category: MovieCategory,
 
     private fun calculateNextPage(totalPage: Int?): Int? {
         if (null != totalPage) {
-            if (totalPage > (currentPage ?: 1)) {
-                currentPage = currentPage?.plus(1)
+            currentPage = if (currentPage in 1 until totalPage) {
+                currentPage.plus(1)
+            } else {
+                -1
             }
         }
         return currentPage
