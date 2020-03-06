@@ -29,6 +29,7 @@ class AppContext : Application() {
                 listOf(
                     gsonModule,
                     networkModule,
+                    rxModule,
                     apiModule,
                     dbModule,
                     daoModule,

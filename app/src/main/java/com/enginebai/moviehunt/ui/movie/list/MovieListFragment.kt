@@ -36,7 +36,7 @@ class MovieListFragment : BaseFragment(),
 
         setupToolbar()
         setupList()
-        subscribeDataChangesFromRemote()
+        subscribeDataChangesFromRemoteV2()
 //        subscribeDataChangesFromLocal()
     }
 
@@ -56,16 +56,30 @@ class MovieListFragment : BaseFragment(),
             setController(controller)
             setItemSpacingRes(R.dimen.padding_small)
         }
+    }
+
+    private fun subscribeDataChangesFromRemoteV1() {
+        viewModelV1.fetchMovieList(movieCategory)
+        subscribePagedList(viewModelV1.movieList)
+        subscribeRefreshState(viewModelV1.refreshState)
+        subscribeNetworkState(viewModelV1.networkState)
         swipeRefresh.setOnRefreshListener {
             viewModelV1.refresh()
         }
     }
 
-    private fun subscribeDataChangesFromRemote() {
-        viewModelV1.fetchMovieList(movieCategory)
-        subscribePagedList(viewModelV1.movieList)
-        subscribeRefreshState(viewModelV1.refreshState)
-        subscribeNetworkState(viewModelV1.networkState)
+    private fun subscribeDataChangesFromRemoteV2() {
+        val listing = viewModelV2.fetchList(movieCategory)
+        subscribePagedList(listing.pagedList)
+        listing.refreshState?.run {
+            subscribeRefreshState(this)
+        }
+        listing.loadMoreState?.run {
+            subscribeNetworkState(this)
+        }
+        swipeRefresh.setOnRefreshListener {
+            listing.refresh()
+        }
     }
 
     private fun subscribeDataChangesFromLocal() {
@@ -76,6 +90,9 @@ class MovieListFragment : BaseFragment(),
         }
         listing.loadMoreState?.run {
             subscribeNetworkState(this)
+        }
+        swipeRefresh.setOnRefreshListener {
+            listing.refresh()
         }
     }
 
