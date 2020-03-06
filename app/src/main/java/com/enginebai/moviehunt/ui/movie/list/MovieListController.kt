@@ -17,6 +17,10 @@ class MovieListController(
     // source: https://github.com/airbnb/epoxy/wiki/Epoxy-Controller#automodels
     private val loadMoreView = LoadMoreView_().apply { id(LoadMoreView::class.java.simpleName) }
     var loadingMore = false
+        set(value) {
+            field = value
+            requestModelBuild()
+        }
 
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {

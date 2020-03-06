@@ -1,7 +1,6 @@
-package com.enginebai.moviehunt.ui.movie.home
+package com.enginebai.moviehunt.ui.movie.home.controller
 
 import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.enginebai.moviehunt.MoviePortrailLargeBindingModel_
 import com.enginebai.moviehunt.MoviePortrailNormalBindingModel_
 import com.enginebai.moviehunt.data.local.MovieModel
@@ -9,11 +8,12 @@ import com.enginebai.moviehunt.data.local.displayTitle
 import com.enginebai.moviehunt.data.local.displayVotePercentage
 import com.enginebai.moviehunt.data.local.getPosterUrl
 import com.enginebai.moviehunt.ui.movie.OnMovieClickListener
+import com.enginebai.moviehunt.ui.movie.home.MovieCategory
 
 class MovieNormalListController(
-    private val movieCategory: MovieCategory,
-    private val clickListener: OnMovieClickListener? = null
-) : PagedListEpoxyController<MovieModel>() {
+    movieCategory: MovieCategory,
+    clickListener: OnMovieClickListener? = null
+) : MovieCarouselController(movieCategory, clickListener) {
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {
             MoviePortrailNormalBindingModel_()

@@ -98,10 +98,7 @@ class MovieListFragment : BaseFragment(),
 
     private fun subscribeNetworkState(state: Observable<NetworkState>) {
         state.observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                controller.loadingMore = (NetworkState.LOADING == it)
-                controller.requestModelBuild()
-            }
+            .doOnNext { controller.loadingMore = (NetworkState.LOADING == it) }
             .subscribe()
             .disposeOnDestroy()
     }
