@@ -7,6 +7,7 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.functions.Consumer
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.subjects.BehaviorSubject
+import retrofit2.HttpException
 import timber.log.Timber
 import java.net.ConnectException
 import java.net.SocketException
@@ -27,6 +28,10 @@ class RxErrorHandler(private val application: Application) : Consumer<Throwable>
             is SocketTimeoutException, is ConnectException, is UnknownHostException, is SocketException -> {
                 Timber.w("Network fail: $cause")
                 errorMessageToDisplay.onNext(application.getString(R.string.error_network_fail))
+            }
+            is HttpException -> {
+                val url = cause.response()?.raw()?.request?.url
+                errorMessageToDisplay.onNext("HTTP ${cause.code()} of $url")
             }
             else -> {
                 Timber.e(cause)

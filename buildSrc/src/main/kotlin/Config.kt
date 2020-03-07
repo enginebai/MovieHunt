@@ -4,8 +4,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 
 object Config {
-//    const val apiRoot = "\"https://api.themoviedb.org/3/\""
-    const val apiRoot = "\"http://86392056.ngrok.io/\""
+    const val apiRoot = "\"https://api.themoviedb.org/3/\""
     const val imageApiRoot = "\"https://image.tmdb.org/t/p/\""
 }
 
