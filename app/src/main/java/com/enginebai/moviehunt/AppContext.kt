@@ -1,4 +1,4 @@
-package com.enginebai.project
+package com.enginebai.moviehunt
 
 import android.app.Application
 import com.enginebai.base.di.gsonModule

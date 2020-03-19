@@ -1,6 +1,5 @@
-package com.enginebai.project
+package com.enginebai.moviehunt
 
-import android.os.Bundle
 import com.enginebai.base.utils.RxErrorHandler
 import com.enginebai.base.view.BaseActivity
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,2 +1,2 @@
 include(":app", ":base")
-rootProject.name="Base"
+rootProject.name="MovieHunt"
