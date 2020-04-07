@@ -1,5 +1,6 @@
 package com.enginebai.base.di
 
+import com.enginebai.base.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
@@ -12,24 +13,23 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 val networkModule = module {
-    single<Interceptor> {
+    single {
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
     single {
         val builder = OkHttpClient.Builder()
-        builder.addInterceptor(get<Interceptor>())
+        builder.addInterceptor(get<HttpLoggingInterceptor>())
         builder.protocols(listOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
         builder.build()
     }
 
     single<Converter.Factory> { GsonConverterFactory.create() }
     single<CallAdapter.Factory> { RxJava2CallAdapterFactory.create() }
-    single<Retrofit> {
-        // TODO: specify the base URL
+    single {
         Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(BuildConfig.API_ROOT)
             .addCallAdapterFactory(get())
             .addConverterFactory(get())
             .client(get())
