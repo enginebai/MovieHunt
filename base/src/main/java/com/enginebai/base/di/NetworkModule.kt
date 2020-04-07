@@ -1,6 +1,7 @@
 package com.enginebai.base.di
 
 import com.enginebai.base.BuildConfig
+import com.enginebai.base.utils.ApiInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
@@ -18,9 +19,11 @@ val networkModule = module {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
+    single { ApiInterceptor() }
     single {
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(get<HttpLoggingInterceptor>())
+        builder.addInterceptor(get<ApiInterceptor>())
         builder.protocols(listOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
         builder.build()
     }

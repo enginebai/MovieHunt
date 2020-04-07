@@ -1,11 +1,12 @@
 
 import com.android.build.gradle.BaseExtension
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 
 object Config {
-    const val apiRoot = "\"https://api.themoviedb.org/3/\""
-    const val imageApiRoot = "\"https://image.tmdb.org/t/p/\""
+    const val API_ROOT = "\"https://api.themoviedb.org/3/\""
+    const val IMAGE_API_ROOT = "\"https://image.tmdb.org/t/p/\""
 }
 
 fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
@@ -19,9 +20,14 @@ fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
 
         dataBinding.isEnabled = true
 
-        buildConfigField("String", "API_ROOT", Config.apiRoot)
-        buildConfigField("String", "TMDB_API_KEY", tmdbApiKey)
-        buildConfigField("String", "IMAGE_API_KEY", Config.imageApiRoot)
+        buildConfigField("String", "API_ROOT", Config.API_ROOT)
+        buildConfigField("String", "TMDB_API_KEY", TMDB_API_KEY)
+        buildConfigField("String", "IMAGE_API_KEY", Config.IMAGE_API_ROOT)
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
     }
 
     buildTypes {
