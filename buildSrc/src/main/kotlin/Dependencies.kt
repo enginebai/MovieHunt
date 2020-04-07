@@ -93,6 +93,10 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.Logging.logger)
         implementation(Dependencies.Logging.timber)
 
+        implementation(Dependencies.Retrofit.core)
+        implementation(Dependencies.okhttp)
+        implementation(Dependencies.gson)
+
         testImplementation(Dependencies.Test.junit)
         androidTestImplementation(Dependencies.Test.runner)
         androidTestImplementation(Dependencies.Test.espressoCore)
