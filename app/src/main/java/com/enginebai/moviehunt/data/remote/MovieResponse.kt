@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.data.remote
 
+import com.enginebai.moviehunt.data.local.MovieModel
 import com.google.gson.annotations.SerializedName
 
 data class MovieListResponse(
@@ -16,6 +17,18 @@ data class MovieListResponse(
     @SerializedName("release_date")
     val releaseDate: String?
 )
+
+fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
+    this.map {
+        MovieModel(
+            id = it.id,
+            posterPath = it.posterPath,
+            title = it.title,
+            voteAverage = it.voteAverage,
+            voteCount = it.voteCount,
+            releaseDate = it.releaseDate
+        )
+    }
 
 data class MovieDetailResponse(
     @SerializedName("id")
