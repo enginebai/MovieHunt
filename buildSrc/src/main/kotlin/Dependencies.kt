@@ -26,7 +26,7 @@ object Dependencies {
         const val appCompat = "androidx.appcompat:appcompat:${Versions.androidX}"
         const val coreKtx = "androidx.core:core-ktx:${Versions.androidX}"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.ArchitectureComponents.lifecycle}"
     }
 
     object Test {
@@ -57,6 +57,11 @@ object Dependencies {
         const val processor = "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
         const val databinding = "com.airbnb.android:epoxy-databinding:${Versions.epoxy}"
         const val paging = "com.airbnb.android:epoxy-paging:${Versions.epoxy}"
+    }
+
+    object Paging {
+        const val runtime = "androidx.paging:paging-runtime:${Versions.ArchitectureComponents.paging}"
+        const val rxJava2 = "androidx.paging:paging-rxjava2:${Versions.ArchitectureComponents.paging}"
     }
 }
 
@@ -96,6 +101,9 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.Retrofit.core)
         implementation(Dependencies.okhttp)
         implementation(Dependencies.gson)
+
+        implementation(Dependencies.Paging.runtime)
+        implementation(Dependencies.Paging.rxJava2)
 
         testImplementation(Dependencies.Test.junit)
         androidTestImplementation(Dependencies.Test.runner)

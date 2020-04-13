@@ -4,7 +4,6 @@ object Versions {
     const val androidX = "1.1.0"
     const val material = "1.0.0"
     const val constraintLayout = "1.1.3"
-    const val lifecycle = "2.1.0"
 
     const val rxJava = "2.2.13"
     const val rxAndroid = "2.1.1"
@@ -28,6 +27,11 @@ object Versions {
         const val id = "com.enginebai.project"
         const val versionCode = 1
         const val versionName = "1.0.0"
+    }
+
+    object ArchitectureComponents {
+        const val paging = "2.1.2"
+        const val lifecycle = "2.1.0"
     }
 
 }
