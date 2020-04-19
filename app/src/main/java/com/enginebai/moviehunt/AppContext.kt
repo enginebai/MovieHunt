@@ -5,6 +5,7 @@ import com.enginebai.base.di.gsonModule
 import com.enginebai.base.di.loggingModule
 import com.enginebai.base.di.networkModule
 import com.enginebai.moviehunt.di.apiModule
+import com.enginebai.moviehunt.di.repoModule
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
@@ -28,7 +29,7 @@ class AppContext : Application() {
         startKoin {
             androidLogger(level = Level.INFO)
             androidContext(this@AppContext)
-            modules(listOf(gsonModule, networkModule, loggingModule, apiModule))
+            modules(listOf(gsonModule, networkModule, loggingModule, apiModule, repoModule))
         }
     }
 
