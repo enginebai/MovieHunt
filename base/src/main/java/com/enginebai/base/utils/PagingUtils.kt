@@ -1,7 +1,7 @@
 package com.enginebai.base.utils
 
 enum class NetworkState {
-    IDEL,
+    IDLE,
     LOADING,
     ERROR
 }

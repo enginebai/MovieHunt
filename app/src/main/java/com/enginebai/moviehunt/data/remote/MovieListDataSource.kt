@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.data.remote
 
+import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
@@ -32,7 +33,7 @@ class MovieListDataSource(
                         calculateNextPage(it.totalPages)
                     )
                 }
-                initLoadState.onNext(NetworkState.IDEL)
+                initLoadState.onNext(NetworkState.IDLE)
             }
             .doOnError { initLoadState.onNext(NetworkState.ERROR) }
             .subscribe()
@@ -46,7 +47,7 @@ class MovieListDataSource(
                 it.results?.run {
                     callback.onResult(this.mapToMovieModels(), calculateNextPage(it.totalPages))
                 }
-                loadMoreState.onNext(NetworkState.IDEL)
+                loadMoreState.onNext(NetworkState.IDLE)
             }
             .doOnError { loadMoreState.onNext(NetworkState.ERROR) }
             .subscribe()
@@ -66,4 +67,17 @@ class MovieListDataSource(
         }
         return currentPage
     }
+}
+
+class MovieListDataSourceFactory(private val category: MovieCategory): DataSource.Factory<Int, MovieModel>() {
+
+    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
+    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
+    var dataSource: MovieListDataSource? = null
+
+    override fun create(): DataSource<Int, MovieModel> {
+        dataSource = MovieListDataSource(category, initLoadState, loadMoreState)
+        return dataSource!!
+    }
+
 }
