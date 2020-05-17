@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">MovieHunt</string>
+    <string name="placeholder">--</string>
+    <string name="vote_count" formatted="false">%s reviews</string>
     <string name="now_playing">Now Playing</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="upcoming">Upcoming</string>
+    <string name="view_all">View All</string>
+
+    <string name="error_network_fail">Looks like your are offline!</string>
 </resources>

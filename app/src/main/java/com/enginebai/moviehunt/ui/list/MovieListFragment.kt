@@ -5,30 +5,39 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.ui.MovieClickListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class MovieListFragment : BaseFragment() {
+class MovieListFragment : BaseFragment(), MovieClickListener {
 
 	private val viewModelV1 by sharedViewModel<MovieListViewModelV1>()
 	private val viewModelV2 by sharedViewModel<MovieListViewModelV2>()
 	private val movieCategory: MovieCategory by lazy {
 		arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
 	}
+	private lateinit var controller: MovieListController
 
 	override fun getLayoutId() = R.layout.fragment_movie_list
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		setupToolbar()
+		setupList()
 		subscribeDataChangesFromRemoteV1()
+	}
+
+	override fun onMovieClicked(movieId: String) {
+		TODO("Not yet implemented")
 	}
 
 	private fun setupToolbar() {
@@ -39,6 +48,17 @@ class MovieListFragment : BaseFragment() {
 				setTitle(movieCategory.strRes)
 				setDisplayHomeAsUpEnabled(true)
 			}
+		}
+	}
+
+	private fun setupList() {
+		activity?.let {
+			controller = MovieListController(it, this)
+		}
+		with (listMovie) {
+			layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+			setController(controller)
+			setItemSpacingRes(R.dimen.size_8)
 		}
 	}
 
@@ -61,9 +81,7 @@ class MovieListFragment : BaseFragment() {
 	private fun subscribePagedList(list: Observable<PagedList<MovieModel>>) {
 		list.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
-			.doOnNext {
-				// TODO: controller.submit(it)
-			}
+			.doOnNext { controller.submitList(it) }
 			.subscribe()
 			.disposeOnDestroy()
 	}
@@ -77,9 +95,7 @@ class MovieListFragment : BaseFragment() {
 
 	private fun subscribeLoadMoreState(state: Observable<NetworkState>) {
 		state.observeOn(AndroidSchedulers.mainThread())
-			.doOnNext {
-				// TODO: controller load more
-			}
+			.doOnNext { controller.loadingMore = (NetworkState.LOADING == it) }
 			.subscribe()
 			.disposeOnDestroy()
 	}

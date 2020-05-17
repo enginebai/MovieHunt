@@ -1,11 +1,47 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="TitleText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TitleText.Large">
+        <item name="android:textSize">@dimen/text_18</item>
+    </style>
+
+    <style name="TitleText.Normal">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:numStars">5</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:colorControlNormal">@color/grey</item>
+    </style>
+
+    <style name="VoteCountText">
+        <item name="android:textSize">@dimen/text_12</item>
+    </style>
+
+    <style name="ContextText">
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:drawablePadding">@dimen/size_4</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

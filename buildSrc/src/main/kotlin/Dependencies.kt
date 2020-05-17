@@ -63,6 +63,11 @@ object Dependencies {
         const val runtime = "androidx.paging:paging-runtime:${Versions.ArchitectureComponents.paging}"
         const val rxJava2 = "androidx.paging:paging-rxjava2:${Versions.ArchitectureComponents.paging}"
     }
+
+	object Glide {
+		const val core = "com.github.bumptech.glide:glide:${Versions.glide}"
+		const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+	}
 }
 
 fun Project.importCommonPlugins() {

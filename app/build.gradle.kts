@@ -18,6 +18,8 @@ dependencies {
     implementation(Dependencies.Epoxy.paging)
     implementation(Dependencies.Epoxy.databinding)
     "kapt"(Dependencies.Epoxy.processor)
+	implementation(Dependencies.Glide.core)
+	"kapt"(Dependencies.Glide.compiler)
 
     implementation(project(":base"))
 }
