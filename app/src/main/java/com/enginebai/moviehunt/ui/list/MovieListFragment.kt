@@ -1,0 +1,94 @@
+package com.enginebai.moviehunt.ui.list
+
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.paging.PagedList
+import com.enginebai.base.utils.NetworkState
+import com.enginebai.base.view.BaseFragment
+import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.MovieModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_movie_list.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
+class MovieListFragment : BaseFragment() {
+
+	private val viewModelV1 by sharedViewModel<MovieListViewModelV1>()
+	private val viewModelV2 by sharedViewModel<MovieListViewModelV2>()
+	private val movieCategory: MovieCategory by lazy {
+		arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
+	}
+
+	override fun getLayoutId() = R.layout.fragment_movie_list
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		setupToolbar()
+		subscribeDataChangesFromRemoteV1()
+	}
+
+	private fun setupToolbar() {
+		activity?.run {
+			(this as AppCompatActivity).setSupportActionBar(toolbar)
+			val actionBar = this.supportActionBar
+			actionBar?.run {
+				setTitle(movieCategory.strRes)
+				setDisplayHomeAsUpEnabled(true)
+			}
+		}
+	}
+
+	private fun subscribeDataChangesFromRemoteV1() {
+		viewModelV1.fetchMovieList(movieCategory)
+		subscribePagedList(viewModelV1.movieList)
+		subscribeRefreshState(viewModelV1.refreshState)
+		subscribeLoadMoreState(viewModelV1.networkState)
+		swipeRefresh.setOnRefreshListener { viewModelV1.refresh() }
+	}
+
+	private fun subscribeDataChangesFromRemoteV2() {
+		val listing = viewModelV2.fetchList(movieCategory)
+		subscribePagedList(listing.pagedList)
+		listing.refreshState?.run { subscribeRefreshState(this) }
+		listing.loadMoreState?.run { subscribeLoadMoreState(this) }
+		swipeRefresh.setOnRefreshListener { listing.refresh() }
+	}
+
+	private fun subscribePagedList(list: Observable<PagedList<MovieModel>>) {
+		list.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.doOnNext {
+				// TODO: controller.submit(it)
+			}
+			.subscribe()
+			.disposeOnDestroy()
+	}
+
+	private fun subscribeRefreshState(state: Observable<NetworkState>) {
+		state.observeOn(AndroidSchedulers.mainThread())
+			.doOnNext { swipeRefresh.isRefreshing = (NetworkState.LOADING == it) }
+			.subscribe()
+			.disposeOnDestroy()
+	}
+
+	private fun subscribeLoadMoreState(state: Observable<NetworkState>) {
+		state.observeOn(AndroidSchedulers.mainThread())
+			.doOnNext {
+				// TODO: controller load more
+			}
+			.subscribe()
+			.disposeOnDestroy()
+	}
+
+	companion object {
+		const val FIELD_LIST_CATEGORY = "movieListCategory"
+
+		fun newInstance(category: MovieCategory): MovieListFragment = MovieListFragment().apply {
+			arguments = bundleOf(FIELD_LIST_CATEGORY to category)
+		}
+	}
+}
