@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movieId"
+            type="String" />
+        <variable
+            name="posterImage"
+            type="String" />
+        <variable
+            name="title"
+            type="String" />
+        <variable
+            name="rating"
+            type="Float" />
+        <variable
+            name="voteCount"
+            type="String" />
+        <variable
+            name="duration"
+            type="String" />
+        <variable
+            name="clickListener"
+            type="com.enginebai.moviehunt.ui.MovieClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onMovieClicked(movieId)}">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/cardPoster"
+            app:cardCornerRadius="@dimen/corner"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="9:14"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imagePoster"
+                android:src="@color/darkBlue"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{posterImage}"
+                app:error="@{@color/darkBlue}"
+                app:placeholder="@{@color/darkBlue}"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textTitle"
+            android:text="@{title}"
+            style="@style/TitleText.Large"
+            android:layout_marginTop="@dimen/size_4"
+            app:layout_constraintTop_toBottomOf="@+id/cardPoster"
+            tools:text="Star Wars: IV"
+            />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            style="@style/RatingBar"
+            android:rating="@{rating}"
+            android:layout_marginTop="@dimen/size_8"
+            app:layout_constraintTop_toBottomOf="@+id/textTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textVoteCount"
+            android:text="@{@string/vote_count(voteCount)}"
+            style="@style/VoteCountText"
+            android:layout_marginStart="@dimen/size_8"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            app:layout_constraintTop_toTopOf="@+id/ratingBar"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text = "2.6k reviews"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textDuration"
+            android:text="@{duration}"
+            style="@style/ContextText"
+            android:layout_marginTop="@dimen/size_8"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
