@@ -14,6 +14,6 @@ class MovieCarousel(context: Context) : Carousel(context) {
 	// you need to override this to prevent NPE of Carousel.setModels()
 	@ModelProp
 	override fun setModels(models: List<EpoxyModel<*>>) {
-		super.setModels(models)
+		// remove super method because we use PagedController for models build.
 	}
 }

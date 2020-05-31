@@ -42,11 +42,11 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 
 	private fun setupToolbar() {
 		activity?.run {
-			(this as AppCompatActivity).setSupportActionBar(toolbar)
-			val actionBar = this.supportActionBar
+			val actionBar = (this as AppCompatActivity).supportActionBar
 			actionBar?.run {
 				setTitle(movieCategory.strRes)
 				setDisplayHomeAsUpEnabled(true)
+				show()
 			}
 		}
 	}
