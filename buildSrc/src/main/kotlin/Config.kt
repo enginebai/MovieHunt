@@ -18,8 +18,6 @@ fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
         versionName = Versions.App.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        dataBinding.isEnabled = true
-
         buildConfigField("String", "API_ROOT", Config.API_ROOT)
         buildConfigField("String", "TMDB_API_KEY", TMDB_API_KEY)
         buildConfigField("String", "IMAGE_API_KEY", Config.IMAGE_API_ROOT)
@@ -29,6 +27,8 @@ fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
             targetCompatibility = JavaVersion.VERSION_1_8
         }
     }
+
+	buildFeatures.dataBinding = true
 
     buildTypes {
         getByName("release") {

@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
 }
 
-//apply(from = "../dependencies.gradle.kts")
 importCommonPlugins()
 configAndroid()
 importCommonDependencies()
