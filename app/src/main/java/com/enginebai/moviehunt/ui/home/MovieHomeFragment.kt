@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
+import com.enginebai.moviehunt.NavigationRouter
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
@@ -17,6 +18,7 @@ import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
 import com.enginebai.moviehunt.ui.home.controller.MovieNormalListController
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
+import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
@@ -30,11 +32,6 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHold
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-
-		activity?.run {
-			(this as AppCompatActivity).supportActionBar?.hide()
-		}
-
 		val categoryListings = mutableListOf<MovieCategoryListing>()
 		MovieCategory.values().forEachIndexed { index, category ->
 			val carouselController: PagedListEpoxyController<MovieModel>
@@ -97,13 +94,10 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHold
 	}
 
 	override fun onViewAllClicked(category: MovieCategory) {
-		activity?.supportFragmentManager?.beginTransaction()
-			?.add(R.id.fragmentContainer, MovieListFragment.newInstance(category))
-			?.addToBackStack(MovieListFragment::class.java.simpleName)
-			?.commit()
+		NavigationRouter.navigationToList(activity, category)
 	}
 
 	override fun onMovieClicked(movieId: String) {
-		TODO("Not yet implemented")
+		NavigationRouter.navigationToDetail(activity, movieId)
 	}
 }

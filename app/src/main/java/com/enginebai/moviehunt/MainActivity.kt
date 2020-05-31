@@ -19,9 +19,7 @@ class MainActivity : BaseActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		supportFragmentManager.beginTransaction()
-			.add(R.id.fragmentContainer, MovieHomeFragment())
-			.commit()
+		NavigationRouter.navigateToHome(this)
 	}
 
 	override fun onStart() {

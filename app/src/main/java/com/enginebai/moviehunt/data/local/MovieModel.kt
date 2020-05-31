@@ -13,6 +13,7 @@ data class MovieModel(
     val title: String? = null,
     val voteAverage: Float? = null,
     val voteCount: Int? = null,
+    val overview: String? = null,
     val releaseDate: String? = null,
     val genreList: List<Genre>? = null,
     val runtime: Int? = null
@@ -27,3 +28,4 @@ fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) 
 
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: PLACEHOLDER
 fun MovieModel.displayReleaseDate(): String = this.releaseDate ?: PLACEHOLDER
+fun MovieModel.displayOverview(): String = this.overview ?: PLACEHOLDER

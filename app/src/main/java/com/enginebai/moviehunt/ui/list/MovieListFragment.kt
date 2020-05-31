@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt.ui.list
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
+import com.enginebai.moviehunt.NavigationRouter
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
@@ -37,13 +39,26 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 	}
 
 	override fun onMovieClicked(movieId: String) {
-		TODO("Not yet implemented")
+		NavigationRouter.navigationToDetail(activity, movieId)
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		return when (item.itemId) {
+			android.R.id.home -> {
+				activity?.onBackPressed()
+				true
+			}
+			else -> super.onOptionsItemSelected(item)
+		}
 	}
 
 	private fun setupToolbar() {
+		// make fragment.onOptionsItemSelected() be called
+		// https://stackoverflow.com/a/37953823/2279285
+		setHasOptionsMenu(true)
 		activity?.run {
-			val actionBar = (this as AppCompatActivity).supportActionBar
-			actionBar?.run {
+			(this as AppCompatActivity).setSupportActionBar(toolbar)
+			this.supportActionBar?.run {
 				setTitle(movieCategory.strRes)
 				setDisplayHomeAsUpEnabled(true)
 				show()
