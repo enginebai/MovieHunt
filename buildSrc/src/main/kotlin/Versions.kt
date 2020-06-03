@@ -21,7 +21,7 @@ object Versions {
     
     object Android {
         const val sdk = 29
-        const val minSdk = 23
+        const val minSdk = 24
     }
  
     object App {

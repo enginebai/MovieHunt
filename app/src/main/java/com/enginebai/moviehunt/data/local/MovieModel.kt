@@ -2,13 +2,32 @@ package com.enginebai.moviehunt.data.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.remote.Genre
+import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
 
 const val PLACEHOLDER = "--"
+
+@Entity(
+	tableName = "movie_list",
+	primaryKeys = ["category", "movie_id"],
+	foreignKeys = [ForeignKey(
+		entity = MovieModel::class,
+		parentColumns = ["id"],
+		childColumns = ["movie_id"],
+		onDelete = ForeignKey.CASCADE,
+		onUpdate = ForeignKey.CASCADE
+	)]
+)
+data class MovieListId(
+	val category: MovieCategory,
+	@ColumnInfo(name = "movie_id")
+	val movieId: String
+)
 
 @Entity(tableName = "movie")
 data class MovieModel(
