@@ -4,10 +4,7 @@ import android.app.Application
 import com.enginebai.base.di.gsonModule
 import com.enginebai.base.di.loggingModule
 import com.enginebai.base.di.networkModule
-import com.enginebai.moviehunt.di.apiModule
-import com.enginebai.moviehunt.di.appModule
-import com.enginebai.moviehunt.di.repoModule
-import com.enginebai.moviehunt.di.viewModelModule
+import com.enginebai.moviehunt.di.*
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
@@ -21,24 +18,36 @@ import timber.log.Timber
 
 class AppContext : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        dependenciesInjection()
-        initLogging()
-    }
+	override fun onCreate() {
+		super.onCreate()
+		dependenciesInjection()
+		initLogging()
+	}
 
-    private fun dependenciesInjection() {
-        startKoin {
-            androidLogger(level = Level.INFO)
-            androidContext(this@AppContext)
-            modules(listOf(appModule, viewModelModule, gsonModule, networkModule, loggingModule, apiModule, repoModule))
-        }
-    }
+	private fun dependenciesInjection() {
+		startKoin {
+			androidLogger(level = Level.INFO)
+			androidContext(this@AppContext)
+			modules(
+				listOf(
+					appModule,
+					viewModelModule,
+					gsonModule,
+					networkModule,
+					loggingModule,
+					apiModule,
+					dbModule,
+					daoModule,
+					repoModule
+				)
+			)
+		}
+	}
 
-    private fun initLogging() {
-        val formatStrategy: FormatStrategy = get()
-        val logAdapter: AndroidLogAdapter = get { parametersOf(formatStrategy) }
-        Logger.addLogAdapter(logAdapter)
-        Timber.plant(get())
-    }
+	private fun initLogging() {
+		val formatStrategy: FormatStrategy = get()
+		val logAdapter: AndroidLogAdapter = get { parametersOf(formatStrategy) }
+		Logger.addLogAdapter(logAdapter)
+		Timber.plant(get())
+	}
 }

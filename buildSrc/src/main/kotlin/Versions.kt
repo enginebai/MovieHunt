@@ -33,6 +33,7 @@ object Versions {
     object ArchitectureComponents {
         const val paging = "2.1.2"
         const val lifecycle = "2.1.0"
+	    const val room = "2.2.5"
     }
 
 }
