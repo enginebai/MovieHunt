@@ -3,6 +3,7 @@ package com.enginebai.moviehunt.data.repo
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.enginebai.base.utils.Listing
+import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListDataSourceFactory
@@ -17,12 +18,15 @@ const val DEFAULT_PAGE_SIZE = 10
 
 interface MovieRepo {
     fun fetchMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
+	fun getMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>
 	fun fetchMovieDetail(movieId: String): Single<MovieModel>
 }
 
 class MovieRepoImpl : MovieRepo, KoinComponent {
 
 	private val movieApi: MovieApiService by inject()
+	private val movieDao: MovieDao by inject()
+	private val nextPageIndex: NextPageIndex by lazy { IncrementalNextPage() }
 
     override fun fetchMovieList(
         category: MovieCategory,
@@ -43,6 +47,24 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
 		    refresh = { dataSourceFactory.dataSource?.invalidate() }
 	    )
     }
+
+	override fun getMovieList(category: MovieCategory, pageSize: Int): Listing<MovieModel> {
+		val dataSourceFactory = movieDao.queryMovieListDataSource(category)
+		val pagedListConfig = PagedList.Config.Builder()
+			.setEnablePlaceholders(false)
+			.setPageSize(pageSize)
+			.build()
+		val boundaryCallback = MovieBoundaryCallback(category, nextPageIndex)
+		val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
+			.setBoundaryCallback(boundaryCallback)
+			.buildObservable()
+		return Listing(
+			pagedList = pagedList,
+			refreshState = boundaryCallback.initLoadState,
+			loadMoreState = boundaryCallback.loadMoreState,
+			refresh = { boundaryCallback.onZeroItemsLoaded() }
+		)
+	}
 
 	override fun fetchMovieDetail(movieId: String): Single<MovieModel> {
 		return movieApi.fetchMovieDetail(movieId)
