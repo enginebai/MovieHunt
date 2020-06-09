@@ -2,8 +2,47 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ae1023a68d63c0f409e011ffce891262",
+    "identityHash": "93b98f468a2452a252d9b321ff229dec",
     "entities": [
+      {
+        "tableName": "movie_list",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category` TEXT NOT NULL, `movie_id` TEXT NOT NULL, PRIMARY KEY(`category`, `movie_id`), FOREIGN KEY(`movie_id`) REFERENCES `movie`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "movieId",
+            "columnName": "movie_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "category",
+            "movie_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "movie",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "movie_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
       {
         "tableName": "movie",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `poster_path` TEXT, `title` TEXT, `vote_average` REAL, `vote_count` INTEGER, `overview` TEXT, `release_date` TEXT, `genres` TEXT, `runtime` INTEGER, PRIMARY KEY(`id`))",
@@ -76,7 +115,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ae1023a68d63c0f409e011ffce891262')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '93b98f468a2452a252d9b321ff229dec')"
     ]
   }
 }

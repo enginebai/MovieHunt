@@ -20,6 +20,12 @@ class MovieHomeViewModel : BaseViewModel() {
 		return listing
 	}
 
+	fun getList(category: MovieCategory): Listing<MovieModel> {
+		val listing = movieRepo.getMovieList(category)
+		listingMap[category] = listing
+		return listing
+	}
+
 	fun refresh() {
 		listingMap.values.forEach {
 			it.refresh.invoke()

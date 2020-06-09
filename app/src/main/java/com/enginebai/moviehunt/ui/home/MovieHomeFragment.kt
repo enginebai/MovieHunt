@@ -53,7 +53,7 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHold
 				)
 			)
 
-			val listing = movieViewModel.fetchList(category)
+			val listing = movieViewModel.getList(category)
 			listing.pagedList
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())

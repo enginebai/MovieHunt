@@ -35,7 +35,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 		super.onViewCreated(view, savedInstanceState)
 		setupToolbar()
 		setupList()
-		subscribeDataChangesFromRemoteV1()
+		subscribeDataChangesFromLocal()
 	}
 
 	override fun onMovieClicked(movieId: String) {
@@ -87,6 +87,14 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 
 	private fun subscribeDataChangesFromRemoteV2() {
 		val listing = viewModelV2.fetchList(movieCategory)
+		subscribePagedList(listing.pagedList)
+		listing.refreshState?.run { subscribeRefreshState(this) }
+		listing.loadMoreState?.run { subscribeLoadMoreState(this) }
+		swipeRefresh.setOnRefreshListener { listing.refresh() }
+	}
+
+	private fun subscribeDataChangesFromLocal() {
+		val listing = viewModelV2.getList(movieCategory)
 		subscribePagedList(listing.pagedList)
 		listing.refreshState?.run { subscribeRefreshState(this) }
 		listing.loadMoreState?.run { subscribeLoadMoreState(this) }
