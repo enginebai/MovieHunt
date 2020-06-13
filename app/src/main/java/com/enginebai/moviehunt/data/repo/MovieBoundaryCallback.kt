@@ -3,6 +3,7 @@ package com.enginebai.moviehunt.data.repo
 import androidx.paging.PagedList
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieDao
+import com.enginebai.moviehunt.data.local.MovieDatabase
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListResponse
@@ -17,11 +18,13 @@ import org.koin.core.inject
 
 class MovieBoundaryCallback(
 	private val category: MovieCategory,
+	private val pageSize: Int,
 	private val nextPageIndex: NextPageIndex
 ): PagedList.BoundaryCallback<MovieModel>(), KoinComponent {
 
 	private val movieApi: MovieApiService by inject()
 	private val movieDao: MovieDao by inject()
+	private val movieDb: MovieDatabase by inject()
 
 	val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
 	val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
@@ -43,7 +46,15 @@ class MovieBoundaryCallback(
 
 	private fun Single<TmdbApiResponse<MovieListResponse>>.subscribeRemoteDataSource(firstLoad: Boolean = false) {
 		this.map {
-			movieDao.upsertMovieListResponse(category, it.results ?: emptyList())
+			movieDb.runInTransaction {
+				if (firstLoad)
+					movieDao.deleteMovieList(category)
+				movieDao.upsertMovieListResponse(
+					category = category,
+					list = it.results ?: emptyList(),
+					pageSize = pageSize,
+					currentPage = nextPageIndex.getNextPageIndex(category.key))
+			}
 			calculateNextPage(it.totalPages)
 		}.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())

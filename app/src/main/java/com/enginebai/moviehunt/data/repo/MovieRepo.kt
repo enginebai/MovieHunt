@@ -8,7 +8,6 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListDataSourceFactory
 import com.enginebai.moviehunt.ui.list.MovieCategory
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
@@ -54,7 +53,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
 			.setEnablePlaceholders(false)
 			.setPageSize(pageSize)
 			.build()
-		val boundaryCallback = MovieBoundaryCallback(category, nextPageIndex)
+		val boundaryCallback = MovieBoundaryCallback(category, pageSize, nextPageIndex)
 		val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
 			.setBoundaryCallback(boundaryCallback)
 			.buildObservable()
@@ -62,7 +61,9 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
 			pagedList = pagedList,
 			refreshState = boundaryCallback.initLoadState,
 			loadMoreState = boundaryCallback.loadMoreState,
-			refresh = { boundaryCallback.onZeroItemsLoaded() }
+			refresh = {
+				boundaryCallback.onZeroItemsLoaded()
+			}
 		)
 	}
 

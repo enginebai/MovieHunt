@@ -26,7 +26,8 @@ const val PLACEHOLDER = "--"
 data class MovieListId(
 	val category: MovieCategory,
 	@ColumnInfo(name = "movie_id")
-	val movieId: String
+	val movieId: String,
+	val position: Long
 )
 
 @Entity(tableName = "movie")

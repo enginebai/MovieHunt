@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "93b98f468a2452a252d9b321ff229dec",
+    "identityHash": "3ed7ccadc56c9f33751c251a09063f51",
     "entities": [
       {
         "tableName": "movie_list",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category` TEXT NOT NULL, `movie_id` TEXT NOT NULL, PRIMARY KEY(`category`, `movie_id`), FOREIGN KEY(`movie_id`) REFERENCES `movie`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category` TEXT NOT NULL, `movie_id` TEXT NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`category`, `movie_id`), FOREIGN KEY(`movie_id`) REFERENCES `movie`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "category",
@@ -18,6 +18,12 @@
             "fieldPath": "movieId",
             "columnName": "movie_id",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -115,7 +121,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '93b98f468a2452a252d9b321ff229dec')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3ed7ccadc56c9f33751c251a09063f51')"
     ]
   }
 }
