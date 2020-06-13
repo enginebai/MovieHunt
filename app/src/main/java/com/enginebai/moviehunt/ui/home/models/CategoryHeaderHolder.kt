@@ -1,4 +1,4 @@
-package com.enginebai.moviehunt.ui.home
+package com.enginebai.moviehunt.ui.home.models
 
 import android.view.View
 import android.widget.Button

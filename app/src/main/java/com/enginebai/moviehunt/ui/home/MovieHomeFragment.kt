@@ -2,7 +2,6 @@ package com.enginebai.moviehunt.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.paging.PagedListEpoxyController
@@ -12,19 +11,16 @@ import com.enginebai.moviehunt.NavigationRouter
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
-import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
-import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
-import com.enginebai.moviehunt.ui.home.controller.MovieNormalListController
+import com.enginebai.moviehunt.ui.home.controller.*
+import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 import com.enginebai.moviehunt.ui.list.MovieCategory
-import com.enginebai.moviehunt.ui.list.MovieListFragment
-import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHolder.OnHeaderClickListener {
+class MovieHomeFragment : BaseFragment(), MovieClickListener,
+	CategoryHeaderHolder.OnHeaderClickListener {
 
 	private val movieViewModel: MovieHomeViewModel by viewModel()
 
@@ -32,7 +28,8 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHold
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		val categoryListings = mutableListOf<MovieCategoryListing>()
+		val categoryListings = mutableMapOf<MovieCategory, MovieCategoryListing>()
+		val homeController = MovieHomeController()
 		MovieCategory.values().forEachIndexed { index, category ->
 			val carouselController: PagedListEpoxyController<MovieModel>
 			val itemsOnScreen: Float
@@ -44,14 +41,13 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHold
 				carouselController = MovieNormalListController(category, this)
 				itemsOnScreen = 3.05f
 			}
-			categoryListings.add(
+			categoryListings[category] =
 				MovieCategoryListing(
-					category,
 					this,
+					NetworkState.LOADING,
 					carouselController,
 					itemsOnScreen
 				)
-			)
 
 			val listing = movieViewModel.getList(category)
 			listing.pagedList
@@ -60,22 +56,28 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, CategoryHeaderHold
 				.doOnNext { carouselController.submitList(it) }
 				.subscribe()
 				.disposeOnDestroy()
+			listing.refreshState
+				?.observeOn(AndroidSchedulers.mainThread())
+				?.doOnNext {
+					categoryListings[category]?.loadingState = it
+					homeController.requestModelBuild()
+				}?.subscribe()
+				?.disposeOnDestroy()
 			listing.loadMoreState
 				?.observeOn(AndroidSchedulers.mainThread())
 				?.doOnNext {
-					(carouselController as MovieCarouselController).loadingMore = (it == NetworkState.LOADING)
+					(carouselController as MovieCarouselController).loadingMore =
+						(it == NetworkState.LOADING)
 				}?.subscribe()
 				?.disposeOnDestroy()
 		}
+		homeController.categoryListings = categoryListings
 
-		val homeController = MovieHomeController()
-			.apply { this.categoryListings = categoryListings }
-
-		with (listHome) {
+		with(listHome) {
 			layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
-			setController(homeController)
+			setControllerAndBuildModels(homeController)
 		}
-		with (swipeRefreshHome) {
+		with(swipeRefreshHome) {
 			movieViewModel.refreshState()
 				.observeOn(AndroidSchedulers.mainThread())
 				.doOnNext { this.isRefreshing = (it == NetworkState.LOADING) }

@@ -13,8 +13,5 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/viewStubCarousel"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_4"
-        android:background="@android:color/black"/>
+
 </LinearLayout>
