@@ -25,7 +25,8 @@ object Versions {
     }
  
     object App {
-        const val id = "com.enginebai.project"
+	    // TODO: name your android ID, version information
+        const val id = ""
         const val versionCode = 1
         const val versionName = "1.0.0"
     }

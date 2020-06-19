@@ -14,10 +14,5 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.Epoxy.core)
-    implementation(Dependencies.Epoxy.paging)
-    implementation(Dependencies.Epoxy.databinding)
-    "kapt"(Dependencies.Epoxy.processor)
-
     implementation(project(":base"))
 }

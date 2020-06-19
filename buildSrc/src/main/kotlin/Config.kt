@@ -17,7 +17,6 @@ fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
         versionCode = Versions.App.versionCode
         versionName = Versions.App.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         dataBinding.isEnabled = true
     }
 
