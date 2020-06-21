@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: start your main layout -->
+    <!-- TODO: 6. start your main layout -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
