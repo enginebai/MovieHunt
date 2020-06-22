@@ -1,11 +1,15 @@
-![Language](https://img.shields.io/badge/language-kotlin-blue?logo=kotlin) ![License](https://img.shields.io/badge/License-MIT-brightgreen) 
+![Language](https://img.shields.io/badge/language-kotlin-blue?logo=kotlin) ![License](https://img.shields.io/badge/License-MIT-brightgreen) ![Version](https://img.shields.io/badge/Version-0.0.1-orange)
 
-The `Base` project provides a Android app project template that includes the base modules/classes, setups for **Gradle Kotlin DSL** and eliminates boilerplate code.
+# AndroidBase
+The `AndroidBase` project provides a Android app project template that includes the base modules/classes (ex: BaseActivity, BaseFragment, BaseViewModel ... etc.), setups for **Gradle Kotlin DSL** and eliminates boilerplate code.
 
-It helps you to quickly create a well configured Android starter application with the most popular libraries (Ex: Android Architecuture Component, Retrofit/OkHttp, RxJava, Logging...etc.). It creates and configures your project for you. Just focus on code development! 
+It helps you to create a well configured Android starter application with the most popular libraries (Ex: Android Architecuture Component, Retrofit/OkHttp, RxJava, Logging ... etc.). It creates and configures your project for you. Just start and focus on your rocket app development! 
+
+> This project is suitable for those apps that fetch data from network and display data in list structure.
 
 ## Setup
-1. Just click on [![Clone this template](https://img.shields.io/badge/-Clone%20template-brightgreen)](https://github.com/enginebai/Base/generate) button to create a new repo starting from this template. Or you can clone this project by `git clone git@github.com:enginebai/Base.git` .
+0. Just click on [![Clone this template](https://img.shields.io/badge/-Clone%20template-brightgreen)](https://github.com/enginebai/Base/generate) button to create a new repo starting from this template. Or you can clone this project by `git clone git@github.com:enginebai/Base.git` .
+1. Change your project name in `settings.gradle.kts`.
 2. Set your application ID in `Versions.kt`
 3. Set the package name in `AndroidManifest.xml` file of `:app` module .
 4. Select `com.enginebai.project` directory in "Project" tool window and rename package for your app.
@@ -15,16 +19,17 @@ It helps you to quickly create a well configured Android starter application wit
 8. That's all. Start your app development journey now 🎉.
 
 ## Good Practices
-* Add all dependencies version in `Versions.kt` 
+* Add all dependencies versions in `Versions.kt` 
 
 ```kotlin
 object Versions {
     const val kotlin = "1.3.50"
     const val awesomeLibrary = "x.y.z"
+    // TODO: add the library version
     ...
 }
 ```
-* Add all 3rd-party dependencies in `Dependencies.kt`
+* Define all 3rd-party dependencies in `Dependencies.kt`, and use all versions definition in `Versions.kt`.
 
 ```kotlin
 object Dependencies {
@@ -44,6 +49,7 @@ object Dependencies {
     ...
 }
 ```
+
 * Always import dependency from `Dependencies.kt` in `build.gradle.kts` file.
 
 ```kotlin
@@ -118,7 +124,7 @@ fun Project.importCommonDependencies() {
     dependencies {
         ...
         implementation(Dependencies.material)
-        // TODO: add your dependencies
+        // TODO: add your common dependencies
         .. 
     }
 }
@@ -128,7 +134,8 @@ fun Project.importCommonDependencies() {
 
 ## Modules Structure
 * `:base` module: It defines the base, common and utilities classes.
-* `:app` module: That's your app module, just like a normal Android app project. You puts all resources that app used, including strings, colors, dimensions, drawables. Or you can create `:common` modules for that if you use multi-modules project. 
+* `:app` module: That's your app module, just like a normal Android app project. You put all resources that app used, including strings, colors, dimensions, drawables. Or you can create a new modules (ex: `:common`) for that if you use multi-modules project.
+* `/buildSrc`: It enables you to write the build script (`*.gradle.kts` files) in kotlin to manage dependencies and gets better IDE completion support. It gives you a way to develop build code more like regular code. More information please check [official document](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources).
 
 > **Note**: Don't put the resources inside `:base` module since it can be updated from remote repo, please treat `:base` module as library.
 
@@ -139,6 +146,27 @@ fun Project.importCommonDependencies() {
 * [Koin](https://github.com/InsertKoinIO/koin), kotlin light-weight dependency injection.
 * [Timber](https://github.com/JakeWharton/timber), for logging.
 * [Epoxy](https://github.com/airbnb/epoxy), for RecyclerView complex view layout.
+
+## How to Update
+Keep this repository as one of your project tracked remote.
+
+```shell
+> git remote -v 
+> origin	git@github.com:yourName/YourAwesomeProject.git (fetch)
+> origin	git@github.com:yourName/YourAwesomeProject.git (push)
+> base	git@github.com:enginebai/AndroidBase.git (fetch)
+> base	git@github.com:enginebai/AndroidBase.git (push)
+```
+
+And you can update by git pull or rebase from this remote repository.
+
+```shell
+> git pull --rebase base master # pull and rebase
+or 
+> get pull base master # pull and merge
+```
+
+Resolve the conflicts and commit, this project will be one of your codebase module.
 
 ## LICENSE
 

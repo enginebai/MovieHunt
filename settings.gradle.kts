@@ -1,2 +1,3 @@
 include(":app", ":base")
-rootProject.name="Base"
+// TODO: 0. change your project name
+rootProject.name="AndroidBase"
