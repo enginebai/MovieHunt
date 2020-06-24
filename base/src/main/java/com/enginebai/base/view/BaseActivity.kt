@@ -35,7 +35,7 @@ abstract class BaseActivity : AppCompatActivity() {
 				.observeOn(AndroidSchedulers.mainThread())
 				.doOnNext { handleErrorMessage(it) }
 				.subscribe()
-				.disposeOnDestroy()
+                .disposeOnDestroy()
 		}
 	}
 

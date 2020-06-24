@@ -8,15 +8,15 @@ It helps you to create a well configured Android starter application with the mo
 > This project is suitable for those apps that fetch data from network and display data in list structure.
 
 ## Setup
-0. Just click on [![Clone this template](https://img.shields.io/badge/-Clone%20template-brightgreen)](https://github.com/enginebai/Base/generate) button to create a new repo starting from this template. Or you can clone this project by `git clone git@github.com:enginebai/Base.git` .
-1. Change your project name in `settings.gradle.kts`.
-2. Set your application ID in `Versions.kt`
-3. Set the package name in `AndroidManifest.xml` file of `:app` module .
-4. Select `com.enginebai.project` directory in "Project" tool window and rename package for your app.
-5. Create your application class which extends `BaseApplication` in `:app` module, implement abstract methods and add to `AndroidManifest.xml` file.
-6. Specify your retrofit base URL in `NetworkModule.kt` file.
-7. Start to design your main layout xml file `fragment_main.xml` and fragment class.
-8. That's all. Start your app development journey now 🎉.
+1. Just click on [![Clone this template](https://img.shields.io/badge/-Clone%20template-brightgreen)](https://github.com/enginebai/Base/generate) button to create a new repo starting from this template. Or you can clone this project by `git clone git@github.com:enginebai/Base.git` .
+2. Change your project name in `settings.gradle.kts`.
+3. Set your application ID in `Versions.kt`
+4. Set the package name in `AndroidManifest.xml` file of `:app` module .
+5. Select `com.enginebai.project` directory in "Project" tool window and rename package for your app.
+6. Create your application class which extends `BaseApplication` in `:app` module, implement abstract methods and add to `AndroidManifest.xml` file.
+7. Specify your retrofit base URL in `NetworkModule.kt` file.
+8. Start to design your main layout xml file `fragment_main.xml` and fragment class.
+9. That's all. Start your app development journey now 🎉.
 
 ## Good Practices
 * Add all dependencies versions in `Versions.kt` 
@@ -167,6 +167,8 @@ or
 ```
 
 Resolve the conflicts and commit, this project will be one of your codebase module.
+
+> **NOTE**: If you have own README, LICENSE files, feel free to accept your change while merging from base remote and resolving the conflicts.
 
 ## LICENSE
 

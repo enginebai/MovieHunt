@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.provideDelegate
 
 object Dependencies {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:3.5.1"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.androidGradle}"
     const val material = "com.google.android.material:material:${Versions.material}"
 
     const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
@@ -19,19 +19,19 @@ object Dependencies {
 
     object Kotlin {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     }
 
     object AndroidX {
-        const val appCompat = "androidx.appcompat:appcompat:${Versions.androidX}"
-        const val coreKtx = "androidx.core:core-ktx:${Versions.androidX}"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+        const val appCompat = "androidx.appcompat:appcompat:${Versions.AndroidX.appCompat}"
+        const val coreKtx = "androidx.core:core-ktx:${Versions.AndroidX.core}"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.constraintLayout}"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.ArchitectureComponents.lifecycle}"
     }
 
     object Test {
         const val junit = "junit:junit:${Versions.junit}"
-        const val runner = "androidx.test:runner:1.2.0"
+        const val runner = "androidx.test:runner:${Versions.testRunner}"
         const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     }
 
@@ -57,6 +57,11 @@ object Dependencies {
         const val processor = "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
         const val databinding = "com.airbnb.android:epoxy-databinding:${Versions.epoxy}"
         const val paging = "com.airbnb.android:epoxy-paging:${Versions.epoxy}"
+    }
+
+    object Paging {
+        const val runtime = "androidx.paging:paging-runtime:${Versions.ArchitectureComponents.paging}"
+        const val rxJava2 = "androidx.paging:paging-rxjava2:${Versions.ArchitectureComponents.paging}"
     }
 }
 
@@ -92,6 +97,13 @@ fun Project.importCommonDependencies() {
 
         implementation(Dependencies.Logging.logger)
         implementation(Dependencies.Logging.timber)
+
+        implementation(Dependencies.Retrofit.core)
+        implementation(Dependencies.okhttp)
+        implementation(Dependencies.gson)
+
+        implementation(Dependencies.Paging.runtime)
+        implementation(Dependencies.Paging.rxJava2)
 
         testImplementation(Dependencies.Test.junit)
         androidTestImplementation(Dependencies.Test.runner)
