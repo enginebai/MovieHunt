@@ -1,0 +1,119 @@
+# MovieHunt
+
+MovieHunt is a sample Android project using [The Movie DB](https://www.themoviedb.org/) based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date tech stacks.
+
+MovieHunt is a simple Android app project based on modern Android development tech-stacks and MVVM architecture.
+// TODO: Screenshot
+
+## Features
+* 100% Kotlin
+* MVVM architecture
+* Reactive pattern
+* Android architecture components and Jetpack
+* Single activity
+* Dependency injection
+* CI support (Upcoming)
+* Testing (Upcoming)
+
+## Tech Stacks
+* [Retrofit](http://square.github.io/retrofit/) + [OkHttp](http://square.github.io/okhttp/)- RESTful API and networking client.
+* [Koin]() - Dependency injection.
+* [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - A collections of libraries that help you design rebust, testable and maintainable apps.
+    * [Room](https://developer.android.com/training/data-storage/room) - Local persistence database.
+    * [Paging](https://developer.android.com/topic/libraries/architecture/paging) - Pagination loading for RecyclerView.
+    * [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) - UI related data holder, lifecycle aware.
+    * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
+    * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way
+    * [Navigation component](https://developer.android.com/guide/navigation) - (Upcoming) 
+    * [WorkManager]() - background jobs (Upcoming)
+* [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous and event trigger
+* [Epoxy]() - 
+* [Glide](https://github.com/bumptech/glide) - Image loading
+* [Timber]() - Logging
+* [Jetpack Compose]() - Upcoming
+* [Coroutines]() - background operations. (Upcoming)
+
+## Architectures
+Our architecture follows Google recommended [Guide to app architecture](https://developer.android.com/jetpack/guide)
+
+MVVM, Repostiory pattern.
+
+// TODO: illustration
+
+## Package Structures
+
+```
+com.enginebai.moviehunt # Root Package
+├── data                # For data modeling layer
+│   ├── local           # Local persistence database
+|   │   ├── dao         # Data Access Object for Room 
+|   |   ├── model       # Model classes  
+│   ├── remote          # Remote data source
+│   └── repo            # Repositories for single source of data
+|
+├── di                  # Dependency injection modules
+│   
+├── ui                  # Fragment / View layer
+│   ├── list            # List screen Fragment and ViewModel
+│   ├── home            # Main screen Fragment and ViewModel
+|   │   ├── controller  # Epoxy controller for RecyclerView
+|   │   └── models      # Epoxy models for RecyclerView   
+│   └── details         # Detail screen Fragment and ViewModel
+|
+├── utils               # Utility Classes / Kotlin extensions
+├── MainActivity        # Single activity
+├── AppContext          # Application
+└── NavigationRouter    # Navigation controller
+
+```
+
+
+## API Key 🔑
+You will need to provide developer key to fetch the data from TMDB API.
+* Generate a new key (v3 auth) from [here](https://www.themoviedb.org/settings/api). Copy the key and go back to Android project.
+* Create a new kotlin file `ApiKey.kt` in path `./buildSrc/src/main/kotlin/`.
+* Define a constant `TMDB_API_KEY` with the double quotes, it looks like
+
+```kotlin
+const val TMDB_API_KEY = "\"90c05******************655\""
+```
+
+* Add the key to build config in `./buildSrc/src/main/kotlin/Config.kt`:
+
+```kotlin
+defaultConfig {
+    ...
+    buildConfigField("String", "TMDB_API_KEY", TMDB_API_KEY)
+    ...
+}
+```
+
+* Perform gradle sync.
+
+> **NOTE**: It's important to keep the double quotes for this value, since it's used as String type build config fields, the field name in quotes, the field value in escaped quotes additionally. If you're missing the double quotes, it will build fail.
+
+## LICENSE
+
+```
+Copyright (c) 2020 Engine Bai
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+
