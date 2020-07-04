@@ -1,9 +1,8 @@
 # MovieHunt
 
-MovieHunt is a sample Android project using [The Movie DB](https://www.themoviedb.org/) based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date tech stacks.
+MovieHunt is a sample Android project using [The Movie DB](https://www.themoviedb.org/) API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.
 
-MovieHunt is a simple Android app project based on modern Android development tech-stacks and MVVM architecture.
-// TODO: Screenshot
+![MovieHunt](./art/MovieHunt.png)
 
 ## Features
 * 100% Kotlin
@@ -16,29 +15,32 @@ MovieHunt is a simple Android app project based on modern Android development te
 * Testing (Upcoming)
 
 ## Tech Stacks
-* [Retrofit](http://square.github.io/retrofit/) + [OkHttp](http://square.github.io/okhttp/)- RESTful API and networking client.
+* [Retrofit](http://square.github.io/retrofit/) + [OkHttp](http://square.github.io/okhttp/) - RESTful API and networking client.
 * [Koin]() - Dependency injection.
 * [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - A collections of libraries that help you design rebust, testable and maintainable apps.
     * [Room](https://developer.android.com/training/data-storage/room) - Local persistence database.
     * [Paging](https://developer.android.com/topic/libraries/architecture/paging) - Pagination loading for RecyclerView.
     * [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) - UI related data holder, lifecycle aware.
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
-    * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way
-    * [Navigation component](https://developer.android.com/guide/navigation) - (Upcoming) 
-    * [WorkManager]() - background jobs (Upcoming)
-* [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous and event trigger
-* [Epoxy]() - 
-* [Glide](https://github.com/bumptech/glide) - Image loading
-* [Timber]() - Logging
-* [Jetpack Compose]() - Upcoming
-* [Coroutines]() - background operations. (Upcoming)
+    * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way to bind data to UI layout.
+    * [Navigation component](https://developer.android.com/guide/navigation) - (Upcoming) Fragment routing handler.
+    * [WorkManager]() - (Upcoming) Tasks scheduler in background jobs.
+* [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.
+* [Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.
+* [Glide](https://github.com/bumptech/glide) - Image loading.
+* [Timber](https://github.com/JakeWharton/timber) - Extensible API for logging.
+* [Jetpack Compose](https://developer.android.com/jetpack/compose) - Declarative and simplified way for UI development. (Upcoming)
+* [Coroutines](https://developer.android.com/kotlin/coroutines) - Light-weight threads for background operations. (Upcoming)
 
 ## Architectures
-Our architecture follows Google recommended [Guide to app architecture](https://developer.android.com/jetpack/guide)
 
-MVVM, Repostiory pattern.
+![MVVM](./art/MovieHunt_Architecture.png)
 
-// TODO: illustration
+We follow Google recommended [Guide to app architecture](https://developer.android.com/jetpack/guide) to structure our architecture based on MVVM, reactive UI using LiveData / RxJava observables and data binding.
+
+* **View**: Activity/Fragment with UI-specific logics only.
+* **ViewModel**: It keeps the logic away from View layer, provides data streams for UI and handle user interactions.
+* **Model**: Repository pattern, data layers that provide interface to manipulate data from both the local and remote data sources. The local data sources will serve as [single source of truth](https://en.wikipedia.org/wiki/Single_source_of_truth).
 
 ## Package Structures
 
