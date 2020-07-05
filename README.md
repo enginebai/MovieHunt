@@ -23,8 +23,8 @@ MovieHunt is a sample Android project using [The Movie DB](https://www.themovied
     * [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) - UI related data holder, lifecycle aware.
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
     * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way to bind data to UI layout.
-    * [Navigation component](https://developer.android.com/guide/navigation) - (Upcoming) Fragment routing handler.
-    * [WorkManager]() - (Upcoming) Tasks scheduler in background jobs.
+    * [Navigation component](https://developer.android.com/guide/navigation) - Fragment routing handler. (Upcoming)
+    * [WorkManager]() - Tasks scheduler in background jobs. (Upcoming) 
 * [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.
 * [Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.
 * [Glide](https://github.com/bumptech/glide) - Image loading.
@@ -48,18 +48,18 @@ We follow Google recommended [Guide to app architecture](https://developer.andro
 com.enginebai.moviehunt # Root Package
 ├── data                # For data modeling layer
 │   ├── local           # Local persistence database
-|   │   ├── dao         # Data Access Object for Room 
-|   |   ├── model       # Model classes  
+|   │   ├── dao         # Data Access Object for Room
+|   |   ├── model       # Model classes
 │   ├── remote          # Remote data source
 │   └── repo            # Repositories for single source of data
 |
 ├── di                  # Dependency injection modules
-│   
+│
 ├── ui                  # Fragment / View layer
 │   ├── list            # List screen Fragment and ViewModel
 │   ├── home            # Main screen Fragment and ViewModel
 |   │   ├── controller  # Epoxy controller for RecyclerView
-|   │   └── models      # Epoxy models for RecyclerView   
+|   │   └── models      # Epoxy models for RecyclerView
 │   └── details         # Detail screen Fragment and ViewModel
 |
 ├── utils               # Utility Classes / Kotlin extensions
