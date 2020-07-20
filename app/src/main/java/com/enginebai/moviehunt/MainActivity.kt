@@ -5,12 +5,14 @@ import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import com.enginebai.base.view.BaseActivity
+import com.enginebai.moviehunt.ui.home.MovieHomeFragment
+import com.enginebai.moviehunt.utils.openFragment
 
 class MainActivity : BaseActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		NavigationRouter.navigateToHome(this)
+		openFragment(MovieHomeFragment(), false)
 	}
 
 	override fun handleErrorMessage(message: String) {

@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
-import com.enginebai.moviehunt.NavigationRouter
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.home.controller.*
 import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import com.enginebai.moviehunt.ui.list.MovieListFragment
+import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
+import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
@@ -96,10 +98,10 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
 	}
 
 	override fun onViewAllClicked(category: MovieCategory) {
-		NavigationRouter.navigationToList(activity, category)
+		activity?.openFragment(MovieListFragment.newInstance(category), true)
 	}
 
 	override fun onMovieClicked(movieId: String) {
-		NavigationRouter.navigationToDetail(activity, movieId)
+		activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
 	}
 }
