@@ -1,8 +1,11 @@
-# MovieHunt
+<h1 align="center">MovieHunt</h1>
 
-MovieHunt is a sample Android project using [The Movie DB](https://www.themoviedb.org/) API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.
+<p align="center">
+MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/">The Movie DB</a> API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.
 
 ![MovieHunt](./art/MovieHunt.png)
+
+</p>
 
 ## Features
 * 100% Kotlin
@@ -14,9 +17,11 @@ MovieHunt is a sample Android project using [The Movie DB](https://www.themovied
 * CI support (Upcoming)
 * Testing (Upcoming)
 
+<img src="./art/moviehunt-demo.gif" align="right" width="32%"/>
+
 ## Tech Stacks
 * [Retrofit](http://square.github.io/retrofit/) + [OkHttp](http://square.github.io/okhttp/) - RESTful API and networking client.
-* [Koin]() - Dependency injection.
+* [Koin](https://insert-koin.io/) - Dependency injection.
 * [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - A collections of libraries that help you design rebust, testable and maintainable apps.
     * [Room](https://developer.android.com/training/data-storage/room) - Local persistence database.
     * [Paging](https://developer.android.com/topic/libraries/architecture/paging) - Pagination loading for RecyclerView.
@@ -24,7 +29,7 @@ MovieHunt is a sample Android project using [The Movie DB](https://www.themovied
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
     * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way to bind data to UI layout.
     * [Navigation component](https://developer.android.com/guide/navigation) - Fragment routing handler. (Upcoming)
-    * [WorkManager]() - Tasks scheduler in background jobs. (Upcoming) 
+    * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Tasks scheduler in background jobs. (Upcoming) 
 * [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.
 * [Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.
 * [Glide](https://github.com/bumptech/glide) - Image loading.
