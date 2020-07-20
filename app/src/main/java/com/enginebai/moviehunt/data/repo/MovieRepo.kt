@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-const val DEFAULT_PAGE_SIZE = 10
+const val DEFAULT_PAGE_SIZE = 5
 
 interface MovieRepo {
     fun fetchMovieList(category: MovieCategory, pageSize: Int = DEFAULT_PAGE_SIZE): Listing<MovieModel>

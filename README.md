@@ -1,8 +1,11 @@
-# MovieHunt
+<h1 align="center">MovieHunt</h1>
 
-MovieHunt is a sample Android project using [The Movie DB](https://www.themoviedb.org/) API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.
+<p align="center">
+MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/">The Movie DB</a> API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.
 
 ![MovieHunt](./art/MovieHunt.png)
+
+</p>
 
 ## Features
 * 100% Kotlin
@@ -13,6 +16,8 @@ MovieHunt is a sample Android project using [The Movie DB](https://www.themovied
 * Dependency injection
 * CI support (Upcoming)
 * Testing (Upcoming)
+
+<img src="./art/moviehunt-demo.gif" align="right" width="32%"/>
 
 ## Tech Stacks
 * [Retrofit](http://square.github.io/retrofit/) + [OkHttp](http://square.github.io/okhttp/) - RESTful API and networking client.
