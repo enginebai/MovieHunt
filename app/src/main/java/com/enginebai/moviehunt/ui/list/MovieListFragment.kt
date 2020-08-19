@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
-import com.enginebai.moviehunt.NavigationRouter
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
+import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
+import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -39,7 +40,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 	}
 
 	override fun onMovieClicked(movieId: String) {
-		NavigationRouter.navigationToDetail(activity, movieId)
+		activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
