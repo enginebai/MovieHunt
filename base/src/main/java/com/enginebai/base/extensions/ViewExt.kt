@@ -4,6 +4,22 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
+/**
+ * Prevent multiple click in a short period of time. Default interval is 1500 milli-second.
+ * @param listener: The click listener
+ * @param intervalInMillis: The time interval to trigger next click events.
+ */
+inline fun View.debounceClick(crossinline listener: (view: View) -> Unit, intervalInMillis: Int = 1500) {
+	var lastClick = 0L
+	setOnClickListener {
+		val diff = System.currentTimeMillis() - lastClick
+		lastClick = System.currentTimeMillis()
+		if (diff > intervalInMillis) {
+			listener(it)
+		}
+	}
+}
+
 //
 // visibility
 //
