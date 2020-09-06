@@ -10,10 +10,10 @@ import androidx.core.content.ContextCompat
 
 /**
  * Prevent multiple click in a short period of time. Default interval is 1500 milli-second.
- * @param listener: The click listener
  * @param intervalInMillis: The time interval to trigger next click events.
+ * @param listener: The click listener
  */
-inline fun View.debounceClick(crossinline listener: (view: View) -> Unit, intervalInMillis: Int = 1500) {
+inline fun View.debounceClick(intervalInMillis: Int = 1500, crossinline listener: (view: View) -> Unit) {
 	var lastClick = 0L
 	setOnClickListener {
 		val diff = System.currentTimeMillis() - lastClick
@@ -27,14 +27,23 @@ inline fun View.debounceClick(crossinline listener: (view: View) -> Unit, interv
 //
 // visibility
 //
+/**
+ * Set visible or invisible of view.
+ */
 fun View.setVisible(visible: Boolean) {
 	visibility = if (visible) View.VISIBLE else View.INVISIBLE
 }
 
+/**
+ * Set visible or gone of view.
+ */
 fun View.setExistence(exist: Boolean) {
 	visibility = if (exist) View.VISIBLE else View.GONE
 }
 
+/**
+ * Set view visible when matching the given [predicate]
+ */
 inline fun View.showIf(predicate: () -> Boolean): View {
 	if (visibility != View.VISIBLE && predicate()) {
 		visibility = View.VISIBLE
@@ -42,13 +51,19 @@ inline fun View.showIf(predicate: () -> Boolean): View {
 	return this
 }
 
+/**
+ * Set view invisible when matching the given [predicate]
+ */
 inline fun View.hideIf(predicate: () -> Boolean): View {
 	if (visibility != View.INVISIBLE && predicate()) {
-		visibility = View.VISIBLE
+		visibility = View.INVISIBLE
 	}
 	return this
 }
 
+/**
+ * Set view gone when matching the given [predicate]
+ */
 inline fun View.goneIf(predicate: () -> Boolean): View {
 	if (visibility != View.GONE && predicate()) {
 		visibility = View.GONE

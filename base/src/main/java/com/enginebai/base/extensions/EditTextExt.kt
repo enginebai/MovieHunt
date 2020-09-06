@@ -10,6 +10,11 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 
+/**
+ * Invoke the listener when afterTextChanged() method is called.
+ *
+ * @return TextWatcher remember to remove when no longer use it anymore.
+ */
 fun EditText.textChanged(listener: (String) -> Unit): TextWatcher {
 	val textWatcher = object : TextWatcher {
 		override fun afterTextChanged(s: Editable?) {
@@ -48,7 +53,12 @@ private class TextChangeWatcher(private var publisher: PublishSubject<String>? =
 	}
 }
 
-
+/**
+ * Validate the input text and display error when it's invalid.
+ * @param [errorMessage] error message to display
+ * @param [validator] the predicate to validate input.
+ *  @return TextWatcher remember to remove when no longer use it anymore.
+ */
 fun EditText.validate(errorMessage: String, validator: (String) -> Boolean): TextWatcher {
 	fun showErrorIfInvalid(s: String) {
 		this.error = if (validator(s)) null else errorMessage
@@ -59,10 +69,28 @@ fun EditText.validate(errorMessage: String, validator: (String) -> Boolean): Tex
 	return this.textChanged { showErrorIfInvalid(it) }
 }
 
+/**
+ * Validate if input is valid email, and invoke either valid or invalid listener.
+ * @return TextWatcher remember to remove when no longer use it anymore.
+ */
+fun EditText.validateEmail(validListener: (String) -> Unit, invalidListener: (String) -> Unit = {}): TextWatcher {
+	return this.textChanged {
+		if (it.isValidEmail()) validListener(it)
+		else invalidListener(it)
+	}
+}
+
+/**
+ * Validate if input is valid email, and display error if invalid. * @return TextWatcher remember to remove when no longer use it anymore.
+ * @return TextWatcher remember to remove when no longer use it anymore.
+ */
 fun EditText.validateEmail(errorMessage: String): TextWatcher {
 	return validate(errorMessage) { it.isValidEmail() }
 }
 
+/**
+ * Validate if input is valid email and return result as stream.
+ */
 fun EditText.validateEmail(): Single<Boolean> {
 	return Single.fromObservable(this.textChanged()).flatMap {
 		Single.just(it.toString().isValidEmail())
