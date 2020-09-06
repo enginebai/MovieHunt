@@ -147,6 +147,9 @@ fun Project.importCommonDependencies() {
 * [Timber](https://github.com/JakeWharton/timber), for logging.
 * [Epoxy](https://github.com/airbnb/epoxy), for RecyclerView complex view layout.
 
+## Useful Extensions
+* See [Extension Functions.](./EXTENSIONS.md)
+
 ## How to Update
 Keep this repository as one of your project tracked remote.
 
