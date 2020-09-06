@@ -1,8 +1,12 @@
 package com.enginebai.base.extensions
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 
 /**
  * Prevent multiple click in a short period of time. Default interval is 1500 milli-second.
@@ -108,4 +112,15 @@ fun View.px2sp(px: Float): Int {
 
 fun View.sp2px(sp: Float): Int {
 	return (sp * resources.displayMetrics.scaledDensity + 0.5f).toInt()
+}
+
+//
+// resources
+//
+fun View.getColor(@ColorRes resId: Int) = ContextCompat.getColor(context, resId)
+fun View.getDrawable(@DrawableRes resId: Int) = ContextCompat.getDrawable(context, resId)
+fun View.getDrawableWithIntrinsicSize(@DrawableRes resId: Int): Drawable? {
+	return getDrawable(resId)?.apply {
+		setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+	}
 }
