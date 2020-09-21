@@ -11,47 +11,47 @@ import org.koin.core.inject
 
 class MovieHomeViewModel : BaseViewModel() {
 
-	private val movieRepo: MovieRepo by inject()
-	private val listingMap = mutableMapOf<MovieCategory, Listing<MovieModel>>()
+    private val movieRepo: MovieRepo by inject()
+    private val listingMap = mutableMapOf<MovieCategory, Listing<MovieModel>>()
 
-	fun fetchList(category: MovieCategory): Listing<MovieModel> {
-		val listing = movieRepo.fetchMovieList(category)
-		listingMap[category] = listing
-		return listing
-	}
+    fun fetchList(category: MovieCategory): Listing<MovieModel> {
+        val listing = movieRepo.fetchMovieList(category)
+        listingMap[category] = listing
+        return listing
+    }
 
-	fun getList(category: MovieCategory): Listing<MovieModel> {
-		val listing = movieRepo.getMovieList(category)
-		listingMap[category] = listing
-		return listing
-	}
+    fun getList(category: MovieCategory): Listing<MovieModel> {
+        val listing = movieRepo.getMovieList(category)
+        listingMap[category] = listing
+        return listing
+    }
 
-	fun refresh() {
-		listingMap.values.forEach {
-			it.refresh.invoke()
-		}
-	}
+    fun refresh() {
+        listingMap.values.forEach {
+            it.refresh.invoke()
+        }
+    }
 
-	/**
-	 * Merge all category refresh state into one state
-	 */
-	fun refreshState(): Observable<NetworkState> {
-		val stateList = mutableListOf<Observable<NetworkState>>()
-		listingMap.values.forEach {
-			it.refreshState?.apply {
-				stateList.add(this)
-			}
-		}
-		return Observable.combineLatest(stateList) { states ->
-			var mergedState = NetworkState.IDLE
-			states.forEach {
-				val s = it as NetworkState
-				if (s == NetworkState.LOADING) {
-					mergedState = NetworkState.ERROR
-				}
-			}
-			mergedState
+    /**
+     * Merge all category refresh state into one state
+     */
+    fun refreshState(): Observable<NetworkState> {
+        val stateList = mutableListOf<Observable<NetworkState>>()
+        listingMap.values.forEach {
+            it.refreshState?.apply {
+                stateList.add(this)
+            }
+        }
+        return Observable.combineLatest(stateList) { states ->
+            var mergedState = NetworkState.IDLE
+            states.forEach {
+                val s = it as NetworkState
+                if (s == NetworkState.LOADING) {
+                    mergedState = NetworkState.ERROR
+                }
+            }
+            mergedState
 
-		}
-	}
+        }
+    }
 }

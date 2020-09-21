@@ -18,7 +18,8 @@ class MovieDetailViewModel : BaseViewModel() {
     val rating: LiveData<Float> = Transformations.map(_movieDetail) { it.display5StarsRating() }
     val voteCount: LiveData<String> = Transformations.map(_movieDetail) { it.displayVoteCount() }
     val duration: LiveData<String> = Transformations.map(_movieDetail) { it.displayDuration() }
-    val releaseDate: LiveData<String> = Transformations.map(_movieDetail) { it.displayReleaseDate() }
+    val releaseDate: LiveData<String> =
+        Transformations.map(_movieDetail) { it.displayReleaseDate() }
     val overview: LiveData<String> = Transformations.map(_movieDetail) { it.displayOverview() }
 
     fun fetchMovieDetail(id: String) {

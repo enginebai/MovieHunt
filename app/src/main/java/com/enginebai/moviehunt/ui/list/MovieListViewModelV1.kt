@@ -14,31 +14,31 @@ import org.koin.core.inject
 
 // v1 architecture (from Google Android Architecture Components PagingWithNetworkSample Project)
 class MovieListViewModelV1 : BaseViewModel() {
-	private val movieRepo: MovieRepo by inject()
+    private val movieRepo: MovieRepo by inject()
 
-	private val movieCategoryEvent = BehaviorSubject.create<MovieCategory>()
-	private val fetchDataSource: Observable<Listing<MovieModel>> = movieCategoryEvent
-		.map { movieRepo.fetchMovieList(it) }
-		.subscribeOn(Schedulers.io())
-		.observeOn(AndroidSchedulers.mainThread())
-		.cache()
+    private val movieCategoryEvent = BehaviorSubject.create<MovieCategory>()
+    private val fetchDataSource: Observable<Listing<MovieModel>> = movieCategoryEvent
+        .map { movieRepo.fetchMovieList(it) }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .cache()
 
-	val movieList: Observable<PagedList<MovieModel>>
-		get() = fetchDataSource.flatMap { it.pagedList }
-	val refreshState: Observable<NetworkState>
-		get() = fetchDataSource.flatMap{ it.refreshState }
-	val networkState: Observable<NetworkState>
-		get() = fetchDataSource.flatMap { it.loadMoreState }
+    val movieList: Observable<PagedList<MovieModel>>
+        get() = fetchDataSource.flatMap { it.pagedList }
+    val refreshState: Observable<NetworkState>
+        get() = fetchDataSource.flatMap { it.refreshState }
+    val networkState: Observable<NetworkState>
+        get() = fetchDataSource.flatMap { it.loadMoreState }
 
-	fun fetchMovieList(category: MovieCategory) {
-		movieCategoryEvent.onNext(category)
-	}
+    fun fetchMovieList(category: MovieCategory) {
+        movieCategoryEvent.onNext(category)
+    }
 
-	fun refresh() {
-		fetchDataSource
-			.map { it.refresh }
-			.doOnNext { it.invoke() }
-			.subscribe()
-			.disposeOnCleared()
-	}
+    fun refresh() {
+        fetchDataSource
+            .map { it.refresh }
+            .doOnNext { it.invoke() }
+            .subscribe()
+            .disposeOnCleared()
+    }
 }

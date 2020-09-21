@@ -11,26 +11,26 @@ import org.koin.core.inject
 
 @TypeConverters
 class MovieTypeConverter : KoinComponent {
-	private val gson: Gson by inject()
+    private val gson: Gson by inject()
 
-	@TypeConverter
-	fun genreListToStr(list: List<Genre>?): String? {
-		return gson.toJson(list)
-	}
+    @TypeConverter
+    fun genreListToStr(list: List<Genre>?): String? {
+        return gson.toJson(list)
+    }
 
-	@TypeConverter
-	fun strToGenreList(str: String?): List<Genre>? {
-		val type = object : TypeToken<List<Genre>>(){}.type
-		return gson.fromJson(str, type)
-	}
+    @TypeConverter
+    fun strToGenreList(str: String?): List<Genre>? {
+        val type = object : TypeToken<List<Genre>>() {}.type
+        return gson.fromJson(str, type)
+    }
 
-	@TypeConverter
-	fun movieCategoryToStr(category: MovieCategory?): String? {
-		return gson.toJson(category)
-	}
+    @TypeConverter
+    fun movieCategoryToStr(category: MovieCategory?): String? {
+        return gson.toJson(category)
+    }
 
-	@TypeConverter
-	fun strToMovieCategory(str: String?): MovieCategory? {
-		return gson.fromJson(str, MovieCategory::class.java)
-	}
+    @TypeConverter
+    fun strToMovieCategory(str: String?): MovieCategory? {
+        return gson.fromJson(str, MovieCategory::class.java)
+    }
 }

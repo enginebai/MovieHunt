@@ -69,7 +69,8 @@ class MovieListDataSource(
     }
 }
 
-class MovieListDataSourceFactory(private val category: MovieCategory): DataSource.Factory<Int, MovieModel>() {
+class MovieListDataSourceFactory(private val category: MovieCategory) :
+    DataSource.Factory<Int, MovieModel>() {
 
     val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
     val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)

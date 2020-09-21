@@ -6,8 +6,8 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 
 data class MovieCategoryListing(
-	val headerClickListener: CategoryHeaderHolder.OnHeaderClickListener? = null,
-	var loadingState: NetworkState? = null,
-	val carouselController: PagedListEpoxyController<MovieModel>,
-	val itemCountOnScreen: Float = 0.0f
+    val headerClickListener: CategoryHeaderHolder.OnHeaderClickListener? = null,
+    var loadingState: NetworkState? = null,
+    val carouselController: PagedListEpoxyController<MovieModel>,
+    val itemCountOnScreen: Float = 0.0f
 )

@@ -10,24 +10,24 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val apiModule = module {
-	single { get<Retrofit>().create(MovieApiService::class.java) }
+    single { get<Retrofit>().create(MovieApiService::class.java) }
 }
 
 val dbModule = module {
-	single {
-		Room.databaseBuilder(
-			androidApplication(),
-			MovieDatabase::class.java,
-			MovieDatabase::class.java.simpleName
-		).fallbackToDestructiveMigration()
-			.build()
-	}
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            MovieDatabase::class.java,
+            MovieDatabase::class.java.simpleName
+        ).fallbackToDestructiveMigration()
+            .build()
+    }
 }
 
 val daoModule = module {
-	single { get<MovieDatabase>().movieDao() }
+    single { get<MovieDatabase>().movieDao() }
 }
 
 val repoModule = module {
-	single<MovieRepo> { MovieRepoImpl() }
+    single<MovieRepo> { MovieRepoImpl() }
 }

@@ -7,23 +7,23 @@ import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.list.MovieCategory
 
 class MovieLargeListController(
-	movieCategory: MovieCategory,
-	clickListener: MovieClickListener? = null
-): MovieCarouselController(movieCategory, clickListener) {
-	override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
-		return item?.run {
-			MovieHomeLargeBindingModel_()
-				.id("${movieCategory}${this.id}")
-				.movieId(this.id)
-				.posterImage(this.getPosterUrl())
-				.title(this.displayTitle())
-				.rating(this.voteAverage)
-				.voteCount(this.displayVoteCount())
-				.duration(this.displayDuration())
-				.clickListener(clickListener)
-		} ?: run {
-			MovieHomeLargeBindingModel_()
-				.id(-currentPosition)
-		}
-	}
+    movieCategory: MovieCategory,
+    clickListener: MovieClickListener? = null
+) : MovieCarouselController(movieCategory, clickListener) {
+    override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
+        return item?.run {
+            MovieHomeLargeBindingModel_()
+                .id("${movieCategory}${this.id}")
+                .movieId(this.id)
+                .posterImage(this.getPosterUrl())
+                .title(this.displayTitle())
+                .rating(this.voteAverage)
+                .voteCount(this.displayVoteCount())
+                .duration(this.displayDuration())
+                .clickListener(clickListener)
+        } ?: run {
+            MovieHomeLargeBindingModel_()
+                .id(-currentPosition)
+        }
+    }
 }

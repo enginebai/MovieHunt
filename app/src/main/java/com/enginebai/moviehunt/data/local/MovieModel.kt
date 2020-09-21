@@ -13,38 +13,38 @@ import com.enginebai.moviehunt.utils.formatHourMinutes
 const val PLACEHOLDER = "--"
 
 @Entity(
-	tableName = "movie_list",
-	primaryKeys = ["category", "movie_id"],
-	foreignKeys = [ForeignKey(
-		entity = MovieModel::class,
-		parentColumns = ["id"],
-		childColumns = ["movie_id"],
-		onDelete = ForeignKey.CASCADE,
-		onUpdate = ForeignKey.CASCADE
-	)]
+    tableName = "movie_list",
+    primaryKeys = ["category", "movie_id"],
+    foreignKeys = [ForeignKey(
+        entity = MovieModel::class,
+        parentColumns = ["id"],
+        childColumns = ["movie_id"],
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE
+    )]
 )
 data class MovieListId(
-	val category: MovieCategory,
-	@ColumnInfo(name = "movie_id")
-	val movieId: String,
-	val position: Long
+    val category: MovieCategory,
+    @ColumnInfo(name = "movie_id")
+    val movieId: String,
+    val position: Long
 )
 
 @Entity(tableName = "movie")
 data class MovieModel(
-	@PrimaryKey
+    @PrimaryKey
     val id: String,
-	@ColumnInfo(name = "poster_path")
+    @ColumnInfo(name = "poster_path")
     val posterPath: String? = null,
     val title: String? = null,
-	@ColumnInfo(name = "vote_average")
+    @ColumnInfo(name = "vote_average")
     val voteAverage: Float? = null,
-	@ColumnInfo(name = "vote_count")
+    @ColumnInfo(name = "vote_count")
     val voteCount: Int? = null,
     val overview: String? = null,
-	@ColumnInfo(name = "release_date")
+    @ColumnInfo(name = "release_date")
     val releaseDate: String? = null,
-	@ColumnInfo(name = "genres")
+    @ColumnInfo(name = "genres")
     val genreList: List<Genre>? = null,
     val runtime: Int? = null
 )
@@ -53,6 +53,7 @@ fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this
 fun MovieModel.displayTitle(): String = this.title ?: PLACEHOLDER
 fun MovieModel.display5StarsRating(): Float = this.voteAverage?.div(2) ?: 0.0f
 fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: PLACEHOLDER
+
 // scale from 0-10 to 0-100%
 fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) ?: PLACEHOLDER}%"
 

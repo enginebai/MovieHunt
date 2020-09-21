@@ -6,6 +6,6 @@ import androidx.room.TypeConverters
 
 @Database(entities = [MovieListId::class, MovieModel::class], version = 1, exportSchema = true)
 @TypeConverters(MovieTypeConverter::class)
-abstract class MovieDatabase: RoomDatabase() {
-	abstract fun movieDao(): MovieDao
+abstract class MovieDatabase : RoomDatabase() {
+    abstract fun movieDao(): MovieDao
 }

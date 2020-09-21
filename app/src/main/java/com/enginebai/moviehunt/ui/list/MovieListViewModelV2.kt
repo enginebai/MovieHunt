@@ -7,13 +7,13 @@ import com.enginebai.moviehunt.data.repo.MovieRepo
 import org.koin.core.inject
 
 class MovieListViewModelV2 : BaseViewModel() {
-	private val movieRepo: MovieRepo by inject()
+    private val movieRepo: MovieRepo by inject()
 
-	fun fetchList(category: MovieCategory): Listing<MovieModel> {
-		return movieRepo.fetchMovieList(category)
-	}
+    fun fetchList(category: MovieCategory): Listing<MovieModel> {
+        return movieRepo.fetchMovieList(category)
+    }
 
-	fun getList(category: MovieCategory): Listing<MovieModel> {
-		return movieRepo.getMovieList(category)
-	}
+    fun getList(category: MovieCategory): Listing<MovieModel> {
+        return movieRepo.getMovieList(category)
+    }
 }

@@ -5,12 +5,12 @@ import com.enginebai.moviehunt.di.*
 
 class AppContext : BaseApplication() {
 
-	override fun defineDependencies() = listOf(
-		appModule,
-		viewModelModule,
-		apiModule,
-		dbModule,
-		daoModule,
-		repoModule
-	)
+    override fun defineDependencies() = listOf(
+        appModule,
+        viewModelModule,
+        apiModule,
+        dbModule,
+        daoModule,
+        repoModule
+    )
 }
