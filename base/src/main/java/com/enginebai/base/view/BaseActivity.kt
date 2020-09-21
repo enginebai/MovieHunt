@@ -13,39 +13,39 @@ import java.util.concurrent.TimeUnit
 abstract class BaseActivity : AppCompatActivity() {
 
     private val disposables = CompositeDisposable()
-	private val rxErrorHandler: RxErrorHandler by inject()
-	private var rxErrorDisposable: Disposable? = null
+    private val rxErrorHandler: RxErrorHandler by inject()
+    private var rxErrorDisposable: Disposable? = null
 
     @LayoutRes
     abstract fun getLayoutId(): Int
 
-	abstract fun handleErrorMessage(message: String)
+    abstract fun handleErrorMessage(message: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
     }
 
-	override fun onStart() {
-		super.onStart()
-		if (null == rxErrorDisposable || false == rxErrorDisposable?.isDisposed) {
-			rxErrorDisposable = rxErrorHandler.errorMessageToDisplay
-				.filter { it.isNotBlank() }
-				.throttleFirst(2, TimeUnit.SECONDS)
-				.observeOn(AndroidSchedulers.mainThread())
-				.doOnNext { handleErrorMessage(it) }
-				.subscribe()
+    override fun onStart() {
+        super.onStart()
+        if (null == rxErrorDisposable || false == rxErrorDisposable?.isDisposed) {
+            rxErrorDisposable = rxErrorHandler.errorMessageToDisplay
+                .filter { it.isNotBlank() }
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { handleErrorMessage(it) }
+                .subscribe()
                 .disposeOnDestroy()
-		}
-	}
+        }
+    }
 
-	override fun onStop() {
-		super.onStop()
-		rxErrorDisposable?.dispose()
-	}
+    override fun onStop() {
+        super.onStop()
+        rxErrorDisposable?.dispose()
+    }
 
 
-	override fun onDestroy() {
+    override fun onDestroy() {
         disposables.clear()
         super.onDestroy()
     }

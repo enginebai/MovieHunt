@@ -1,4 +1,3 @@
-
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.fileTree
@@ -25,8 +24,10 @@ object Dependencies {
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:${Versions.AndroidX.appCompat}"
         const val coreKtx = "androidx.core:core-ktx:${Versions.AndroidX.core}"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.constraintLayout}"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.ArchitectureComponents.lifecycle}"
+        const val constraintLayout =
+            "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.constraintLayout}"
+        const val viewModel =
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.ArchitectureComponents.lifecycle}"
     }
 
     object Test {
@@ -60,8 +61,10 @@ object Dependencies {
     }
 
     object Paging {
-        const val runtime = "androidx.paging:paging-runtime:${Versions.ArchitectureComponents.paging}"
-        const val rxJava2 = "androidx.paging:paging-rxjava2:${Versions.ArchitectureComponents.paging}"
+        const val runtime =
+            "androidx.paging:paging-runtime:${Versions.ArchitectureComponents.paging}"
+        const val rxJava2 =
+            "androidx.paging:paging-rxjava2:${Versions.ArchitectureComponents.paging}"
     }
 }
 
