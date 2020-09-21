@@ -29,6 +29,7 @@
     <option name="modulesWithSuppressedNotConfigured">
       <set>
         <option value="AndroidBase_buildSrc" />
+        <option value="MovieHunt_buildSrc" />
       </set>
     </option>
   </component>

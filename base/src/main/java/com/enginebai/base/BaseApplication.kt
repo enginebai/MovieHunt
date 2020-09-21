@@ -19,30 +19,30 @@ import timber.log.Timber
 
 abstract class BaseApplication : Application() {
 
-	abstract fun defineDependencies(): List<Module>
+    abstract fun defineDependencies(): List<Module>
 
-	override fun onCreate() {
-		super.onCreate()
-		dependenciesInjection()
-		initLogging()
-	}
+    override fun onCreate() {
+        super.onCreate()
+        dependenciesInjection()
+        initLogging()
+    }
 
-	private fun dependenciesInjection() {
-		startKoin {
-			androidLogger(level = Level.INFO)
-			androidContext(this@BaseApplication)
-			val dependencies =
-				mutableListOf(gsonModule, errorHandleModule, networkModule, loggingModule).apply {
-					addAll(defineDependencies())
-				}
-			modules(dependencies)
-		}
-	}
+    private fun dependenciesInjection() {
+        startKoin {
+            androidLogger(level = Level.INFO)
+            androidContext(this@BaseApplication)
+            val dependencies =
+                mutableListOf(gsonModule, errorHandleModule, networkModule, loggingModule).apply {
+                    addAll(defineDependencies())
+                }
+            modules(dependencies)
+        }
+    }
 
-	private fun initLogging() {
-		val formatStrategy: FormatStrategy = get()
-		val logAdapter: AndroidLogAdapter = get { parametersOf(formatStrategy) }
-		Logger.addLogAdapter(logAdapter)
-		Timber.plant(get())
-	}
+    private fun initLogging() {
+        val formatStrategy: FormatStrategy = get()
+        val logAdapter: AndroidLogAdapter = get { parametersOf(formatStrategy) }
+        Logger.addLogAdapter(logAdapter)
+        Timber.plant(get())
+    }
 }

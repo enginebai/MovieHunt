@@ -29,7 +29,7 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
     * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way to bind data to UI layout.
     * [Navigation component](https://developer.android.com/guide/navigation) - Fragment routing handler. (Upcoming)
-    * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Tasks scheduler in background jobs. (Upcoming) 
+    * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Tasks scheduler in background jobs. (Upcoming)
 * [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.
 * [Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.
 * [Glide](https://github.com/bumptech/glide) - Image loading.
@@ -122,5 +122,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-
 
