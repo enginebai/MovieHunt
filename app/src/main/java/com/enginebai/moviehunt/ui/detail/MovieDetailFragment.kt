@@ -1,4 +1,4 @@
-package com.enginebai.moviehunt.ui.movie.detail
+package com.enginebai.moviehunt.ui.detail
 
 import android.os.Bundle
 import android.view.View

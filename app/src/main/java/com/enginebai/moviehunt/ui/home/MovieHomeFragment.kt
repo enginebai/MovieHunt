@@ -17,7 +17,7 @@ import com.enginebai.moviehunt.ui.home.controller.MovieNormalListController
 import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
-import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

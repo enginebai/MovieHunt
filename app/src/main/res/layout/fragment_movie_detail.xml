@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.enginebai.moviehunt.ui.movie.detail.MovieDetailViewModel" />
+            type="com.enginebai.moviehunt.ui.detail.MovieDetailViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

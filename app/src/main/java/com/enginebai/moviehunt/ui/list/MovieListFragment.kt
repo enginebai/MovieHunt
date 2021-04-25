@@ -13,7 +13,7 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.movie.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
