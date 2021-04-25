@@ -1,8 +1,8 @@
-package com.enginebai.base.di
+package com.enginebai.moviehunt.di
 
 import com.enginebai.base.BuildConfig
-import com.enginebai.base.utils.RxErrorHandler
 import com.enginebai.base.utils.logging.TimberLoggerDebugTree
+import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy
@@ -36,5 +36,5 @@ val gsonModule = module {
 }
 
 val errorHandleModule = module {
-    single(createdAtStart = true) { RxErrorHandler(androidApplication()) }
+    single(createdAtStart = true) { ExceptionHandler(androidApplication()) }
 }

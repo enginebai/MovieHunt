@@ -32,5 +32,11 @@ dependencies {
     implementation(Dependencies.Room.rxjava2)
     "kapt"(Dependencies.Room.annotation)
 
-    implementation(project(":base"))
+    implementation(Dependencies.androidBase)
+
+    implementation(Dependencies.okhttp)
+    implementation(Dependencies.okhttpLogging)
+    implementation(Dependencies.Retrofit.core)
+    implementation(Dependencies.Retrofit.gsonConverter)
+    implementation(Dependencies.Retrofit.rxJavaAdapter)
 }

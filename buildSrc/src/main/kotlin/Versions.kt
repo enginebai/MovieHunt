@@ -12,6 +12,7 @@ object Versions {
     const val logger = "2.2.0"
     const val epoxy = "3.11.0"
     const val glide = "4.11.0"
+    const val androidBase = "451427d5af"
 
     // Test frameworks
     const val junit = "4.12"

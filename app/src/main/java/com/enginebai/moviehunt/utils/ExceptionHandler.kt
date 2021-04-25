@@ -1,7 +1,7 @@
-package com.enginebai.base.utils
+package com.enginebai.moviehunt.utils
 
 import android.app.Application
-import com.enginebai.base.R
+import com.enginebai.moviehunt.R
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.functions.Consumer
@@ -14,7 +14,7 @@ import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-class RxErrorHandler(private val application: Application) : Consumer<Throwable> {
+class ExceptionHandler(private val application: Application) : Consumer<Throwable> {
 
     val errorMessageToDisplay = PublishSubject.create<String>()
 

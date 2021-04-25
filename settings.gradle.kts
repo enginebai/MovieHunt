@@ -1,2 +1,2 @@
-include(":app", ":base")
+include(":app")
 rootProject.name="MovieHunt"

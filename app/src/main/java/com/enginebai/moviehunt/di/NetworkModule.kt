@@ -1,8 +1,7 @@
-package com.enginebai.base.di
+package com.enginebai.moviehunt.di
 
-import com.enginebai.base.BuildConfig
-import com.enginebai.base.utils.ApiInterceptor
-import okhttp3.Interceptor
+import com.enginebai.moviehunt.BuildConfig.API_ROOT
+import com.enginebai.moviehunt.utils.ApiInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
@@ -32,7 +31,7 @@ val networkModule = module {
     single<CallAdapter.Factory> { RxJava2CallAdapterFactory.create() }
     single<Retrofit> {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.API_ROOT)
+            .baseUrl(API_ROOT)
             .addCallAdapterFactory(get())
             .addConverterFactory(get())
             .client(get())
