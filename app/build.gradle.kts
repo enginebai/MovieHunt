@@ -12,9 +12,13 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = mapOf("room.schemaLocation" to "$projectDir/db")
+                argument("room.schemaLocation", "$projectDir/schemas")
             }
         }
+    }
+
+    buildFeatures {
+        dataBinding = true
     }
 }
 

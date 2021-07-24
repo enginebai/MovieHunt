@@ -1,6 +1,6 @@
 object Versions {
     const val kotlin = "1.3.72"
-    const val androidGradle = "4.0.0"
+    const val androidGradle = "4.2.1"
     const val material = "1.0.0"
     const val rxJava = "2.2.19"
     const val rxAndroid = "2.1.1"

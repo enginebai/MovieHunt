@@ -27,8 +27,6 @@ fun Project.configAndroid() = this.extensions.getByType<BaseExtension>().run {
         }
     }
 
-    buildFeatures.dataBinding = true
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
