@@ -1,9 +1,11 @@
 package com.enginebai.moviehunt.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import com.enginebai.moviehunt.data.remote.MovieListResponse
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import io.reactivex.Observable
 
 @Dao
 interface MovieDao {
@@ -18,6 +20,9 @@ interface MovieDao {
         if (insert(movie) == -1L)
             update(movie)
     }
+
+    @Query("SELECT movie.* FROM `movie` WHERE `id` = :movieId")
+    fun queryMovieDetail(movieId: String): Observable<MovieModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE, entity = MovieModel::class)
     fun insertMovieListResponse(response: MovieListResponse): Long

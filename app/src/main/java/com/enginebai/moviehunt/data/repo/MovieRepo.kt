@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.data.repo
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.enginebai.base.utils.Listing
@@ -8,6 +9,8 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListDataSourceFactory
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
@@ -26,7 +29,8 @@ interface MovieRepo {
         pageSize: Int = DEFAULT_PAGE_SIZE
     ): Listing<MovieModel>
 
-    fun fetchMovieDetail(movieId: String): Single<MovieModel>
+    fun fetchMovieDetail(movieId: String): Completable
+    fun getMovieDetail(movieId: String): Observable<MovieModel>
 }
 
 class MovieRepoImpl : MovieRepo, KoinComponent {
@@ -75,7 +79,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
         )
     }
 
-    override fun fetchMovieDetail(movieId: String): Single<MovieModel> {
+    override fun fetchMovieDetail(movieId: String): Completable {
         return movieApi.fetchMovieDetail(movieId)
             .map { response ->
                 MovieModel(
@@ -89,6 +93,11 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                     genreList = response.genreList,
                     runtime = response.runtime
                 )
+            }.flatMapCompletable {
+                movieDao.upsert(it)
+                Completable.complete()
             }
     }
+
+    override fun getMovieDetail(movieId: String) = movieDao.queryMovieDetail(movieId)
 }

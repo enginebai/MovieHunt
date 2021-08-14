@@ -25,8 +25,13 @@ class MovieDetailViewModel : BaseViewModel() {
     fun fetchMovieDetail(id: String) {
         movieRepo.fetchMovieDetail(id)
             .subscribeOn(Schedulers.io())
-            .doOnSuccess { _movieDetail.postValue(it) }
             .subscribe()
+            .disposeOnCleared()
+
+        movieRepo.getMovieDetail(id)
+            .doOnNext {
+                _movieDetail.postValue(it)
+            }.subscribe()
             .disposeOnCleared()
     }
 }
