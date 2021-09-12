@@ -27,8 +27,8 @@ object Dependencies {
         const val coreKtx = "androidx.core:core-ktx:${Versions.AndroidX.core}"
         const val constraintLayout =
             "androidx.constraintlayout:constraintlayout:${Versions.AndroidX.constraintLayout}"
-        const val viewModel =
-            "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.ArchitectureComponents.lifecycle}"
+        const val swipeRefreshLayout =
+            "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.AndroidX.swipeRefreshLayout}"
     }
 
     object Test {
@@ -110,6 +110,7 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.AndroidX.appCompat)
         implementation(Dependencies.AndroidX.coreKtx)
         implementation(Dependencies.AndroidX.constraintLayout)
+        implementation(Dependencies.AndroidX.swipeRefreshLayout)
         implementation(Dependencies.material)
 
         implementation(Dependencies.Koin.android)
