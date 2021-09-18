@@ -6,8 +6,8 @@ import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 @TypeConverters
 class MovieTypeConverter : KoinComponent {

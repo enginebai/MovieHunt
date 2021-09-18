@@ -7,7 +7,7 @@ import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.data.repo.MovieRepo
 import io.reactivex.schedulers.Schedulers
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class MovieDetailViewModel : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()

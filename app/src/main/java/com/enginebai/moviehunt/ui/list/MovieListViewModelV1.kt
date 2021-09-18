@@ -10,7 +10,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 // v1 architecture (from Google Android Architecture Components PagingWithNetworkSample Project)
 class MovieListViewModelV1 : BaseViewModel() {

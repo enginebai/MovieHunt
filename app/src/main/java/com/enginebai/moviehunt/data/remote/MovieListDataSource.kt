@@ -6,8 +6,8 @@ import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.subjects.BehaviorSubject
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class MovieListDataSource(
     private val category: MovieCategory,

@@ -38,9 +38,8 @@ object Dependencies {
     }
 
     object Koin {
-        const val android = "org.koin:koin-android:${Versions.koin}"
-        const val viewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
-        const val test = "org.koin:koin-test:${Versions.koin}"
+        const val android = "io.insert-koin:koin-android:${Versions.koin}"
+        const val test = "io.insert-koin:koin-test:${Versions.koin}"
     }
 
     object Retrofit {
@@ -114,7 +113,6 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.material)
 
         implementation(Dependencies.Koin.android)
-        implementation(Dependencies.Koin.viewModel)
 
         implementation(Dependencies.Logging.logger)
         implementation(Dependencies.Logging.timber)

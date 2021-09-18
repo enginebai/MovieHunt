@@ -7,7 +7,7 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.repo.MovieRepo
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.Observable
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class MovieHomeViewModel : BaseViewModel() {
 
