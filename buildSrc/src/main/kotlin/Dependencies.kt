@@ -16,6 +16,7 @@ object Dependencies {
     const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
 
     const val androidBase = "com.github.enginebai:AndroidBase:${Versions.androidBase}"
+    const val coil = "io.coil-kt:coil:${Versions.coil}"
 
     object Kotlin {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
@@ -72,15 +73,6 @@ object Dependencies {
         const val annotation = "androidx.room:room-compiler:${Versions.ArchitectureComponents.room}"
         const val ktx = "androidx.room:room-ktx:${Versions.ArchitectureComponents.room}"
         const val rxjava2 = "androidx.room:room-rxjava2:${Versions.ArchitectureComponents.room}"
-    }
-
-    object Glide {
-        const val core = "com.github.bumptech.glide:glide:${Versions.glide}"
-        const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
-        const val runtime =
-            "androidx.paging:paging-runtime:${Versions.ArchitectureComponents.paging}"
-        const val rxJava2 =
-            "androidx.paging:paging-rxjava2:${Versions.ArchitectureComponents.paging}"
     }
 }
 

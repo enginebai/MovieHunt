@@ -3,7 +3,7 @@ package com.enginebai.moviehunt.utils
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import coil.load
 
 object BindingAdapter {
 
@@ -15,11 +15,11 @@ object BindingAdapter {
         placeholder: Drawable?,
         error: Drawable?
     ) {
-        Glide.with(imageView)
-            .load(imageUrl)
-            .placeholder(placeholder)
-            .error(error)
-            .into(imageView)
+        imageView
+            .load(imageUrl) {
+                placeholder(placeholder)
+                error(error)
+            }
     }
 
 }

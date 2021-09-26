@@ -4,11 +4,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import coil.load
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.bumptech.glide.Glide
 import com.enginebai.moviehunt.R
 
 @EpoxyModelClass(layout = R.layout.holder_movie_landscape)
@@ -32,11 +32,11 @@ abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Ho
     var itemClickListener: (String) -> Unit = {}
 
     override fun bind(holder: Holder) {
-        Glide.with(holder.imagePoster)
-            .load(imagePoster)
-            .error(R.color.darkBlue)
-            .placeholder(R.color.darkBlue)
-            .into(holder.imagePoster)
+        holder.imagePoster
+            .load(imagePoster) {
+                error(R.color.darkBlue)
+                placeholder(R.color.darkBlue)
+            }
         holder.textTitle.text = textTitle
         holder.ratingBar.rating = rating
         holder.textVoteCount.text = voteCount

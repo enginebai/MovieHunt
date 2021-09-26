@@ -18,7 +18,7 @@ object Versions {
 
     const val epoxy = "4.6.3"
 
-    const val glide = "4.12.0"
+    const val coil = "1.3.2"
     const val androidBase = "1.0.3"
 
     // Test frameworks
