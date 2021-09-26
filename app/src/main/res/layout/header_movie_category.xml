@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:id="@+id/buttonViewAll"
-        android:text="@string/view_all"
+        android:text="@string/see_all"
         android:textSize="@dimen/text_12"
         android:textColor="@color/colorAccent"
         android:background="?selectableItemBackground"

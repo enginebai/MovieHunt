@@ -3,6 +3,7 @@ package com.enginebai.moviehunt.ui.home.controller
 import com.airbnb.epoxy.EpoxyController
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.ui.TitleHolder_
 import com.enginebai.moviehunt.ui.home.MovieCategoryListing
 import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder_
 import com.enginebai.moviehunt.ui.home.models.HomeLoadInitView_
@@ -15,11 +16,13 @@ class MovieHomeController : EpoxyController() {
     var categoryListings: Map<MovieCategory, MovieCategoryListing>? = null
 
     override fun buildModels() {
-        categoryListings?.forEach { category, listing ->
-            CategoryHeaderHolder_()
+        categoryListings?.forEach { (category, listing) ->
+            TitleHolder_()
                 .id("${category.key}-header")
-                .category(category)
-                .clickListener(listing.headerClickListener)
+                .title(category.name)
+                .onClickListener {
+                    listing.headerClickListener?.onViewAllClicked(category)
+                }
                 .addTo(this)
             if (listing.loadingState == NetworkState.LOADING) {
                 HomeLoadInitView_()

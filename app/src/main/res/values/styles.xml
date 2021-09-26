@@ -49,23 +49,19 @@
     <style name="Headline6">
         <item name="android:textSize">@dimen/text_20</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.15</item>
     </style>
 
     <style name="Caption">
         <item name="android:textSize">@dimen/text_12</item>
-        <item name="android:letterSpacing">0.4</item>
     </style>
 
     <style name="Body2">
         <item name="android:textSize">@dimen/text_14</item>
-        <item name="android:letterSpacing">0.25</item>
 
     </style>
     <style name="Body1">
         <item name="android:textSize">@dimen/text_16</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.5</item>
     </style>
     <style name="Headline5">
         <item name="android:textSize">@dimen/text_24</item>
@@ -74,6 +70,5 @@
     <style name="Subtitle2">
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.1</item>
     </style>
 </resources>

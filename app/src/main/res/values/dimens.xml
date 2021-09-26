@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="size_32">32dp</dimen>
+    <dimen name="size_20">20dp</dimen>
     <dimen name="size_16">16dp</dimen>
     <dimen name="size_12">12dp</dimen>
     <dimen name="size_8">8dp</dimen>
@@ -14,5 +15,6 @@
     <dimen name="text_12">12sp</dimen>
 
     <dimen name="corner">@dimen/size_8</dimen>
+    <dimen name="page_horizontal_padding">@dimen/size_20</dimen>
 
 </resources>
