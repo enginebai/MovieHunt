@@ -3,9 +3,8 @@ package com.enginebai.moviehunt.ui.home.controller
 import com.airbnb.epoxy.EpoxyController
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.ui.TitleHolder_
+import com.enginebai.moviehunt.ui.holders.TitleHolder_
 import com.enginebai.moviehunt.ui.home.MovieCategoryListing
-import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder_
 import com.enginebai.moviehunt.ui.home.models.HomeLoadInitView_
 import com.enginebai.moviehunt.ui.home.models.HomeSeparatorView_
 import com.enginebai.moviehunt.ui.home.models.MovieCarouselModel_

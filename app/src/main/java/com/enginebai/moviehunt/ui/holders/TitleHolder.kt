@@ -1,4 +1,4 @@
-package com.enginebai.moviehunt.ui
+package com.enginebai.moviehunt.ui.holders
 
 import android.view.View
 import android.widget.Button
