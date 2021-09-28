@@ -36,9 +36,6 @@ class MovieHomeController : EpoxyController() {
                     .numViewsToShowOnScreen(listing.itemCountOnScreen)
                     .addTo(this)
             }
-            HomeSeparatorView_()
-                .id("${category.key}-separator")
-                .addTo(this)
         }
     }
 }

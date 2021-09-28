@@ -5,4 +5,7 @@
     <color name="colorAccent">#3bdeee</color>
     <color name="darkBlue">#17293F</color>
     <color name="grey">#A7A7A9</color>
+
+    <color name="background">@color/colorPrimary</color>
+    <color name="cardBackground">@color/darkBlue</color>
 </resources>

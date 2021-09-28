@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/imagePoster"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintDimensionRatio="9:16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/darkBlue"
-        />
-
-    <TextView
-        style="@style/Body1"
+    app:cardCornerRadius="@dimen/corner"
+    app:cardBackgroundColor="@color/cardBackground"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textMovieName"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_margin="@dimen/size_8"
-        app:layout_constraintTop_toBottomOf="@+id/imagePoster"
-        tools:text="Mission Impossible"
-        />
-    <TextView
-        style="@style/Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textReleaseYearAndGenre"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintTop_toBottomOf="@+id/textMovieName"
-        app:layout_constraintStart_toStartOf="@+id/textMovieName"
-        tools:text="2021 Action"
-        />
+        >
 
-    <TextView
-        style="@style/Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textRating"
-        android:drawablePadding="@dimen/size_4"
-        android:layout_marginTop="@dimen/size_4"
-        android:paddingBottom="@dimen/size_12"
-        tools:text="9.2 (10.6 k)"
-        app:layout_constraintTop_toBottomOf="@+id/textReleaseYearAndGenre"
-        app:layout_constraintStart_toStartOf="@+id/textReleaseYearAndGenre"
-        app:drawableStartCompat="@drawable/ic_star" />
+        <ImageView
+            android:id="@+id/imagePoster"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/darkBlue"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="9:16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textMovieName"
+            style="@style/Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@+id/imagePoster"
+            tools:text="Mission Impossible" />
+
+        <TextView
+            android:id="@+id/textReleaseYearAndGenre"
+            style="@style/Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="@+id/textMovieName"
+            app:layout_constraintTop_toBottomOf="@+id/textMovieName"
+            tools:text="2021 Action" />
+
+        <TextView
+            android:id="@+id/textRating"
+            style="@style/Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:drawablePadding="@dimen/size_4"
+            android:paddingBottom="@dimen/size_12"
+            app:drawableStartCompat="@drawable/ic_star"
+            app:layout_constraintStart_toStartOf="@+id/textReleaseYearAndGenre"
+            app:layout_constraintTop_toBottomOf="@+id/textReleaseYearAndGenre"
+            tools:text="9.2 (10.6 k)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
