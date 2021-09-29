@@ -15,6 +15,7 @@
     <dimen name="text_12">12sp</dimen>
 
     <dimen name="corner">@dimen/size_8</dimen>
+    <dimen name="corner_small">@dimen/size_4</dimen>
     <dimen name="page_horizontal_padding">@dimen/size_20</dimen>
-
+    <dimen name="poster_height">160dp</dimen>
 </resources>
