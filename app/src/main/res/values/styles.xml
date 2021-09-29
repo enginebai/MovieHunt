@@ -72,4 +72,10 @@
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar</item>
+        <item name="android:minHeight">@dimen/size_12</item>
+        <item name="android:minWidth">@dimen/size_12</item>
+    </style>
 </resources>
