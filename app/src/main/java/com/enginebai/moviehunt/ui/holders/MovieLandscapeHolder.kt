@@ -1,6 +1,5 @@
-package com.enginebai.moviehunt.ui.list
+package com.enginebai.moviehunt.ui.holders
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView

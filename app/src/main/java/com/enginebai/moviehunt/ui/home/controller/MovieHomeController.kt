@@ -6,7 +6,6 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.ui.holders.TitleHolder_
 import com.enginebai.moviehunt.ui.home.MovieCategoryListing
 import com.enginebai.moviehunt.ui.home.models.HomeLoadInitView_
-import com.enginebai.moviehunt.ui.home.models.HomeSeparatorView_
 import com.enginebai.moviehunt.ui.home.models.MovieCarouselModel_
 import com.enginebai.moviehunt.ui.list.MovieCategory
 

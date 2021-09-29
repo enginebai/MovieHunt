@@ -28,9 +28,9 @@ class MovieListController(
                 .imagePoster(this.getPosterUrl())
                 .textTitle(this.displayTitle())
                 .rating(this.display5StarsRating())
-                .voteCount(context.getString(R.string.vote_count, this.displayVoteCount()))
                 .duration(this.displayDuration())
-                .releaseDate(this.displayReleaseDate())
+                    // FIXME: release year
+                .releaseYear(2021)
                 .itemClickListener { clickListener.onMovieClicked(this.id) }
         } ?: run {
             MovieListEpoxyModel_()
