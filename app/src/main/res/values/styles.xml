@@ -32,7 +32,8 @@
     <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:numStars">5</item>
         <item name="android:isIndicator">true</item>
-        <item name="android:colorControlNormal">@color/grey</item>
+        <item name="android:progressTint">@color/yellow</item>
+        <item name="android:progressBackgroundTint">@color/colorAccent</item>
     </style>
 
     <style name="VoteCountText">
@@ -73,9 +74,4 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar</item>
-        <item name="android:minHeight">@dimen/size_12</item>
-        <item name="android:minWidth">@dimen/size_12</item>
-    </style>
 </resources>

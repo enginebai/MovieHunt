@@ -88,13 +88,10 @@
             android:orientation="horizontal">
             <RatingBar
                 android:id="@+id/ratingBar"
-                style="@style/CustomRatingBar"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:stepSize="0.01"
+                style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:theme="@style/RatingBar" />
+                />
             <TextView
                 style="@style/Caption"
                 android:layout_width="wrap_content"
