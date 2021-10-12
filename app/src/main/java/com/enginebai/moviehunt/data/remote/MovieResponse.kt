@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt.data.remote
 
 import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.google.gson.annotations.SerializedName
 
@@ -22,27 +23,17 @@ data class MovieListResponse(
     val releaseDate: String?,
     @SerializedName("genres")
     @ColumnInfo(name = "genres")
-    val genreList: List<Genre>?,
+    var genreList: List<Genre>?,
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     val voteAverage: Float?,
-//    @SerializedName("backdrop_path")
-//    @ColumnInfo(name = "backdrop_path")
-//    val backdropPath: String?,
-//    @SerializedName("genre_ids")
-//    val genreIds: List<Int>?,
+    @SerializedName("backdrop_path")
+    @ColumnInfo(name = "backdrop_path")
+    val backdropPath: String?,
+    @Ignore
+    @SerializedName("genre_ids")
+    val genreIds: List<Int>?
 )
-
-fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
-    this.map {
-        MovieModel(
-            id = it.id,
-            posterPath = it.posterPath,
-            title = it.title,
-            voteAverage = it.voteAverage,
-            releaseDate = it.releaseDate
-        )
-    }
 
 data class MovieDetailResponse(
     @SerializedName("id")
@@ -72,7 +63,7 @@ data class GenreListing(
 
 data class Genre(
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("name")
     val name: String?
 )

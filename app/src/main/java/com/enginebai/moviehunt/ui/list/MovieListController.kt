@@ -29,6 +29,7 @@ class MovieListController(
                 .textTitle(this.displayTitle())
                 .rating(this.display5StarsRating())
                 .duration(this.displayDuration())
+                .genre(this.genreList?.map { it.name }?.joinToString())
                     // FIXME: release year
                 .releaseYear(2021)
                 .itemClickListener { clickListener.onMovieClicked(this.id) }

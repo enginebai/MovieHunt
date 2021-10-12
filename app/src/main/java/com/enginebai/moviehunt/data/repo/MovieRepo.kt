@@ -20,8 +20,9 @@ import org.koin.core.component.inject
 const val DEFAULT_PAGE_SIZE = 5
 
 interface MovieRepo {
-    fun fetchGenreList(): Single<List<Genre>>
+    val genreList: BehaviorSubject<List<Genre>>
 
+    fun fetchGenreList(): Single<List<Genre>>
     fun fetchMovieList(
         category: MovieCategory,
         pageSize: Int = DEFAULT_PAGE_SIZE
@@ -42,7 +43,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     private val movieDao: MovieDao by inject()
     private val nextPageIndex: NextPageIndex by lazy { IncrementalNextPage() }
 
-    private val genreList = BehaviorSubject.create<List<Genre>>()
+    override val genreList = BehaviorSubject.create<List<Genre>>()
 
     override fun fetchGenreList(): Single<List<Genre>> {
         return Single.create<List<Genre>> {
@@ -111,7 +112,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                     overview = response.overview,
                     releaseDate = response.releaseDate,
                     genreList = response.genreList,
-                    runtime = response.runtime
+                    runtime = response.runtime,
                 )
             }.flatMapCompletable {
                 movieDao.upsert(it)

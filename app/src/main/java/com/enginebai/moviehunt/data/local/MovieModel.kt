@@ -47,7 +47,8 @@ data class MovieModel(
     @ColumnInfo(name = "genres")
     val genreList: List<Genre>? = null,
     val runtime: Int? = null,
-
+    @ColumnInfo(name = "backdrop_path")
+    val backdropPath: String? = null,
 )
 
 fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this.posterPath}"

@@ -5,6 +5,7 @@ import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieDatabase
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListResponse
 import com.enginebai.moviehunt.data.remote.TmdbApiResponse
@@ -25,6 +26,7 @@ class MovieBoundaryCallback(
     private val movieApi: MovieApiService by inject()
     private val movieDao: MovieDao by inject()
     private val movieDb: MovieDatabase by inject()
+    private val movieRepo: MovieRepo by inject()
 
     val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
     val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
@@ -46,18 +48,31 @@ class MovieBoundaryCallback(
     }
 
     private fun Single<TmdbApiResponse<MovieListResponse>>.subscribeRemoteDataSource(firstLoad: Boolean = false) {
-        this.map {
+        this.map { tmdbApiResponse ->
+            val updatedList: List<MovieListResponse> = tmdbApiResponse.results?.map { movieListResponse ->
+                if (movieRepo.genreList.value != null) {
+                    val genreList = mutableListOf<Genre>()
+                    movieListResponse.genreIds?.forEach { id ->
+                        movieRepo.genreList.value!!.find { it.id == id }?.apply {
+                            genreList.add(this)
+                        }
+                    }
+                    movieListResponse.genreList = genreList
+                }
+                movieListResponse
+            } ?: emptyList()
+
             movieDb.runInTransaction {
                 if (firstLoad)
                     movieDao.deleteMovieList(category)
                 movieDao.upsertMovieListResponse(
                     category = category,
-                    list = it.results ?: emptyList(),
+                    list = updatedList,
                     pageSize = pageSize,
                     currentPage = nextPageIndex.getNextPageIndex(category.key)
                 )
             }
-            calculateNextPage(it.totalPages)
+            calculateNextPage(tmdbApiResponse.totalPages)
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { changeLoadState(firstLoad, NetworkState.LOADING) }
