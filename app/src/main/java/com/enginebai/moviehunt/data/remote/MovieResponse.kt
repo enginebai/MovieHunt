@@ -14,15 +14,23 @@ data class MovieListResponse(
     val posterPath: String?,
     @SerializedName("title")
     val title: String?,
+    @SerializedName("runtime")
+    val runtime: Int?,
+    // TODO: Date format
+    @SerializedName("release_date")
+    @ColumnInfo(name = "release_date")
+    val releaseDate: String?,
+    @SerializedName("genres")
+    @ColumnInfo(name = "genres")
+    val genreList: List<Genre>?,
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     val voteAverage: Float?,
-    @SerializedName("vote_count")
-    @ColumnInfo(name = "vote_count")
-    val voteCount: Int?,
-    @SerializedName("release_date")
-    @ColumnInfo(name = "release_date")
-    val releaseDate: String?
+//    @SerializedName("backdrop_path")
+//    @ColumnInfo(name = "backdrop_path")
+//    val backdropPath: String?,
+//    @SerializedName("genre_ids")
+//    val genreIds: List<Int>?,
 )
 
 fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
@@ -32,7 +40,6 @@ fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
             posterPath = it.posterPath,
             title = it.title,
             voteAverage = it.voteAverage,
-            voteCount = it.voteCount,
             releaseDate = it.releaseDate
         )
     }
@@ -56,6 +63,11 @@ data class MovieDetailResponse(
     val genreList: List<Genre>?,
     @SerializedName("runtime")
     val runtime: Int?
+)
+
+data class GenreListing(
+    @SerializedName("genres")
+    val genreList: List<Genre>?
 )
 
 data class Genre(
