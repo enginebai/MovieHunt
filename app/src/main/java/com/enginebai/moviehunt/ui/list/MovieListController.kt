@@ -4,9 +4,9 @@ import android.content.Context
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
+import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
 
 class MovieListController(
     private val context: Context,
@@ -22,19 +22,18 @@ class MovieListController(
 
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {
-            MovieListEpoxyModel_()
+            MovieLandscapeHolder_()
                 .id(this.id)
                 .movieId(this.id)
                 .imagePoster(this.getPosterUrl())
                 .textTitle(this.displayTitle())
                 .rating(this.display5StarsRating())
-                .duration(this.displayDuration())
                 .genre(this.genreList?.map { it.name }?.joinToString())
                     // FIXME: release year
-                .releaseYear(2021)
+                .releaseDate(2021)
                 .itemClickListener { clickListener.onMovieClicked(this.id) }
         } ?: run {
-            MovieListEpoxyModel_()
+            MovieLandscapeHolder_()
                 .id(-currentPosition)
         }
     }

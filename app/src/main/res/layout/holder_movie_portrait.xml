@@ -35,7 +35,7 @@
             tools:text="Mission Impossible" />
 
         <TextView
-            android:id="@+id/textReleaseYearAndGenre"
+            android:id="@+id/textReleaseDate"
             style="@style/Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,8 +54,8 @@
             android:drawablePadding="@dimen/size_4"
             android:paddingBottom="@dimen/size_12"
             app:drawableStartCompat="@drawable/ic_star"
-            app:layout_constraintStart_toStartOf="@+id/textReleaseYearAndGenre"
-            app:layout_constraintTop_toBottomOf="@+id/textReleaseYearAndGenre"
+            app:layout_constraintStart_toStartOf="@+id/textReleaseDate"
+            app:layout_constraintTop_toBottomOf="@+id/textReleaseDate"
             tools:text="9.2 (10.6 k)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

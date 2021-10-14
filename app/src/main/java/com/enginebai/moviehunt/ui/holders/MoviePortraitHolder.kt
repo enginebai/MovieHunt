@@ -9,7 +9,6 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
-import java.text.MessageFormat
 
 @EpoxyModelClass(layout = R.layout.holder_movie_portrait)
 abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Holder>() {
@@ -59,7 +58,7 @@ abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Ho
             rootView = itemView
             imagePoster = itemView.findViewById(R.id.imagePoster)
             textName = itemView.findViewById(R.id.textMovieName)
-            textReleaseYearAndGenre = itemView.findViewById(R.id.textReleaseYearAndGenre)
+            textReleaseYearAndGenre = itemView.findViewById(R.id.textReleaseDate)
             textRating = itemView.findViewById(R.id.textRating)
         }
     }

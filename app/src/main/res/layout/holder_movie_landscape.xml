@@ -60,25 +60,25 @@
             android:layout_height="wrap_content"
             tools:text="Star Wars: IV" />
 
-
         <TextView
-            android:id="@+id/textDuration"
-            style="@style/Caption"
+            style="@style/Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textReleaseDate"
             android:textColor="@color/colorAccent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_12"
-            android:drawablePadding="@dimen/size_4"
-            tools:text="2h 14m"
-            app:drawableStartCompat="@drawable/clock" />
+            android:layout_marginTop="@dimen/size_8"
+            tools:text="2022-03-17"
+            />
 
         <TextView
             style="@style/Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textReleaseYearAndGenre"
+            android:id="@+id/textGenres"
             android:layout_marginTop="@dimen/size_8"
-            tools:text="2022 Action, Adventure"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Action, Adventure"
             />
 
         <LinearLayout

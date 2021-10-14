@@ -14,22 +14,26 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.PLACEHOLDER
 
 @EpoxyModelClass(layout = R.layout.holder_movie_landscape)
-abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Holder>() {
+abstract class MovieLandscapeHolder : EpoxyModelWithHolder<MovieLandscapeHolder.Holder>() {
 
     @EpoxyAttribute
     var movieId = ""
+
     @EpoxyAttribute
     var imagePoster = ""
+
     @EpoxyAttribute
     var textTitle = PLACEHOLDER
+
     @EpoxyAttribute
     var rating = 0.0f
+
     @EpoxyAttribute
-    var duration = ""
-    @EpoxyAttribute
-    var releaseYear: Int? = null
+    var releaseDate: Int? = null
+
     @EpoxyAttribute
     var genre: String? = null
+
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var itemClickListener: (String) -> Unit = {}
 
@@ -42,8 +46,8 @@ abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Ho
         holder.textTitle.text = textTitle
         holder.ratingBar.rating = rating
         holder.textRating.text = rating.toString()
-        holder.textDuration.text = duration
-        holder.textReleaseYearAndGenre.text = "$releaseYear $genre"
+        holder.textReleaseDate.text = releaseDate?.toString()
+        holder.textGenres.text = genre
         holder.itemView.setOnClickListener { itemClickListener(movieId) }
     }
 
@@ -54,8 +58,8 @@ abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Ho
         lateinit var textTitle: TextView
         lateinit var ratingBar: RatingBar
         lateinit var textRating: TextView
-        lateinit var textDuration: TextView
-        lateinit var textReleaseYearAndGenre: TextView
+        lateinit var textReleaseDate: TextView
+        lateinit var textGenres: TextView
         lateinit var buttonBookmark: ImageButton
 
         override fun bindView(itemView: View) {
@@ -64,8 +68,8 @@ abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Ho
             textTitle = itemView.findViewById(R.id.textTitle)
             ratingBar = itemView.findViewById(R.id.ratingBar)
             textRating = itemView.findViewById(R.id.textRating)
-            textDuration = itemView.findViewById(R.id.textDuration)
-            textReleaseYearAndGenre = itemView.findViewById(R.id.textReleaseYearAndGenre)
+            textReleaseDate = itemView.findViewById(R.id.textReleaseDate)
+            textGenres = itemView.findViewById(R.id.textGenres)
             buttonBookmark = itemView.findViewById(R.id.buttonBookmark)
         }
 

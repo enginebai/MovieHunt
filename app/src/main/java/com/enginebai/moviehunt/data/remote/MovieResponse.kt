@@ -15,8 +15,6 @@ data class MovieListResponse(
     val posterPath: String?,
     @SerializedName("title")
     val title: String?,
-    @SerializedName("runtime")
-    val runtime: Int?,
     // TODO: Date format
     @SerializedName("release_date")
     @ColumnInfo(name = "release_date")
@@ -27,6 +25,9 @@ data class MovieListResponse(
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     val voteAverage: Float?,
+    @SerializedName("vote_count")
+    @ColumnInfo(name = "vote_count")
+    val voteCount: Int? = null,
     @SerializedName("backdrop_path")
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String?,
