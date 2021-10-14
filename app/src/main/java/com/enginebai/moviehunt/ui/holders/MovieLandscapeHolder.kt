@@ -12,6 +12,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.PLACEHOLDER
+import com.enginebai.moviehunt.utils.loadImage
 
 @EpoxyModelClass(layout = R.layout.holder_movie_landscape)
 abstract class MovieLandscapeHolder : EpoxyModelWithHolder<MovieLandscapeHolder.Holder>() {
@@ -38,11 +39,7 @@ abstract class MovieLandscapeHolder : EpoxyModelWithHolder<MovieLandscapeHolder.
     var itemClickListener: (String) -> Unit = {}
 
     override fun bind(holder: Holder) {
-        holder.imagePoster
-            .load(imagePoster) {
-                error(R.color.darkBlue)
-                placeholder(R.color.darkBlue)
-            }
+        holder.imagePoster.loadImage(imagePoster)
         holder.textTitle.text = textTitle
         holder.ratingBar.rating = rating
         holder.textRating.text = rating.toString()

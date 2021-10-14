@@ -9,6 +9,7 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.utils.loadImage
 
 @EpoxyModelClass(layout = R.layout.holder_movie_portrait)
 abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Holder>() {
@@ -42,7 +43,7 @@ abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Ho
         holder.rootView.setOnClickListener {
             onClickListener(movieId)
         }
-        holder.imagePoster.load(posterUrl)
+        holder.imagePoster.loadImage(posterUrl)
         holder.textName.text = movieName
         holder.textReleaseYearAndGenre.text = "%s %s".format(releaseYear, genre)
         holder.textRating.text = "%.1f (%s)".format(rating, ratingTotalCountText)
