@@ -35,13 +35,16 @@
             tools:text="Mission Impossible" />
 
         <TextView
-            android:id="@+id/textReleaseDate"
+            android:id="@+id/textReleaseYearAndGenres"
             style="@style/Caption"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
+            android:gravity="start|center_vertical"
+            android:layout_marginEnd="@dimen/size_4"
             app:layout_constraintStart_toStartOf="@+id/textMovieName"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMovieName"
             tools:text="2021 Action" />
 
@@ -54,8 +57,8 @@
             android:drawablePadding="@dimen/size_4"
             android:paddingBottom="@dimen/size_12"
             app:drawableStartCompat="@drawable/ic_star"
-            app:layout_constraintStart_toStartOf="@+id/textReleaseDate"
-            app:layout_constraintTop_toBottomOf="@+id/textReleaseDate"
+            app:layout_constraintStart_toStartOf="@+id/textReleaseYearAndGenres"
+            app:layout_constraintTop_toBottomOf="@+id/textReleaseYearAndGenres"
             tools:text="9.2 (10.6 k)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

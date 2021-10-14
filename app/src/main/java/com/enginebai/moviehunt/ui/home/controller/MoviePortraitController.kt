@@ -8,7 +8,7 @@ import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.list.MovieCategory
 
-class MovieNormalListController(
+class MoviePortraitController(
     movieCategory: MovieCategory,
     clickListener: MovieClickListener? = null
 ) : MovieCarouselController(movieCategory, clickListener) {
@@ -20,7 +20,7 @@ class MovieNormalListController(
                 .posterUrl(this.getPosterUrl())
                 .movieName(this.displayTitle())
                 .rating(this.display5StarsRating())
-                .ratingTotalCount(this.voteCount)
+                .ratingTotalCountText(this.displayVoteCount())
                 .genre(this.genreList?.firstOrNull()?.name)
                 .releaseYear(1234)
                 .onClickListener {

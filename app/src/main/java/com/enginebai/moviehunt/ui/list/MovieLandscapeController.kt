@@ -8,7 +8,7 @@ import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
 
-class MovieListController(
+class MovieLandscapeController(
     private val context: Context,
     private val clickListener: MovieClickListener
 ) : PagedListEpoxyController<MovieModel>(diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()) {

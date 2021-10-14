@@ -32,7 +32,7 @@ abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Ho
     var rating: Float? = null
 
     @EpoxyAttribute
-    var ratingTotalCount: Int? = null
+    var ratingTotalCountText: String? = null
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var onClickListener: (String) -> Unit = {}
@@ -45,7 +45,7 @@ abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Ho
         holder.imagePoster.load(posterUrl)
         holder.textName.text = movieName
         holder.textReleaseYearAndGenre.text = "%s %s".format(releaseYear, genre)
-        holder.textRating.text = "%.1f (%s)".format(rating, ratingTotalCount)
+        holder.textRating.text = "%.1f (%s)".format(rating, ratingTotalCountText)
     }
 
     class Holder : EpoxyHolder() {
@@ -58,7 +58,7 @@ abstract class MoviePortraitHolder : EpoxyModelWithHolder<MoviePortraitHolder.Ho
             rootView = itemView
             imagePoster = itemView.findViewById(R.id.imagePoster)
             textName = itemView.findViewById(R.id.textMovieName)
-            textReleaseYearAndGenre = itemView.findViewById(R.id.textReleaseDate)
+            textReleaseYearAndGenre = itemView.findViewById(R.id.textReleaseYearAndGenres)
             textRating = itemView.findViewById(R.id.textRating)
         }
     }
