@@ -18,11 +18,12 @@ fun Int.formatHourMinutes(): String {
     return String.format("%d:%02d", hours, minutes)
 }
 
-object DateFormat {
+object DateTimeFormatter {
     private const val API_DATE_FORMAT = "yyyy-MM-dd"
+    const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
-    fun String.toCalendarOrNull(): Calendar? {
-        val dateFormat = SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault())
+    fun String.toCalendarOrNull(format: String = API_DATE_FORMAT): Calendar? {
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
         val date = try {
             dateFormat.parse(this)
         } catch (e: Exception) {
@@ -31,8 +32,8 @@ object DateFormat {
         return date?.let { Calendar.getInstance().apply { time = it } }
     }
 
-    fun Calendar.yyyyMMdd(): String? {
-        val dateFormat = SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault())
+    fun Calendar.format(format: String = API_DATE_FORMAT): String? {
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
         return dateFormat.format(this.time)
     }
 }

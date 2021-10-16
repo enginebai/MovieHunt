@@ -39,6 +39,7 @@ val gsonModule = module {
     single {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.registerTypeAdapter(Calendar::class.java, get<CalendarDeserializer>())
+        gsonBuilder.create()
     }
 }
 

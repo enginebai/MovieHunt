@@ -5,7 +5,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import coil.load
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
@@ -30,7 +29,10 @@ abstract class MovieLandscapeHolder : EpoxyModelWithHolder<MovieLandscapeHolder.
     var rating = 0.0f
 
     @EpoxyAttribute
-    var releaseDate: Int? = null
+    var ratingTotalCountText: String? = null
+
+    @EpoxyAttribute
+    var releaseDateText: String? = null
 
     @EpoxyAttribute
     var genre: String? = null
@@ -42,8 +44,8 @@ abstract class MovieLandscapeHolder : EpoxyModelWithHolder<MovieLandscapeHolder.
         holder.imagePoster.loadImage(imagePoster)
         holder.textTitle.text = textTitle
         holder.ratingBar.rating = rating
-        holder.textRating.text = rating.toString()
-        holder.textReleaseDate.text = releaseDate?.toString()
+        holder.textRating.text = "%.1f (%s)".format(rating, ratingTotalCountText)
+        holder.textReleaseDate.text = releaseDateText
         holder.textGenres.text = genre
         holder.itemView.setOnClickListener { itemClickListener(movieId) }
     }

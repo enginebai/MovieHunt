@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
 import java.util.*
@@ -61,5 +62,5 @@ fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: PLACEHOL
 fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) ?: PLACEHOLDER}%"
 
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: PLACEHOLDER
-fun MovieModel.displayReleaseDate(): String = this.releaseDate ?: PLACEHOLDER
+fun MovieModel.displayReleaseDate(): String = this.releaseDate?.format() ?: PLACEHOLDER
 fun MovieModel.displayOverview(): String = this.overview ?: PLACEHOLDER

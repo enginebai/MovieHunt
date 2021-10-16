@@ -7,6 +7,7 @@ import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import java.util.*
 
 class MoviePortraitController(
     movieCategory: MovieCategory,
@@ -22,7 +23,7 @@ class MoviePortraitController(
                 .rating(this.display5StarsRating())
                 .ratingTotalCountText(this.displayVoteCount())
                 .genre(this.genreList?.firstOrNull()?.name)
-                .releaseYear(1234)
+                .releaseYear(this.releaseDate?.get(Calendar.YEAR))
                 .onClickListener {
                     clickListener?.onMovieClicked(this.id)
                 }

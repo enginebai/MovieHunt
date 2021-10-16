@@ -7,6 +7,8 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
+import java.util.*
 
 class MovieLandscapeController(
     private val context: Context,
@@ -28,9 +30,9 @@ class MovieLandscapeController(
                 .imagePoster(this.getPosterUrl())
                 .textTitle(this.displayTitle())
                 .rating(this.display5StarsRating())
+                .ratingTotalCountText(this.displayVoteCount())
                 .genre(this.genreList?.map { it.name }?.joinToString())
-                    // FIXME: release year
-                .releaseDate(2021)
+                .releaseDateText(this.releaseDate?.format())
                 .itemClickListener { clickListener.onMovieClicked(this.id) }
         } ?: run {
             MovieLandscapeHolder_()

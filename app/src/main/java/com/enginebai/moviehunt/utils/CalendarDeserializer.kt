@@ -1,6 +1,6 @@
 package com.enginebai.moviehunt.utils
 
-import com.enginebai.moviehunt.utils.DateFormat.toCalendarOrNull
+import com.enginebai.moviehunt.utils.DateTimeFormatter.toCalendarOrNull
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
