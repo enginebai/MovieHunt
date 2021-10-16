@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class MovieListResponse(
     @SerializedName("id")
@@ -15,10 +16,9 @@ data class MovieListResponse(
     val posterPath: String?,
     @SerializedName("title")
     val title: String?,
-    // TODO: Date format
     @SerializedName("release_date")
     @ColumnInfo(name = "release_date")
-    val releaseDate: String?,
+    val releaseDate: Calendar?,
     @SerializedName("genres")
     @ColumnInfo(name = "genres")
     var genreList: List<Genre>?,

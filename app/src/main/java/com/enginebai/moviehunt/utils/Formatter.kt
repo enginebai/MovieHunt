@@ -1,5 +1,7 @@
 package com.enginebai.moviehunt.utils
 
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.ln
 import kotlin.math.pow
 
@@ -14,4 +16,23 @@ fun Int.formatHourMinutes(): String {
     val hours = this.div(60)
     val minutes = this % 60
     return String.format("%d:%02d", hours, minutes)
+}
+
+object DateFormat {
+    private const val API_DATE_FORMAT = "yyyy-MM-dd"
+
+    fun String.toCalendarOrNull(): Calendar? {
+        val dateFormat = SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault())
+        val date = try {
+            dateFormat.parse(this)
+        } catch (e: Exception) {
+            null
+        }
+        return date?.let { Calendar.getInstance().apply { time = it } }
+    }
+
+    fun Calendar.yyyyMMdd(): String? {
+        val dateFormat = SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault())
+        return dateFormat.format(this.time)
+    }
 }

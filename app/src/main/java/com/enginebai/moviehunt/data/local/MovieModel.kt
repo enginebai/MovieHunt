@@ -9,6 +9,7 @@ import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
+import java.util.*
 
 const val PLACEHOLDER = "--"
 
@@ -43,7 +44,7 @@ data class MovieModel(
     val voteCount: Int? = null,
     val overview: String? = null,
     @ColumnInfo(name = "release_date")
-    val releaseDate: String? = null,
+    val releaseDate: Calendar? = null,
     @ColumnInfo(name = "genres")
     val genreList: List<Genre>? = null,
     val runtime: Int? = null,
