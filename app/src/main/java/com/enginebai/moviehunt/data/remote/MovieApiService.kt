@@ -7,6 +7,9 @@ import retrofit2.http.Query
 
 interface MovieApiService {
 
+    @GET("genre/movie/list")
+    fun fetchGenreList(): Single<GenreListing>
+
     @GET("movie/{list}")
     fun fetchMovieList(
         @Path("list") list: String,

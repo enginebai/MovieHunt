@@ -17,7 +17,7 @@ class MovieLargeListController(
                 .movieId(this.id)
                 .posterImage(this.getPosterUrl())
                 .title(this.displayTitle())
-                .rating(this.voteAverage)
+                .rating(this.display5StarsRating())
                 .voteCount(this.displayVoteCount())
                 .duration(this.displayDuration())
                 .clickListener(clickListener)

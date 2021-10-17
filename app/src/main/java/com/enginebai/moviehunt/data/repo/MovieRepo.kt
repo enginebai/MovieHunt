@@ -1,11 +1,11 @@
 package com.enginebai.moviehunt.data.repo
 
-import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.enginebai.base.utils.Listing
 import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListDataSourceFactory
 import com.enginebai.moviehunt.ui.list.MovieCategory
@@ -13,12 +13,16 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 const val DEFAULT_PAGE_SIZE = 5
 
 interface MovieRepo {
+    val genreList: BehaviorSubject<List<Genre>>
+
+    fun fetchGenreList(): Single<List<Genre>>
     fun fetchMovieList(
         category: MovieCategory,
         pageSize: Int = DEFAULT_PAGE_SIZE
@@ -38,6 +42,23 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     private val movieApi: MovieApiService by inject()
     private val movieDao: MovieDao by inject()
     private val nextPageIndex: NextPageIndex by lazy { IncrementalNextPage() }
+
+    override val genreList = BehaviorSubject.create<List<Genre>>()
+
+    override fun fetchGenreList(): Single<List<Genre>> {
+        return Single.create<List<Genre>> {
+            if (genreList.value?.isNotEmpty() == true) {
+                it.onSuccess(genreList.value!!)
+            } else {
+                it.onError(NoSuchElementException())
+            }
+        }.onErrorResumeNext {
+            movieApi.fetchGenreList().map { it.genreList ?: throw NullPointerException() }
+                .doOnSuccess {
+                    genreList.onNext(it)
+                }
+        }
+    }
 
     override fun fetchMovieList(
         category: MovieCategory,
@@ -91,7 +112,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                     overview = response.overview,
                     releaseDate = response.releaseDate,
                     genreList = response.genreList,
-                    runtime = response.runtime
+                    runtime = response.runtime,
                 )
             }.flatMapCompletable {
                 movieDao.upsert(it)

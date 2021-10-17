@@ -32,7 +32,7 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
     * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Tasks scheduler in background jobs. (Upcoming)
 * [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.
 * [Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.
-* [Glide](https://github.com/bumptech/glide) - Image loading.
+* [Coil](https://github.com/coil-kt/coil) - Image loading.
 * [Timber](https://github.com/JakeWharton/timber) - Extensible API for logging.
 * [Jetpack Compose](https://developer.android.com/jetpack/compose) - Declarative and simplified way for UI development. (Upcoming)
 * [Coroutines](https://developer.android.com/kotlin/coroutines) - Light-weight threads for background operations. (Upcoming)

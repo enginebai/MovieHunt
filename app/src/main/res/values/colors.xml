@@ -3,6 +3,10 @@
     <color name="colorPrimary">#121e2d</color>
     <color name="colorPrimaryDark">#121e2d</color>
     <color name="colorAccent">#3bdeee</color>
-    <color name="darkBlue">#042f45</color>
-    <color name="grey">#9b9b9b</color>
+    <color name="darkBlue">#17293F</color>
+    <color name="yellow">#FFC42E</color>
+    <color name="grey">#A7A7A9</color>
+
+    <color name="background">@color/colorPrimary</color>
+    <color name="cardBackground">@color/darkBlue</color>
 </resources>

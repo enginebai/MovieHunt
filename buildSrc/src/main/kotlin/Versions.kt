@@ -12,15 +12,13 @@ object Versions {
 
     const val okhttp = "4.9.0"
     const val retrofit = "2.9.0"
-    // TODO: migrate to v3
     const val koin = "3.1.2"
     const val timber = "5.0.1"
     const val logger = "2.2.0"
 
-    // TODO: migrate to v4
-    const val epoxy = "3.11.0"
+    const val epoxy = "4.6.3"
 
-    const val glide = "4.12.0"
+    const val coil = "1.3.2"
     const val androidBase = "1.0.3"
 
     // Test frameworks

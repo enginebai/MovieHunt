@@ -4,6 +4,7 @@ import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.repo.MovieRepo
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.component.KoinComponent
@@ -16,6 +17,7 @@ class MovieListDataSource(
 ) : PageKeyedDataSource<Int, MovieModel>(), KoinComponent {
 
     private val api: MovieApiService by inject()
+    private val repo: MovieRepo by inject()
     private var currentPage: Int = -1
 
     override fun loadInitial(
@@ -67,6 +69,18 @@ class MovieListDataSource(
         }
         return currentPage
     }
+
+    private fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
+        this.map {
+            MovieModel(
+                id = it.id,
+                posterPath = it.posterPath,
+                title = it.title,
+                voteAverage = it.voteAverage,
+                releaseDate = it.releaseDate,
+                backdropPath = it.backdropPath,
+            )
+        }
 }
 
 class MovieListDataSourceFactory(private val category: MovieCategory) :

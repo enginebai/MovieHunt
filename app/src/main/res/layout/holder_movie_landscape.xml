@@ -3,25 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideVerticalHalf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.55" />
+    android:layout_height="wrap_content"
+    android:padding="@dimen/size_12"
+    android:background="@color/cardBackground"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardPoster"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/size_8"
-        app:cardCornerRadius="@dimen/corner"
-        app:layout_constraintDimensionRatio="16:12"
-        app:layout_constraintEnd_toEndOf="@+id/guideVerticalHalf"
+        android:layout_height="@dimen/poster_height"
+        app:cardCornerRadius="@dimen/corner_small"
+        app:layout_constraintDimensionRatio="9:16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
         <ImageView
             android:id="@+id/imagePoster"
@@ -29,58 +25,83 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:src="@color/darkBlue" />
+            android:src="@color/colorPrimary" />
     </androidx.cardview.widget.CardView>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/selector_bookmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layoutContent"
+        android:id="@+id/buttonBookmark"
+        android:background="?selectableItemBackground"
+        />
+
     <LinearLayout
+        android:id="@+id/layoutContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_8"
-        android:layout_marginEnd="@dimen/size_8"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_4"
+        android:layout_marginTop="@dimen/size_4"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonBookmark"
         app:layout_constraintStart_toEndOf="@+id/cardPoster"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/textTitle"
-            style="@style/TitleText.Normal"
+            style="@style/Headline6"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Star Wars: IV" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
+        <TextView
+            style="@style/Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textReleaseDate"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="@dimen/size_8"
+            tools:text="2022-03-17"
+            />
+
+        <TextView
+            style="@style/Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textGenres"
+            android:layout_marginTop="@dimen/size_8"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Action, Adventure"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_8"
-            android:theme="@style/RatingBar" />
+            android:orientation="horizontal">
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                style="@style/Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/size_4"
+                android:id="@+id/textRating"
+                tools:text="9.5"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/textVoteCount"
-            style="@style/VoteCountText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            tools:text="2.6k reviews" />
 
-        <TextView
-            android:id="@+id/textDuration"
-            style="@style/ContextText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:drawableStart="@drawable/clock"
-            tools:text="2h14m" />
-
-        <TextView
-            android:id="@+id/textReleaseDate"
-            style="@style/ContextText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:drawableStart="@drawable/calendar"
-            tools:text="2019/12/31" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

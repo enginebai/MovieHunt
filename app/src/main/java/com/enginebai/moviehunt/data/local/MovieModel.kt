@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey
 import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
+import java.util.*
 
 const val PLACEHOLDER = "--"
 
@@ -43,10 +45,12 @@ data class MovieModel(
     val voteCount: Int? = null,
     val overview: String? = null,
     @ColumnInfo(name = "release_date")
-    val releaseDate: String? = null,
+    val releaseDate: Calendar? = null,
     @ColumnInfo(name = "genres")
     val genreList: List<Genre>? = null,
-    val runtime: Int? = null
+    val runtime: Int? = null,
+    @ColumnInfo(name = "backdrop_path")
+    val backdropPath: String? = null,
 )
 
 fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this.posterPath}"
@@ -58,5 +62,5 @@ fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: PLACEHOL
 fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) ?: PLACEHOLDER}%"
 
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: PLACEHOLDER
-fun MovieModel.displayReleaseDate(): String = this.releaseDate ?: PLACEHOLDER
+fun MovieModel.displayReleaseDate(): String = this.releaseDate?.format() ?: PLACEHOLDER
 fun MovieModel.displayOverview(): String = this.overview ?: PLACEHOLDER

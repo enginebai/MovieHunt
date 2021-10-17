@@ -1,7 +1,9 @@
 package com.enginebai.moviehunt.ui.home.models
 
 import android.content.Context
+import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.*
+import com.enginebai.moviehunt.R
 
 @ModelView(saveViewState = true, autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 class MovieCarousel(context: Context) : Carousel(context) {

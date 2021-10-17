@@ -13,7 +13,7 @@ import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
 import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
 import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
-import com.enginebai.moviehunt.ui.home.controller.MovieNormalListController
+import com.enginebai.moviehunt.ui.home.controller.MoviePortraitController
 import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
@@ -43,7 +43,7 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
                 carouselController = MovieLargeListController(category, this)
                 itemsOnScreen = 1.7f
             } else {
-                carouselController = MovieNormalListController(category, this)
+                carouselController = MoviePortraitController(category, this)
                 itemsOnScreen = 3.05f
             }
             categoryListings[category] =

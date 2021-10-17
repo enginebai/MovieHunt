@@ -13,6 +13,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 argument("room.schemaLocation", "$projectDir/schemas")
+                argument("enableParallelEpoxyProcessing", "true")
             }
         }
     }
@@ -28,8 +29,7 @@ dependencies {
     implementation(Dependencies.Epoxy.databinding)
     "kapt"(Dependencies.Epoxy.processor)
 
-    implementation(Dependencies.Glide.core)
-    "kapt"(Dependencies.Glide.compiler)
+    implementation(Dependencies.coil)
 
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.ktx)

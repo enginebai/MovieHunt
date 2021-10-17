@@ -1,8 +1,10 @@
 package com.enginebai.moviehunt.data.remote
 
 import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class MovieListResponse(
     @SerializedName("id")
@@ -14,28 +16,25 @@ data class MovieListResponse(
     val posterPath: String?,
     @SerializedName("title")
     val title: String?,
+    @SerializedName("release_date")
+    @ColumnInfo(name = "release_date")
+    val releaseDate: Calendar?,
+    @SerializedName("genres")
+    @ColumnInfo(name = "genres")
+    var genreList: List<Genre>?,
     @SerializedName("vote_average")
     @ColumnInfo(name = "vote_average")
     val voteAverage: Float?,
     @SerializedName("vote_count")
     @ColumnInfo(name = "vote_count")
-    val voteCount: Int?,
-    @SerializedName("release_date")
-    @ColumnInfo(name = "release_date")
-    val releaseDate: String?
+    val voteCount: Int? = null,
+    @SerializedName("backdrop_path")
+    @ColumnInfo(name = "backdrop_path")
+    val backdropPath: String?,
+    @Ignore
+    @SerializedName("genre_ids")
+    val genreIds: List<Int>?
 )
-
-fun List<MovieListResponse>.mapToMovieModels(): List<MovieModel> =
-    this.map {
-        MovieModel(
-            id = it.id,
-            posterPath = it.posterPath,
-            title = it.title,
-            voteAverage = it.voteAverage,
-            voteCount = it.voteCount,
-            releaseDate = it.releaseDate
-        )
-    }
 
 data class MovieDetailResponse(
     @SerializedName("id")
@@ -51,16 +50,21 @@ data class MovieDetailResponse(
     @SerializedName("overview")
     val overview: String?,
     @SerializedName("release_date")
-    val releaseDate: String?,
+    val releaseDate: Calendar?,
     @SerializedName("genres")
     val genreList: List<Genre>?,
     @SerializedName("runtime")
     val runtime: Int?
 )
 
+data class GenreListing(
+    @SerializedName("genres")
+    val genreList: List<Genre>?
+)
+
 data class Genre(
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("name")
     val name: String?
 )

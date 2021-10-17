@@ -28,7 +28,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     private val movieCategory: MovieCategory by lazy {
         arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
     }
-    private lateinit var controller: MovieListController
+    private lateinit var controller: MovieLandscapeController
 
     override fun getLayoutId() = R.layout.fragment_movie_list
 
@@ -69,7 +69,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 
     private fun setupList() {
         activity?.let {
-            controller = MovieListController(it, this)
+            controller = MovieLandscapeController(it, this)
         }
         with(listMovie) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

@@ -1,6 +1,7 @@
-package com.enginebai.moviehunt.ui.list
+package com.enginebai.moviehunt.ui.holders
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -8,40 +9,44 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.bumptech.glide.Glide
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.PLACEHOLDER
+import com.enginebai.moviehunt.utils.loadImage
 
 @EpoxyModelClass(layout = R.layout.holder_movie_landscape)
-abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Holder>() {
+abstract class MovieLandscapeHolder : EpoxyModelWithHolder<MovieLandscapeHolder.Holder>() {
 
     @EpoxyAttribute
     var movieId = ""
+
     @EpoxyAttribute
     var imagePoster = ""
+
     @EpoxyAttribute
-    var textTitle = "--"
+    var textTitle = PLACEHOLDER
+
     @EpoxyAttribute
     var rating = 0.0f
+
     @EpoxyAttribute
-    var voteCount = ""
+    var ratingTotalCountText: String? = null
+
     @EpoxyAttribute
-    var duration = ""
+    var releaseDateText: String? = null
+
     @EpoxyAttribute
-    var releaseDate = ""
+    var genre: String? = null
+
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var itemClickListener: (String) -> Unit = {}
 
     override fun bind(holder: Holder) {
-        Glide.with(holder.imagePoster)
-            .load(imagePoster)
-            .error(R.color.darkBlue)
-            .placeholder(R.color.darkBlue)
-            .into(holder.imagePoster)
+        holder.imagePoster.loadImage(imagePoster)
         holder.textTitle.text = textTitle
         holder.ratingBar.rating = rating
-        holder.textVoteCount.text = voteCount
-        holder.textDuration.text = duration
-        holder.textReleaseDate.text = releaseDate
+        holder.textRating.text = "%.1f (%s)".format(rating, ratingTotalCountText)
+        holder.textReleaseDate.text = releaseDateText
+        holder.textGenres.text = genre
         holder.itemView.setOnClickListener { itemClickListener(movieId) }
     }
 
@@ -51,18 +56,20 @@ abstract class MovieListEpoxyModel : EpoxyModelWithHolder<MovieListEpoxyModel.Ho
         lateinit var imagePoster: ImageView
         lateinit var textTitle: TextView
         lateinit var ratingBar: RatingBar
-        lateinit var textVoteCount: TextView
-        lateinit var textDuration: TextView
+        lateinit var textRating: TextView
         lateinit var textReleaseDate: TextView
+        lateinit var textGenres: TextView
+        lateinit var buttonBookmark: ImageButton
 
         override fun bindView(itemView: View) {
             this.itemView = itemView
             imagePoster = itemView.findViewById(R.id.imagePoster)
             textTitle = itemView.findViewById(R.id.textTitle)
             ratingBar = itemView.findViewById(R.id.ratingBar)
-            textVoteCount = itemView.findViewById(R.id.textVoteCount)
-            textDuration = itemView.findViewById(R.id.textDuration)
+            textRating = itemView.findViewById(R.id.textRating)
             textReleaseDate = itemView.findViewById(R.id.textReleaseDate)
+            textGenres = itemView.findViewById(R.id.textGenres)
+            buttonBookmark = itemView.findViewById(R.id.buttonBookmark)
         }
 
     }

@@ -4,10 +4,14 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import com.enginebai.moviehunt.utils.DateTimeFormatter
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
+import com.enginebai.moviehunt.utils.DateTimeFormatter.toCalendarOrNull
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.util.*
 
 @TypeConverters
 class MovieTypeConverter : KoinComponent {
@@ -32,5 +36,15 @@ class MovieTypeConverter : KoinComponent {
     @TypeConverter
     fun strToMovieCategory(str: String?): MovieCategory? {
         return gson.fromJson(str, MovieCategory::class.java)
+    }
+
+    @TypeConverter
+    fun calendarToStr(calendar: Calendar): String? {
+        return calendar.format(DateTimeFormatter.DATE_TIME_FORMAT)
+    }
+
+    @TypeConverter
+    fun strToCalendar(str: String?): Calendar? {
+        return str?.toCalendarOrNull(DateTimeFormatter.DATE_TIME_FORMAT)
     }
 }

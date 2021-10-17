@@ -1,14 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/darkBlue</item>
 
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
     <style name="TitleText">
@@ -31,7 +32,8 @@
     <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:numStars">5</item>
         <item name="android:isIndicator">true</item>
-        <item name="android:colorControlNormal">@color/grey</item>
+        <item name="android:progressTint">@color/yellow</item>
+        <item name="android:progressBackgroundTint">@color/colorAccent</item>
     </style>
 
     <style name="VoteCountText">
@@ -44,4 +46,32 @@
         <item name="android:drawablePadding">@dimen/size_4</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <!-- New design -->
+    <style name="Headline6">
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Caption">
+        <item name="android:textSize">@dimen/text_12</item>
+    </style>
+
+    <style name="Body2">
+        <item name="android:textSize">@dimen/text_14</item>
+
+    </style>
+    <style name="Body1">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Headline5">
+        <item name="android:textSize">@dimen/text_24</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Subtitle2">
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -2,14 +2,17 @@ package com.enginebai.moviehunt.di
 
 import com.enginebai.base.BuildConfig
 import com.enginebai.base.utils.logging.TimberLoggerDebugTree
+import com.enginebai.moviehunt.utils.CalendarDeserializer
 import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.PrettyFormatStrategy
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import timber.log.Timber
+import java.util.*
 
 val loggingModule = module {
     single<AndroidLogAdapter> { (formatStrategy: FormatStrategy) ->
@@ -32,7 +35,12 @@ val loggingModule = module {
 }
 
 val gsonModule = module {
-    single { Gson() }
+    single { CalendarDeserializer }
+    single {
+        val gsonBuilder = GsonBuilder()
+        gsonBuilder.registerTypeAdapter(Calendar::class.java, get<CalendarDeserializer>())
+        gsonBuilder.create()
+    }
 }
 
 val errorHandleModule = module {

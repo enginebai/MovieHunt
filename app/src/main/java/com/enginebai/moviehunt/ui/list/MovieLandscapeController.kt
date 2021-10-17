@@ -4,11 +4,13 @@ import android.content.Context
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
+import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
+import java.util.*
 
-class MovieListController(
+class MovieLandscapeController(
     private val context: Context,
     private val clickListener: MovieClickListener
 ) : PagedListEpoxyController<MovieModel>(diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()) {
@@ -22,18 +24,18 @@ class MovieListController(
 
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {
-            MovieListEpoxyModel_()
+            MovieLandscapeHolder_()
                 .id(this.id)
                 .movieId(this.id)
                 .imagePoster(this.getPosterUrl())
                 .textTitle(this.displayTitle())
                 .rating(this.display5StarsRating())
-                .voteCount(context.getString(R.string.vote_count, this.displayVoteCount()))
-                .duration(this.displayDuration())
-                .releaseDate(this.displayReleaseDate())
+                .ratingTotalCountText(this.displayVoteCount())
+                .genre(this.genreList?.map { it.name }?.joinToString())
+                .releaseDateText(this.releaseDate?.format())
                 .itemClickListener { clickListener.onMovieClicked(this.id) }
         } ?: run {
-            MovieListEpoxyModel_()
+            MovieLandscapeHolder_()
                 .id(-currentPosition)
         }
     }
