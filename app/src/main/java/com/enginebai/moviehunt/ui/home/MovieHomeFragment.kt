@@ -10,7 +10,7 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.detail.MovieDetailFragmentV1
 import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
 import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
 import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
@@ -115,6 +115,6 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
     }
 
     override fun onMovieClicked(movieId: String) {
-        activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
+        activity?.openFragment(MovieDetailFragmentV1.newInstance(movieId), true)
     }
 }
