@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/size_12"
+    android:paddingStart="@dimen/size_12"
+    android:paddingBottom="@dimen/size_12"
     android:background="@color/cardBackground"
     >
 
@@ -12,6 +13,7 @@
         android:id="@+id/cardPoster"
         android:layout_width="0dp"
         android:layout_height="@dimen/poster_height"
+        android:layout_marginTop="@dimen/size_12"
         app:cardCornerRadius="@dimen/corner_small"
         app:layout_constraintDimensionRatio="9:16"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +35,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/selector_bookmark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/layoutContent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/size_12"
         android:id="@+id/buttonBookmark"
         android:background="?selectableItemBackground"
         />
@@ -48,7 +51,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/buttonBookmark"
         app:layout_constraintStart_toEndOf="@+id/cardPoster"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardPoster"
         >
 
         <TextView
@@ -81,27 +84,7 @@
             tools:text="Action, Adventure"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_8"
-            android:orientation="horizontal">
-            <RatingBar
-                android:id="@+id/ratingBar"
-                style="@style/RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                style="@style/Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/size_4"
-                android:id="@+id/textRating"
-                tools:text="9.5"/>
-        </LinearLayout>
-
+        <include layout="@layout/view_rating"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
