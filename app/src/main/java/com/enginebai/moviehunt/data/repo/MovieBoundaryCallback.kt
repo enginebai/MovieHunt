@@ -8,6 +8,7 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListResponse
+import com.enginebai.moviehunt.data.remote.MovieModelMapper.fillGenreList
 import com.enginebai.moviehunt.data.remote.TmdbApiResponse
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.Single
@@ -50,15 +51,7 @@ class MovieBoundaryCallback(
     private fun Single<TmdbApiResponse<MovieListResponse>>.subscribeRemoteDataSource(firstLoad: Boolean = false) {
         this.map { tmdbApiResponse ->
             val updatedList: List<MovieListResponse> = tmdbApiResponse.results?.map { movieListResponse ->
-                if (movieRepo.genreList.value != null) {
-                    val genreList = mutableListOf<Genre>()
-                    movieListResponse.genreIds?.forEach { id ->
-                        movieRepo.genreList.value!!.find { it.id == id }?.apply {
-                            genreList.add(this)
-                        }
-                    }
-                    movieListResponse.genreList = genreList
-                }
+                movieListResponse.fillGenreList()
                 movieListResponse
             } ?: emptyList()
 

@@ -3,6 +3,8 @@ package com.enginebai.moviehunt.di
 import androidx.room.Room
 import com.enginebai.moviehunt.data.local.MovieDatabase
 import com.enginebai.moviehunt.data.remote.MovieApiService
+import com.enginebai.moviehunt.data.repo.ConfigRepo
+import com.enginebai.moviehunt.data.repo.ConfigRepoImpl
 import com.enginebai.moviehunt.data.repo.MovieRepo
 import com.enginebai.moviehunt.data.repo.MovieRepoImpl
 import org.koin.android.ext.koin.androidApplication
@@ -29,5 +31,6 @@ val daoModule = module {
 }
 
 val repoModule = module {
+    single<ConfigRepo> { ConfigRepoImpl() }
     single<MovieRepo> { MovieRepoImpl() }
 }

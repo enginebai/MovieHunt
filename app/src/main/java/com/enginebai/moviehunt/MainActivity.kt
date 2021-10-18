@@ -6,6 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
+import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.enginebai.moviehunt.data.repo.MovieRepo
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
@@ -78,9 +79,9 @@ class MainActivity : BaseActivity() {
 }
 
 class MainViewModel : BaseViewModel() {
-    private val movieRepo by inject<MovieRepo>()
+    private val configRepo by inject<ConfigRepo>()
 
     fun fetchGenreList(): Completable {
-        return movieRepo.fetchGenreList().ignoreElement()
+        return configRepo.fetchGenreList().ignoreElement()
     }
 }

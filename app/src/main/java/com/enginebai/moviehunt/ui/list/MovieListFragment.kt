@@ -69,7 +69,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 
     private fun setupList() {
         activity?.let {
-            controller = MovieLandscapeController(it, this)
+            controller = MovieLandscapeController(this)
         }
         with(listMovie) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -87,7 +87,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     }
 
     private fun subscribeDataChangesFromRemoteV2() {
-        val listing = viewModelV2.fetchList(movieCategory)
+        val listing = viewModelV2.fetchPagedListing(movieCategory)
         subscribePagedList(listing.pagedList)
         listing.refreshState?.run { subscribeRefreshState(this) }
         listing.loadMoreState?.run { subscribeLoadMoreState(this) }
@@ -95,7 +95,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     }
 
     private fun subscribeDataChangesFromLocal() {
-        val listing = viewModelV2.getList(movieCategory)
+        val listing = viewModelV2.getPagedListing(movieCategory)
         subscribePagedList(listing.pagedList)
         listing.refreshState?.run { subscribeRefreshState(this) }
         listing.loadMoreState?.run { subscribeLoadMoreState(this) }

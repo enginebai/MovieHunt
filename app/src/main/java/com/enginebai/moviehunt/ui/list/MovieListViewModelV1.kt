@@ -18,7 +18,7 @@ class MovieListViewModelV1 : BaseViewModel() {
 
     private val movieCategoryEvent = BehaviorSubject.create<MovieCategory>()
     private val fetchDataSource: Observable<Listing<MovieModel>> = movieCategoryEvent
-        .map { movieRepo.fetchMovieList(it) }
+        .map { movieRepo.fetchMoviePagedListing(it) }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .cache()

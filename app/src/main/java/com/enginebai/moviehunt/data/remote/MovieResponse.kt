@@ -3,7 +3,10 @@ package com.enginebai.moviehunt.data.remote
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.google.gson.annotations.SerializedName
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 
 data class MovieListResponse(
@@ -68,3 +71,33 @@ data class Genre(
     @SerializedName("name")
     val name: String?
 )
+
+object MovieModelMapper : KoinComponent {
+    private val configRepo by inject<ConfigRepo>()
+
+    fun MovieListResponse.toMovieModel(): MovieModel {
+        fillGenreList()
+        return MovieModel(
+                id = this.id,
+                posterPath = this.posterPath,
+                title = this.title,
+                voteAverage = this.voteAverage,
+                voteCount = this.voteCount,
+                releaseDate = this.releaseDate,
+                backdropPath = this.backdropPath,
+                genreList = this.genreList
+        )
+    }
+
+    fun MovieListResponse.fillGenreList() {
+        if (configRepo.genreList.value != null) {
+            val genreList = mutableListOf<Genre>()
+            this.genreIds?.forEach { id ->
+                configRepo.genreList.value!!.find { it.id == id }?.apply {
+                    genreList.add(this)
+                }
+            }
+            this.genreList = genreList
+        }
+    }
+}

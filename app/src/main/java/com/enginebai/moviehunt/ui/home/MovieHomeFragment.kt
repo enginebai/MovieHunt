@@ -10,6 +10,7 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
+import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
 import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
 import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
@@ -17,7 +18,6 @@ import com.enginebai.moviehunt.ui.home.controller.MoviePortraitController
 import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
-import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -33,49 +33,59 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categoryListings = mutableMapOf<MovieCategory, MovieCategoryListing>()
-        val homeController = MovieHomeController()
-        MovieCategory.values().forEachIndexed { index, category ->
-            val carouselController: PagedListEpoxyController<MovieModel>
-            val itemsOnScreen: Float
-            // first category uses large carousel, other uses normal carousel
-            if (index == 0) {
-                carouselController = MovieLargeListController(category, this)
-                itemsOnScreen = 1.7f
-            } else {
-                carouselController = MoviePortraitController(category, this)
-                itemsOnScreen = 3.05f
+        val homeController = MovieHomeController(view.context, this)
+        movieViewModel.fetchUpcomingMovieList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess {
+                homeController.upcomingMovieList = it
             }
-            categoryListings[category] =
-                MovieCategoryListing(
-                    this,
-                    NetworkState.LOADING,
-                    carouselController,
-                    itemsOnScreen
-                )
+            .subscribe()
+            .disposeOnDestroy()
 
-            val listing = movieViewModel.getList(category)
-            listing.pagedList
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { carouselController.submitList(it) }
-                .subscribe()
-                .disposeOnDestroy()
-            listing.refreshState
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.doOnNext {
-                    categoryListings[category]?.loadingState = it
-                    homeController.requestModelBuild()
-                }?.subscribe()
-                ?.disposeOnDestroy()
-            listing.loadMoreState
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.doOnNext {
-                    (carouselController as MovieCarouselController).loadingMore =
-                        (it == NetworkState.LOADING)
-                }?.subscribe()
-                ?.disposeOnDestroy()
-        }
+        val categoryListings = mutableMapOf<MovieCategory, MovieCategoryListing>()
+        MovieCategory.values()
+            .forEachIndexed { index, category ->
+                val carouselController: PagedListEpoxyController<MovieModel>
+                val itemsOnScreen: Float
+                // first category uses large carousel, other uses normal carousel
+                if (index == 0) {
+                    carouselController = MovieLargeListController(category, this)
+                    itemsOnScreen = 1.7f
+                } else {
+                    carouselController = MoviePortraitController(category, this)
+                    itemsOnScreen = 3.05f
+                }
+                categoryListings[category] =
+                    MovieCategoryListing(
+                        this,
+                        NetworkState.LOADING,
+                        carouselController,
+                        itemsOnScreen
+                    )
+
+                val listing = movieViewModel.getPagedListing(category)
+                listing.pagedList
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext { carouselController.submitList(it) }
+                    .subscribe()
+                    .disposeOnDestroy()
+                listing.refreshState
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.doOnNext {
+                        categoryListings[category]?.loadingState = it
+                        homeController.requestModelBuild()
+                    }?.subscribe()
+                    ?.disposeOnDestroy()
+                listing.loadMoreState
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.doOnNext {
+                        (carouselController as MovieCarouselController).loadingMore =
+                            (it == NetworkState.LOADING)
+                    }?.subscribe()
+                    ?.disposeOnDestroy()
+            }
         homeController.categoryListings = categoryListings
 
         with(listHome) {

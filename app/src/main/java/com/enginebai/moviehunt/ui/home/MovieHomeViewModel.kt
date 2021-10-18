@@ -14,14 +14,16 @@ class MovieHomeViewModel : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()
     private val listingMap = mutableMapOf<MovieCategory, Listing<MovieModel>>()
 
-    fun fetchList(category: MovieCategory): Listing<MovieModel> {
-        val listing = movieRepo.fetchMovieList(category)
+    fun fetchPagedListing(category: MovieCategory): Listing<MovieModel> {
+        val listing = movieRepo.fetchMoviePagedListing(category)
         listingMap[category] = listing
         return listing
     }
 
-    fun getList(category: MovieCategory): Listing<MovieModel> {
-        val listing = movieRepo.getMovieList(category)
+    fun fetchUpcomingMovieList() = movieRepo.fetchMovieList(MovieCategory.UPCOMING)
+
+    fun getPagedListing(category: MovieCategory): Listing<MovieModel> {
+        val listing = movieRepo.getMoviePagedListing(category)
         listingMap[category] = listing
         return listing
     }

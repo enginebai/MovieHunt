@@ -1,6 +1,5 @@
 package com.enginebai.moviehunt.ui.list
 
-import android.content.Context
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
@@ -8,10 +7,8 @@ import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
-import java.util.*
 
 class MovieLandscapeController(
-    private val context: Context,
     private val clickListener: MovieClickListener
 ) : PagedListEpoxyController<MovieModel>(diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()) {
 

@@ -9,11 +9,11 @@ import org.koin.core.component.inject
 class MovieListViewModelV2 : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()
 
-    fun fetchList(category: MovieCategory): Listing<MovieModel> {
-        return movieRepo.fetchMovieList(category)
+    fun fetchPagedListing(category: MovieCategory): Listing<MovieModel> {
+        return movieRepo.fetchMoviePagedListing(category)
     }
 
-    fun getList(category: MovieCategory): Listing<MovieModel> {
-        return movieRepo.getMovieList(category)
+    fun getPagedListing(category: MovieCategory): Listing<MovieModel> {
+        return movieRepo.getMoviePagedListing(category)
     }
 }
