@@ -21,4 +21,5 @@
     <dimen name="poster_height">160dp</dimen>
 
     <dimen name="avatar_cast">48dp</dimen>
+    <dimen name="avatar_review">36dp</dimen>
 </resources>

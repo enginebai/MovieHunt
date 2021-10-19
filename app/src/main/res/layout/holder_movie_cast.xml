@@ -38,6 +38,4 @@
         tools:text="Tony Stark"
         />
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
