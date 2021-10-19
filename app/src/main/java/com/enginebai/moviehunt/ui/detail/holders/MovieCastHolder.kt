@@ -25,7 +25,7 @@ abstract class MovieCastHolder : EpoxyModelWithHolder<MovieCastHolder.Holder>() 
 
     override fun bind(holder: Holder) {
         super.bind(holder)
-        holder.imageCastAvatar.loadImage(avatar)
+        holder.imageCastAvatar.loadImage(avatar, circular = true)
         holder.textActorName.text = actorName
         holder.textCharacter.text = character
     }

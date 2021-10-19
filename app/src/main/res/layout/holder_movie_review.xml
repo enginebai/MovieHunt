@@ -51,6 +51,7 @@
         android:paddingEnd="@dimen/size_12"
         android:paddingBottom="@dimen/size_4"
         android:paddingTop="@dimen/size_4"
+        android:id="@+id/textReviewRating"
         app:layout_constraintTop_toTopOf="@+id/imageReviewerAvatar"
         app:layout_constraintBottom_toBottomOf="@+id/imageReviewerAvatar"
         app:layout_constraintEnd_toEndOf="parent"
