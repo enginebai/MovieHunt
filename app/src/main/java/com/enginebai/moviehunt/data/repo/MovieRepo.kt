@@ -15,6 +15,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 const val DEFAULT_PAGE_SIZE = 5
 
@@ -112,6 +113,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                             releaseDate = response.releaseDate,
                             genreList = response.genreList,
                             runtime = response.runtime,
+                            backdropPath = response.backdropPath
                     )
                 }.flatMapCompletable {
                     movieDao.upsert(it)

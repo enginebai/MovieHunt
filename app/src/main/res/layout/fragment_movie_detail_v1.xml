@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.enginebai.moviehunt.ui.detail.MovieDetailViewModel" />
+            type="com.enginebai.moviehunt.ui.detail.MovieDetailViewModelV1" />
     </data>
     <ScrollView
         android:background="@color/background"

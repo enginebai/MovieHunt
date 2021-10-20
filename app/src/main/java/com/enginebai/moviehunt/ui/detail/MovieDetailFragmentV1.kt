@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 @Deprecated("Use v2")
 class MovieDetailFragmentV1 : BaseBindingFragment<FragmentMovieDetailV1Binding>() {
 
-    private val movieViewModel: MovieDetailViewModel by viewModel()
+    private val movieViewModel: MovieDetailViewModelV1 by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

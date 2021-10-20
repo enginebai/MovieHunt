@@ -9,7 +9,8 @@ import com.enginebai.moviehunt.data.repo.MovieRepo
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.component.inject
 
-class MovieDetailViewModel : BaseViewModel() {
+@Deprecated("Use new design version")
+class MovieDetailViewModelV1 : BaseViewModel() {
     private val movieRepo: MovieRepo by inject()
     private val _movieDetail = MutableLiveData<MovieModel>()
 
