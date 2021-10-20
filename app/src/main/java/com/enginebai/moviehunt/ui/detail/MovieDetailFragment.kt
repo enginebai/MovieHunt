@@ -10,6 +10,8 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.remote.CastListing
+import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.repo.MovieRepo
 import io.reactivex.schedulers.Schedulers
@@ -37,10 +39,16 @@ class MovieDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         detailViewMovieModel.fetchMovieDetail(arguments?.getString(FIELD_MOVIE_ID)!!)
         detailViewMovieModel.movieDetail.observe(viewLifecycleOwner, {
-            Log.d(this.toString(), it.toString())
+            Log.d(this.javaClass.simpleName, "Detail $it")
         })
         detailViewMovieModel.videos.observe(viewLifecycleOwner, {
-            Log.d(this.toString(), it.toString())
+            Log.d(this.javaClass.simpleName, "Videos $it")
+        })
+        detailViewMovieModel.reviews.observe(viewLifecycleOwner, {
+            Log.d(this.javaClass.simpleName, "Reviews $it")
+        })
+        detailViewMovieModel.casts.observe(viewLifecycleOwner, {
+            Log.d(this.javaClass.simpleName, "Casts $it")
         })
     }
 }
@@ -52,6 +60,10 @@ class MovieDetailViewModel : BaseViewModel() {
     val movieDetail: LiveData<MovieModel> = _movieDetail
     private val _movieVideos = MutableLiveData<List<Video>>()
     val videos: LiveData<List<Video>> = _movieVideos
+    private val _movieReviews = MutableLiveData<List<Review>>()
+    val reviews: LiveData<List<Review>> = _movieReviews
+    private val _movieCasts = MutableLiveData<List<CastListing.Cast>>()
+    val casts: LiveData<List<CastListing.Cast>> = _movieCasts
 
     fun fetchMovieDetail(id: String) {
         movieRepo.fetchMovieDetail(id)
@@ -63,6 +75,22 @@ class MovieDetailViewModel : BaseViewModel() {
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess {
                     _movieVideos.postValue(it)
+                }
+                .subscribe()
+                .disposeOnCleared()
+
+        movieRepo.fetchMovieReviews(id)
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess {
+                    _movieReviews.postValue(it)
+                }
+                .subscribe()
+                .disposeOnCleared()
+
+        movieRepo.fetchMovieCasts(id)
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess {
+                    _movieCasts.postValue(it)
                 }
                 .subscribe()
                 .disposeOnCleared()

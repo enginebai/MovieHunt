@@ -81,6 +81,38 @@ data class Video(
     // TODO: store `site` and provide different thumbnail
 )
 
+data class Review(
+    @SerializedName("author_details")
+    val author: Author?,
+    @SerializedName("content")
+    val content: String?
+) {
+    data class Author(
+        @SerializedName("username")
+        val username: String?,
+        @SerializedName("avatar_path")
+        val avatarPath: String?,
+        @SerializedName("rating")
+        val rating: Float?
+    )
+}
+
+data class CastListing(
+    @SerializedName("cast")
+    val castList: List<Cast>?
+) {
+    data class Cast(
+        @SerializedName("id")
+        val id: Long,
+        @SerializedName("name")
+        val actorName: String?,
+        @SerializedName("character")
+        val character: String?,
+        @SerializedName("profile_path")
+        val profilePath: String
+    )
+}
+
 object MovieModelMapper : KoinComponent {
     private val configRepo by inject<ConfigRepo>()
 

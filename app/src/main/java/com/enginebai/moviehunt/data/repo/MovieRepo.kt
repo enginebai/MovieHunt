@@ -5,10 +5,8 @@ import androidx.paging.RxPagedListBuilder
 import com.enginebai.base.utils.Listing
 import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
-import com.enginebai.moviehunt.data.remote.MovieApiService
-import com.enginebai.moviehunt.data.remote.MovieListDataSourceFactory
+import com.enginebai.moviehunt.data.remote.*
 import com.enginebai.moviehunt.data.remote.MovieModelMapper.toMovieModel
-import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -40,6 +38,8 @@ interface MovieRepo {
     fun fetchMovieDetail(movieId: String): Completable
     fun getMovieDetail(movieId: String): Observable<MovieModel>
     fun fetchMovieVideos(movieId: String): Single<List<Video>>
+    fun fetchMovieReviews(movieId: String): Single<List<Review>>
+    fun fetchMovieCasts(movieId: String): Single<List<CastListing.Cast>>
 }
 
 class MovieRepoImpl : MovieRepo, KoinComponent {
@@ -128,5 +128,15 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     override fun fetchMovieVideos(movieId: String): Single<List<Video>> {
         return movieApi.fetchMovieVideos(movieId)
                 .map { it.results ?: emptyList() }
+    }
+
+    override fun fetchMovieReviews(movieId: String): Single<List<Review>> {
+        return movieApi.fetchMovieReviews(movieId)
+                .map { it.results ?: emptyList() }
+    }
+
+    override fun fetchMovieCasts(movieId: String): Single<List<CastListing.Cast>> {
+        return movieApi.fetchMovieCasts(movieId)
+                .map { it.castList ?: emptyList() }
     }
 }
