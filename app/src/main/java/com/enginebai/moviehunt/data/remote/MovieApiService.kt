@@ -33,4 +33,10 @@ interface MovieApiService {
 
     @GET("$PATH_MOVIE_DETAIL + /credits")
     fun fetchMovieCasts(@Path(PARAM_MOVIE_ID) movieId: String): Single<CastListing>
+
+    @GET("$PATH_MOVIE_DETAIL + /similar")
+    fun fetchSimilarMovies(@Path(PARAM_MOVIE_ID) movieId: String): Single<TmdbApiResponse<MovieListResponse>>
+
+    @GET("$PATH_MOVIE_DETAIL + /recommendations")
+    fun fetchRecommendationMovies(@Path(PARAM_MOVIE_ID) movieId: String): Single<TmdbApiResponse<MovieListResponse>>
 }

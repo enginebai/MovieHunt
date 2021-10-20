@@ -40,6 +40,8 @@ interface MovieRepo {
     fun fetchMovieVideos(movieId: String): Single<List<Video>>
     fun fetchMovieReviews(movieId: String): Single<List<Review>>
     fun fetchMovieCasts(movieId: String): Single<List<CastListing.Cast>>
+    fun fetchSimilarMovies(movieId: String): Single<List<MovieModel>>
+    fun fetchRecommendationMovies(movieId: String): Single<List<MovieModel>>
 }
 
 class MovieRepoImpl : MovieRepo, KoinComponent {
@@ -92,14 +94,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
             category: MovieCategory,
             page: Int?
     ): Single<List<MovieModel>> {
-        return movieApi.fetchMovieList(category.key, page)
-                .map {
-                    it.results?.map { response ->
-                        val model = response.toMovieModel()
-                        movieDao.upsert(model)
-                        model
-                    }
-                }
+        return movieApi.fetchMovieList(category.key, page).toMovieList()
     }
 
     override fun fetchMovieDetail(movieId: String): Completable {
@@ -138,5 +133,23 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     override fun fetchMovieCasts(movieId: String): Single<List<CastListing.Cast>> {
         return movieApi.fetchMovieCasts(movieId)
                 .map { it.castList ?: emptyList() }
+    }
+
+    override fun fetchSimilarMovies(movieId: String): Single<List<MovieModel>> {
+        return movieApi.fetchSimilarMovies(movieId).toMovieList()
+    }
+
+    override fun fetchRecommendationMovies(movieId: String): Single<List<MovieModel>> {
+        return movieApi.fetchRecommendationMovies(movieId).toMovieList()
+    }
+
+    private fun Single<TmdbApiResponse<MovieListResponse>>.toMovieList(): Single<List<MovieModel>> {
+         return this.map {
+             it.results?.map { response ->
+                 val model = response.toMovieModel()
+                 movieDao.upsert(model)
+                 model
+             }
+         }
     }
 }

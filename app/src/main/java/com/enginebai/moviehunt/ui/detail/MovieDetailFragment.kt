@@ -64,6 +64,10 @@ class MovieDetailViewModel : BaseViewModel() {
     val reviews: LiveData<List<Review>> = _movieReviews
     private val _movieCasts = MutableLiveData<List<CastListing.Cast>>()
     val casts: LiveData<List<CastListing.Cast>> = _movieCasts
+    private val _similarMovies = MutableLiveData<List<MovieModel>>()
+    val similarMovies: LiveData<List<MovieModel>> = _similarMovies
+    private val _recommendationMovies = MutableLiveData<List<MovieModel>>()
+    val recommendationMovies: LiveData<List<MovieModel>> = _recommendationMovies
 
     fun fetchMovieDetail(id: String) {
         movieRepo.fetchMovieDetail(id)
@@ -91,6 +95,22 @@ class MovieDetailViewModel : BaseViewModel() {
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess {
                     _movieCasts.postValue(it)
+                }
+                .subscribe()
+                .disposeOnCleared()
+
+        movieRepo.fetchSimilarMovies(id)
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess {
+                    _similarMovies.postValue(it)
+                }
+                .subscribe()
+                .disposeOnCleared()
+
+        movieRepo.fetchRecommendationMovies(id)
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess {
+                    _recommendationMovies.postValue(it)
                 }
                 .subscribe()
                 .disposeOnCleared()
