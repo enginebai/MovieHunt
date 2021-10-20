@@ -8,6 +8,7 @@ import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.MovieApiService
 import com.enginebai.moviehunt.data.remote.MovieListDataSourceFactory
 import com.enginebai.moviehunt.data.remote.MovieModelMapper.toMovieModel
+import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -38,6 +39,7 @@ interface MovieRepo {
 
     fun fetchMovieDetail(movieId: String): Completable
     fun getMovieDetail(movieId: String): Observable<MovieModel>
+    fun fetchMovieVideos(movieId: String): Single<List<Video>>
 }
 
 class MovieRepoImpl : MovieRepo, KoinComponent {
@@ -122,4 +124,9 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     }
 
     override fun getMovieDetail(movieId: String) = movieDao.queryMovieDetail(movieId)
+
+    override fun fetchMovieVideos(movieId: String): Single<List<Video>> {
+        return movieApi.fetchMovieVideos(movieId)
+                .map { it.results ?: emptyList() }
+    }
 }

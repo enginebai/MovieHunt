@@ -16,7 +16,7 @@ fun Activity.openFragment(
     supportFragmentManager.beginTransaction().apply {
         add(R.id.fragmentContainer, fragment)
         if (addToBackStack) addToBackStack(fragment::class.java.simpleName)
-        commit()
+        commitAllowingStateLoss()
     }
 }
 

@@ -7,6 +7,12 @@ import retrofit2.http.Query
 
 interface MovieApiService {
 
+    companion object {
+        private const val PARAM_MOVIE_ID = "movieId"
+
+        private const val PATH_MOVIE_DETAIL = "movie/{$PARAM_MOVIE_ID}"
+    }
+
     @GET("genre/movie/list")
     fun fetchGenreList(): Single<GenreListing>
 
@@ -16,7 +22,9 @@ interface MovieApiService {
         @Query("page") page: Int? = null
     ): Single<TmdbApiResponse<MovieListResponse>>
 
-    @GET("movie/{movieId}")
-    fun fetchMovieDetail(@Path("movieId") movieId: String): Single<MovieDetailResponse>
+    @GET(PATH_MOVIE_DETAIL)
+    fun fetchMovieDetail(@Path(PARAM_MOVIE_ID) movieId: String): Single<MovieDetailResponse>
 
+    @GET("$PATH_MOVIE_DETAIL + /videos")
+    fun fetchMovieVideos(@Path(PARAM_MOVIE_ID) movieId: String): Single<TmdbApiResponse<Video>>
 }

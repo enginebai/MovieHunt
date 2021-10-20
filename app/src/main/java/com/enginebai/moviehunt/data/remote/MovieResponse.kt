@@ -74,6 +74,13 @@ data class Genre(
     val name: String?
 )
 
+data class Video(
+    @SerializedName("id") val id: String,
+    @SerializedName("key") val key: String?
+
+    // TODO: store `site` and provide different thumbnail
+)
+
 object MovieModelMapper : KoinComponent {
     private val configRepo by inject<ConfigRepo>()
 
