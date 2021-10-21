@@ -6,15 +6,22 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.local.getPosterUrl
+import com.enginebai.moviehunt.data.local.getPosterUrlWithLargeSize
+import com.enginebai.moviehunt.data.local.getPosterUrlWithOriginalSize
 import com.enginebai.moviehunt.data.remote.CastListing
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.repo.MovieRepo
+import com.enginebai.moviehunt.utils.loadImage
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
@@ -31,15 +38,20 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     private val detailViewMovieModel by viewModel<MovieDetailViewModel>()
-
+    private val detailController by lazy { MovieDetailController() }
 
     override fun getLayoutId() = R.layout.fragment_movie_detail
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         detailViewMovieModel.fetchMovieDetail(arguments?.getString(FIELD_MOVIE_ID)!!)
+        listContent.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
+        listContent.setController(detailController)
+
         detailViewMovieModel.movieDetail.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Detail $it")
+            imagePoster.loadImage(it.getPosterUrlWithLargeSize())
+            detailController.detail = it
         })
         detailViewMovieModel.videos.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Videos $it")

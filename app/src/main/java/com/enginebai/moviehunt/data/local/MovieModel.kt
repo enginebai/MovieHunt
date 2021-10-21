@@ -54,6 +54,8 @@ data class MovieModel(
 )
 
 fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this.posterPath}"
+fun MovieModel.getPosterUrlWithLargeSize(): String = "${BuildConfig.IMAGE_API_KEY}w780/${this.posterPath}"
+fun MovieModel.getPosterUrlWithOriginalSize(): String = "${BuildConfig.IMAGE_API_KEY}original/${this.posterPath}"
 fun MovieModel.displayTitle(): String = this.title ?: PLACEHOLDER
 fun MovieModel.display5StarsRating(): Float = this.voteAverage?.div(2) ?: 0.0f
 fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: PLACEHOLDER
