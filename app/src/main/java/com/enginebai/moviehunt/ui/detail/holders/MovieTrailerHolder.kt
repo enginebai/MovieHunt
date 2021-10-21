@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.holder_movie_info.view.*
 import kotlinx.android.synthetic.main.holder_movie_trailer.view.*
 import kotlinx.android.synthetic.main.view_rating.view.*
 
-@EpoxyModelClass(layout = R.layout.holder_movie_info)
+@EpoxyModelClass(layout = R.layout.holder_movie_trailer)
 abstract class MovieTrailerHolder : EpoxyModelWithHolder<MovieTrailerHolder.Holder>() {
 
     @EpoxyAttribute

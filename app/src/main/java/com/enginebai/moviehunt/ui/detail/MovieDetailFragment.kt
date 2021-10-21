@@ -1,5 +1,7 @@
 package com.enginebai.moviehunt.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,9 +14,7 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
-import com.enginebai.moviehunt.data.local.getPosterUrl
 import com.enginebai.moviehunt.data.local.getPosterUrlWithLargeSize
-import com.enginebai.moviehunt.data.local.getPosterUrlWithOriginalSize
 import com.enginebai.moviehunt.data.remote.CastListing
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
-class MovieDetailFragment : BaseFragment() {
+class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
 
     companion object {
         const val FIELD_MOVIE_ID = "movieId"
@@ -38,7 +38,7 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     private val detailViewMovieModel by viewModel<MovieDetailViewModel>()
-    private val detailController by lazy { MovieDetailController() }
+    private val detailController by lazy { MovieDetailController(this) }
 
     override fun getLayoutId() = R.layout.fragment_movie_detail
 
@@ -55,6 +55,7 @@ class MovieDetailFragment : BaseFragment() {
         })
         detailViewMovieModel.videos.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Videos $it")
+            detailController.videos = it
         })
         detailViewMovieModel.reviews.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Reviews $it")
@@ -62,6 +63,12 @@ class MovieDetailFragment : BaseFragment() {
         detailViewMovieModel.casts.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Casts $it")
         })
+    }
+
+    override fun onTrailerClicked(trailerVideo: String) {
+        val playVideoIntent =
+            Intent(Intent.ACTION_VIEW, Uri.parse(trailerVideo))
+        activity?.startActivity(playVideoIntent)
     }
 }
 
@@ -83,54 +90,54 @@ class MovieDetailViewModel : BaseViewModel() {
 
     fun fetchMovieDetail(id: String) {
         movieRepo.fetchMovieDetail(id)
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-                .disposeOnCleared()
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+            .disposeOnCleared()
 
         movieRepo.fetchMovieVideos(id)
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess {
-                    _movieVideos.postValue(it)
-                }
-                .subscribe()
-                .disposeOnCleared()
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess {
+                _movieVideos.postValue(it)
+            }
+            .subscribe()
+            .disposeOnCleared()
 
         movieRepo.fetchMovieReviews(id)
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess {
-                    _movieReviews.postValue(it)
-                }
-                .subscribe()
-                .disposeOnCleared()
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess {
+                _movieReviews.postValue(it)
+            }
+            .subscribe()
+            .disposeOnCleared()
 
         movieRepo.fetchMovieCasts(id)
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess {
-                    _movieCasts.postValue(it)
-                }
-                .subscribe()
-                .disposeOnCleared()
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess {
+                _movieCasts.postValue(it)
+            }
+            .subscribe()
+            .disposeOnCleared()
 
         movieRepo.fetchSimilarMovies(id)
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess {
-                    _similarMovies.postValue(it)
-                }
-                .subscribe()
-                .disposeOnCleared()
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess {
+                _similarMovies.postValue(it)
+            }
+            .subscribe()
+            .disposeOnCleared()
 
         movieRepo.fetchRecommendationMovies(id)
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess {
-                    _recommendationMovies.postValue(it)
-                }
-                .subscribe()
-                .disposeOnCleared()
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess {
+                _recommendationMovies.postValue(it)
+            }
+            .subscribe()
+            .disposeOnCleared()
 
         movieRepo.getMovieDetail(id)
-                .doOnNext {
-                    _movieDetail.postValue(it)
-                }.subscribe()
-                .disposeOnCleared()
+            .doOnNext {
+                _movieDetail.postValue(it)
+            }.subscribe()
+            .disposeOnCleared()
     }
 }

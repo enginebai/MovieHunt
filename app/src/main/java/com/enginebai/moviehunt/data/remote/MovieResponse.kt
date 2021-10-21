@@ -2,6 +2,7 @@ package com.enginebai.moviehunt.data.remote
 
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
+import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.google.gson.annotations.SerializedName
@@ -79,7 +80,10 @@ data class Video(
     @SerializedName("key") val key: String?
 
     // TODO: store `site` and provide different thumbnail
-)
+) {
+    val youtubeThumbnail get() = "${BuildConfig.YOUTUBE_THUMBNAIL_URL}$key/default.jpg"
+    val youtubeVideo get() = "${BuildConfig.YOUTUBE_VIDEO_URL}$key"
+}
 
 data class Review(
     @SerializedName("author_details")
