@@ -66,6 +66,12 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
             Log.d(this.javaClass.simpleName, "Casts $it")
             detailController.casts = it
         })
+        detailViewMovieModel.similarMovies.observe(viewLifecycleOwner, {
+            detailController.similarMovies = it
+        })
+        detailViewMovieModel.recommendationMovies.observe(viewLifecycleOwner, {
+            detailController.recommendationMovies = it
+        })
     }
 
     override fun onTrailerClicked(trailerVideo: String) {

@@ -4,15 +4,13 @@ import android.content.Context
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.carousel
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.local.MovieModel
-import com.enginebai.moviehunt.data.local.display5StarsRating
-import com.enginebai.moviehunt.data.local.displayDuration
-import com.enginebai.moviehunt.data.local.displayVoteCount
+import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.data.remote.CastListing
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.remote.getAvatar
 import com.enginebai.moviehunt.ui.detail.holders.*
+import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.holders.TitleHolder
 import com.enginebai.moviehunt.ui.holders.TitleHolder_
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
@@ -37,6 +35,12 @@ class MovieDetailController(
         requestModelBuild()
     }
     var casts by Delegates.observable<List<CastListing.Cast>?>(null) { _, _, _ ->
+        requestModelBuild()
+    }
+    var similarMovies by Delegates.observable<List<MovieModel>?>(null) { _, _, _ ->
+        requestModelBuild()
+    }
+    var recommendationMovies by Delegates.observable<List<MovieModel>?>(null) { _, _, _ ->
         requestModelBuild()
     }
 
@@ -76,6 +80,7 @@ class MovieDetailController(
                 id(MovieTrailerHolder::class.java.simpleName)
                         paddingRes(R.dimen.size_8)
                     models(trailerHolders)
+                numViewsToShowOnScreen(2.5f)
             }
         }
 
@@ -115,6 +120,33 @@ class MovieDetailController(
             carousel {
                 id(MovieCastHolder::class.java.simpleName)
                     .models(castHolders)
+            }
+        }
+
+        buildMovieCarousel(context.getString(R.string.title_similar_movies), similarMovies)
+        buildMovieCarousel(context.getString(R.string.title_recommendation_movies), recommendationMovies)
+    }
+
+    private fun buildMovieCarousel(title: String, movieList: List<MovieModel>?) {
+        if (!movieList.isNullOrEmpty()) {
+            TitleHolder_()
+                .id("${TitleHolder::class.java.simpleName} ${MovieReviewHolder::class.java.simpleName}")
+                .title(title)
+                .addTo(this)
+
+            val movieHolders = mutableListOf<MoviePortraitHolder_>()
+            movieList.forEach {
+                movieHolders.add(
+                    it.toPortraitHolder()
+                        .id("$title ${it.id}")
+                )
+            }
+
+            carousel {
+                id(title)
+                    .models(movieHolders)
+                    // TODO: define constant along with home settings
+                    .numViewsToShowOnScreen(3.1f)
             }
         }
     }

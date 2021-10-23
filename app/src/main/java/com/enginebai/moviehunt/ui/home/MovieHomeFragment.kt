@@ -55,7 +55,7 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
                     itemsOnScreen = 1.7f
                 } else {
                     carouselController = MoviePortraitController(category, this)
-                    itemsOnScreen = 3.05f
+                    itemsOnScreen = 3.1f
                 }
                 categoryListings[category] =
                     MovieCategoryListing(

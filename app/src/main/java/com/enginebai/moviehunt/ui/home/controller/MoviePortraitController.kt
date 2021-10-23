@@ -15,20 +15,13 @@ class MoviePortraitController(
 ) : MovieCarouselController(movieCategory, clickListener) {
     override fun buildItemModel(currentPosition: Int, item: MovieModel?): EpoxyModel<*> {
         return item?.run {
-            MoviePortraitHolder_()
+            this.toPortraitHolder()
                 .id("${movieCategory}${this.id}")
-                .movieId(this.id)
-                .posterUrl(this.getPosterUrl())
-                .movieName(this.displayTitle())
-                .rating(this.display5StarsRating())
-                .ratingTotalCountText(this.displayVoteCount())
-                .genre(this.genreList?.firstOrNull()?.name)
-                .releaseYear(this.releaseDate?.get(Calendar.YEAR))
                 .onClickListener {
                     clickListener?.onMovieClicked(this.id)
                 }
         } ?: run {
-            MovieHomeLargeBindingModel_()
+            MoviePortraitHolder_()
                 .id(-currentPosition)
         }
     }
