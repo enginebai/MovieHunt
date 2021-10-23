@@ -101,6 +101,14 @@ data class Review(
     )
 }
 
+fun Review.Author.getAvatar(): String {
+    return if (avatarPath?.startsWith("/http", ignoreCase = true) == true) {
+        avatarPath.replaceFirst("/", "")
+    } else {
+        "${BuildConfig.IMAGE_API_KEY}w185/$avatarPath"
+    }
+}
+
 data class CastListing(
     @SerializedName("cast")
     val castList: List<Cast>?
@@ -116,6 +124,8 @@ data class CastListing(
         val profilePath: String
     )
 }
+
+fun CastListing.Cast.getAvatar() = "${BuildConfig.IMAGE_API_KEY}w185/$profilePath"
 
 object MovieModelMapper : KoinComponent {
     private val configRepo by inject<ConfigRepo>()

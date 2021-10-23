@@ -11,7 +11,7 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.utils.loadImage
 import kotlinx.android.synthetic.main.holder_movie_cast.view.*
 
-@EpoxyModelClass(layout = R.layout.holder_movie_info)
+@EpoxyModelClass(layout = R.layout.holder_movie_cast)
 abstract class MovieCastHolder : EpoxyModelWithHolder<MovieCastHolder.Holder>() {
 
     @EpoxyAttribute

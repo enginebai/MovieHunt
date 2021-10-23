@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.ui.detail.holders
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -7,12 +8,12 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import com.enginebai.base.extensions.setExistence
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.utils.loadImage
 import kotlinx.android.synthetic.main.holder_movie_review.view.*
-import kotlinx.android.synthetic.main.view_rating.view.*
 
-@EpoxyModelClass(layout = R.layout.holder_movie_info)
+@EpoxyModelClass(layout = R.layout.holder_movie_review)
 abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder>() {
 
     @EpoxyAttribute
@@ -25,10 +26,10 @@ abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder
     var name: String? = null
 
     @EpoxyAttribute
-    var releaseDateText: String? = null
+    var createdAtDateText: String? = null
 
     @EpoxyAttribute
-    var rating = 0.0f
+    var rating: Float? = null
 
     @EpoxyAttribute
     var comment: String? = null
@@ -37,10 +38,12 @@ abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder
 
     override fun bind(holder: Holder) {
         super.bind(holder)
+        Log.wtf("qwer", avatar)
         holder.imageReviewerAvatar.loadImage(avatar, circular = true)
         holder.textName.text = name
+        holder.textRating.setExistence(rating != null)
         holder.textRating.text = "%.1f".format(rating)
-        holder.textReleaseDate.text = releaseDateText
+        holder.textReleaseDate.text = createdAtDateText
         holder.textComment.text = comment
     }
 

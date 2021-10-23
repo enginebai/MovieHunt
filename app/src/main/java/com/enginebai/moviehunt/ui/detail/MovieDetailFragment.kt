@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
@@ -38,7 +39,7 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
     }
 
     private val detailViewMovieModel by viewModel<MovieDetailViewModel>()
-    private val detailController by lazy { MovieDetailController(this) }
+    private val detailController by lazy { MovieDetailController(requireContext(), this) }
 
     override fun getLayoutId() = R.layout.fragment_movie_detail
 
@@ -57,11 +58,13 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
             Log.d(this.javaClass.simpleName, "Videos $it")
             detailController.videos = it
         })
-        detailViewMovieModel.reviews.observe(viewLifecycleOwner, {
+        detailViewMovieModel.review.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Reviews $it")
+            detailController.review = it
         })
         detailViewMovieModel.casts.observe(viewLifecycleOwner, {
             Log.d(this.javaClass.simpleName, "Casts $it")
+            detailController.casts = it
         })
     }
 
@@ -80,7 +83,10 @@ class MovieDetailViewModel : BaseViewModel() {
     private val _movieVideos = MutableLiveData<List<Video>>()
     val videos: LiveData<List<Video>> = _movieVideos
     private val _movieReviews = MutableLiveData<List<Review>>()
-    val reviews: LiveData<List<Review>> = _movieReviews
+    val review: LiveData<Review?> = Transformations.map(_movieReviews) {
+        // TODO: find the best review
+        it.firstOrNull()
+    }
     private val _movieCasts = MutableLiveData<List<CastListing.Cast>>()
     val casts: LiveData<List<CastListing.Cast>> = _movieCasts
     private val _similarMovies = MutableLiveData<List<MovieModel>>()
