@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt.ui.detail
 
 import android.content.Context
+import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.carousel
 import com.enginebai.moviehunt.R
