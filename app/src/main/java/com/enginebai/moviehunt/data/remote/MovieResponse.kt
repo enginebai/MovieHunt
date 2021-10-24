@@ -81,7 +81,17 @@ data class Video(
 
     // TODO: store `site` and provide different thumbnail
 ) {
-    val youtubeThumbnail get() = "${BuildConfig.YOUTUBE_THUMBNAIL_URL}$key/default.jpg"
+    enum class ThumbnailSize(val path: String) {
+        MAX("maxres"),
+        MQ("mq"),
+        HD("hq"),
+        SD("sd"),
+        MIN("");
+
+        override fun toString() = path
+    }
+
+    val youtubeThumbnail get() = "${BuildConfig.YOUTUBE_THUMBNAIL_URL}$key/${ThumbnailSize.MQ}default.jpg"
     val youtubeVideo get() = "${BuildConfig.YOUTUBE_VIDEO_URL}$key"
 }
 
@@ -135,14 +145,14 @@ object MovieModelMapper : KoinComponent {
     fun MovieListResponse.toMovieModel(): MovieModel {
         fillGenreList()
         return MovieModel(
-                id = this.id,
-                posterPath = this.posterPath,
-                title = this.title,
-                voteAverage = this.voteAverage,
-                voteCount = this.voteCount,
-                releaseDate = this.releaseDate,
-                backdropPath = this.backdropPath,
-                genreList = this.genreList
+            id = this.id,
+            posterPath = this.posterPath,
+            title = this.title,
+            voteAverage = this.voteAverage,
+            voteCount = this.voteCount,
+            releaseDate = this.releaseDate,
+            backdropPath = this.backdropPath,
+            genreList = this.genreList
         )
     }
 
