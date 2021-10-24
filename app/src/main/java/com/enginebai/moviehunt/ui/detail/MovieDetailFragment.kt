@@ -90,8 +90,7 @@ class MovieDetailViewModel : BaseViewModel() {
     val videos: LiveData<List<Video>> = _movieVideos
     private val _movieReviews = MutableLiveData<List<Review>>()
     val review: LiveData<Review?> = Transformations.map(_movieReviews) {
-        // TODO: find the best review
-        it.firstOrNull()
+        it.findBestReview()
     }
     private val _movieCasts = MutableLiveData<List<CastListing.Cast>>()
     val casts: LiveData<List<CastListing.Cast>> = _movieCasts
@@ -151,5 +150,17 @@ class MovieDetailViewModel : BaseViewModel() {
                 _movieDetail.postValue(it)
             }.subscribe()
             .disposeOnCleared()
+    }
+
+    private fun List<Review>.findBestReview(): Review? {
+        return filter {
+            !it.content.isNullOrBlank() &&
+                    !it.author?.avatarPath.isNullOrBlank() &&
+                    it.author?.rating != null
+        }.maxByOrNull { it.author!!.rating!! }
+            ?: this.firstOrNull {
+                !it.content.isNullOrBlank() &&
+                        !it.author?.avatarPath.isNullOrBlank()
+            }
     }
 }
