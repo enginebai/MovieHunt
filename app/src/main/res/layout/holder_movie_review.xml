@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingStart="@dimen/page_horizontal_padding"
     android:paddingEnd="@dimen/page_horizontal_padding"
-    android:paddingTop="@dimen/size_4"
+    android:paddingTop="@dimen/size_8"
     android:paddingBottom="@dimen/size_4"
     >
 

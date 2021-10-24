@@ -11,9 +11,7 @@ import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.remote.getAvatar
 import com.enginebai.moviehunt.ui.detail.holders.*
-import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
-import com.enginebai.moviehunt.ui.holders.TitleHolder
-import com.enginebai.moviehunt.ui.holders.TitleHolder_
+import com.enginebai.moviehunt.ui.holders.*
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import kotlin.properties.Delegates
 
@@ -25,6 +23,9 @@ class MovieDetailController(
     private val context: Context,
     private val clickListener: MovieDetailClickListener
 ) : EpoxyController() {
+
+    private val titlePaddingTopCount = 5
+    private val titlePaddingBottomCount = 1
 
     var detail by Delegates.observable<MovieModel?>(null) { _, _, _ ->
         requestModelBuild()
@@ -60,10 +61,7 @@ class MovieDetailController(
         }
 
         if (!videos.isNullOrEmpty()) {
-            TitleHolder_()
-                .id("${TitleHolder::class.java.simpleName} ${MovieTrailerHolder::class.java.simpleName}")
-                .title(context.getString(R.string.title_trailers))
-                .addTo(this)
+            buildTitle(context.getString(R.string.title_trailers))
             val trailerHolders = mutableListOf<MovieTrailerHolder_>()
             videos!!.forEach { video ->
                 trailerHolders.add(
@@ -73,7 +71,7 @@ class MovieDetailController(
                         .onTrailerPlayed {
                             clickListener.onTrailerClicked(video.youtubeVideo)
                         }
-                            .trailerUrl(video.youtubeVideo)
+                        .trailerUrl(video.youtubeVideo)
                 )
             }
 
@@ -86,27 +84,19 @@ class MovieDetailController(
         }
 
         review?.let {
-            TitleHolder_()
-                .id("${TitleHolder::class.java.simpleName} ${MovieReviewHolder::class.java.simpleName}")
-                .title(context.getString(R.string.title_reviews))
-                .addTo(this)
+            buildTitle(context.getString(R.string.title_reviews))
             MovieReviewHolder_()
                 .id(MovieReviewHolder::class.java.simpleName)
                 .avatar(it.author?.getAvatar())
                 .name(it.author?.username)
-                // TODO: rating
-                .rating(9.5f)
+                .rating(it.author?.rating)
                 .comment(it.content)
                 .createdAtDateText(it.createdAt?.format())
                 .addTo(this)
         }
 
         if (!casts.isNullOrEmpty()) {
-            TitleHolder_()
-                .id("${TitleHolder::class.java.simpleName} ${MovieReviewHolder::class.java.simpleName}")
-                .title(context.getString(R.string.title_casts))
-                .addTo(this)
-
+            buildTitle(context.getString(R.string.title_casts))
             val castHolders = mutableListOf<MovieCastHolder_>()
             casts!!.forEach {
                 castHolders.add(MovieCastHolder_()
@@ -123,16 +113,29 @@ class MovieDetailController(
             }
         }
 
-        buildMovieCarousel(context.getString(R.string.title_similar_movies), similarMovies)
         buildMovieCarousel(context.getString(R.string.title_recommendation_movies), recommendationMovies)
+        buildMovieCarousel(context.getString(R.string.title_similar_movies), similarMovies)
+    }
+
+    private fun buildTitle(title: String, clickListener: (() -> Unit)? = null) {
+        for (i in 1..titlePaddingTopCount)
+            ListSeparator_()
+                .id("${ListSeparator::class.java.simpleName} $title padding top")
+                .addTo(this)
+        TitleHolder_()
+            .id("${TitleHolder::class.java.simpleName} $title")
+            .title(title)
+            .onClickListener(clickListener)
+            .addTo(this)
+        for (i in 1..titlePaddingBottomCount)
+            ListSeparator_()
+                .id("${ListSeparator::class.java.simpleName} $title padding bottom")
+                .addTo(this)
     }
 
     private fun buildMovieCarousel(title: String, movieList: List<MovieModel>?) {
         if (!movieList.isNullOrEmpty()) {
-            TitleHolder_()
-                .id("${TitleHolder::class.java.simpleName} ${MovieReviewHolder::class.java.simpleName}")
-                .title(title)
-                .addTo(this)
+            buildTitle(title)
 
             val movieHolders = mutableListOf<MoviePortraitHolder_>()
             movieList.forEach {

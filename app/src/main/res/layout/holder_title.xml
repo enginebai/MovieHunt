@@ -27,6 +27,8 @@
         android:text="@string/see_all"
         android:background="?selectableItemBackground"
         android:textColor="@color/colorAccent"
+        android:minHeight="0dp"
+        android:padding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
