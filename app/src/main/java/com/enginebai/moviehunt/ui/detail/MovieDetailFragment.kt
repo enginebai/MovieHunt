@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,6 +47,7 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         detailViewMovieModel.fetchMovieDetail(arguments?.getString(FIELD_MOVIE_ID)!!)
         listContent.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
         listContent.setController(detailController)
@@ -72,6 +75,30 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
         detailViewMovieModel.recommendationMovies.observe(viewLifecycleOwner, {
             detailController.recommendationMovies = it
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                activity?.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setupToolbar() {
+        // make fragment.onOptionsItemSelected() be called
+        // https://stackoverflow.com/a/37953823/2279285
+        setHasOptionsMenu(true)
+        activity?.run {
+            (this as AppCompatActivity).setSupportActionBar(toolbar)
+            this.supportActionBar?.run {
+                title = ""
+                setDisplayHomeAsUpEnabled(true)
+                show()
+            }
+        }
     }
 
     override fun onTrailerClicked(trailerVideo: String) {

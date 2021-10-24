@@ -36,6 +36,9 @@
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:id="@+id/toolbar"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_constraintTop_toTopOf="parent"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
