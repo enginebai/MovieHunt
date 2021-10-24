@@ -89,7 +89,9 @@ data class Review(
     @SerializedName("author_details")
     val author: Author?,
     @SerializedName("content")
-    val content: String?
+    val content: String?,
+    @SerializedName("created_at")
+    val createdAt: Calendar?
 ) {
     data class Author(
         @SerializedName("username")

@@ -96,8 +96,7 @@ class MovieDetailController(
                 // TODO: rating
                 .rating(9.5f)
                 .comment(it.content)
-                // TODO: date
-                .createdAtDateText("2021-10-11")
+                .createdAtDateText(it.createdAt?.format())
                 .addTo(this)
         }
 
