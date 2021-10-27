@@ -1,7 +1,6 @@
 package com.enginebai.moviehunt.ui.detail
 
 import android.content.Context
-import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.carousel
 import com.enginebai.moviehunt.R
@@ -10,18 +9,16 @@ import com.enginebai.moviehunt.data.remote.CastListing
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.remote.getAvatar
+import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.holders.*
 import com.enginebai.moviehunt.ui.holders.*
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import kotlin.properties.Delegates
 
-interface MovieDetailClickListener {
-    fun onTrailerClicked(trailerVideo: String)
-}
-
 class MovieDetailController(
     private val context: Context,
-    private val clickListener: MovieDetailClickListener
+    private val onTrailerClickListener: (String) -> Unit,
+    private val movieClickListener: MovieClickListener
 ) : EpoxyController() {
 
     private val titlePaddingTopCount = 5
@@ -69,7 +66,7 @@ class MovieDetailController(
                         .id("${MovieTrailerHolder::class.java.simpleName} ${video.id}")
                             .thumbnail(video.youtubeThumbnail)
                         .onTrailerPlayed {
-                            clickListener.onTrailerClicked(video.youtubeVideo)
+                            onTrailerClickListener(video.youtubeVideo)
                         }
                         .trailerUrl(video.youtubeVideo)
                 )
@@ -142,6 +139,9 @@ class MovieDetailController(
                 movieHolders.add(
                     it.toPortraitHolder()
                         .id("$title ${it.id}")
+                        .onClickListener {
+                            movieClickListener.onMovieClicked(it)
+                        }
                 )
             }
 

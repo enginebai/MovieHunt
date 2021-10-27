@@ -15,7 +15,7 @@ fun Activity.openFragment(
     this as AppCompatActivity
     supportFragmentManager.beginTransaction().apply {
         add(R.id.fragmentContainer, fragment)
-        if (addToBackStack) addToBackStack(fragment::class.java.simpleName)
+        if (addToBackStack) addToBackStack(fragment.toString())
         commitAllowingStateLoss()
     }
 }

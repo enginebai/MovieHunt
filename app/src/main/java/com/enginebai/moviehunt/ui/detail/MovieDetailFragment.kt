@@ -22,13 +22,15 @@ import com.enginebai.moviehunt.data.remote.CastListing
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.repo.MovieRepo
+import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.utils.loadImage
+import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
-class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
+class MovieDetailFragment : BaseFragment(), MovieClickListener {
 
     companion object {
         const val FIELD_MOVIE_ID = "movieId"
@@ -41,7 +43,9 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
     }
 
     private val detailViewMovieModel by viewModel<MovieDetailViewModel>()
-    private val detailController by lazy { MovieDetailController(requireContext(), this) }
+    private val detailController by lazy { MovieDetailController(requireContext(),
+        ::onTrailerClicked,
+    this) }
 
     override fun getLayoutId() = R.layout.fragment_movie_detail
 
@@ -77,34 +81,20 @@ class MovieDetailFragment : BaseFragment(), MovieDetailClickListener {
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                activity?.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun setupToolbar() {
-        // make fragment.onOptionsItemSelected() be called
-        // https://stackoverflow.com/a/37953823/2279285
-        setHasOptionsMenu(true)
-        activity?.run {
-            (this as AppCompatActivity).setSupportActionBar(toolbar)
-            this.supportActionBar?.run {
-                title = ""
-                setDisplayHomeAsUpEnabled(true)
-                show()
-            }
+        buttonBack.setOnClickListener {
+            activity?.onBackPressed()
         }
     }
 
-    override fun onTrailerClicked(trailerVideo: String) {
+    private fun onTrailerClicked(trailerVideo: String) {
         val playVideoIntent =
             Intent(Intent.ACTION_VIEW, Uri.parse(trailerVideo))
         activity?.startActivity(playVideoIntent)
+    }
+
+    override fun onMovieClicked(movieId: String) {
+        activity?.openFragment(newInstance(movieId), true)
     }
 }
 
