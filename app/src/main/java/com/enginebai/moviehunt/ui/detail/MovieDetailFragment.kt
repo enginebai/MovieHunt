@@ -27,6 +27,7 @@ import com.enginebai.moviehunt.utils.loadImage
 import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
