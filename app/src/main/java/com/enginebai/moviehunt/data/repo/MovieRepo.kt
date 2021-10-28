@@ -39,6 +39,10 @@ interface MovieRepo {
     fun getMovieDetail(movieId: String): Observable<MovieModel>
     fun fetchMovieVideos(movieId: String): Single<List<Video>>
     fun fetchMovieReviews(movieId: String): Single<List<Review>>
+    fun fetchMovieReviewPagedListing(
+        movieId: String,
+        pageSize: Int = DEFAULT_PAGE_SIZE
+    ): Listing<Review>
     fun fetchMovieCasts(movieId: String): Single<List<CastListing.Cast>>
     fun fetchSimilarMovies(movieId: String): Single<List<MovieModel>>
     fun fetchRecommendationMovies(movieId: String): Single<List<MovieModel>>
@@ -67,6 +71,23 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                 refreshState = dataSourceFactory.initLoadState,
                 loadMoreState = dataSourceFactory.loadMoreState,
                 refresh = { dataSourceFactory.dataSource?.invalidate() }
+        )
+    }
+
+    override fun fetchMovieReviewPagedListing(movieId: String, pageSize: Int): Listing<Review> {
+        val dataSourceFactory = MovieReviewsDataSourceFactory(movieId)
+        val pagedListConfig = PagedList.Config.Builder()
+            .setPageSize(pageSize)
+            .setEnablePlaceholders(false)
+            .build()
+        val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
+            .setFetchScheduler(Schedulers.io())
+            .buildObservable()
+        return Listing(
+            pagedList = pagedList,
+            refreshState = dataSourceFactory.initLoadState,
+            loadMoreState = dataSourceFactory.loadMoreState,
+            refresh = { dataSourceFactory.dataSource?.invalidate() }
         )
     }
 
