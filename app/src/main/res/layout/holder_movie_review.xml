@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/page_horizontal_padding"
+    android:paddingEnd="@dimen/page_horizontal_padding"
+    android:paddingTop="@dimen/size_8"
+    android:paddingBottom="@dimen/size_4"
+    >
+
+    <ImageView
+        android:layout_width="@dimen/avatar_review"
+        android:layout_height="@dimen/avatar_review"
+        android:id="@+id/imageReviewerAvatar"
+        android:src="@color/cardBackground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        style="@style/Subtitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textReviewerName"
+        android:layout_marginStart="@dimen/size_8"
+        tools:text="Robert"
+        app:layout_constraintStart_toEndOf="@+id/imageReviewerAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageReviewerAvatar"
+        app:layout_constraintBottom_toTopOf="@+id/textDate"
+        />
+
+    <TextView
+        style="@style/Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textDate"
+        app:layout_constraintTop_toBottomOf="@+id/textReviewerName"
+        app:layout_constraintStart_toStartOf="@+id/textReviewerName"
+        app:layout_constraintBottom_toBottomOf="@+id/imageReviewerAvatar"
+        tools:text="Tony Stark"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/size_4"
+        android:background="@drawable/bg_rating"
+        android:paddingStart="@dimen/size_12"
+        android:paddingEnd="@dimen/size_12"
+        android:paddingBottom="@dimen/size_4"
+        android:paddingTop="@dimen/size_4"
+        android:id="@+id/textReviewRating"
+        app:layout_constraintTop_toTopOf="@+id/imageReviewerAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/imageReviewerAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="9.2"
+        app:drawableStartCompat="@drawable/ic_star_large" />
+
+    <TextView
+        style="@style/Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textReviewComment"
+        android:layout_marginTop="@dimen/size_12"
+        android:paddingBottom="@dimen/size_4"
+        android:maxLines="5"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@+id/imageReviewerAvatar"
+        tools:text="The character development for Thanos was so good that it made me think that maybe he was right. He was the villain that surpassed all the other villains from the past Marvel movies. Trust me, this is the movie that might have changed the MCU."
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

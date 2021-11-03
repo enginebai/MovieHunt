@@ -2,6 +2,7 @@ package com.enginebai.moviehunt.data.remote
 
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
+import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.google.gson.annotations.SerializedName
@@ -57,7 +58,9 @@ data class MovieDetailResponse(
     @SerializedName("genres")
     val genreList: List<Genre>?,
     @SerializedName("runtime")
-    val runtime: Int?
+    val runtime: Int?,
+    @SerializedName("backdrop_path")
+    val backdropPath: String?,
 )
 
 data class GenreListing(
@@ -72,20 +75,86 @@ data class Genre(
     val name: String?
 )
 
+data class Video(
+    @SerializedName("id") val id: String,
+    @SerializedName("key") val key: String?
+
+    // TODO: store `site` and provide different thumbnail
+) {
+    enum class ThumbnailSize(val path: String) {
+        MAX("maxres"),
+        MQ("mq"),
+        HD("hq"),
+        SD("sd"),
+        MIN("");
+
+        override fun toString() = path
+    }
+
+    val youtubeThumbnail get() = "${BuildConfig.YOUTUBE_THUMBNAIL_URL}$key/${ThumbnailSize.MQ}default.jpg"
+    val youtubeVideo get() = "${BuildConfig.YOUTUBE_VIDEO_URL}$key"
+}
+
+data class Review(
+    @SerializedName("id")
+    val id: String?,
+    @SerializedName("author_details")
+    val author: Author?,
+    @SerializedName("content")
+    val content: String?,
+    @SerializedName("created_at")
+    val createdAt: Calendar?
+) {
+    data class Author(
+        @SerializedName("username")
+        val username: String?,
+        @SerializedName("avatar_path")
+        val avatarPath: String?,
+        @SerializedName("rating")
+        val rating: Float?
+    ) {
+        fun getAvatarFullPath(): String {
+            return if (avatarPath?.startsWith("/http", ignoreCase = true) == true) {
+                avatarPath.replaceFirst("/", "")
+            } else {
+                "${BuildConfig.IMAGE_API_KEY}w185/$avatarPath"
+            }
+        }
+    }
+}
+
+data class CastListing(
+    @SerializedName("cast")
+    val castList: List<Cast>?
+) {
+    data class Cast(
+        @SerializedName("id")
+        val id: Long,
+        @SerializedName("name")
+        val actorName: String?,
+        @SerializedName("character")
+        val character: String?,
+        @SerializedName("profile_path")
+        val profilePath: String
+    ) {
+        fun getAvatarFullPath() = "${BuildConfig.IMAGE_API_KEY}w185/$profilePath"
+    }
+}
+
 object MovieModelMapper : KoinComponent {
     private val configRepo by inject<ConfigRepo>()
 
     fun MovieListResponse.toMovieModel(): MovieModel {
         fillGenreList()
         return MovieModel(
-                id = this.id,
-                posterPath = this.posterPath,
-                title = this.title,
-                voteAverage = this.voteAverage,
-                voteCount = this.voteCount,
-                releaseDate = this.releaseDate,
-                backdropPath = this.backdropPath,
-                genreList = this.genreList
+            id = this.id,
+            posterPath = this.posterPath,
+            title = this.title,
+            voteAverage = this.voteAverage,
+            voteCount = this.voteCount,
+            releaseDate = this.releaseDate,
+            backdropPath = this.backdropPath,
+            genreList = this.genreList
         )
     }
 

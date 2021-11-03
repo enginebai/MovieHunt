@@ -28,7 +28,7 @@ object Versions {
 
     object Android {
         const val sdk = 29
-        const val minSdk = 24
+        const val minSdk = 26
     }
 
     object AndroidX {

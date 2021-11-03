@@ -19,4 +19,7 @@
     <dimen name="corner_small">@dimen/size_4</dimen>
     <dimen name="page_horizontal_padding">@dimen/size_20</dimen>
     <dimen name="poster_height">160dp</dimen>
+
+    <dimen name="avatar_cast">48dp</dimen>
+    <dimen name="avatar_review">36dp</dimen>
 </resources>

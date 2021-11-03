@@ -6,6 +6,7 @@
     <color name="darkBlue">#17293F</color>
     <color name="yellow">#FFC42E</color>
     <color name="grey">#A7A7A9</color>
+    <color name="ratingBackground">#293E58</color>
 
     <color name="background">@color/colorPrimary</color>
     <color name="cardBackground">@color/darkBlue</color>

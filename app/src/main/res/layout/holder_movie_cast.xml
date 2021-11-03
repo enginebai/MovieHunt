@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:layout_width="@dimen/avatar_cast"
+        android:layout_height="@dimen/avatar_cast"
+        android:id="@+id/imageCastAvatar"
+        android:src="@color/cardBackground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        style="@style/Subtitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textActorName"
+        android:layout_marginStart="@dimen/size_8"
+        tools:text="Robert"
+        app:layout_constraintStart_toEndOf="@+id/imageCastAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageCastAvatar"
+        app:layout_constraintBottom_toTopOf="@+id/textCharacter"
+        />
+
+    <TextView
+        style="@style/Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textCharacter"
+        app:layout_constraintTop_toBottomOf="@+id/textActorName"
+        app:layout_constraintStart_toStartOf="@+id/textActorName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Tony Stark"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

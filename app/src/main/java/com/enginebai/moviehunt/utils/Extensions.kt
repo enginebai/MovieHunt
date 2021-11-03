@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.enginebai.moviehunt.R
 
 fun Activity.openFragment(
@@ -14,15 +15,16 @@ fun Activity.openFragment(
     this as AppCompatActivity
     supportFragmentManager.beginTransaction().apply {
         add(R.id.fragmentContainer, fragment)
-        if (addToBackStack) addToBackStack(fragment::class.java.simpleName)
-        commit()
+        if (addToBackStack) addToBackStack(fragment.toString())
+        commitAllowingStateLoss()
     }
 }
 
-fun ImageView.loadImage(url: String?) {
+fun ImageView.loadImage(url: String?, circular: Boolean = false) {
     load(url) {
         error(R.color.grey)
         placeholder(R.color.colorPrimary)
         crossfade(true)
+        if (circular) transformations(CircleCropTransformation())
     }
 }

@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.remote.Genre
+import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format
@@ -54,6 +55,12 @@ data class MovieModel(
 )
 
 fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this.posterPath}"
+fun MovieModel.getPosterUrlWithLargeSize(): String =
+    "${BuildConfig.IMAGE_API_KEY}w780/${this.posterPath}"
+
+fun MovieModel.getPosterUrlWithOriginalSize(): String =
+    "${BuildConfig.IMAGE_API_KEY}original/${this.posterPath}"
+
 fun MovieModel.displayTitle(): String = this.title ?: PLACEHOLDER
 fun MovieModel.display5StarsRating(): Float = this.voteAverage?.div(2) ?: 0.0f
 fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: PLACEHOLDER
@@ -64,3 +71,12 @@ fun MovieModel.displayVotePercentage(): String = "${this.voteAverage?.times(10) 
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: PLACEHOLDER
 fun MovieModel.displayReleaseDate(): String = this.releaseDate?.format() ?: PLACEHOLDER
 fun MovieModel.displayOverview(): String = this.overview ?: PLACEHOLDER
+
+fun MovieModel.toPortraitHolder(): MoviePortraitHolder_ = MoviePortraitHolder_()
+    .movieId(this.id)
+    .posterUrl(this.getPosterUrl())
+    .movieName(this.displayTitle())
+    .rating(this.display5StarsRating())
+    .ratingTotalCountText(this.displayVoteCount())
+    .genre(this.genreList?.firstOrNull()?.name)
+    .releaseYear(this.releaseDate?.get(Calendar.YEAR))

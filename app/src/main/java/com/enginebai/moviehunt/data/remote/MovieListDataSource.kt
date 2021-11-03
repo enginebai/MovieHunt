@@ -10,6 +10,65 @@ import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+class MovieReviewsDataSource(
+    private val movieId: String,
+    private val initLoadState: BehaviorSubject<NetworkState>,
+    private val loadMoreState: BehaviorSubject<NetworkState>
+) : PageKeyedDataSource<Int, Review>(), KoinComponent {
+    private val api: MovieApiService by inject()
+    private var currentPage: Int = -1
+
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, Review>
+    ) {
+        currentPage = 1
+        api.fetchMovieReviews(movieId, currentPage)
+            .doOnSubscribe { initLoadState.onNext(NetworkState.LOADING) }
+            .doOnSuccess {
+                it.results?.run {
+                    callback.onResult(
+                        this,
+                        null,
+                        calculateNextPage(it.totalPages)
+                    )
+                }
+                initLoadState.onNext(NetworkState.IDLE)
+            }
+            .doOnError { initLoadState.onNext(NetworkState.ERROR) }
+            .subscribe()
+    }
+
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Review>) {
+        if (-1 == params.key || NetworkState.LOADING == loadMoreState.value) return
+        api.fetchMovieReviews(movieId, params.key)
+            .doOnSubscribe { loadMoreState.onNext(NetworkState.LOADING) }
+            .doOnSuccess {
+                it.results?.run {
+                    callback.onResult(this, calculateNextPage(it.totalPages))
+                }
+                loadMoreState.onNext(NetworkState.IDLE)
+            }
+            .doOnError { loadMoreState.onNext(NetworkState.ERROR) }
+            .subscribe()
+    }
+
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Review>) {
+        // we don't need this
+    }
+
+    private fun calculateNextPage(totalPage: Int?): Int {
+        totalPage?.run {
+            currentPage = if (currentPage in 1 until totalPage) {
+                currentPage.plus(1)
+            } else {
+                -1
+            }
+        }
+        return currentPage
+    }
+}
+
 class MovieListDataSource(
         private val category: MovieCategory,
         private val initLoadState: BehaviorSubject<NetworkState>,
@@ -84,5 +143,15 @@ class MovieListDataSourceFactory(private val category: MovieCategory) :
         dataSource = MovieListDataSource(category, initLoadState, loadMoreState)
         return dataSource!!
     }
+}
 
+class MovieReviewsDataSourceFactory(private val movieId: String) : DataSource.Factory<Int, Review>() {
+    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
+    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
+    var dataSource: MovieReviewsDataSource? = null
+
+    override fun create(): DataSource<Int, Review> {
+        dataSource = MovieReviewsDataSource(movieId, initLoadState, loadMoreState)
+        return dataSource!!
+    }
 }

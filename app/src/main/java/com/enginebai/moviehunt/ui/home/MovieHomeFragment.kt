@@ -11,6 +11,7 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.detail.MovieDetailFragmentV1
 import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
 import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
 import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
@@ -54,7 +55,7 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
                     itemsOnScreen = 1.7f
                 } else {
                     carouselController = MoviePortraitController(category, this)
-                    itemsOnScreen = 3.05f
+                    itemsOnScreen = 3.1f
                 }
                 categoryListings[category] =
                     MovieCategoryListing(

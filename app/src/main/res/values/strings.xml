@@ -9,4 +9,11 @@
     <string name="see_all">See All</string>
 
     <string name="error_network_fail">Looks like your are offline.</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_trailers">Trailers</string>
+    <string name="title_reviews">Reviews</string>
+    <string name="title_casts">Casts</string>
+    <string name="title_similar_movies">Similar</string>
+    <string name="title_recommendation_movies">Recommendation</string>
+    <string name="reviews_total_count" formatted="false">(%s reviews)</string>
 </resources>

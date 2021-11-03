@@ -39,8 +39,8 @@ class MovieTypeConverter : KoinComponent {
     }
 
     @TypeConverter
-    fun calendarToStr(calendar: Calendar): String? {
-        return calendar.format(DateTimeFormatter.DATE_TIME_FORMAT)
+    fun calendarToStr(calendar: Calendar?): String? {
+        return calendar?.format(DateTimeFormatter.DATE_TIME_FORMAT)
     }
 
     @TypeConverter
