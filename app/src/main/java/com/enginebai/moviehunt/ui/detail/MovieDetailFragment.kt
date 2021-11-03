@@ -12,6 +12,7 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.getPosterUrlWithLargeSize
 import com.enginebai.moviehunt.ui.MovieClickListener
+import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
 import com.enginebai.moviehunt.utils.loadImage
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
@@ -31,9 +32,14 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
     }
 
     private val detailViewMovieModel by viewModel<MovieDetailViewModel>()
-    private val detailController by lazy { MovieDetailController(requireContext(),
-        ::onTrailerClicked,
-    this) }
+    private val detailController by lazy {
+        MovieDetailController(
+            requireContext(),
+            ::onTrailerClicked,
+            ::onReviewSeeAllClicked,
+            this
+        )
+    }
 
     override fun getLayoutId() = R.layout.fragment_movie_detail
 
@@ -79,6 +85,10 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
         val playVideoIntent =
             Intent(Intent.ACTION_VIEW, Uri.parse(trailerVideo))
         activity?.startActivity(playVideoIntent)
+    }
+
+    private fun onReviewSeeAllClicked(movieId: String) {
+        activity?.openFragment(MovieReviewsFragment.newInstance(movieId), true)
     }
 
     override fun onMovieClicked(movieId: String) {

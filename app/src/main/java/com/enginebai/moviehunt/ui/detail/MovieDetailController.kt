@@ -8,7 +8,6 @@ import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.data.remote.CastListing
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
-import com.enginebai.moviehunt.data.remote.getAvatar
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.holders.*
 import com.enginebai.moviehunt.ui.holders.*
@@ -17,7 +16,8 @@ import kotlin.properties.Delegates
 
 class MovieDetailController(
     private val context: Context,
-    private val onTrailerClickListener: (String) -> Unit,
+    private val trailerClickListener: (String) -> Unit,
+    private val reviewSeeAllClickListener: (String) -> Unit,
     private val movieClickListener: MovieClickListener
 ) : EpoxyController() {
 
@@ -66,7 +66,7 @@ class MovieDetailController(
                         .id("${MovieTrailerHolder::class.java.simpleName} ${video.id}")
                             .thumbnail(video.youtubeThumbnail)
                         .onTrailerPlayed {
-                            onTrailerClickListener(video.youtubeVideo)
+                            trailerClickListener(video.youtubeVideo)
                         }
                         .trailerUrl(video.youtubeVideo)
                 )
@@ -81,15 +81,12 @@ class MovieDetailController(
         }
 
         review?.let {
-            buildTitle(context.getString(R.string.title_reviews))
-            MovieReviewHolder_()
-                .id(MovieReviewHolder::class.java.simpleName)
-                .avatar(it.author?.getAvatar())
-                .name(it.author?.username)
-                .rating(it.author?.rating)
-                .comment(it.content)
-                .createdAtDateText(it.createdAt?.format())
-                .addTo(this)
+            buildTitle(context.getString(R.string.title_reviews)) {
+                detail?.id?.run {
+                    reviewSeeAllClickListener.invoke(this)
+                }
+            }
+            it.toHolder().addTo(this)
         }
 
         if (!casts.isNullOrEmpty()) {
@@ -98,7 +95,7 @@ class MovieDetailController(
             casts!!.forEach {
                 castHolders.add(MovieCastHolder_()
                     .id("${MovieCastHolder::class.java.simpleName} ${it.id}")
-                    .avatar(it.getAvatar())
+                    .avatar(it.getAvatarFullPath())
                     .actorName(it.actorName)
                     .character(it.character)
                 )
@@ -139,8 +136,8 @@ class MovieDetailController(
                 movieHolders.add(
                     it.toPortraitHolder()
                         .id("$title ${it.id}")
-                        .onClickListener {
-                            movieClickListener.onMovieClicked(it)
+                        .onClickListener { id ->
+                            movieClickListener.onMovieClicked(id)
                         }
                 )
             }

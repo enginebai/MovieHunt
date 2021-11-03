@@ -96,6 +96,8 @@ data class Video(
 }
 
 data class Review(
+    @SerializedName("id")
+    val id: String?,
     @SerializedName("author_details")
     val author: Author?,
     @SerializedName("content")
@@ -110,14 +112,14 @@ data class Review(
         val avatarPath: String?,
         @SerializedName("rating")
         val rating: Float?
-    )
-}
-
-fun Review.Author.getAvatar(): String {
-    return if (avatarPath?.startsWith("/http", ignoreCase = true) == true) {
-        avatarPath.replaceFirst("/", "")
-    } else {
-        "${BuildConfig.IMAGE_API_KEY}w185/$avatarPath"
+    ) {
+        fun getAvatarFullPath(): String {
+            return if (avatarPath?.startsWith("/http", ignoreCase = true) == true) {
+                avatarPath.replaceFirst("/", "")
+            } else {
+                "${BuildConfig.IMAGE_API_KEY}w185/$avatarPath"
+            }
+        }
     }
 }
 
@@ -134,10 +136,10 @@ data class CastListing(
         val character: String?,
         @SerializedName("profile_path")
         val profilePath: String
-    )
+    ) {
+        fun getAvatarFullPath() = "${BuildConfig.IMAGE_API_KEY}w185/$profilePath"
+    }
 }
-
-fun CastListing.Cast.getAvatar() = "${BuildConfig.IMAGE_API_KEY}w185/$profilePath"
 
 object MovieModelMapper : KoinComponent {
     private val configRepo by inject<ConfigRepo>()

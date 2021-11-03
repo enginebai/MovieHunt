@@ -1,6 +1,5 @@
-package com.enginebai.moviehunt.ui.detail.holders
+package com.enginebai.moviehunt.ui.holders
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,8 +9,21 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.base.extensions.setExistence
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.PLACEHOLDER
+import com.enginebai.moviehunt.data.remote.Review
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.loadImage
 import kotlinx.android.synthetic.main.holder_movie_review.view.*
+
+fun Review.toHolder(): MovieReviewHolder_ {
+    return MovieReviewHolder_()
+        .id("${MovieReviewHolder::class.java.simpleName} ${this.id}")
+        .avatar(this.author?.getAvatarFullPath())
+        .name(this.author?.username)
+        .rating(this.author?.rating)
+        .comment(this.content)
+        .createdAtDateText(this.createdAt?.format())
+}
 
 @EpoxyModelClass(layout = R.layout.holder_movie_review)
 abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder>() {
@@ -34,15 +46,12 @@ abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder
     @EpoxyAttribute
     var comment: String? = null
 
-    // TODO: bookmark feature
 
     override fun bind(holder: Holder) {
         super.bind(holder)
-        Log.wtf("qwer", avatar)
         holder.imageReviewerAvatar.loadImage(avatar, circular = true)
         holder.textName.text = name
-        holder.textRating.setExistence(rating != null)
-        holder.textRating.text = "%.1f".format(rating)
+        holder.textRating.text = rating?.let { "%.1f".format(rating) } ?: run { PLACEHOLDER }
         holder.textReleaseDate.text = createdAtDateText
         holder.textComment.text = comment
     }
