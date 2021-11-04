@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt.ui.reviews
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager

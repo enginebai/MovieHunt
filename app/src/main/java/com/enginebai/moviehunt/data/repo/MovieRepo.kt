@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.data.repo
 
+import android.util.Log
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.enginebai.base.utils.Listing
@@ -63,7 +64,9 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
                 .setPageSize(pageSize)
                 .setEnablePlaceholders(false)
                 .build()
-        val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
+        val pagedList = RxPagedListBuilder(dataSourceFactory.map {
+            it.toMovieModel()
+        }, pagedListConfig)
                 .setFetchScheduler(Schedulers.io())
                 .buildObservable()
         return Listing(
@@ -76,6 +79,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
 
     override fun fetchMovieReviewPagedListing(movieId: String, pageSize: Int): Listing<Review> {
         val dataSourceFactory = MovieReviewsDataSourceFactory(movieId)
+
         val pagedListConfig = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setEnablePlaceholders(false)
