@@ -1,6 +1,5 @@
 package com.enginebai.moviehunt.data.remote
 
-import android.util.Log
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.enginebai.base.utils.NetworkState
@@ -71,6 +70,13 @@ abstract class ApiPageKeyedDataSource<T>(
     }
 }
 
+abstract class ApiPageKeyedDataSourceFactory<T> : DataSource.Factory<Int, T>() {
+    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
+    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
+
+    var dataSource: DataSource<Int, T>? = null
+}
+
 class MovieReviewsDataSource(
     private val movieId: String,
     initLoadState: BehaviorSubject<NetworkState>,
@@ -92,18 +98,8 @@ class MovieListDataSource(
     override fun apiFetch(page: Int) = api.fetchMovieList(category.key, page)
 }
 
-abstract class ApiPageKeyedDataSourceFactory<T> : DataSource.Factory<Int, T>() {
-    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
-    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
-}
-
-
 class MovieListDataSourceFactory(private val category: MovieCategory) :
-    DataSource.Factory<Int, MovieListResponse>() {
-
-    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
-    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
-    var dataSource: MovieListDataSource? = null
+   ApiPageKeyedDataSourceFactory<MovieListResponse>() {
 
     override fun create(): DataSource<Int, MovieListResponse> {
         dataSource = MovieListDataSource(category, initLoadState, loadMoreState)
@@ -112,10 +108,7 @@ class MovieListDataSourceFactory(private val category: MovieCategory) :
 }
 
 class MovieReviewsDataSourceFactory(private val movieId: String) :
-    DataSource.Factory<Int, Review>() {
-    val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
-    val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
-    var dataSource: MovieReviewsDataSource? = null
+    ApiPageKeyedDataSourceFactory<Review>() {
 
     override fun create(): DataSource<Int, Review> {
         dataSource = MovieReviewsDataSource(movieId, initLoadState, loadMoreState)
