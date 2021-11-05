@@ -5,7 +5,7 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
+import com.enginebai.moviehunt.ui.widgets.MovieLandscapeHolder_
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 
 class MovieLandscapeController(

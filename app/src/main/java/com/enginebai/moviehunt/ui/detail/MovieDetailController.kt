@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt.ui.detail
 
 import android.content.Context
+import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.carousel
 import com.enginebai.moviehunt.R
@@ -10,7 +11,7 @@ import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.holders.*
-import com.enginebai.moviehunt.ui.holders.*
+import com.enginebai.moviehunt.ui.widgets.*
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import kotlin.properties.Delegates
 
@@ -44,6 +45,13 @@ class MovieDetailController(
     }
 
     override fun buildModels() {
+        val padding: Carousel.Padding = Carousel.Padding.resource(
+            R.dimen.page_horizontal_padding,
+            R.dimen.size_12,
+            R.dimen.page_horizontal_padding,
+            R.dimen.size_12,
+            R.dimen.size_8
+        )
         detail?.let { detail ->
             MovieInfoHolder_()
                 .id(MovieInfoHolder::class.java.simpleName)
@@ -72,11 +80,12 @@ class MovieDetailController(
                 )
             }
 
-            carousel {
+            customCarousel {
                 id(MovieTrailerHolder::class.java.simpleName)
                         paddingRes(R.dimen.size_8)
                     models(trailerHolders)
                 numViewsToShowOnScreen(2.5f)
+                padding(padding)
             }
         }
 
@@ -101,9 +110,10 @@ class MovieDetailController(
                 )
             }
 
-            carousel {
+            customCarousel {
                 id(MovieCastHolder::class.java.simpleName)
                     .models(castHolders)
+                    .padding(padding)
             }
         }
 

@@ -1,4 +1,4 @@
-package com.enginebai.moviehunt.ui.holders
+package com.enginebai.moviehunt.ui.widgets
 
 import android.view.View
 import android.widget.ImageView
@@ -7,7 +7,6 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.enginebai.base.extensions.setExistence
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.PLACEHOLDER
 import com.enginebai.moviehunt.data.remote.Review

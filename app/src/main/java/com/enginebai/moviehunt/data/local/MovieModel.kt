@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.data.remote.Genre
-import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
+import com.enginebai.moviehunt.ui.widgets.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format

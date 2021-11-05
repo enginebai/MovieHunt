@@ -1,4 +1,4 @@
-package com.enginebai.moviehunt.ui.holders
+package com.enginebai.moviehunt.ui.widgets
 
 import android.view.View
 import com.airbnb.epoxy.EpoxyModel

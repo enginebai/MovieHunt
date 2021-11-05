@@ -1,13 +1,10 @@
 package com.enginebai.moviehunt.ui.home.controller
 
 import com.airbnb.epoxy.EpoxyModel
-import com.enginebai.moviehunt.MovieHomeLargeBindingModel_
-import com.enginebai.moviehunt.MovieHomeNormalBindingModel_
 import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.holders.MoviePortraitHolder_
+import com.enginebai.moviehunt.ui.widgets.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.list.MovieCategory
-import java.util.*
 
 class MoviePortraitController(
     movieCategory: MovieCategory,

@@ -1,9 +1,8 @@
-package com.enginebai.moviehunt.ui.holders
+package com.enginebai.moviehunt.ui.widgets
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import coil.load
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
