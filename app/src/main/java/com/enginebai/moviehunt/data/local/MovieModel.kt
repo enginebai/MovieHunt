@@ -54,6 +54,7 @@ data class MovieModel(
     val backdropPath: String? = null,
 )
 
+// TODO: image API
 fun MovieModel.getPosterUrl(): String = "${BuildConfig.IMAGE_API_KEY}w500/${this.posterPath}"
 fun MovieModel.getPosterUrlWithLargeSize(): String =
     "${BuildConfig.IMAGE_API_KEY}w780/${this.posterPath}"

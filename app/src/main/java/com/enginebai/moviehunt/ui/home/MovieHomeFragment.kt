@@ -13,7 +13,7 @@ import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
 import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
-import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
+import com.enginebai.moviehunt.ui.home.controller.MovieShowcaseController
 import com.enginebai.moviehunt.ui.home.controller.MoviePortraitController
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
@@ -48,8 +48,8 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
                 val itemsOnScreen: Float
                 // first category uses large carousel, other uses normal carousel
                 if (index == 0) {
-                    carouselController = MovieLargeListController(category, this)
-                    itemsOnScreen = 1.7f
+                    carouselController = MovieShowcaseController(category, this)
+                    itemsOnScreen = 1.05f
                 } else {
                     carouselController = MoviePortraitController(category, this)
                     itemsOnScreen = 3.1f
