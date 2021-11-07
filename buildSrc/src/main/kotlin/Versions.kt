@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.5.30"
+    const val kotlin = "1.5.31"
     const val androidGradle = "7.0.2"
     const val material = "1.4.0"
 
@@ -28,7 +28,7 @@ object Versions {
     const val testRunner = "1.2.0"
 
     object Android {
-        const val sdk = 29
+        const val sdk = 30
         const val minSdk = 26
     }
 
@@ -53,4 +53,9 @@ object Versions {
         const val room = "2.3.0"
     }
 
+    object JetpackCompose {
+        const val jetpackCompose = "1.0.1"
+        const val appCompatTheme = "0.16.0"
+        const val compiler = "1.0.5"
+    }
 }
