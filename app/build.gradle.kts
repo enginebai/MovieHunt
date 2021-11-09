@@ -34,6 +34,7 @@ dependencies {
     "kapt"(Dependencies.Epoxy.processor)
 
     implementation(Dependencies.coil)
+    implementation(Dependencies.coilCompose)
 
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.ktx)

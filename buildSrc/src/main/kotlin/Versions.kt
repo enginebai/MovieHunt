@@ -18,7 +18,7 @@ object Versions {
 
     const val epoxy = "4.6.3"
 
-    const val coil = "1.3.2"
+    const val coil = "1.4.0"
     const val androidBase = "1.0.3"
     const val snapHelper = "2.2.2"
 
@@ -55,6 +55,7 @@ object Versions {
 
     object JetpackCompose {
         const val jetpackCompose = "1.0.1"
+        const val activity = "1.3.1"
         const val appCompatTheme = "0.16.0"
         const val compiler = "1.0.5"
     }

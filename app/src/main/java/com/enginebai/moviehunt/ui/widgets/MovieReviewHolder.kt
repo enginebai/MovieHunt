@@ -3,6 +3,18 @@ package com.enginebai.moviehunt.ui.widgets
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
@@ -13,6 +25,7 @@ import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.loadImage
 import kotlinx.android.synthetic.main.holder_movie_review.view.*
+import java.util.*
 
 fun Review.toHolder(): MovieReviewHolder_ {
     return MovieReviewHolder_()
@@ -71,4 +84,55 @@ abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder
         }
 
     }
+}
+
+@Composable
+fun MovieReviewWidget(
+    movieId: String? = null,
+    avatar: String? = null,
+    name: String? = null,
+    createdAtDateText: String? = null,
+    rating: Float? = null,
+    comment: String? = null
+) {
+    Column(
+        Modifier.padding(
+            start = dimensionResource(id = R.dimen.page_horizontal_padding),
+            end = dimensionResource(id = R.dimen.page_horizontal_padding),
+            top = dimensionResource(id = R.dimen.size_8),
+            bottom = dimensionResource(id = R.dimen.size_4)
+        )
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                painter = rememberImagePainter(
+                    data = avatar,
+                    builder = {
+                        transformations(CircleCropTransformation())
+                    }), contentDescription = null
+            )
+            Column {
+                Text(text = name ?: "")
+                Text(text = createdAtDateText ?: "")
+            }
+            Text(
+                // TODO: background
+                // TODO: star icon
+                text = rating?.let { "%.1f".format(rating) } ?: run { PLACEHOLDER },
+            )
+        }
+        Text(text = comment ?: "")
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true, showBackground = true)
+fun MovieReviewPreview() {
+    MovieReviewWidget(
+        movieId = "1234",
+        name = "Robert",
+        createdAtDateText = Calendar.getInstance().format(),
+        rating = 9.5f,
+        comment = "The character development for Thanos was so good that it made me think that maybe he was right. He was the villain that surpassed all the other villains from the past Marvel movies. Trust me, this is the movie that might have changed the MCU."
+    )
 }
