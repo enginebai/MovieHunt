@@ -1,7 +1,10 @@
 package com.enginebai.moviehunt
 
+import coil.Coil
+import coil.ImageLoader
 import com.enginebai.base.BaseApplication
 import com.enginebai.moviehunt.di.*
+import org.koin.android.ext.android.get
 
 class AppContext : BaseApplication() {
 
@@ -17,4 +20,9 @@ class AppContext : BaseApplication() {
         daoModule,
         repoModule
     )
+
+    override fun onCreate() {
+        super.onCreate()
+        Coil.setImageLoader(get<ImageLoader>())
+    }
 }

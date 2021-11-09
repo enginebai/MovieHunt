@@ -1,10 +1,15 @@
 package com.enginebai.moviehunt.di
 
+import coil.ImageLoader
+import coil.util.CoilUtils
+import coil.util.DebugLogger
+import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.BuildConfig.API_ROOT
 import com.enginebai.moviehunt.utils.ApiInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.CallAdapter
 import retrofit2.Converter
@@ -35,6 +40,18 @@ val networkModule = module {
             .addCallAdapterFactory(get())
             .addConverterFactory(get())
             .client(get())
+            .build()
+    }
+
+    single {
+        ImageLoader.Builder(androidApplication())
+            .crossfade(true)
+            .logger(if (BuildConfig.DEBUG) DebugLogger() else null)
+            .okHttpClient {
+                OkHttpClient.Builder()
+                    .cache(CoilUtils.createDefaultCache(androidApplication()))
+                    .build()
+            }
             .build()
     }
 }
