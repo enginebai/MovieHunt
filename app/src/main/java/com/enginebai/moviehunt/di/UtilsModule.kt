@@ -1,10 +1,9 @@
 package com.enginebai.moviehunt.di
 
-import com.enginebai.base.BuildConfig
 import com.enginebai.base.utils.logging.TimberLoggerDebugTree
+import com.enginebai.moviehunt.BuildConfig
 import com.enginebai.moviehunt.utils.CalendarDeserializer
 import com.enginebai.moviehunt.utils.ExceptionHandler
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy

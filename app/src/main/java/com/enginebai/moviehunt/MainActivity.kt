@@ -7,15 +7,12 @@ import android.widget.Toast
 import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
-import com.enginebai.moviehunt.data.repo.MovieRepo
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
 import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.Completable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.SerialDisposable
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.ext.android.inject
