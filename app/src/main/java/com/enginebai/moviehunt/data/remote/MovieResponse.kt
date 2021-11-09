@@ -117,7 +117,7 @@ data class Review(
             return if (avatarPath?.startsWith("/http", ignoreCase = true) == true) {
                 avatarPath.replaceFirst("/", "")
             } else {
-                "${BuildConfig.IMAGE_API_KEY}w185/$avatarPath"
+                ImageApi.getFullUrl(avatarPath, ImageSize.W185)
             }
         }
     }
@@ -137,7 +137,7 @@ data class CastListing(
         @SerializedName("profile_path")
         val profilePath: String
     ) {
-        fun getAvatarFullPath() = "${BuildConfig.IMAGE_API_KEY}w185/$profilePath"
+        fun getAvatarFullPath() = ImageApi.getFullUrl(profilePath, ImageSize.W185)
     }
 }
 
