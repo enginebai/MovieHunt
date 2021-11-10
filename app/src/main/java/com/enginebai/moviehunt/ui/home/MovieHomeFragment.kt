@@ -11,12 +11,10 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
-import com.enginebai.moviehunt.ui.detail.MovieDetailFragmentV1
 import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
 import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
-import com.enginebai.moviehunt.ui.home.controller.MovieLargeListController
+import com.enginebai.moviehunt.ui.home.controller.MovieShowcaseController
 import com.enginebai.moviehunt.ui.home.controller.MoviePortraitController
-import com.enginebai.moviehunt.ui.home.models.CategoryHeaderHolder
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
 import com.enginebai.moviehunt.utils.openFragment
@@ -25,8 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieHomeFragment : BaseFragment(), MovieClickListener,
-    CategoryHeaderHolder.OnHeaderClickListener {
+class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListener {
 
     private val movieViewModel: MovieHomeViewModel by viewModel()
 
@@ -51,8 +48,8 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener,
                 val itemsOnScreen: Float
                 // first category uses large carousel, other uses normal carousel
                 if (index == 0) {
-                    carouselController = MovieLargeListController(category, this)
-                    itemsOnScreen = 1.7f
+                    carouselController = MovieShowcaseController(category, this)
+                    itemsOnScreen = 1.05f
                 } else {
                     carouselController = MoviePortraitController(category, this)
                     itemsOnScreen = 3.1f

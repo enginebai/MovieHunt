@@ -65,7 +65,6 @@ interface MovieDao {
 		FROM movie
 		INNER JOIN movie_list ON movie.id == movie_list.movie_id
 		WHERE movie_list.category = :category
-		ORDER BY position
 	"""
     )
     fun queryMovieListDataSource(category: MovieCategory): DataSource.Factory<Int, MovieModel>

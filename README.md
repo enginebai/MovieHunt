@@ -1,7 +1,9 @@
 <h1 align="center">MovieHunt</h1>
 
 <p align="center">
-MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/">The Movie DB</a> API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.
+MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/">The Movie DB</a> API based on MVVM architecture. It showcases the latest Android tech stacks with well-designed architecture and best practices.
+
+> The new v2 re-design is available. 🎉 Check it out now! 
 
 ![MovieHunt](./art/MovieHunt.png)
 
@@ -11,8 +13,8 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
 * 100% Kotlin
 * MVVM architecture
 * Reactive pattern
-* Android architecture components and Jetpack
-* Single activity
+* Android architecture components and Jetpack libraries
+* Single activity pattern
 * Dependency injection
 * CI support (Upcoming)
 * Testing (Upcoming)
@@ -30,12 +32,13 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
     * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way to bind data to UI layout.
     * [Navigation component](https://developer.android.com/guide/navigation) - Fragment routing handler. (Upcoming)
     * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Tasks scheduler in background jobs. (Upcoming)
-* [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.
-* [Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.
+* ~[RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.~ Replaced by Coroutine + Flow.
+* (Upcoming) [Flow](https://developer.android.com/kotlin/flow) Stream of value that returns from suspend function.
+* (Implementing) [Coroutine](https://developer.android.com/kotlin/coroutines) Concurrency design pattern for asynchronous programming.
+* ~[Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.~ Replaced by Jetpack Compose.
 * [Coil](https://github.com/coil-kt/coil) - Image loading.
 * [Timber](https://github.com/JakeWharton/timber) - Extensible API for logging.
-* [Jetpack Compose](https://developer.android.com/jetpack/compose) - Declarative and simplified way for UI development. (Upcoming)
-* [Coroutines](https://developer.android.com/kotlin/coroutines) - Light-weight threads for background operations. (Upcoming)
+* (Implementing) [Jetpack Compose](https://developer.android.com/jetpack/compose) - Declarative and simplified way for UI development. 
 
 ## Architectures
 

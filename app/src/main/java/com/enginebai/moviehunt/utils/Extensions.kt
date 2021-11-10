@@ -22,8 +22,8 @@ fun Activity.openFragment(
 
 fun ImageView.loadImage(url: String?, circular: Boolean = false) {
     load(url) {
-        error(R.color.grey)
-        placeholder(R.color.colorPrimary)
+        error(if (circular) R.drawable.bg_error else R.color.grey)
+        placeholder(if (circular) R.drawable.bg_placeholder else R.color.placeholder)
         crossfade(true)
         if (circular) transformations(CircleCropTransformation())
     }

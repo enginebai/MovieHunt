@@ -3,9 +3,14 @@ package com.enginebai.moviehunt.ui.list
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.enginebai.moviehunt.data.local.*
+import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.local.display5StarsRating
+import com.enginebai.moviehunt.data.local.displayTitle
+import com.enginebai.moviehunt.data.local.displayVoteCount
+import com.enginebai.moviehunt.data.remote.ImageApi
+import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
+import com.enginebai.moviehunt.ui.widgets.MovieLandscapeHolder_
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 
 class MovieLandscapeController(
@@ -24,7 +29,7 @@ class MovieLandscapeController(
             MovieLandscapeHolder_()
                 .id(this.id)
                 .movieId(this.id)
-                .imagePoster(this.getPosterUrl())
+                .imagePoster(ImageApi.getFullUrl(this.posterPath, ImageSize.W500))
                 .textTitle(this.displayTitle())
                 .rating(this.display5StarsRating())
                 .ratingTotalCountText(this.displayVoteCount())

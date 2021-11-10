@@ -3,14 +3,14 @@ package com.enginebai.moviehunt.ui.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.local.getPosterUrlWithLargeSize
+import com.enginebai.moviehunt.data.remote.ImageApi
+import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
 import com.enginebai.moviehunt.utils.loadImage
@@ -51,20 +51,16 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
         listContent.setController(detailController)
 
         detailViewMovieModel.movieDetail.observe(viewLifecycleOwner, {
-            Log.d(this.javaClass.simpleName, "Detail $it")
-            imagePoster.loadImage(it.getPosterUrlWithLargeSize())
+            imagePoster.loadImage(ImageApi.getFullUrl(it.posterPath, ImageSize.W780))
             detailController.detail = it
         })
         detailViewMovieModel.videos.observe(viewLifecycleOwner, {
-            Log.d(this.javaClass.simpleName, "Videos $it")
             detailController.videos = it
         })
         detailViewMovieModel.review.observe(viewLifecycleOwner, {
-            Log.d(this.javaClass.simpleName, "Reviews $it")
             detailController.review = it
         })
         detailViewMovieModel.casts.observe(viewLifecycleOwner, {
-            Log.d(this.javaClass.simpleName, "Casts $it")
             detailController.casts = it
         })
         detailViewMovieModel.similarMovies.observe(viewLifecycleOwner, {

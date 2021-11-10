@@ -20,6 +20,7 @@ object Versions {
 
     const val coil = "1.3.2"
     const val androidBase = "1.0.3"
+    const val snapHelper = "2.2.2"
 
     // Test frameworks
     const val junit = "4.12"

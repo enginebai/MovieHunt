@@ -37,6 +37,7 @@ dependencies {
     "kapt"(Dependencies.Room.annotation)
 
     implementation(Dependencies.androidBase)
+    implementation(Dependencies.snapHelper)
 
     implementation(Dependencies.okhttp)
     implementation(Dependencies.okhttpLogging)

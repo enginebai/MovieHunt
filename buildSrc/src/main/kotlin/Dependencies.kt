@@ -17,6 +17,7 @@ object Dependencies {
 
     const val androidBase = "com.github.enginebai:AndroidBase:${Versions.androidBase}"
     const val coil = "io.coil-kt:coil:${Versions.coil}"
+    const val snapHelper = "com.github.rubensousa:gravitysnaphelper:${Versions.snapHelper}"
 
     object Kotlin {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"

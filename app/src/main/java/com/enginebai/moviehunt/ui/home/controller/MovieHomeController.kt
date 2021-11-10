@@ -3,17 +3,21 @@ package com.enginebai.moviehunt.ui.home.controller
 import android.content.Context
 import com.airbnb.epoxy.EpoxyController
 import com.enginebai.base.utils.NetworkState
-import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.local.*
+import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.local.display5StarsRating
+import com.enginebai.moviehunt.data.local.displayTitle
+import com.enginebai.moviehunt.data.local.displayVoteCount
+import com.enginebai.moviehunt.data.remote.ImageApi
+import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.holders.ListSeparator
-import com.enginebai.moviehunt.ui.holders.ListSeparator_
-import com.enginebai.moviehunt.ui.holders.MovieLandscapeHolder_
-import com.enginebai.moviehunt.ui.holders.TitleHolder_
 import com.enginebai.moviehunt.ui.home.MovieCategoryListing
 import com.enginebai.moviehunt.ui.home.models.HomeLoadInitView_
 import com.enginebai.moviehunt.ui.home.models.MovieCarouselModel_
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import com.enginebai.moviehunt.ui.widgets.ListSeparator
+import com.enginebai.moviehunt.ui.widgets.ListSeparator_
+import com.enginebai.moviehunt.ui.widgets.MovieLandscapeHolder_
+import com.enginebai.moviehunt.ui.widgets.TitleHolder_
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import kotlin.properties.Delegates
 
@@ -62,7 +66,11 @@ class MovieHomeController(
                         MovieLandscapeHolder_()
                             .id(movie.id)
                             .movieId(movie.id)
-                            .imagePoster(movie.getPosterUrl())
+                            .imagePoster(
+                                ImageApi.getFullUrl(
+                                    movie.posterPath,
+                                    ImageSize.W500
+                                ))
                             .textTitle(movie.displayTitle())
                             .rating(movie.display5StarsRating())
                             .ratingTotalCountText(movie.displayVoteCount())
