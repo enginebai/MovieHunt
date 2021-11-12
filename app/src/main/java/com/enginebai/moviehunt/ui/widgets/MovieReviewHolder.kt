@@ -4,13 +4,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberImagePainter
@@ -109,8 +110,14 @@ fun MovieReviewWidget(
                     data = avatar,
                     builder = {
                         transformations(CircleCropTransformation())
-                    }), contentDescription = null
+                    }),
+                contentDescription = null,
+                modifier = Modifier
+                    .width(dimensionResource(id = R.dimen.avatar_review))
+                    .height(dimensionResource(id = R.dimen.avatar_review))
+                    .background(colorResource(id = R.color.cardBackground), shape = CircleShape)
             )
+            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.size_8)))
             Column {
                 Text(text = name ?: "")
                 Text(text = createdAtDateText ?: "")
@@ -131,6 +138,7 @@ fun MovieReviewPreview() {
     MovieReviewWidget(
         movieId = "1234",
         name = "Robert",
+        avatar = "https://image.tmdb.org/t/p/w500//4DiJQ1mBp4ztoznZADIrPg69v46.jpg",
         createdAtDateText = Calendar.getInstance().format(),
         rating = 9.5f,
         comment = "The character development for Thanos was so good that it made me think that maybe he was right. He was the villain that surpassed all the other villains from the past Marvel movies. Trust me, this is the movie that might have changed the MCU."
