@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,13 +24,14 @@ import androidx.compose.ui.unit.TextUnitType
 import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
+import com.enginebai.moviehunt.resources.MHThemes
+import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.enginebai.moviehunt.utils.openFragment
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
@@ -65,7 +67,7 @@ class MainActivity : BaseActivity() {
             .subscribe()
             .disposeOnDestroy()
         composeView.setContent {
-            AppCompatTheme {
+            MovieHuntTheme {
                 MovieReviewWidget(
                     movieId = "1234",
                     name = "Robert",

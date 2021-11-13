@@ -12,7 +12,7 @@ object ColorsPalette {
     val grey = Color(0xFFA7A7A9)
 }
 
-object MyColors {
+object MHColors {
     val placeholder = Color(0xFF293E58)
     val ratingBackground = Color(0xFF293E58)
     val background = ColorsPalette.colorPrimary
