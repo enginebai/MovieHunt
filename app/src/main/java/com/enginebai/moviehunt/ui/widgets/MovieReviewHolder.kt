@@ -7,13 +7,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -23,6 +25,9 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.PLACEHOLDER
 import com.enginebai.moviehunt.data.remote.Review
+import com.enginebai.moviehunt.resources.MHColors
+import com.enginebai.moviehunt.resources.MHDimensions
+import com.enginebai.moviehunt.resources.MHStyle
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.loadImage
 import kotlinx.android.synthetic.main.holder_movie_review.view.*
@@ -98,10 +103,10 @@ fun MovieReviewWidget(
 ) {
     Column(
         Modifier.padding(
-            start = dimensionResource(id = R.dimen.page_horizontal_padding),
-            end = dimensionResource(id = R.dimen.page_horizontal_padding),
-            top = dimensionResource(id = R.dimen.size_8),
-            bottom = dimensionResource(id = R.dimen.size_4)
+            start = MHDimensions.pageHorizontalPadding,
+            end = MHDimensions.pageHorizontalPadding,
+            top = 8.dp,
+            bottom = 4.dp
         )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -113,22 +118,42 @@ fun MovieReviewWidget(
                     }),
                 contentDescription = null,
                 modifier = Modifier
-                    .width(dimensionResource(id = R.dimen.avatar_review))
-                    .height(dimensionResource(id = R.dimen.avatar_review))
-                    .background(colorResource(id = R.color.cardBackground), shape = CircleShape)
+                    .width(MHDimensions.avatarReview)
+                    .height(MHDimensions.avatarReview)
+                    .background(MHColors.cardBackground, shape = CircleShape)
             )
-            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.size_8)))
+            Spacer(modifier = Modifier.size(12.dp))
             Column {
-                Text(text = name ?: "")
-                Text(text = createdAtDateText ?: "")
+                Text(text = name ?: "", style = MHStyle.subtitle2)
+                Text(text = createdAtDateText ?: "", style = MHStyle.caption)
             }
-            Text(
-                // TODO: background
-                // TODO: star icon
-                text = rating?.let { "%.1f".format(rating) } ?: run { PLACEHOLDER },
-            )
+            Spacer(modifier = Modifier.weight(1f))
+
+            Row(
+                modifier = Modifier
+                    .background(
+                        color = MHColors.ratingBackground,
+                        shape = RoundedCornerShape(28.dp)
+                    )
+                    .padding(top = 4.dp, bottom = 4.dp, start = 12.dp, end = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(painter = painterResource(id = R.drawable.ic_star_large), contentDescription = null)
+                Spacer(modifier = Modifier.size(4.dp))
+                Text(
+                    text = rating?.let { "%.1f".format(rating) } ?: run { PLACEHOLDER },
+                    style = MHStyle.caption,
+                )
+            }
         }
-        Text(text = comment ?: "")
+        Spacer(modifier = Modifier.size(12.dp))
+        Text(
+            text = comment ?: "",
+            style = MHStyle.body2,
+            maxLines = 5,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
     }
 }
 
