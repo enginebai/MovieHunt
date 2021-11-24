@@ -5,7 +5,7 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
 
 > The new v2 re-design is available. 🎉 Check it out now! 
 
-![MovieHunt](./art/MovieHunt.png)
+<img src='art/home.png' width='25%'/><img src = 'art/home2.png' width='25%'/><img src='art/list.png' width='25%'/><img src ='art/movie_detail.png' width='25%'/>
 
 </p>
 
