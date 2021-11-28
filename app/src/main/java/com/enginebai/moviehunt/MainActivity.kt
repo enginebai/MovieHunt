@@ -54,7 +54,11 @@ class MainActivity : BaseActivity() {
         composeView.setContent {
             MovieHuntTheme {
                 Column {
-                    MovieInfoWidget(movieName = "Star Wars", isBookmark = false)
+                    MovieInfoWidget(
+                        posterUrl = "https://image.tmdb.org/t/p/w780//or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+                        movieName = "Star Wars",
+                        isBookmark = false
+                    )
                     MovieReviewWidget(
                         movieId = "1234",
                         name = "Robert",

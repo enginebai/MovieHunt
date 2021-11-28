@@ -3,6 +3,7 @@ package com.enginebai.moviehunt.ui.detail.holders
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
@@ -10,9 +11,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
@@ -89,10 +92,19 @@ abstract class MovieInfoHolder : EpoxyModelWithHolder<MovieInfoHolder.Holder>() 
 
 @Composable
 fun MovieInfoWidget(
+    posterUrl: String,
     movieName: String,
     isBookmark: Boolean
 ) {
     Column(modifier = Modifier.padding(start = MHDimensions.pagePadding, end = 8.dp)) {
+        Image(
+            painter = rememberImagePainter(data = posterUrl),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(ratio = 3.0f.div(4.0f)),
+            contentScale = ContentScale.Crop
+        )
         Row(
             modifier = Modifier
                 .padding(top = 20.dp)
@@ -124,5 +136,9 @@ fun MovieInfoWidget(
 @Preview
 @Composable
 fun MovieInfoWidgetPreview() {
-    MovieInfoWidget(movieName = "Star Wars", isBookmark = true)
+    MovieInfoWidget(
+        posterUrl = "https://image.tmdb.org/t/p/w780//or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+        movieName = "Star Wars",
+        isBookmark = true
+    )
 }
