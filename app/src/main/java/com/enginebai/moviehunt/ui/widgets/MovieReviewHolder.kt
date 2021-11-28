@@ -103,8 +103,8 @@ fun MovieReviewWidget(
 ) {
     Column(
         Modifier.padding(
-            start = MHDimensions.pageHorizontalPadding,
-            end = MHDimensions.pageHorizontalPadding,
+            start = MHDimensions.pagePadding,
+            end = MHDimensions.pagePadding,
             top = 8.dp,
             bottom = 4.dp
         )
