@@ -58,5 +58,6 @@ object Versions {
         const val activity = "1.3.1"
         const val appCompatTheme = "0.16.0"
         const val compiler = "1.0.5"
+        const val ratingBar = "1.1.1"
     }
 }

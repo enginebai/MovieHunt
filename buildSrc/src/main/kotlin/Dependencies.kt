@@ -86,6 +86,8 @@ object Dependencies {
         const val rxjava2 = "androidx.compose.runtime:runtime-rxjava2:${Versions.JetpackCompose.jetpackCompose}"
         const val activity = "androidx.activity:activity-compose:${Versions.JetpackCompose.activity}"
         const val appCompatTheme = "com.google.accompanist:accompanist-appcompat-theme:${Versions.JetpackCompose.appCompatTheme}"
+
+        const val ratingBar = "com.github.a914-gowtham:compose-ratingbar:${Versions.JetpackCompose.ratingBar}"
     }
 }
 

@@ -96,7 +96,7 @@ fun MovieInfoWidget(
     movieName: String,
     isBookmark: Boolean
 ) {
-    Column(modifier = Modifier.padding(start = MHDimensions.pagePadding, end = 8.dp)) {
+    Column {
         Image(
             painter = rememberImagePainter(data = posterUrl),
             contentDescription = null,
@@ -105,29 +105,32 @@ fun MovieInfoWidget(
                 .aspectRatio(ratio = 3.0f.div(4.0f)),
             contentScale = ContentScale.Crop
         )
-        Row(
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                movieName, style = MHStyle.headline5,
+        Column(modifier = Modifier.padding(start = MHDimensions.pagePadding, end = 8.dp)) {
+            Row(
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterVertically)
-            )
-            IconToggleButton(
-                modifier = Modifier.padding(8.dp),
-                checked = isBookmark,
-                onCheckedChange = {
-                    // TODO:
-                }) {
-                Icon(
-                    painter = painterResource(id = if (isBookmark) R.drawable.ic_bookmarked else R.drawable.ic_bookmark),
-                    contentDescription = null,
-                    tint = ColorsPalette.colorAccent
+                    .padding(top = 20.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    movieName,
+                    style = MHStyle.headline5,
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterVertically)
                 )
+                IconToggleButton(
+                    modifier = Modifier.padding(8.dp),
+                    checked = isBookmark,
+                    onCheckedChange = {
+                        // TODO:
+                    }) {
+                    Icon(
+                        painter = painterResource(id = if (isBookmark) R.drawable.ic_bookmarked else R.drawable.ic_bookmark),
+                        contentDescription = null,
+                        tint = ColorsPalette.colorAccent
+                    )
+                }
             }
         }
     }

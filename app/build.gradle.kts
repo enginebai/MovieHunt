@@ -58,4 +58,5 @@ dependencies {
     implementation(Dependencies.JetpackCompose.rxjava2)
     implementation(Dependencies.JetpackCompose.activity)
     implementation(Dependencies.JetpackCompose.appCompatTheme)
+    implementation(Dependencies.JetpackCompose.ratingBar)
 }
