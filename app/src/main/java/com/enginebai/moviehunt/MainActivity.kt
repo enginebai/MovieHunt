@@ -11,6 +11,7 @@ import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
+import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
@@ -54,19 +55,7 @@ class MainActivity : BaseActivity() {
         composeView.setContent {
             MovieHuntTheme {
                 Column {
-                    MovieInfoWidget(
-                        posterUrl = "https://image.tmdb.org/t/p/w780//or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-                        movieName = "Star Wars",
-                        isBookmark = false
-                    )
-                    MovieReviewWidget(
-                        movieId = "1234",
-                        name = "Robert",
-                        avatar = "https://image.tmdb.org/t/p/w500/4DiJQ1mBp4ztoznZADIrPg69v46.jpg",
-                        createdAtDateText = Calendar.getInstance().format(),
-                        rating = 9.5f,
-                        comment = "The character development for Thanos was so good that it made me think that maybe he was right. He was the villain that surpassed all the other villains from the past Marvel movies. Trust me, this is the movie that might have changed the MCU."
-                    )
+                    MovieInfoWidgetPreview()
                 }
             }
         }

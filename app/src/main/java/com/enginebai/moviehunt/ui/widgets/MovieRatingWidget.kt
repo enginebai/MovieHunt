@@ -16,24 +16,25 @@ import com.gowtham.ratingbar.RatingBar
 
 @Composable
 fun MovieRatingWidget(
-    rating: Float,
-    textRating: String
+    rating: Float? = null,
+    textRating: String? = null
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(top = 8.dp)
     ) {
         RatingBar(
-            value = rating,
+            value = rating ?: 0.0f,
             onValueChange = {},
             onRatingChanged = {},
             isIndicator = true,
             numStars = 5,
+            size = 16.dp,
             activeColor = MHColors.ratingBarActive,
             inactiveColor = MHColors.ratingBarInactive,
         )
         Spacer(modifier = Modifier.width(4.dp))
-        Text(textRating, style = MHStyle.caption)
+        Text(textRating ?: "", style = MHStyle.caption)
     }
 }
 
