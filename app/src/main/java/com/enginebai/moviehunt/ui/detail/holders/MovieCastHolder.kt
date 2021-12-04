@@ -3,11 +3,22 @@ package com.enginebai.moviehunt.ui.detail.holders
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.resources.MHDimensions
+import com.enginebai.moviehunt.resources.MHStyle
 import com.enginebai.moviehunt.utils.loadImage
 import kotlinx.android.synthetic.main.holder_movie_cast.view.*
 
@@ -42,4 +53,40 @@ abstract class MovieCastHolder : EpoxyModelWithHolder<MovieCastHolder.Holder>() 
         }
 
     }
+}
+
+@Composable
+fun MovieCastWidget(
+    avatar: String? = null,
+    actorName: String? = null,
+    character: String? = null
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Image(
+            painter = rememberImagePainter(data = avatar), contentDescription = null,
+            modifier = Modifier.size(MHDimensions.avatarCast)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Column(
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.height(MHDimensions.avatarCast)
+        ) {
+            actorName?.let {
+                Text(it, style = MHStyle.subtitle2)
+            }
+            character?.let {
+                Text(it, style = MHStyle.caption)
+            }
+        }
+    }
+}
+
+@Composable
+@Preview
+fun MovieCastWidgetPreview() {
+    MovieCastWidget(
+        avatar = "https://image.tmdb.org/t/p/w185//fysvehTvU6bE3JgxaOTRfvQJzJ4.jpg",
+        actorName = "Gal Gadot",
+        character = "The Bishop"
+    )
 }

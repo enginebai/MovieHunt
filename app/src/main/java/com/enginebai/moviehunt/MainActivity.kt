@@ -10,6 +10,7 @@ import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.enginebai.moviehunt.resources.MovieHuntTheme
+import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidgetPreview
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
 import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidgetPreview
@@ -57,6 +58,7 @@ class MainActivity : BaseActivity() {
             MovieHuntTheme {
                 Column {
                     MovieTrailerWidgetPreview()
+                    MovieCastWidgetPreview()
                 }
             }
         }
