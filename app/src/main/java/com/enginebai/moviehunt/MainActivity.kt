@@ -12,6 +12,7 @@ import com.enginebai.moviehunt.data.repo.ConfigRepo
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
+import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidgetPreview
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
@@ -55,7 +56,7 @@ class MainActivity : BaseActivity() {
         composeView.setContent {
             MovieHuntTheme {
                 Column {
-                    MovieInfoWidgetPreview()
+                    MovieTrailerWidgetPreview()
                 }
             }
         }
