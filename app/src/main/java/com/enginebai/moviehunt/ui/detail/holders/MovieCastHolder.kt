@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
@@ -63,7 +64,12 @@ fun MovieCastWidget(
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Image(
-            painter = rememberImagePainter(data = avatar), contentDescription = null,
+            painter = rememberImagePainter(
+                data = avatar,
+                builder = {
+                    transformations(CircleCropTransformation())
+                },
+            ), contentDescription = null,
             modifier = Modifier.size(MHDimensions.avatarCast)
         )
         Spacer(modifier = Modifier.width(8.dp))

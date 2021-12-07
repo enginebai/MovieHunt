@@ -16,6 +16,7 @@ import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
 import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidgetPreview
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
+import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidgetPreview
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.ExceptionHandler
@@ -57,8 +58,8 @@ class MainActivity : BaseActivity() {
         composeView.setContent {
             MovieHuntTheme {
                 Column {
-                    MovieTrailerWidgetPreview()
                     MovieCastWidgetPreview()
+                    MoviePortraitWidgetPreview()
                 }
             }
         }
