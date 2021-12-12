@@ -159,7 +159,7 @@ fun MovieReviewWidget(
 
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
-fun MovieReviewPreview() {
+fun MovieReviewWidgetPreview() {
     MovieReviewWidget(
         movieId = "1234",
         name = "Robert",

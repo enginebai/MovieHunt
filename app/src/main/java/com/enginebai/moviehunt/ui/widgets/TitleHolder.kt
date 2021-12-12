@@ -69,7 +69,7 @@ fun TitleWidget(
             Button(onClick = { onClickListener.invoke() }) {
                 Text(
                     text = stringResource(id = R.string.see_all),
-                    style = MHStyle.caption.copy(color = ColorsPalette.colorAccent)
+                    style = MHStyle.subtitle2.copy(color = ColorsPalette.colorAccent)
                 )
             }
         }

@@ -18,6 +18,7 @@ import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidgetPreview
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
+import com.enginebai.moviehunt.ui.widgets.TitleWidgetPreview
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.enginebai.moviehunt.utils.openFragment
@@ -55,14 +56,6 @@ class MainActivity : BaseActivity() {
             }
             .subscribe()
             .disposeOnDestroy()
-        composeView.setContent {
-            MovieHuntTheme {
-                Column {
-                    MovieCastWidgetPreview()
-                    MoviePortraitWidgetPreview()
-                }
-            }
-        }
     }
 
     override fun onStart() {

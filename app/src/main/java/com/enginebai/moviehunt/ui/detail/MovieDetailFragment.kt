@@ -4,16 +4,22 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.Modifier
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.remote.ImageApi
-import com.enginebai.moviehunt.data.remote.ImageSize
+import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
+import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidgetPreview
+import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
+import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidgetPreview
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
-import com.enginebai.moviehunt.utils.loadImage
+import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidgetPreview
+import com.enginebai.moviehunt.ui.widgets.MovieReviewWidgetPreview
+import com.enginebai.moviehunt.ui.widgets.TitleWidgetPreview
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -45,30 +51,21 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
+//        setupToolbar()
         detailViewMovieModel.fetchMovieDetail(arguments?.getString(FIELD_MOVIE_ID)!!)
-        listContent.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
-        listContent.setController(detailController)
-
-        detailViewMovieModel.movieDetail.observe(viewLifecycleOwner, {
-            imagePoster.loadImage(ImageApi.getFullUrl(it.posterPath, ImageSize.W780))
-            detailController.detail = it
-        })
-        detailViewMovieModel.videos.observe(viewLifecycleOwner, {
-            detailController.videos = it
-        })
-        detailViewMovieModel.review.observe(viewLifecycleOwner, {
-            detailController.review = it
-        })
-        detailViewMovieModel.casts.observe(viewLifecycleOwner, {
-            detailController.casts = it
-        })
-        detailViewMovieModel.similarMovies.observe(viewLifecycleOwner, {
-            detailController.similarMovies = it
-        })
-        detailViewMovieModel.recommendationMovies.observe(viewLifecycleOwner, {
-            detailController.recommendationMovies = it
-        })
+        composeView.apply {
+            setContent {
+                MovieHuntTheme {
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        MovieInfoWidgetPreview()
+                        MovieTrailerWidgetPreview()
+                        MovieReviewWidgetPreview()
+                        MovieCastWidgetPreview()
+                        MoviePortraitWidgetPreview()
+                    }
+                }
+            }
+        }
     }
 
     private fun setupToolbar() {

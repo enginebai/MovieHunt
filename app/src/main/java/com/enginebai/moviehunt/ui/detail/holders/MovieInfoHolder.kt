@@ -106,10 +106,7 @@ fun MovieInfoWidget(
     runtimeText: String? = null,
     overview: String? = null
 ) {
-    Column(
-        // FIXME: remove this scroll here
-        modifier = Modifier.verticalScroll(rememberScrollState())
-    ) {
+    Column {
         Image(
             painter = rememberImagePainter(data = posterUrl),
             contentDescription = null,
