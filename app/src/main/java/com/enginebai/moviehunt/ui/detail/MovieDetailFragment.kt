@@ -4,7 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -12,6 +17,8 @@ import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
@@ -20,22 +27,18 @@ import com.enginebai.moviehunt.data.local.displayDuration
 import com.enginebai.moviehunt.data.local.displayVoteCount
 import com.enginebai.moviehunt.data.remote.ImageApi
 import com.enginebai.moviehunt.data.remote.ImageSize
+import com.enginebai.moviehunt.resources.MHDimensions
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidgetPreview
-import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
-import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
-import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidgetPreview
+import com.enginebai.moviehunt.ui.detail.holders.*
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
-import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidgetPreview
-import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
-import com.enginebai.moviehunt.ui.widgets.MovieReviewWidgetPreview
-import com.enginebai.moviehunt.ui.widgets.TitleWidgetPreview
+import com.enginebai.moviehunt.ui.widgets.*
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MovieDetailFragment : BaseFragment(), MovieClickListener {
 
@@ -98,6 +101,7 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
 @Composable
 fun MovieDetail(viewModel: MovieDetailViewModel) {
     val detail by viewModel.movieDetail.observeAsState()
+    val videos by viewModel.videos.observeAsState()
     val review by viewModel.review.observeAsState()
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -114,9 +118,28 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
             )
         }
 
-        MovieTrailerWidgetPreview()
+        if (!videos.isNullOrEmpty()) {
+            TitleWidget(title = stringResource(id = R.string.title_trailers))
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
+            ) {
+                items(videos!!) { video ->
+                    MovieTrailerWidget(
+                        thumbnail = video.youtubeThumbnail,
+                        trailerUrl = video.youtubeVideo,
+                    ) {
+                        // TODO: play trailer
+                    }
+                }
+            }
+//            Row {
+//               MovieTrailerWidget(videos!!.first().youtubeThumbnail, videos!!.first().youtubeVideo)
+//            }
+        }
 
         review?.let { review ->
+            TitleWidget(title = stringResource(id = R.string.title_reviews))
             MovieReviewWidget(
                 avatar = review.author?.getAvatarFullPath(),
                 name = review.author?.username,
