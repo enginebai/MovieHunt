@@ -4,10 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -103,6 +100,10 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
     val detail by viewModel.movieDetail.observeAsState()
     val videos by viewModel.videos.observeAsState()
     val review by viewModel.review.observeAsState()
+    val casts by viewModel.casts.observeAsState()
+
+    val horizontalArrangement = Arrangement.spacedBy(8.dp)
+    val horizontalContentPadding = PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         detail?.let { detail ->
@@ -121,8 +122,8 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
         if (!videos.isNullOrEmpty()) {
             TitleWidget(title = stringResource(id = R.string.title_trailers))
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
+                horizontalArrangement = horizontalArrangement,
+                contentPadding = horizontalContentPadding
             ) {
                 items(videos!!) { video ->
                     MovieTrailerWidget(
@@ -133,13 +134,11 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
                     }
                 }
             }
-//            Row {
-//               MovieTrailerWidget(videos!!.first().youtubeThumbnail, videos!!.first().youtubeVideo)
-//            }
         }
 
         review?.let { review ->
             TitleWidget(title = stringResource(id = R.string.title_reviews))
+            Spacer(modifier = Modifier.height(4.dp))
             MovieReviewWidget(
                 avatar = review.author?.getAvatarFullPath(),
                 name = review.author?.username,
@@ -148,7 +147,23 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
                 createdAtDateText = review.createdAt?.format()
             )
         }
-        MovieCastWidgetPreview()
+
+        if (!casts.isNullOrEmpty()) {
+            TitleWidget(title = stringResource(id = R.string.title_casts))
+            LazyRow(
+                horizontalArrangement = horizontalArrangement,
+                contentPadding = horizontalContentPadding
+            ) {
+                items(casts!!) { cast ->
+                    MovieCastWidget(
+                        avatar = cast.getAvatarFullPath(),
+                        actorName = cast.actorName,
+                        character = cast.character
+                    )
+
+                }
+            }
+        }
         MoviePortraitWidgetPreview()
     }
 }
