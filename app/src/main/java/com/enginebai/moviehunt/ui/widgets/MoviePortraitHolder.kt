@@ -104,7 +104,7 @@ fun MoviePortraitWidget(
     ) {
         Column(modifier = Modifier
             .padding(bottom = 12.dp)
-            .width(160.dp)) {
+            .width(128.dp)) {
             Image(
                 painter = rememberImagePainter(data = posterUrl), contentDescription = null,
                 modifier = Modifier.aspectRatio(9f.div(16)),

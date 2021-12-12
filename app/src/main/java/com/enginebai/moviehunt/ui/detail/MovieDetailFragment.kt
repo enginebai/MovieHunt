@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -19,23 +18,23 @@ import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.local.display5StarsRating
-import com.enginebai.moviehunt.data.local.displayDuration
-import com.enginebai.moviehunt.data.local.displayVoteCount
+import com.enginebai.moviehunt.data.local.*
 import com.enginebai.moviehunt.data.remote.ImageApi
 import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.resources.MHDimensions
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.detail.holders.*
+import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidget
+import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
+import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidget
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
-import com.enginebai.moviehunt.ui.widgets.*
+import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
+import com.enginebai.moviehunt.ui.widgets.TitleWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class MovieDetailFragment : BaseFragment(), MovieClickListener {
 
@@ -101,9 +100,28 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
     val videos by viewModel.videos.observeAsState()
     val review by viewModel.review.observeAsState()
     val casts by viewModel.casts.observeAsState()
+    val recommendationMovies by viewModel.recommendationMovies.observeAsState()
+    val similarMovies by viewModel.similarMovies.observeAsState()
 
     val horizontalArrangement = Arrangement.spacedBy(8.dp)
-    val horizontalContentPadding = PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
+    val horizontalContentPadding =
+        PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
+
+    @Composable
+    fun buildMovieCarousel(title: String, movieList: List<MovieModel>?) {
+        if (!movieList.isNullOrEmpty()) {
+            TitleWidget(title = title)
+
+            LazyRow(
+                horizontalArrangement = horizontalArrangement,
+                contentPadding = horizontalContentPadding
+            ) {
+                items(movieList) { movie ->
+                    movie.PortraitWidget()
+                }
+            }
+        }
+    }
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         detail?.let { detail ->
@@ -164,7 +182,15 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
                 }
             }
         }
-        MoviePortraitWidgetPreview()
+
+        buildMovieCarousel(
+            title = stringResource(id = R.string.title_recommendation_movies),
+            movieList = recommendationMovies
+        )
+        buildMovieCarousel(
+            title = stringResource(id = R.string.title_similar_movies),
+            movieList = similarMovies
+        )
     }
 }
 
