@@ -94,7 +94,6 @@ abstract class MovieReviewHolder : EpoxyModelWithHolder<MovieReviewHolder.Holder
 
 @Composable
 fun MovieReviewWidget(
-    movieId: String? = null,
     avatar: String? = null,
     name: String? = null,
     createdAtDateText: String? = null,
@@ -161,7 +160,6 @@ fun MovieReviewWidget(
 @Preview(showSystemUi = true, showBackground = true)
 fun MovieReviewWidgetPreview() {
     MovieReviewWidget(
-        movieId = "1234",
         name = "Robert",
         avatar = "https://image.tmdb.org/t/p/w500/4DiJQ1mBp4ztoznZADIrPg69v46.jpg",
         createdAtDateText = Calendar.getInstance().format(),
