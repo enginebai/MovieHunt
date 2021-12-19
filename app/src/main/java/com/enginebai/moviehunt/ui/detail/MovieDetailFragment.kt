@@ -49,14 +49,6 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
     }
 
     private val detailViewMovieModel by viewModel<MovieDetailViewModel>()
-    private val detailController by lazy {
-        MovieDetailController(
-            requireContext(),
-            ::onTrailerClicked,
-            ::onReviewSeeAllClicked,
-            this
-        )
-    }
 
     override fun getLayoutId() = R.layout.fragment_movie_detail
 
@@ -66,9 +58,13 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
         composeView.apply {
             setContent {
                 MovieHuntTheme {
-                    MovieDetail(detailViewMovieModel, onBackButtonClicked = {
-                        activity?.onBackPressed()
-                    }, this@MovieDetailFragment)
+                    MovieDetail(
+                        detailViewMovieModel, onBackButtonClicked = {
+                            activity?.onBackPressed()
+                        }, ::onTrailerClicked,
+                        ::onReviewSeeAllClicked,
+                        this@MovieDetailFragment
+                    )
                 }
             }
         }
@@ -154,7 +150,7 @@ fun MovieDetail(
                         thumbnail = video.youtubeThumbnail,
                         trailerUrl = video.youtubeVideo,
                     ) {
-                        // TODO: play trailer
+                        trailerClickListener.invoke(video.youtubeVideo)
                     }
                 }
             }
@@ -162,7 +158,9 @@ fun MovieDetail(
 
         review?.let { review ->
             Spacer(modifier = Modifier.height(paddingAboveTitle))
-            TitleWidget(title = stringResource(id = R.string.title_reviews))
+            TitleWidget(title = stringResource(id = R.string.title_reviews), onClickListener = {
+                detail?.id?.let { reviewSeeAllClickListener.invoke(it) }
+            })
             Spacer(modifier = Modifier.height(4.dp))
             MovieReviewWidget(
                 avatar = review.author?.getAvatarFullPath(),
