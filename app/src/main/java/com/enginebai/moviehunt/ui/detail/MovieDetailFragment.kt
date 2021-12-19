@@ -28,7 +28,6 @@ import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidget
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
 import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidget
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
-import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidgetPreview
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
 import com.enginebai.moviehunt.ui.widgets.TitleWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
@@ -63,20 +62,15 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setupToolbar()
         detailViewMovieModel.fetchMovieDetail(arguments?.getString(FIELD_MOVIE_ID)!!)
         composeView.apply {
             setContent {
                 MovieHuntTheme {
-                    MovieDetail(detailViewMovieModel)
+                    MovieDetail(detailViewMovieModel, onBackButtonClicked = {
+                        activity?.onBackPressed()
+                    }, this@MovieDetailFragment)
                 }
             }
-        }
-    }
-
-    private fun setupToolbar() {
-        buttonBack.setOnClickListener {
-            activity?.onBackPressed()
         }
     }
 
@@ -96,7 +90,13 @@ class MovieDetailFragment : BaseFragment(), MovieClickListener {
 }
 
 @Composable
-fun MovieDetail(viewModel: MovieDetailViewModel) {
+fun MovieDetail(
+    viewModel: MovieDetailViewModel,
+    onBackButtonClicked: () -> Unit,
+    trailerClickListener: (String) -> Unit,
+    reviewSeeAllClickListener: (String) -> Unit,
+    movieClickListener: MovieClickListener
+) {
     val detail by viewModel.movieDetail.observeAsState()
     val videos by viewModel.videos.observeAsState()
     val review by viewModel.review.observeAsState()
@@ -107,18 +107,21 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
     val horizontalArrangement = Arrangement.spacedBy(8.dp)
     val horizontalContentPadding =
         PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
+    val paddingAboveTitle = 16.dp
 
     @Composable
     fun buildMovieCarousel(title: String, movieList: List<MovieModel>?) {
         if (!movieList.isNullOrEmpty()) {
+            Spacer(modifier = Modifier.height(paddingAboveTitle))
             TitleWidget(title = title)
-
             LazyRow(
                 horizontalArrangement = horizontalArrangement,
                 contentPadding = horizontalContentPadding
             ) {
                 items(movieList) { movie ->
-                    movie.PortraitWidget()
+                    movie.PortraitWidget {
+                        movieClickListener.onMovieClicked(it)
+                    }
                 }
             }
         }
@@ -126,7 +129,6 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         detail?.let { detail ->
-            MovieLandscapeWidgetPreview()
             MovieInfoWidget(
                 posterUrl = ImageApi.getFullUrl(detail.posterPath, ImageSize.W780),
                 movieName = detail.title,
@@ -135,11 +137,13 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
                 genres = detail.genreList?.map { it.name }?.joinToString(),
                 releaseDateText = detail.releaseDate?.format(),
                 runtimeText = detail.displayDuration(),
-                overview = detail.overview
+                overview = detail.overview,
+                onBackButtonClicked = onBackButtonClicked
             )
         }
 
         if (!videos.isNullOrEmpty()) {
+            Spacer(modifier = Modifier.height(paddingAboveTitle))
             TitleWidget(title = stringResource(id = R.string.title_trailers))
             LazyRow(
                 horizontalArrangement = horizontalArrangement,
@@ -157,6 +161,7 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
         }
 
         review?.let { review ->
+            Spacer(modifier = Modifier.height(paddingAboveTitle))
             TitleWidget(title = stringResource(id = R.string.title_reviews))
             Spacer(modifier = Modifier.height(4.dp))
             MovieReviewWidget(
@@ -169,6 +174,7 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
         }
 
         if (!casts.isNullOrEmpty()) {
+            Spacer(modifier = Modifier.height(paddingAboveTitle))
             TitleWidget(title = stringResource(id = R.string.title_casts))
             LazyRow(
                 horizontalArrangement = horizontalArrangement,

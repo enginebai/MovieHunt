@@ -74,7 +74,7 @@ fun MovieModel.toPortraitHolder(): MoviePortraitHolder_ = MoviePortraitHolder_()
     .releaseYear(this.releaseDate?.get(Calendar.YEAR))
 
 @Composable
-fun MovieModel.PortraitWidget() {
+fun MovieModel.PortraitWidget(onClick: (String) -> Unit) {
     MoviePortraitWidget(
         movieId = this.id,
         posterUrl = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
@@ -82,6 +82,7 @@ fun MovieModel.PortraitWidget() {
         rating = this.display5StarsRating(),
         ratingTotalCountText = this.displayVoteCount(),
         genre = this.genreList?.firstOrNull()?.name,
-        releaseYear = this.releaseDate?.get(Calendar.YEAR)
+        releaseYear = this.releaseDate?.get(Calendar.YEAR),
+        onClickListener = onClick
     )
 }

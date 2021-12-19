@@ -4,13 +4,15 @@ import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -103,17 +105,31 @@ fun MovieInfoWidget(
     genres: String? = null,
     releaseDateText: String? = null,
     runtimeText: String? = null,
-    overview: String? = null
+    overview: String? = null,
+    onBackButtonClicked: () -> Unit = {}
 ) {
     Column {
-        Image(
-            painter = rememberImagePainter(data = posterUrl),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(ratio = 3.0f.div(4.0f)),
-            contentScale = ContentScale.Crop
-        )
+        Box {
+            Image(
+                painter = rememberImagePainter(data = posterUrl),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(ratio = 3.0f.div(4.0f)),
+                contentScale = ContentScale.Crop
+            )
+            IconButton(onClick = onBackButtonClicked, modifier = Modifier.padding(start = 8.dp, top = 8.dp)) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .padding(12.dp)
+                    ,
+                    tint = Color.White
+                )
+            }
+        }
         Column(modifier = Modifier.padding(start = MHDimensions.pagePadding, end = 8.dp)) {
             Row(
                 modifier = Modifier
@@ -160,6 +176,7 @@ fun MovieInfoWidget(
             if (!overview.isNullOrBlank()) {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(stringResource(id = R.string.title_overview), style = MHStyle.headline6)
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     overview, style = MHStyle.body2,
                     modifier = Modifier.padding(vertical = 8.dp)
