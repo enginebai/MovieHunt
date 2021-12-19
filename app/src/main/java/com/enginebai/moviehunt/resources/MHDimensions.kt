@@ -8,4 +8,5 @@ object MHDimensions {
     val avatarCast = 48.dp
     val corner = 8.dp
 
+    val posterHeight = 160.dp
 }

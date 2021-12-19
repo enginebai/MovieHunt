@@ -5,8 +5,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
@@ -27,6 +25,7 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.resources.ColorsPalette
 import com.enginebai.moviehunt.resources.MHDimensions
 import com.enginebai.moviehunt.resources.MHStyle
+import com.enginebai.moviehunt.ui.widgets.BookmarkButton
 import com.enginebai.moviehunt.ui.widgets.MovieRatingWidget
 import kotlinx.android.synthetic.main.holder_movie_info.view.*
 import kotlinx.android.synthetic.main.view_rating.view.*
@@ -99,7 +98,7 @@ fun MovieInfoWidget(
     posterUrl: String? = null,
     movieName: String? = null,
     isBookmark: Boolean = false,
-    rating: Float? = null,
+    rating: Float = 0.0f,
     ratingTotalCountText: String? = null,
     genres: String? = null,
     releaseDateText: String? = null,
@@ -129,19 +128,14 @@ fun MovieInfoWidget(
                     modifier = Modifier
                         .align(alignment = Alignment.CenterVertically)
                 )
-                IconToggleButton(
-                    checked = isBookmark,
-                    onCheckedChange = {
-                        // TODO:
-                    }) {
-                    Icon(
-                        painter = painterResource(id = if (isBookmark) R.drawable.ic_bookmarked else R.drawable.ic_bookmark),
-                        contentDescription = null,
-                        tint = ColorsPalette.colorAccent
-                    )
-                }
+                BookmarkButton(isBookmark = isBookmark, onCheckedChange = {
+                    // TODO: bookmark feature
+                })
             }
-            MovieRatingWidget(rating = rating, textRating = ratingTotalCountText)
+            MovieRatingWidget(
+                rating = rating,
+                textRating = stringResource(R.string.reviews_total_count, ratingTotalCountText ?: "")
+            )
             Text(
                 genres ?: "",
                 style = MHStyle.caption.copy(color = ColorsPalette.grey),

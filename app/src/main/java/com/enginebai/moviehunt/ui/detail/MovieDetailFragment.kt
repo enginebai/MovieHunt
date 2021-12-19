@@ -28,6 +28,7 @@ import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidget
 import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
 import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidget
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
+import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidgetPreview
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
 import com.enginebai.moviehunt.ui.widgets.TitleWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
@@ -125,12 +126,13 @@ fun MovieDetail(viewModel: MovieDetailViewModel) {
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         detail?.let { detail ->
+            MovieLandscapeWidgetPreview()
             MovieInfoWidget(
                 posterUrl = ImageApi.getFullUrl(detail.posterPath, ImageSize.W780),
                 movieName = detail.title,
                 rating = detail.display5StarsRating(),
                 ratingTotalCountText = detail.displayVoteCount(),
-                genres = detail.genreList?.map { it.name }?.joinToString(","),
+                genres = detail.genreList?.map { it.name }?.joinToString(),
                 releaseDateText = detail.releaseDate?.format(),
                 runtimeText = detail.displayDuration(),
                 overview = detail.overview
