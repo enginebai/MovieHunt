@@ -9,7 +9,7 @@ import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ApiPageKeyedDataSource<T>(
+abstract class ApiPageKeyedDataSource<T : Any>(
     private val initLoadState: BehaviorSubject<NetworkState>,
     private val loadMoreState: BehaviorSubject<NetworkState>
 ) : PageKeyedDataSource<Int, T>(), KoinComponent {
@@ -70,7 +70,7 @@ abstract class ApiPageKeyedDataSource<T>(
     }
 }
 
-abstract class ApiPageKeyedDataSourceFactory<T> : DataSource.Factory<Int, T>() {
+abstract class ApiPageKeyedDataSourceFactory<T : Any> : DataSource.Factory<Int, T>() {
     val initLoadState = BehaviorSubject.createDefault(NetworkState.IDLE)
     val loadMoreState = BehaviorSubject.createDefault(NetworkState.IDLE)
 

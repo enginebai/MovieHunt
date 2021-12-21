@@ -28,7 +28,7 @@ object Versions {
     const val testRunner = "1.2.0"
 
     object Android {
-        const val sdk = 30
+        const val sdk = 31
         const val minSdk = 26
     }
 
@@ -46,10 +46,7 @@ object Versions {
     }
 
     object ArchitectureComponents {
-        const val lifecycle = "2.3.1"
-
-        // TODO: migrate to v3
-        const val paging = "2.1.2"
+        const val paging = "3.1.0"
         const val room = "2.3.0"
     }
 
