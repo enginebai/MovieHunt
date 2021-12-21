@@ -4,36 +4,23 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
-import com.enginebai.moviehunt.resources.MovieHuntTheme
-import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidgetPreview
-import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
-import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidgetPreview
-import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidgetPreview
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
 import com.enginebai.moviehunt.ui.home.SplashFragment
-import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidgetPreview
-import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
-import com.enginebai.moviehunt.ui.widgets.TitleWidgetPreview
-import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.SerialDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
-import java.util.*
 import java.util.concurrent.TimeUnit
 
-@ExperimentalUnitApi
 class MainActivity : BaseActivity() {
 
     private val mainViewModel by viewModel<MainViewModel>()

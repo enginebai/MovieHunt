@@ -13,7 +13,7 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
 * 100% Kotlin
 * MVVM architecture
 * Reactive pattern
-* Android architecture components and Jetpack libraries
+* Android Architecture Components and Jetpack Compose.
 * Single activity pattern
 * Dependency injection
 * CI support (Upcoming)
