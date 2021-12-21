@@ -20,6 +20,10 @@ android {
 
     buildFeatures {
         dataBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.JetpackCompose.compiler
     }
 }
 
@@ -30,6 +34,7 @@ dependencies {
     "kapt"(Dependencies.Epoxy.processor)
 
     implementation(Dependencies.coil)
+    implementation(Dependencies.coilCompose)
 
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.ktx)
@@ -44,4 +49,14 @@ dependencies {
     implementation(Dependencies.Retrofit.core)
     implementation(Dependencies.Retrofit.gsonConverter)
     implementation(Dependencies.Retrofit.rxJavaAdapter)
+
+    implementation(Dependencies.JetpackCompose.ui)
+    implementation(Dependencies.JetpackCompose.tooling)
+    implementation(Dependencies.JetpackCompose.foundation)
+    implementation(Dependencies.JetpackCompose.material)
+    implementation(Dependencies.JetpackCompose.liveData)
+    implementation(Dependencies.JetpackCompose.rxjava2)
+    implementation(Dependencies.JetpackCompose.activity)
+    implementation(Dependencies.JetpackCompose.appCompatTheme)
+    implementation(Dependencies.JetpackCompose.ratingBar)
 }

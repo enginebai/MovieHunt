@@ -1,5 +1,6 @@
 package com.enginebai.moviehunt.data.local
 
+import androidx.compose.runtime.Composable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -9,6 +10,7 @@ import com.enginebai.moviehunt.data.remote.ImageApi
 import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitHolder_
+import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
@@ -70,3 +72,17 @@ fun MovieModel.toPortraitHolder(): MoviePortraitHolder_ = MoviePortraitHolder_()
     .ratingTotalCountText(this.displayVoteCount())
     .genre(this.genreList?.firstOrNull()?.name)
     .releaseYear(this.releaseDate?.get(Calendar.YEAR))
+
+@Composable
+fun MovieModel.PortraitWidget(onClick: (String) -> Unit) {
+    MoviePortraitWidget(
+        movieId = this.id,
+        posterUrl = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
+        movieName = this.displayTitle(),
+        rating = this.display5StarsRating(),
+        ratingTotalCountText = this.displayVoteCount(),
+        genre = this.genreList?.firstOrNull()?.name,
+        releaseYear = this.releaseDate?.get(Calendar.YEAR),
+        onClickListener = onClick
+    )
+}

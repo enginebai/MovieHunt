@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo

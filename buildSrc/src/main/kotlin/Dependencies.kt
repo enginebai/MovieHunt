@@ -17,6 +17,7 @@ object Dependencies {
 
     const val androidBase = "com.github.enginebai:AndroidBase:${Versions.androidBase}"
     const val coil = "io.coil-kt:coil:${Versions.coil}"
+    const val coilCompose = "io.coil-kt:coil-compose:${Versions.coil}"
     const val snapHelper = "com.github.rubensousa:gravitysnaphelper:${Versions.snapHelper}"
 
     object Kotlin {
@@ -74,6 +75,19 @@ object Dependencies {
         const val annotation = "androidx.room:room-compiler:${Versions.ArchitectureComponents.room}"
         const val ktx = "androidx.room:room-ktx:${Versions.ArchitectureComponents.room}"
         const val rxjava2 = "androidx.room:room-rxjava2:${Versions.ArchitectureComponents.room}"
+    }
+
+    object JetpackCompose {
+        const val ui = "androidx.compose.ui:ui:${Versions.JetpackCompose.jetpackCompose}"
+        const val tooling = "androidx.compose.ui:ui-tooling:${Versions.JetpackCompose.jetpackCompose}"
+        const val foundation = "androidx.compose.foundation:foundation:${Versions.JetpackCompose.jetpackCompose}"
+        const val material = "androidx.compose.material:material:${Versions.JetpackCompose.jetpackCompose}"
+        const val liveData = "androidx.compose.runtime:runtime-livedata:${Versions.JetpackCompose.jetpackCompose}"
+        const val rxjava2 = "androidx.compose.runtime:runtime-rxjava2:${Versions.JetpackCompose.jetpackCompose}"
+        const val activity = "androidx.activity:activity-compose:${Versions.JetpackCompose.activity}"
+        const val appCompatTheme = "com.google.accompanist:accompanist-appcompat-theme:${Versions.JetpackCompose.appCompatTheme}"
+
+        const val ratingBar = "com.github.a914-gowtham:compose-ratingbar:${Versions.JetpackCompose.ratingBar}"
     }
 }
 
