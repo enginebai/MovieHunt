@@ -9,6 +9,7 @@ import io.reactivex.subjects.BehaviorSubject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+@Deprecated("Use MoviePagingSource")
 abstract class ApiPageKeyedDataSource<T : Any>(
     private val initLoadState: BehaviorSubject<NetworkState>,
     private val loadMoreState: BehaviorSubject<NetworkState>
