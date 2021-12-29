@@ -1,6 +1,7 @@
 package com.enginebai.moviehunt.ui.home.controller
 
 import android.content.Context
+import androidx.paging.LoadState
 import com.airbnb.epoxy.EpoxyController
 import com.enginebai.base.utils.NetworkState
 import com.enginebai.moviehunt.data.local.MovieModel
@@ -47,7 +48,7 @@ class MovieHomeController(
                 .addTo(this)
             for (i in 1..1) ListSeparator_().id("${ListSeparator::class.java.simpleName} $category padding bottom")
                 .addTo(this)
-            if (listing.loadingState == NetworkState.LOADING) {
+            if (listing.loadingState == LoadState.Loading) {
                 HomeLoadInitView_()
                     .id("${category.key} loading")
                     .addTo(this)

@@ -20,7 +20,7 @@ const val DEFAULT_PAGE_SIZE = 5
 
 interface MovieRepo {
 
-    fun fetchMoviePagedListing(
+    fun fetchMoviePagingData(
             category: MovieCategory,
             pageSize: Int = DEFAULT_PAGE_SIZE
     ): Flowable<PagingData<MovieListResponse>>
@@ -54,7 +54,7 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     private val movieDao: MovieDao by inject()
     private val nextPageIndex: NextPageIndex by lazy { IncrementalNextPage() }
 
-    override fun fetchMoviePagedListing(
+    override fun fetchMoviePagingData(
             category: MovieCategory,
             pageSize: Int
     ): Flowable<PagingData<MovieListResponse>> {

@@ -79,7 +79,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     }
 
     private fun subscribePagingDataFromRemote() {
-        val pagingData = viewModel.fetchPagedListing(movieCategory)
+        val pagingData = viewModel.fetchPagingData(movieCategory)
         pagingData.doOnNext {
             // TODO: double check if this coroutine runs correctly.
             lifecycleScope.launch {
