@@ -14,6 +14,7 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
 * MVVM architecture
 * Reactive pattern
 * Android Architecture Components and Jetpack Compose.
+* Kotlin Coroutines + Flow (Upcoming)
 * Single activity pattern
 * Dependency injection
 * CI support (Upcoming)
@@ -26,19 +27,19 @@ MovieHunt is a sample Android project using <a href="https://www.themoviedb.org/
 * [Koin](https://insert-koin.io/) - Dependency injection.
 * [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - A collections of libraries that help you design rebust, testable and maintainable apps.
     * [Room](https://developer.android.com/training/data-storage/room) - Local persistence database.
-    * [Paging](https://developer.android.com/topic/libraries/architecture/paging) - Pagination loading for RecyclerView.
+    * [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - Pagination loading for RecyclerView.
     * [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) - UI related data holder, lifecycle aware.
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
     * [Data Binding](https://developer.android.com/topic/libraries/data-binding) - Declarative way to bind data to UI layout.
     * [Navigation component](https://developer.android.com/guide/navigation) - Fragment routing handler. (Upcoming)
     * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Tasks scheduler in background jobs. (Upcoming)
-* ~[RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.~ Replaced by Coroutine + Flow.
-* (Upcoming) [Flow](https://developer.android.com/kotlin/flow) Stream of value that returns from suspend function.
-* (Implementing) [Coroutine](https://developer.android.com/kotlin/coroutines) Concurrency design pattern for asynchronous programming.
+* (Implementing) [Jetpack Compose](https://developer.android.com/jetpack/compose) - Declarative and simplified way for UI development.
 * ~[Epoxy](https://github.com/airbnb/epoxy) - Simplified way to build complex layout in RecyclerView.~ Replaced by Jetpack Compose.
+* (Implementing) [Coroutine](https://developer.android.com/kotlin/coroutines) Concurrency design pattern for asynchronous programming.
+* (Upcoming) [Flow](https://developer.android.com/kotlin/flow) Stream of value that returns from suspend function.
+* ~[RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous programming with observable streams.~ (Upcoming) Replaced by Coroutine + Flow.
 * [Coil](https://github.com/coil-kt/coil) - Image loading.
 * [Timber](https://github.com/JakeWharton/timber) - Extensible API for logging.
-* (Implementing) [Jetpack Compose](https://developer.android.com/jetpack/compose) - Declarative and simplified way for UI development. 
 
 ## Architectures
 
