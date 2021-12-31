@@ -1,7 +1,6 @@
 package com.enginebai.moviehunt.ui.home.controller
 
 import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
