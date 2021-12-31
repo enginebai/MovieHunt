@@ -3,12 +3,10 @@ package com.enginebai.moviehunt.data.remote
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.enginebai.moviehunt.ui.list.MovieCategory
-import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.concurrent.TimeUnit
 
 abstract class ApiPagingSource<T : Any> : RxPagingSource<Int, T>(), KoinComponent {
 
@@ -20,6 +18,7 @@ abstract class ApiPagingSource<T : Any> : RxPagingSource<Int, T>(), KoinComponen
         val currentPage = params.key ?: 1
         return apiFetch(currentPage)
             .subscribeOn(Schedulers.io())
+            .onErrorReturn { TmdbApiResponse() }
             .map { tmdbApiResponse ->
                 tmdbApiResponse.results?.let { list ->
                     val nextKey = if (list.isEmpty()) null else currentPage + 1
@@ -50,8 +49,13 @@ abstract class ApiPagingSource<T : Any> : RxPagingSource<Int, T>(), KoinComponen
 class MovieListPagingSource(
     private val category: MovieCategory
 ) : ApiPagingSource<MovieListResponse>() {
-
     private val api: MovieApiService by inject()
-
     override fun apiFetch(page: Int) = api.fetchMovieList(category.key, page)
+}
+
+class MovieReviewPagingSource(
+    private val movieId: String
+) : ApiPagingSource<Review>() {
+    private val api: MovieApiService by inject()
+    override fun apiFetch(page: Int) = api.fetchMovieReviews(movieId, page)
 }

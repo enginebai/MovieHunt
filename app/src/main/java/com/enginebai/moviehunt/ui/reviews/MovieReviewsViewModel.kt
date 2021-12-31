@@ -7,5 +7,5 @@ import org.koin.core.component.inject
 class MovieReviewsViewModel : BaseViewModel() {
     private val movieRepo by inject<MovieRepo>()
 
-    fun fetchReviews(movieId: String) = movieRepo.fetchMovieReviewPagedListing(movieId)
+    fun fetchReviews(movieId: String) = movieRepo.fetchMovieReviewPagingData(movieId)
 }
