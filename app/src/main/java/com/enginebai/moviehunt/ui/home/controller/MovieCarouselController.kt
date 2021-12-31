@@ -1,7 +1,7 @@
 package com.enginebai.moviehunt.ui.home.controller
 
 import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.paging.PagedListEpoxyController
+import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.home.models.HomeLoadMoreView
@@ -11,7 +11,7 @@ import com.enginebai.moviehunt.ui.list.MovieCategory
 abstract class MovieCarouselController(
     protected val movieCategory: MovieCategory,
     protected val clickListener: MovieClickListener? = null
-) : PagedListEpoxyController<MovieModel>() {
+) : PagingDataEpoxyController<MovieModel>() {
 
     var loadingMore = false
         set(value) {

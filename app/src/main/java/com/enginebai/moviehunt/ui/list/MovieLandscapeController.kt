@@ -2,7 +2,7 @@ package com.enginebai.moviehunt.ui.list
 
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.paging.PagedListEpoxyController
+import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.local.display5StarsRating
 import com.enginebai.moviehunt.data.local.displayTitle
@@ -15,7 +15,7 @@ import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 
 class MovieLandscapeController(
     private val clickListener: MovieClickListener
-) : PagedListEpoxyController<MovieModel>(diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()) {
+) : PagingDataEpoxyController<MovieModel>(diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()) {
 
     private val loadMoreView = LoadMoreView_().apply { id(LoadMoreView::class.java.simpleName) }
     var loadingMore = false

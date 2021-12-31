@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class TmdbApiResponse<T>(
     @SerializedName("page")
-    val page: Int?,
+    val page: Int? = 0,
     @SerializedName("total_results")
-    val totalResults: Int?,
+    val totalResults: Int? = 0,
     @SerializedName("total_pages")
-    val totalPages: Int?,
+    val totalPages: Int? = 0,
     @SerializedName("results")
-    val results: List<T>? = null
+    val results: List<T>? = null,
 )

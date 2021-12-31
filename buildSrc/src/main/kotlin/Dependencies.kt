@@ -60,7 +60,7 @@ object Dependencies {
         const val core = "com.airbnb.android:epoxy:${Versions.epoxy}"
         const val processor = "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
         const val databinding = "com.airbnb.android:epoxy-databinding:${Versions.epoxy}"
-        const val paging = "com.airbnb.android:epoxy-paging:${Versions.epoxy}"
+        const val paging3 = "com.airbnb.android:epoxy-paging3:${Versions.epoxy}"
     }
 
     object Paging {

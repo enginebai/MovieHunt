@@ -5,27 +5,23 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.paging.PagedList
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.enginebai.base.utils.NetworkState
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
-import com.enginebai.moviehunt.ui.detail.MovieDetailFragmentV1
 import com.enginebai.moviehunt.utils.openFragment
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class MovieListFragment : BaseFragment(), MovieClickListener {
 
-    private val viewModelV1 by sharedViewModel<MovieListViewModelV1>()
-    private val viewModelV2 by sharedViewModel<MovieListViewModelV2>()
+    private val viewModel by sharedViewModel<MovieListViewModel>()
     private val movieCategory: MovieCategory by lazy {
         arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
     }
@@ -37,7 +33,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupList()
-        subscribeDataChangesFromLocal()
+        subscribePagingDataFromRemote()
     }
 
     override fun onMovieClicked(movieId: String) {
@@ -77,52 +73,26 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
             setController(controller)
             setItemSpacingRes(R.dimen.size_8)
         }
+        swipeRefresh.setOnRefreshListener {
+            controller.refresh()
+        }
     }
 
-    private fun subscribeDataChangesFromRemoteV1() {
-        viewModelV1.fetchMovieList(movieCategory)
-        subscribePagedList(viewModelV1.movieList)
-        subscribeRefreshState(viewModelV1.refreshState)
-        subscribeLoadMoreState(viewModelV1.networkState)
-        swipeRefresh.setOnRefreshListener { viewModelV1.refresh() }
-    }
-
-    private fun subscribeDataChangesFromRemoteV2() {
-        val listing = viewModelV2.fetchPagedListing(movieCategory)
-        subscribePagedList(listing.pagedList)
-        listing.refreshState?.run { subscribeRefreshState(this) }
-        listing.loadMoreState?.run { subscribeLoadMoreState(this) }
-        swipeRefresh.setOnRefreshListener { listing.refresh() }
-    }
-
-    private fun subscribeDataChangesFromLocal() {
-        val listing = viewModelV2.getPagedListing(movieCategory)
-        subscribePagedList(listing.pagedList)
-        listing.refreshState?.run { subscribeRefreshState(this) }
-        listing.loadMoreState?.run { subscribeLoadMoreState(this) }
-        swipeRefresh.setOnRefreshListener { listing.refresh() }
-    }
-
-    private fun subscribePagedList(list: Observable<PagedList<MovieModel>>) {
-        list.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { controller.submitList(it) }
-            .subscribe()
+    private fun subscribePagingDataFromRemote() {
+        val pagingData = viewModel.fetchPagingData(movieCategory)
+        pagingData.doOnNext {
+            // TODO: double check if this coroutine runs correctly.
+            lifecycleScope.launch {
+                controller.submitData(it)
+            }
+        }.subscribe()
             .disposeOnDestroy()
-    }
 
-    private fun subscribeRefreshState(state: Observable<NetworkState>) {
-        state.observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { swipeRefresh.isRefreshing = (NetworkState.LOADING == it) }
-            .subscribe()
-            .disposeOnDestroy()
-    }
-
-    private fun subscribeLoadMoreState(state: Observable<NetworkState>) {
-        state.observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { controller.loadingMore = (NetworkState.LOADING == it) }
-            .subscribe()
-            .disposeOnDestroy()
+        controller.addLoadStateListener {
+            Timber.d("Source.append=${it.source.append}\nSource.refresh=${it.source.refresh}\nAppend=${it.append}\nRefresh=${it.refresh}")
+            swipeRefresh.isRefreshing = (it.refresh == LoadState.Loading)
+            controller.loadingMore = (it.append == LoadState.Loading)
+        }
     }
 
     companion object {

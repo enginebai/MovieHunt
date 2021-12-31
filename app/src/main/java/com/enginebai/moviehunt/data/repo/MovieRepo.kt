@@ -1,8 +1,7 @@
 package com.enginebai.moviehunt.data.repo
 
-import android.util.Log
-import androidx.paging.PagedList
-import androidx.paging.RxPagedListBuilder
+import androidx.paging.*
+import androidx.paging.rxjava2.flowable
 import com.enginebai.base.utils.Listing
 import com.enginebai.moviehunt.data.local.MovieDao
 import com.enginebai.moviehunt.data.local.MovieModel
@@ -10,21 +9,21 @@ import com.enginebai.moviehunt.data.remote.*
 import com.enginebai.moviehunt.data.remote.MovieModelMapper.toMovieModel
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import timber.log.Timber
 
 const val DEFAULT_PAGE_SIZE = 5
 
 interface MovieRepo {
 
-    fun fetchMoviePagedListing(
+    fun fetchMoviePagingData(
             category: MovieCategory,
             pageSize: Int = DEFAULT_PAGE_SIZE
-    ): Listing<MovieModel>
+    ): Flowable<PagingData<MovieListResponse>>
 
     fun getMoviePagedListing(
             category: MovieCategory,
@@ -40,10 +39,10 @@ interface MovieRepo {
     fun getMovieDetail(movieId: String): Observable<MovieModel>
     fun fetchMovieVideos(movieId: String): Single<List<Video>>
     fun fetchMovieReviews(movieId: String): Single<List<Review>>
-    fun fetchMovieReviewPagedListing(
+    fun fetchMovieReviewPagingData(
         movieId: String,
         pageSize: Int = DEFAULT_PAGE_SIZE
-    ): Listing<Review>
+    ): Flowable<PagingData<Review>>
     fun fetchMovieCasts(movieId: String): Single<List<CastListing.Cast>>
     fun fetchSimilarMovies(movieId: String): Single<List<MovieModel>>
     fun fetchRecommendationMovies(movieId: String): Single<List<MovieModel>>
@@ -55,44 +54,27 @@ class MovieRepoImpl : MovieRepo, KoinComponent {
     private val movieDao: MovieDao by inject()
     private val nextPageIndex: NextPageIndex by lazy { IncrementalNextPage() }
 
-    override fun fetchMoviePagedListing(
+    override fun fetchMoviePagingData(
             category: MovieCategory,
             pageSize: Int
-    ): Listing<MovieModel> {
-        val dataSourceFactory = MovieListDataSourceFactory(category)
-        val pagedListConfig = PagedList.Config.Builder()
-                .setPageSize(pageSize)
-                .setEnablePlaceholders(false)
-                .build()
-        val pagedList = RxPagedListBuilder(dataSourceFactory.map {
-            it.toMovieModel()
-        }, pagedListConfig)
-                .setFetchScheduler(Schedulers.io())
-                .buildObservable()
-        return Listing(
-                pagedList = pagedList,
-                refreshState = dataSourceFactory.initLoadState,
-                loadMoreState = dataSourceFactory.loadMoreState,
-                refresh = { dataSourceFactory.dataSource?.invalidate() }
+    ): Flowable<PagingData<MovieListResponse>> {
+        val pager = Pager(
+            config = PagingConfig(pageSize = pageSize, enablePlaceholders = false),
+            pagingSourceFactory = {
+                MovieListPagingSource(category = category)
+            }
         )
+        return pager.flowable
     }
 
-    override fun fetchMovieReviewPagedListing(movieId: String, pageSize: Int): Listing<Review> {
-        val dataSourceFactory = MovieReviewsDataSourceFactory(movieId)
-
-        val pagedListConfig = PagedList.Config.Builder()
-            .setPageSize(pageSize)
-            .setEnablePlaceholders(false)
-            .build()
-        val pagedList = RxPagedListBuilder(dataSourceFactory, pagedListConfig)
-            .setFetchScheduler(Schedulers.io())
-            .buildObservable()
-        return Listing(
-            pagedList = pagedList,
-            refreshState = dataSourceFactory.initLoadState,
-            loadMoreState = dataSourceFactory.loadMoreState,
-            refresh = { dataSourceFactory.dataSource?.invalidate() }
+    override fun fetchMovieReviewPagingData(movieId: String, pageSize: Int): Flowable<PagingData<Review>> {
+        val pager = Pager(
+            config = PagingConfig(pageSize = pageSize, enablePlaceholders = false),
+            pagingSourceFactory = {
+                MovieReviewPagingSource(movieId = movieId)
+            }
         )
+        return pager.flowable
     }
 
     override fun getMoviePagedListing(category: MovieCategory, pageSize: Int): Listing<MovieModel> {

@@ -29,7 +29,7 @@ android {
 
 dependencies {
     implementation(Dependencies.Epoxy.core)
-    implementation(Dependencies.Epoxy.paging)
+    implementation(Dependencies.Epoxy.paging3)
     implementation(Dependencies.Epoxy.databinding)
     "kapt"(Dependencies.Epoxy.processor)
 

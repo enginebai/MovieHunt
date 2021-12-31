@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
@@ -12,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_reviews.*
 import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieReviewsFragment : BaseFragment() {
@@ -43,10 +45,12 @@ class MovieReviewsFragment : BaseFragment() {
         listReviews.setController(controller)
         listReviews.setItemSpacingRes(R.dimen.size_20)
 
-        listing.pagedList
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(Schedulers.io())
-            .doOnNext { controller.submitList(it) }
+        listing
+            .doOnNext {
+                lifecycleScope.launch {
+                    controller.submitData(it)
+                }
+            }
             .subscribe()
             .disposeOnDestroy()
     }
