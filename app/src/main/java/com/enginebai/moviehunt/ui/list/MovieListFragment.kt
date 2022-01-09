@@ -4,17 +4,32 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.local.display5StarsRating
+import com.enginebai.moviehunt.data.local.displayTitle
+import com.enginebai.moviehunt.data.local.displayVoteCount
+import com.enginebai.moviehunt.data.remote.ImageApi
+import com.enginebai.moviehunt.data.remote.ImageSize
+import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -34,7 +49,6 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupList()
-        subscribePagingDataFromRemote()
     }
 
     override fun onMovieClicked(movieId: String) {
@@ -69,20 +83,16 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
         activity?.let {
             controller = MovieLandscapeController(this)
         }
-        with(listMovie) {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            setController(controller)
-            setItemSpacingRes(R.dimen.size_8)
-        }
         swipeRefresh.setOnRefreshListener {
             controller.refresh()
         }
-    }
 
-    private fun subscribePagingDataFromRemote() {
-        lifecycleScope.launch {
-            viewModel.fetchPagingData(movieCategory).collectLatest {
-                controller.submitData(it)
+        listMovie.setContent {
+            MovieHuntTheme {
+                MovieListWidget(
+                    movies = viewModel.fetchPagingData(movieCategory),
+                    clickListener = this
+                )
             }
         }
         controller.addLoadStateListener {
@@ -97,6 +107,28 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 
         fun newInstance(category: MovieCategory): MovieListFragment = MovieListFragment().apply {
             arguments = bundleOf(FIELD_LIST_CATEGORY to category)
+        }
+    }
+}
+
+@Composable
+fun MovieListWidget(movies: Flow<PagingData<MovieModel>>, clickListener: MovieClickListener) {
+    val lazyMovieItems = movies.collectAsLazyPagingItems()
+
+    LazyColumn {
+        items(lazyMovieItems) { movie ->
+            movie?.run {
+                MovieLandscapeWidget(
+                    movieId = movie.id,
+                    imagePoster = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
+                    textTitle = this.displayTitle(),
+                    rating = this.display5StarsRating(),
+                    ratingTotalCountText = this.displayVoteCount(),
+                    genre = this.genreList?.map { it.name }?.joinToString(),
+                    releaseDateText = this.releaseDate?.format(),
+                    itemClickListener = { clickListener.onMovieClicked(this.id) }
+                )
+            }
         }
     }
 }

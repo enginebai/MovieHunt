@@ -111,10 +111,8 @@ fun MovieLandscapeWidget(
 ) {
     Card(
         modifier = Modifier
-            .background(MHColors.cardBackground)
-            .clickable {
-                itemClickListener(movieId)
-            }
+            .clickable { itemClickListener(movieId) },
+        backgroundColor = MHColors.cardBackground
     ) {
         Row(
             modifier = Modifier
