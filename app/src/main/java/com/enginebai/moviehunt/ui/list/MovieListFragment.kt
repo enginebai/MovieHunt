@@ -15,6 +15,7 @@ import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -79,15 +80,11 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     }
 
     private fun subscribePagingDataFromRemote() {
-        val pagingData = viewModel.fetchPagingData(movieCategory)
-        pagingData.doOnNext {
-            // TODO: double check if this coroutine runs correctly.
-            lifecycleScope.launch {
+        lifecycleScope.launch {
+            viewModel.fetchPagingData(movieCategory).collectLatest {
                 controller.submitData(it)
             }
-        }.subscribe()
-            .disposeOnDestroy()
-
+        }
         controller.addLoadStateListener {
             Timber.d("Source.append=${it.source.append}\nSource.refresh=${it.source.refresh}\nAppend=${it.append}\nRefresh=${it.refresh}")
             swipeRefresh.isRefreshing = (it.refresh == LoadState.Loading)

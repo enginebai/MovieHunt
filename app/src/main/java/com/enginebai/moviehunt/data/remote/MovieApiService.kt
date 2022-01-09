@@ -17,10 +17,10 @@ interface MovieApiService {
     fun fetchGenreList(): Single<GenreListing>
 
     @GET("movie/{list}")
-    fun fetchMovieList(
+    suspend fun fetchMovieList(
         @Path("list") list: String,
         @Query("page") page: Int? = null
-    ): Single<TmdbApiResponse<MovieListResponse>>
+    ): TmdbApiResponse<MovieListResponse>
 
     @GET(PATH_MOVIE_DETAIL)
     fun fetchMovieDetail(@Path(PARAM_MOVIE_ID) movieId: String): Single<MovieDetailResponse>
@@ -29,10 +29,10 @@ interface MovieApiService {
     fun fetchMovieVideos(@Path(PARAM_MOVIE_ID) movieId: String): Single<TmdbApiResponse<Video>>
 
     @GET("$PATH_MOVIE_DETAIL + /reviews")
-    fun fetchMovieReviews(
+    suspend fun fetchMovieReviews(
         @Path(PARAM_MOVIE_ID) movieId: String,
         @Query("page") page: Int? = null
-    ): Single<TmdbApiResponse<Review>>
+    ): TmdbApiResponse<Review>
 
     @GET("$PATH_MOVIE_DETAIL + /credits")
     fun fetchMovieCasts(@Path(PARAM_MOVIE_ID) movieId: String): Single<CastListing>

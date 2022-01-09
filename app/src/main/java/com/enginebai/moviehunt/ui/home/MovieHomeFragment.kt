@@ -2,6 +2,7 @@ package com.enginebai.moviehunt.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.enginebai.moviehunt.utils.openFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -47,11 +49,6 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
 
     private fun refreshUpcomingMovieList() {
         movieViewModel.fetchUpcomingMovieList()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { homeController.upcomingMovieList = it }
-            .subscribe()
-            .disposeOnDestroy()
     }
 
     private fun buildMovieCarouselsForEachCategory() {
@@ -76,15 +73,11 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
                         itemsOnScreen
                     )
 
-                val pagingData = movieViewModel.fetchPagingData(category)
-                pagingData
-                    .doOnNext {
-                        lifecycleScope.launch {
-                            carouselController.submitData(it)
-                        }
+                lifecycleScope.launch {
+                    movieViewModel.fetchPagingData(category).collectLatest {
+                        carouselController.submitData(it)
                     }
-                    .subscribe()
-                    .disposeOnDestroy()
+                }
                 carouselController.addLoadStateListener {
                     categoryListings[category]?.loadingState = it.refresh
                     swipeRefreshHome.isRefreshing = it.refresh is LoadState.Loading
@@ -104,6 +97,9 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
         swipeRefreshHome.setOnRefreshListener {
             refresh()
         }
+        movieViewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
+            homeController.upcomingMovieList = it
+        })
     }
 
     private fun refresh() {
