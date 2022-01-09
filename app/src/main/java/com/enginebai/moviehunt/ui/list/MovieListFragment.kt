@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.MovieModel
@@ -22,16 +21,16 @@ import com.enginebai.moviehunt.data.local.displayTitle
 import com.enginebai.moviehunt.data.local.displayVoteCount
 import com.enginebai.moviehunt.data.remote.ImageApi
 import com.enginebai.moviehunt.data.remote.ImageSize
+import com.enginebai.moviehunt.resources.MHColors
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -95,11 +94,6 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
                 )
             }
         }
-        controller.addLoadStateListener {
-            Timber.d("Source.append=${it.source.append}\nSource.refresh=${it.source.refresh}\nAppend=${it.append}\nRefresh=${it.refresh}")
-            swipeRefresh.isRefreshing = (it.refresh == LoadState.Loading)
-            controller.loadingMore = (it.append == LoadState.Loading)
-        }
     }
 
     companion object {
@@ -116,6 +110,16 @@ fun MovieListWidget(movies: Flow<PagingData<MovieModel>>, clickListener: MovieCl
     val lazyMovieItems = movies.collectAsLazyPagingItems()
 
     LazyColumn {
+        if (lazyMovieItems.loadState.refresh is LoadState.Loading) {
+            item {
+                LoadingWidget(
+                    modifier = Modifier
+                        .fillParentMaxWidth()
+                        .fillParentMaxHeight()
+                )
+            }
+        }
+
         items(lazyMovieItems) { movie ->
             movie?.run {
                 MovieLandscapeWidget(
@@ -129,6 +133,16 @@ fun MovieListWidget(movies: Flow<PagingData<MovieModel>>, clickListener: MovieCl
                     itemClickListener = { clickListener.onMovieClicked(this.id) }
                 )
             }
+        }
+
+        if (lazyMovieItems.loadState.append is LoadState.Loading) {
+            item {
+                LoadingWidget(modifier = Modifier.background(MHColors.cardBackground))
+            }
+        }
+
+        lazyMovieItems.apply {
+            Timber.d("Source.append=${loadState.source.append}\nSource.refresh=${loadState.source.refresh}\nAppend=${loadState.append}\nRefresh=${loadState.refresh}")
         }
     }
 }

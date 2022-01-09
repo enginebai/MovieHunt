@@ -17,6 +17,7 @@ object MHColors {
     val ratingBackground = Color(0xFF293E58)
     val background = ColorsPalette.colorPrimary
     val cardBackground = ColorsPalette.darkBlue
-    var ratingBarActive = ColorsPalette.yellow
-    var ratingBarInactive = ColorsPalette.darkBlue
+    val ratingBarActive = ColorsPalette.yellow
+    val ratingBarInactive = ColorsPalette.darkBlue
+    val progressBarColor = ColorsPalette.colorAccent
 }

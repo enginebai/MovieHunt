@@ -3,6 +3,7 @@ package com.enginebai.moviehunt.data.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -16,6 +17,8 @@ abstract class ApiPagingSource<T : Any> : PagingSource<Int, T>(), KoinComponent 
         return try {
             val currentPage = params.key ?: 1
             val tmdbApiResponse = apiFetch(currentPage)
+            // FIXME: remove this, this is used for test loading state
+            delay(2000)
             tmdbApiResponse.results?.let { list ->
                 val nextKey = if (list.isEmpty()) null else currentPage + 1
                 LoadResult.Page(

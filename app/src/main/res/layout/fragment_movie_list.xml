@@ -26,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listMovie"
-            android:paddingTop="@dimen/size_8"
-            android:paddingBottom="@dimen/size_8"/>
+            />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
