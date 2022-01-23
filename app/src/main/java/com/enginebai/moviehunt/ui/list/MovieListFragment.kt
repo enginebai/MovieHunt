@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.core.os.bundleOf
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -30,6 +31,7 @@ import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import kotlinx.coroutines.flow.Flow
@@ -42,8 +44,6 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     private val movieCategory: MovieCategory by lazy {
         arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
     }
-    private lateinit var controller: MovieLandscapeController
-
     override fun getLayoutId() = R.layout.fragment_movie_list
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,17 +81,12 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     }
 
     private fun setupList() {
-        activity?.let {
-            controller = MovieLandscapeController(this)
-        }
         listMovie.setContent {
             MovieHuntTheme {
                 MovieListWidget(
                     movies = viewModel.fetchPagingData(movieCategory),
                     clickListener = this,
-                ) {
-                    controller.refresh()
-                }
+                )
             }
         }
     }
@@ -108,8 +103,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 @Composable
 fun MovieListWidget(
     movies: Flow<PagingData<MovieModel>>,
-    clickListener: MovieClickListener,
-    onRefresh: () -> Unit
+    clickListener: MovieClickListener
 ) {
     val lazyMovieItems = movies.collectAsLazyPagingItems()
 
@@ -117,7 +111,11 @@ fun MovieListWidget(
         state = rememberSwipeRefreshState(
             isRefreshing = lazyMovieItems.loadState.refresh == LoadState.Loading
         ),
-        onRefresh = onRefresh
+        onRefresh = { lazyMovieItems.refresh() },
+        indicator = { state, refreshTrigger ->
+            SwipeRefreshIndicator(state = state, refreshTriggerDistance = refreshTrigger,
+            backgroundColor = Color.White)
+        }
     ) {
         LazyColumn {
             if (lazyMovieItems.loadState.refresh is LoadState.Loading) {
