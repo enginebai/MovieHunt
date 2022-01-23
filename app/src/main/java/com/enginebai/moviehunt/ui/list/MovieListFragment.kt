@@ -29,6 +29,8 @@ import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -82,16 +84,14 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
         activity?.let {
             controller = MovieLandscapeController(this)
         }
-        swipeRefresh.setOnRefreshListener {
-            controller.refresh()
-        }
-
         listMovie.setContent {
             MovieHuntTheme {
                 MovieListWidget(
                     movies = viewModel.fetchPagingData(movieCategory),
-                    clickListener = this
-                )
+                    clickListener = this,
+                ) {
+                    controller.refresh()
+                }
             }
         }
     }
@@ -106,43 +106,54 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 }
 
 @Composable
-fun MovieListWidget(movies: Flow<PagingData<MovieModel>>, clickListener: MovieClickListener) {
+fun MovieListWidget(
+    movies: Flow<PagingData<MovieModel>>,
+    clickListener: MovieClickListener,
+    onRefresh: () -> Unit
+) {
     val lazyMovieItems = movies.collectAsLazyPagingItems()
 
-    LazyColumn {
-        if (lazyMovieItems.loadState.refresh is LoadState.Loading) {
-            item {
-                LoadingWidget(
-                    modifier = Modifier
-                        .fillParentMaxWidth()
-                        .fillParentMaxHeight()
-                )
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(
+            isRefreshing = lazyMovieItems.loadState.refresh == LoadState.Loading
+        ),
+        onRefresh = onRefresh
+    ) {
+        LazyColumn {
+            if (lazyMovieItems.loadState.refresh is LoadState.Loading) {
+                item {
+                    LoadingWidget(
+                        modifier = Modifier
+                            .fillParentMaxWidth()
+                            .fillParentMaxHeight()
+                    )
+                }
             }
-        }
 
-        items(lazyMovieItems) { movie ->
-            movie?.run {
-                MovieLandscapeWidget(
-                    movieId = movie.id,
-                    imagePoster = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
-                    textTitle = this.displayTitle(),
-                    rating = this.display5StarsRating(),
-                    ratingTotalCountText = this.displayVoteCount(),
-                    genre = this.genreList?.map { it.name }?.joinToString(),
-                    releaseDateText = this.releaseDate?.format(),
-                    itemClickListener = { clickListener.onMovieClicked(this.id) }
-                )
+            items(lazyMovieItems) { movie ->
+                movie?.run {
+                    MovieLandscapeWidget(
+                        movieId = movie.id,
+                        imagePoster = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
+                        textTitle = this.displayTitle(),
+                        rating = this.display5StarsRating(),
+                        ratingTotalCountText = this.displayVoteCount(),
+                        genre = this.genreList?.map { it.name }?.joinToString(),
+                        releaseDateText = this.releaseDate?.format(),
+                        itemClickListener = { clickListener.onMovieClicked(this.id) }
+                    )
+                }
             }
-        }
 
-        if (lazyMovieItems.loadState.append is LoadState.Loading) {
-            item {
-                LoadingWidget(modifier = Modifier.background(MHColors.cardBackground))
+            if (lazyMovieItems.loadState.append is LoadState.Loading) {
+                item {
+                    LoadingWidget(modifier = Modifier.background(MHColors.cardBackground))
+                }
             }
-        }
 
-        lazyMovieItems.apply {
-            Timber.d("Source.append=${loadState.source.append}\nSource.refresh=${loadState.source.refresh}\nAppend=${loadState.append}\nRefresh=${loadState.refresh}")
+            lazyMovieItems.apply {
+                Timber.d("Source.append=${loadState.source.append}\nSource.refresh=${loadState.source.refresh}\nAppend=${loadState.append}\nRefresh=${loadState.refresh}")
+            }
         }
     }
 }

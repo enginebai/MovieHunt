@@ -89,6 +89,7 @@ object Dependencies {
         const val paging = "androidx.paging:paging-compose:${Versions.JetpackCompose.paging}"
 
         const val ratingBar = "com.github.a914-gowtham:compose-ratingbar:${Versions.JetpackCompose.ratingBar}"
+        const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.JetpackCompose.swipeRefresh}"
     }
 }
 

@@ -60,4 +60,5 @@ dependencies {
     implementation(Dependencies.JetpackCompose.appCompatTheme)
     implementation(Dependencies.JetpackCompose.ratingBar)
     implementation(Dependencies.JetpackCompose.paging)
+    implementation(Dependencies.JetpackCompose.swipeRefresh)
 }

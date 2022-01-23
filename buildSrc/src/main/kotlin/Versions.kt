@@ -12,7 +12,7 @@ object Versions {
 
     const val okhttp = "4.9.0"
     const val retrofit = "2.9.0"
-    const val koin = "3.1.2"
+    const val koin = "3.2.0"
     const val timber = "5.0.1"
     const val logger = "2.2.0"
 
@@ -57,5 +57,6 @@ object Versions {
         const val compiler = "1.0.5"
         const val ratingBar = "1.1.1"
         const val paging = "1.0.0-alpha14"
+        const val swipeRefresh = "0.24.0-alpha"
     }
 }
