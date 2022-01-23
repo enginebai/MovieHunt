@@ -41,7 +41,7 @@ dependencies {
     implementation(Dependencies.Room.rxjava2)
     "kapt"(Dependencies.Room.annotation)
 
-    implementation(Dependencies.androidBase)
+    implementation(project(":base"))
     implementation(Dependencies.snapHelper)
 
     implementation(Dependencies.okhttp)

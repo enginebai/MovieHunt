@@ -12,14 +12,13 @@ object Versions {
 
     const val okhttp = "4.9.0"
     const val retrofit = "2.9.0"
-    const val koin = "3.2.0"
+    const val koin = "3.1.5"
     const val timber = "5.0.1"
     const val logger = "2.2.0"
 
     const val epoxy = "4.6.3"
 
     const val coil = "1.4.0"
-    const val androidBase = "1.0.3"
     const val snapHelper = "2.2.2"
 
     // Test frameworks

@@ -15,7 +15,6 @@ object Dependencies {
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
 
-    const val androidBase = "com.github.enginebai:AndroidBase:${Versions.androidBase}"
     const val coil = "io.coil-kt:coil:${Versions.coil}"
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.coil}"
     const val snapHelper = "com.github.rubensousa:gravitysnaphelper:${Versions.snapHelper}"
