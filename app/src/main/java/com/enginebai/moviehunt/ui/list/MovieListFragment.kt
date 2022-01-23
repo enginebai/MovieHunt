@@ -5,10 +5,14 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -26,6 +30,7 @@ import com.enginebai.moviehunt.resources.MHColors
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.widgets.ListSeparator
 import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
@@ -130,16 +135,19 @@ fun MovieListWidget(
 
             items(lazyMovieItems) { movie ->
                 movie?.run {
-                    MovieLandscapeWidget(
-                        movieId = movie.id,
-                        imagePoster = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
-                        textTitle = this.displayTitle(),
-                        rating = this.display5StarsRating(),
-                        ratingTotalCountText = this.displayVoteCount(),
-                        genre = this.genreList?.map { it.name }?.joinToString(),
-                        releaseDateText = this.releaseDate?.format(),
-                        itemClickListener = { clickListener.onMovieClicked(this.id) }
-                    )
+                    Column {
+                        Spacer(modifier = Modifier.height(8.dp).background(color = MHColors.background))
+                        MovieLandscapeWidget(
+                            movieId = movie.id,
+                            imagePoster = ImageApi.getFullUrl(movie.posterPath, ImageSize.W500),
+                            textTitle = movie.displayTitle(),
+                            rating = movie.display5StarsRating(),
+                            ratingTotalCountText = movie.displayVoteCount(),
+                            genre = movie.genreList?.map { it.name }?.joinToString(),
+                            releaseDateText = movie.releaseDate?.format(),
+                            itemClickListener = { clickListener.onMovieClicked(movie.id) }
+                        )
+                    }
                 }
             }
 
