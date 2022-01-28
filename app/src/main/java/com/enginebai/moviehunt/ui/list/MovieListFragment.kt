@@ -39,6 +39,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -55,10 +56,6 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupList()
-    }
-
-    override fun onMovieClicked(movieId: String) {
-        activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -94,6 +91,10 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
                 )
             }
         }
+    }
+
+    override fun onMovieClicked(movieId: String) {
+        activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
     }
 
     companion object {
@@ -155,10 +156,6 @@ fun MovieListWidget(
                 item {
                     LoadingWidget(modifier = Modifier.background(MHColors.cardBackground))
                 }
-            }
-
-            lazyMovieItems.apply {
-                Timber.d("Source.append=${loadState.source.append}\nSource.refresh=${loadState.source.refresh}\nAppend=${loadState.append}\nRefresh=${loadState.refresh}")
             }
         }
     }

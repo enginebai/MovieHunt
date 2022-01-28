@@ -101,11 +101,11 @@ fun MovieReviewWidget(
     comment: String? = null
 ) {
     Column(
-        Modifier.padding(
+        Modifier.background(MHColors.cardBackground).padding(
             start = MHDimensions.pagePadding,
             end = MHDimensions.pagePadding,
-            top = 8.dp,
-            bottom = 4.dp
+            top = 12.dp,
+            bottom = 12.dp
         )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {

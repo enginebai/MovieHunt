@@ -2,17 +2,33 @@ package com.enginebai.moviehunt.ui.reviews
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.remote.Review
+import com.enginebai.moviehunt.resources.MHColors
+import com.enginebai.moviehunt.resources.MovieHuntTheme
+import com.enginebai.moviehunt.ui.widgets.LoadingWidget
+import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
+import com.enginebai.moviehunt.ui.widgets.toHolder
+import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_reviews.*
@@ -35,24 +51,78 @@ class MovieReviewsFragment : BaseFragment() {
     }
 
     private val viewModel by viewModel<MovieReviewsViewModel>()
-    private val controller by lazy {
-        MovieReviewsController()
-    }
 
     override fun getLayoutId() = R.layout.fragment_movie_reviews
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textTitle.text = getString(R.string.title_reviews)
-        buttonBack.setOnClickListener { activity?.onBackPressed() }
+        setupToolbar()
+        setupList()
+    }
 
-        listReviews.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
-        listReviews.setController(controller)
-        listReviews.setItemSpacingRes(R.dimen.size_20)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                activity?.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
-        lifecycleScope.launch {
-            viewModel.fetchReviews(arguments?.getString(FIELD_MOVIE_ID)!!).collectLatest {
-                controller.submitData(it)
+    private fun setupToolbar() {
+        // make fragment.onOptionsItemSelected() be called
+        // https://stackoverflow.com/a/37953823/2279285
+        setHasOptionsMenu(true)
+        activity?.run {
+            (this as AppCompatActivity).setSupportActionBar(toolbar)
+            this.supportActionBar?.run {
+                title = getString(R.string.title_reviews)
+                setDisplayHomeAsUpEnabled(true)
+                show()
+            }
+        }
+    }
+
+    private fun setupList() {
+        listReview.setContent {
+            MovieHuntTheme {
+                MovieReviewList(reviewList = viewModel.fetchReviews(arguments?.getString(FIELD_MOVIE_ID)!!))
+            }
+        }
+    }
+}
+
+@Composable
+fun MovieReviewList(
+    reviewList: Flow<PagingData<Review>>
+) {
+    val lazyItems = reviewList.collectAsLazyPagingItems()
+    LazyColumn {
+        if (lazyItems.loadState.refresh is LoadState.Loading) {
+            item {
+                LoadingWidget(modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight())
+            }
+        }
+        items(lazyItems) { review ->
+            review?.run {
+                Column {
+                    Spacer(modifier = Modifier.height(8.dp).background(color = MHColors.background))
+                    MovieReviewWidget(
+                        avatar = review.author?.getAvatarFullPath(),
+                        name = review.author?.username,
+                        rating = review.author?.rating,
+                        comment = review.content,
+                        createdAtDateText = review.createdAt?.format()
+                    )
+                }
+            }
+        }
+        if (lazyItems.loadState.append is LoadState.Loading) {
+            item {
+                LoadingWidget(modifier = Modifier.background(MHColors.cardBackground))
             }
         }
     }

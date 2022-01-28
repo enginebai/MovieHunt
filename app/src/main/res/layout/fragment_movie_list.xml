@@ -7,13 +7,7 @@
     android:clickable="true"
     android:focusable="true">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <include layout="@layout/view_toolbar" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/listMovie"
