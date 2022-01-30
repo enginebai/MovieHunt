@@ -20,20 +20,14 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.LandscapeWidget
 import com.enginebai.moviehunt.data.local.MovieModel
-import com.enginebai.moviehunt.data.local.display5StarsRating
-import com.enginebai.moviehunt.data.local.displayTitle
-import com.enginebai.moviehunt.data.local.displayVoteCount
-import com.enginebai.moviehunt.data.remote.ImageApi
-import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.resources.MHColors
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
-import com.enginebai.moviehunt.ui.widgets.ListSeparator
+import com.enginebai.moviehunt.ui.widgets.ListSeparatorWidget
 import com.enginebai.moviehunt.ui.widgets.LoadingWidget
-import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
-import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
@@ -42,7 +36,6 @@ import kotlinx.android.synthetic.main.fragment_movie_list.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 class MovieListFragment : BaseFragment(), MovieClickListener {
 
@@ -50,6 +43,7 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     private val movieCategory: MovieCategory by lazy {
         arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
     }
+
     override fun getLayoutId() = R.layout.fragment_movie_list
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,8 +113,10 @@ fun MovieListWidget(
         ),
         onRefresh = { lazyMovieItems.refresh() },
         indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(state = state, refreshTriggerDistance = refreshTrigger,
-            backgroundColor = Color.White)
+            SwipeRefreshIndicator(
+                state = state, refreshTriggerDistance = refreshTrigger,
+                backgroundColor = Color.White
+            )
         }
     ) {
         LazyColumn {
@@ -137,17 +133,8 @@ fun MovieListWidget(
             items(lazyMovieItems) { movie ->
                 movie?.run {
                     Column {
-                        Spacer(modifier = Modifier.height(8.dp).background(color = MHColors.background))
-                        MovieLandscapeWidget(
-                            movieId = movie.id,
-                            imagePoster = ImageApi.getFullUrl(movie.posterPath, ImageSize.W500),
-                            textTitle = movie.displayTitle(),
-                            rating = movie.display5StarsRating(),
-                            ratingTotalCountText = movie.displayVoteCount(),
-                            genre = movie.genreList?.map { it.name }?.joinToString(),
-                            releaseDateText = movie.releaseDate?.format(),
-                            itemClickListener = { clickListener.onMovieClicked(movie.id) }
-                        )
+                        ListSeparatorWidget()
+                        movie.LandscapeWidget(onClick = { clickListener.onMovieClicked(movie.id) })
                     }
                 }
             }

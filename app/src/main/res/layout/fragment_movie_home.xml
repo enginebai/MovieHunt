@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipeRefreshHome"
-    android:clickable="true"
-    android:focusable="true"
+<androidx.compose.ui.platform.ComposeView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/composeHome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listHome"/>
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    android:clickable="true"
+    android:focusable="true" />

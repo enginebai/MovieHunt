@@ -25,6 +25,7 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.resources.MHColors
 import com.enginebai.moviehunt.resources.MovieHuntTheme
+import com.enginebai.moviehunt.ui.widgets.ListSeparatorWidget
 import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
 import com.enginebai.moviehunt.ui.widgets.toHolder
@@ -109,7 +110,7 @@ fun MovieReviewList(
         items(lazyItems) { review ->
             review?.run {
                 Column {
-                    Spacer(modifier = Modifier.height(8.dp).background(color = MHColors.background))
+                    ListSeparatorWidget()
                     MovieReviewWidget(
                         avatar = review.author?.getAvatarFullPath(),
                         name = review.author?.username,

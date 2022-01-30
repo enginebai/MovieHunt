@@ -2,44 +2,41 @@ package com.enginebai.moviehunt.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
-import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.data.local.LandscapeWidget
+import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
-import com.enginebai.moviehunt.ui.home.controller.MovieCarouselController
-import com.enginebai.moviehunt.ui.home.controller.MovieHomeController
-import com.enginebai.moviehunt.ui.home.controller.MoviePortraitController
-import com.enginebai.moviehunt.ui.home.controller.MovieShowcaseController
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
+import com.enginebai.moviehunt.ui.widgets.ListSeparatorWidget
 import com.enginebai.moviehunt.utils.openFragment
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movie_home.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListener {
 
     private val movieViewModel: MovieHomeViewModel by viewModel()
-    private lateinit var homeController: MovieHomeController
 
     override fun getLayoutId() = R.layout.fragment_movie_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeController = MovieHomeController(view.context, this)
         refreshUpcomingMovieList()
         buildMovieCarouselsForEachCategory()
-        buildHomeList()
+        composeHome.setContent {
+            MovieHuntTheme {
+                MovieHomeWidget(viewModel = movieViewModel, movieClickListener = this)
+            }
+        }
     }
 
     override fun onStart() {
@@ -52,59 +49,15 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
     }
 
     private fun buildMovieCarouselsForEachCategory() {
-        val categoryListings = mutableMapOf<MovieCategory, MovieCategoryListing>()
         MovieCategory.values()
             .forEachIndexed { index, category ->
-                val carouselController: PagingDataEpoxyController<MovieModel>
-                val itemsOnScreen: Float
-                // first category uses large carousel, other uses normal carousel
-                if (index == 0) {
-                    carouselController = MovieShowcaseController(category, this)
-                    itemsOnScreen = 1.05f
-                } else {
-                    carouselController = MoviePortraitController(category, this)
-                    itemsOnScreen = 3.1f
-                }
-                categoryListings[category] =
-                    MovieCategoryListing(
-                        this,
-                        LoadState.Loading,
-                        carouselController,
-                        itemsOnScreen
-                    )
-
-                lifecycleScope.launch {
-                    movieViewModel.fetchPagingData(category).collectLatest {
-                        carouselController.submitData(it)
-                    }
-                }
-                carouselController.addLoadStateListener {
-                    categoryListings[category]?.loadingState = it.refresh
-                    swipeRefreshHome.isRefreshing = it.refresh is LoadState.Loading
-                    (carouselController as MovieCarouselController).loadingMore =
-                        (it.append == LoadState.Loading)
-                    homeController.requestModelBuild()
-                }
+                // TODO: build the horizontal list
             }
-        homeController.categoryListings = categoryListings
-    }
-
-    private fun buildHomeList() {
-        with(listHome) {
-            layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
-            setControllerAndBuildModels(homeController)
-        }
-        swipeRefreshHome.setOnRefreshListener {
-            refresh()
-        }
-        movieViewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
-            homeController.upcomingMovieList = it
-        })
     }
 
     private fun refresh() {
         MovieCategory.values().forEach {
-            homeController.categoryListings?.get(it)?.carouselController?.refresh()
+            // TODO: refresh each category
         }
         refreshUpcomingMovieList()
     }
@@ -115,5 +68,21 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
 
     override fun onMovieClicked(movieId: String) {
         activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
+    }
+}
+
+@Composable
+fun MovieHomeWidget(viewModel: MovieHomeViewModel, movieClickListener: MovieClickListener) {
+    val upcomingMovieList by viewModel.upcomingMovieList.observeAsState()
+
+    if (upcomingMovieList?.isNotEmpty() == true) {
+        LazyColumn {
+            items(upcomingMovieList!!) { movie ->
+                Column {
+                    ListSeparatorWidget()
+                    movie.LandscapeWidget(onClick = { movieClickListener.onMovieClicked(movie.id) })
+                }
+            }
+        }
     }
 }
