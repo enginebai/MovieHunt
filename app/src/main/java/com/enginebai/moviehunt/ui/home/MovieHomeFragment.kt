@@ -20,6 +20,7 @@ import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.LandscapeWidget
 import com.enginebai.moviehunt.data.local.PortraitWidget
+import com.enginebai.moviehunt.data.local.ShowcaseWidget
 import com.enginebai.moviehunt.data.local.toPortraitHolder
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
@@ -87,15 +88,21 @@ fun MovieHomeWidget(viewModel: MovieHomeViewModel, movieClickListener: MovieClic
 
     LazyColumn(modifier = Modifier.fillMaxHeight()) {
 
-        MovieCategory.values().forEach {
+        MovieCategory.values().forEach { movieCategory ->
             item {
-                TitleWidget(title = stringResource(id = it.strRes))
+                TitleWidget(title = stringResource(id = movieCategory.strRes))
             }
+
             item {
-                val pagingData = viewModel.fetchPagingData(it).collectAsLazyPagingItems()
+                val pagingData =
+                    viewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
                 LazyRow(modifier = Modifier.fillMaxWidth()) {
                     items(pagingData) { movie ->
-                        movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
+                        if (movieCategory == MovieCategory.NOW_PLAYING) {
+                            movie?.ShowcaseWidget(onClick = movieClickListener::onMovieClicked)
+                        } else {
+                            movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
+                        }
                     }
                 }
             }

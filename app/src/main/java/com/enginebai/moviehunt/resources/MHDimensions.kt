@@ -9,4 +9,5 @@ object MHDimensions {
     val corner = 8.dp
 
     val posterHeight = 160.dp
+    val showcaseHeight = 190.dp
 }

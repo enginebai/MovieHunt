@@ -12,6 +12,7 @@ import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidget
+import com.enginebai.moviehunt.ui.widgets.MovieShowcaseWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
@@ -99,5 +100,19 @@ fun MovieModel.LandscapeWidget(onClick: (String) -> Unit) {
         genre = genreList?.map { it.name }?.joinToString(),
         releaseDateText = releaseDate?.format(),
         itemClickListener = onClick
+    )
+}
+
+@Composable
+fun MovieModel.ShowcaseWidget(onClick: (String) -> Unit) {
+    MovieShowcaseWidget(
+        movieId = id,
+        backgroundImageUrl = ImageApi.getFullUrl(this.posterPath, ImageSize.W780),
+        backdropUrl = ImageApi.getFullUrl(this.backdropPath, ImageSize.W780),
+        movieName = this.displayTitle(),
+        rating = this.display5StarsRating(),
+        genres = this.genreList?.map { it.name }?.joinToString(","),
+        ratingTotalCountText = this.displayVoteCount(),
+        onClickListener = onClick
     )
 }
