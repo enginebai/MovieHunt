@@ -4,23 +4,28 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.resources.MHColors
 import com.enginebai.moviehunt.resources.MHDimensions
 import com.enginebai.moviehunt.resources.MHStyle
 import com.enginebai.moviehunt.utils.loadImage
@@ -94,34 +99,76 @@ fun MovieShowcaseWidget(
     ratingTotalCountText: String? = null,
     onClickListener: (String) -> Unit = {}
 ) {
-    Card(modifier = Modifier
-        .height(MHDimensions.showcaseHeight)
-        .clickable {
-            onClickListener.invoke(movieId)
-        }) {
+    Card(
+        modifier = Modifier
+            .height(MHDimensions.showcaseHeight.dp)
+            .aspectRatio(
+                MHDimensions.showcaseWidth
+                    .toFloat()
+                    .div(MHDimensions.showcaseHeight)
+            )
+            .clickable {
+                onClickListener.invoke(movieId)
+            },
+        backgroundColor = MHColors.cardBackground
+    ) {
         Box {
             Image(
                 painter = rememberImagePainter(backgroundImageUrl), contentDescription = null,
-                modifier = Modifier.aspectRatio(320f.div(157))
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
             )
-            Column {
-                Card {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(MHColors.showcaseOverlay)
+            )
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = MHDimensions.pagePadding,
+                    vertical = 12.dp
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Card(shape = RoundedCornerShape(MHDimensions.cornerLarge)) {
                     Image(
                         painter = rememberImagePainter(backdropUrl), contentDescription = null,
-                        modifier = Modifier.aspectRatio(320f.div(157))
+                        modifier = Modifier
+                            .height(MHDimensions.showcaseImageHeight.dp)
+                            .aspectRatio(
+                                MHDimensions.showcaseImageWidth
+                                    .toFloat()
+                                    .div(MHDimensions.showcaseImageHeight)
+                            )
+                            .fillMaxWidth(),
+                        contentScale = ContentScale.Crop
                     )
                 }
                 Text(
                     movieName ?: "",
                     style = MHStyle.headline6,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.fillMaxWidth().padding(8.dp)
                 )
                 Text(
                     genres ?: "",
-                    style = MHStyle.body2
+                    style = MHStyle.body2,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
                 )
-                Text("$rating $ratingTotalCountText")
+                Row(modifier = Modifier.padding(8.dp)) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_star),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("$rating ($ratingTotalCountText)",
+                        style = MHStyle.caption,
+                    modifier = Modifier.fillMaxWidth())
+                }
             }
         }
     }

@@ -7,7 +7,11 @@ object MHDimensions {
     val avatarReview = 36.dp
     val avatarCast = 48.dp
     val corner = 8.dp
+    val cornerLarge = 16.dp
 
     val posterHeight = 160.dp
-    val showcaseHeight = 190.dp
+    const val showcaseHeight = 280
+    const val showcaseWidth = 360
+    const val showcaseImageHeight = 160
+    const val showcaseImageWidth = 320
 }

@@ -20,4 +20,5 @@ object MHColors {
     val ratingBarActive = ColorsPalette.yellow
     val ratingBarInactive = ColorsPalette.darkBlue
     val progressBarColor = ColorsPalette.colorAccent
+    val showcaseOverlay = Color(0xCC121E2D)
 }
