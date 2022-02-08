@@ -66,7 +66,7 @@ fun MovieTrailerWidget(
     onTrailerPlayed: (String) -> Unit = {}
 ) {
     Card(
-        shape = RoundedCornerShape(MHDimensions.corner)
+        shape = RoundedCornerShape(MHDimensions.corner.dp)
     ) {
         Box(modifier = Modifier
             .height(90.dp)

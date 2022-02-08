@@ -96,9 +96,11 @@ fun MoviePortraitWidget(
     onClickListener: (String) -> Unit = {}
 ) {
     Card(
-        shape = RoundedCornerShape(MHDimensions.corner),
+        shape = RoundedCornerShape(MHDimensions.corner.dp),
         backgroundColor = MHColors.cardBackground,
-        modifier = Modifier.clickable {
+        modifier = Modifier
+            .height(MHDimensions.portraitHeight.dp)
+            .clickable {
             onClickListener(movieId)
         }
     ) {

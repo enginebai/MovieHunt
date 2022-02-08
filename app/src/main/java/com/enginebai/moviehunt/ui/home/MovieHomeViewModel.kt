@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.enginebai.base.utils.Listing
 import com.enginebai.base.view.BaseViewModel
@@ -26,7 +27,7 @@ class MovieHomeViewModel : BaseViewModel() {
         val listing = movieRepo.fetchMoviePagingData(category)
         return listing.map { pagingData ->
             pagingData.map { it.toMovieModel() }
-        }
+        }.cachedIn(viewModelScope)
     }
 
     fun fetchUpcomingMovieList() {

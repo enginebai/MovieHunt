@@ -127,13 +127,13 @@ fun MovieShowcaseWidget(
             )
             Column(
                 modifier = Modifier.padding(
-                    horizontal = MHDimensions.pagePadding,
+                    horizontal = MHDimensions.pagePadding.dp,
                     vertical = 12.dp
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Card(shape = RoundedCornerShape(MHDimensions.cornerLarge)) {
+                Card(shape = RoundedCornerShape(MHDimensions.cornerLarge.dp)) {
                     Image(
                         painter = rememberImagePainter(backdropUrl), contentDescription = null,
                         modifier = Modifier

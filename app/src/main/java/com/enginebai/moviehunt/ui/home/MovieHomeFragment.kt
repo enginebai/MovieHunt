@@ -3,8 +3,9 @@ package com.enginebai.moviehunt.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -13,7 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.Observer
+import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.enginebai.base.view.BaseFragment
@@ -21,7 +22,7 @@ import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.data.local.LandscapeWidget
 import com.enginebai.moviehunt.data.local.PortraitWidget
 import com.enginebai.moviehunt.data.local.ShowcaseWidget
-import com.enginebai.moviehunt.data.local.toPortraitHolder
+import com.enginebai.moviehunt.resources.MHDimensions
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
@@ -83,24 +84,40 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
 }
 
 @Composable
-fun MovieHomeWidget(viewModel: MovieHomeViewModel, movieClickListener: MovieClickListener) {
+fun MovieHomeWidget(
+    viewModel: MovieHomeViewModel, movieClickListener: MovieClickListener
+) {
     val upcomingMovieList by viewModel.upcomingMovieList.observeAsState()
 
-    LazyColumn(modifier = Modifier.fillMaxHeight()) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-        MovieCategory.values().forEach { movieCategory ->
-            item {
-                TitleWidget(title = stringResource(id = movieCategory.strRes))
-            }
-
+        MovieCategory.values().filterNot { it == MovieCategory.UPCOMING }.forEach { movieCategory ->
             item {
                 val pagingData =
                     viewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
-                LazyRow(modifier = Modifier.fillMaxWidth()) {
-                    items(pagingData) { movie ->
-                        if (movieCategory == MovieCategory.NOW_PLAYING) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    TitleWidget(title = stringResource(id = movieCategory.strRes))
+                }
+                if (movieCategory == MovieCategory.NOW_PLAYING) {
+                    LazyRow(
+                        // We have to specify the height for nested row regarding performance issue.
+                        // Source: https://stackoverflow.com/a/70081188/2279285
+                        modifier = Modifier
+                            .height(MHDimensions.showcaseHeight.dp)
+                            .fillMaxWidth()
+                    ) {
+                        items(pagingData) { movie ->
                             movie?.ShowcaseWidget(onClick = movieClickListener::onMovieClicked)
-                        } else {
+                        }
+                    }
+
+                } else {
+                    LazyRow(
+                        modifier = Modifier
+                            .height(MHDimensions.portraitHeight.dp)
+                            .fillMaxWidth()
+                    ) {
+                        items(pagingData) { movie ->
                             movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
                         }
                     }
