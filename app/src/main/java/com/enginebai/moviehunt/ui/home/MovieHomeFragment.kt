@@ -2,10 +2,7 @@ package com.enginebai.moviehunt.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -46,7 +43,8 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
         buildMovieCarouselsForEachCategory()
         composeHome.setContent {
             MovieHuntTheme {
-                MovieHomeWidget(viewModel = movieViewModel, movieClickListener = this)
+                MovieHomeWidget(viewModel = movieViewModel, movieClickListener = this,
+                onSeeAllClicked = ::onViewAllClicked)
             }
         }
     }
@@ -85,7 +83,9 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
 
 @Composable
 fun MovieHomeWidget(
-    viewModel: MovieHomeViewModel, movieClickListener: MovieClickListener
+    viewModel: MovieHomeViewModel,
+    movieClickListener: MovieClickListener,
+    onSeeAllClicked: (MovieCategory) -> Unit
 ) {
     val upcomingMovieList by viewModel.upcomingMovieList.observeAsState()
 
@@ -96,7 +96,10 @@ fun MovieHomeWidget(
                 val pagingData =
                     viewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    TitleWidget(title = stringResource(id = movieCategory.strRes))
+                    TitleWidget(title = stringResource(id = movieCategory.strRes),
+                    onClickListener = {
+                        onSeeAllClicked(movieCategory)
+                    })
                 }
                 if (movieCategory == MovieCategory.NOW_PLAYING) {
                     LazyRow(
@@ -104,18 +107,25 @@ fun MovieHomeWidget(
                         // Source: https://stackoverflow.com/a/70081188/2279285
                         modifier = Modifier
                             .height(MHDimensions.showcaseHeight.dp)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(horizontal = 8.dp)
                     ) {
                         items(pagingData) { movie ->
                             movie?.ShowcaseWidget(onClick = movieClickListener::onMovieClicked)
                         }
                     }
+                    ListSeparatorWidget()
 
                 } else {
                     LazyRow(
                         modifier = Modifier
                             .height(MHDimensions.portraitHeight.dp)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        // Add item padding
+                        // Source: https://stackoverflow.com/a/66715644/2279285
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(start = 8.dp, end = 8.dp, bottom = 12.dp)
                     ) {
                         items(pagingData) { movie ->
                             movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
@@ -127,6 +137,8 @@ fun MovieHomeWidget(
 
         if (upcomingMovieList?.isNotEmpty() == true) {
             item {
+                ListSeparatorWidget()
+                ListSeparatorWidget()
                 TitleWidget(title = stringResource(id = MovieCategory.UPCOMING.strRes))
             }
             items(upcomingMovieList!!) { movie ->

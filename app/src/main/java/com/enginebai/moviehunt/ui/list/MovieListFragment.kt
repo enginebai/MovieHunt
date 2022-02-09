@@ -5,9 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +24,6 @@ import com.enginebai.moviehunt.resources.MHColors
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
-import com.enginebai.moviehunt.ui.widgets.ListSeparatorWidget
 import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.utils.openFragment
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -119,7 +116,9 @@ fun MovieListWidget(
             )
         }
     ) {
-        LazyColumn {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             if (lazyMovieItems.loadState.refresh is LoadState.Loading) {
                 item {
                     LoadingWidget(
@@ -132,10 +131,7 @@ fun MovieListWidget(
 
             items(lazyMovieItems) { movie ->
                 movie?.run {
-                    Column {
-                        ListSeparatorWidget()
-                        movie.LandscapeWidget(onClick = { clickListener.onMovieClicked(movie.id) })
-                    }
+                    movie.LandscapeWidget(onClick = { clickListener.onMovieClicked(movie.id) })
                 }
             }
 

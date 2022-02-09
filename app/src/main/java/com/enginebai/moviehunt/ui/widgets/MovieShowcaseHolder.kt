@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -152,22 +151,31 @@ fun MovieShowcaseWidget(
                     style = MHStyle.headline6,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
                 )
                 Text(
                     genres ?: "",
                     style = MHStyle.body2,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
                 )
-                Row(modifier = Modifier.padding(8.dp)) {
+                Row(
+                    modifier = Modifier.padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_star),
                         contentDescription = null
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("$rating ($ratingTotalCountText)",
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        "$rating ($ratingTotalCountText)",
                         style = MHStyle.caption,
-                    modifier = Modifier.fillMaxWidth())
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
         }

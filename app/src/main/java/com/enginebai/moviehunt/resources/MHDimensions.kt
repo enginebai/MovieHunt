@@ -8,7 +8,7 @@ object MHDimensions {
     const val cornerLarge = 16
 
     const val posterHeight = 160
-    const val portraitHeight = 300
+    const val portraitHeight = 320
     const val showcaseHeight = 280
     const val showcaseWidth = 360
     const val showcaseImageHeight = 160

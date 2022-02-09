@@ -82,7 +82,7 @@ fun MovieModel.PortraitWidget(onClick: (String) -> Unit) {
         posterUrl = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
         movieName = this.displayTitle(),
         rating = this.display5StarsRating(),
-        ratingTotalCountText = this.displayVoteCount(),
+        ratingTotalCountText = "(${this.displayVoteCount()})",
         genre = this.genreList?.firstOrNull()?.name,
         releaseYear = this.releaseDate?.get(Calendar.YEAR),
         onClickListener = onClick
