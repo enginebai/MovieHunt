@@ -12,6 +12,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.enginebai.base.view.BaseFragment
@@ -26,6 +27,7 @@ import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.list.MovieListFragment
 import com.enginebai.moviehunt.ui.widgets.ListSeparatorWidget
+import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.ui.widgets.TitleWidget
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_home.*
@@ -43,8 +45,11 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
         buildMovieCarouselsForEachCategory()
         composeHome.setContent {
             MovieHuntTheme {
-                MovieHomeWidget(viewModel = movieViewModel, movieClickListener = this,
-                onSeeAllClicked = ::onViewAllClicked)
+                MovieHomeWidget(
+                    viewModel = movieViewModel,
+                    movieClickListener = this,
+                    onSeeAllClicked = ::onViewAllClicked
+                )
             }
         }
     }
@@ -90,17 +95,19 @@ fun MovieHomeWidget(
     val upcomingMovieList by viewModel.upcomingMovieList.observeAsState()
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-
         MovieCategory.values().filterNot { it == MovieCategory.UPCOMING }.forEach { movieCategory ->
             item {
                 val pagingData =
                     viewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
                 Column(modifier = Modifier.fillMaxWidth()) {
                     TitleWidget(title = stringResource(id = movieCategory.strRes),
-                    onClickListener = {
-                        onSeeAllClicked(movieCategory)
-                    })
+                        onClickListener = {
+                            onSeeAllClicked(movieCategory)
+                        })
                 }
+                // It makes the app ANR here when getting the paging loading state, why?
+                // Timber.wtf("${pagingData.loadState.refresh}")
+
                 if (movieCategory == MovieCategory.NOW_PLAYING) {
                     LazyRow(
                         // We have to specify the height for nested row regarding performance issue.
@@ -111,8 +118,21 @@ fun MovieHomeWidget(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(horizontal = 8.dp)
                     ) {
+                        if (pagingData.loadState.refresh is LoadState.Loading) {
+                            item {
+                                LoadingWidget(modifier = Modifier
+                                    .fillParentMaxWidth()
+                                )
+                            }
+                        }
                         items(pagingData) { movie ->
                             movie?.ShowcaseWidget(onClick = movieClickListener::onMovieClicked)
+                        }
+                        if (pagingData.loadState.append is LoadState.Loading) {
+                            item {
+                                LoadingWidget(modifier = Modifier
+                                    .fillParentMaxHeight())
+                            }
                         }
                     }
                     ListSeparatorWidget()
@@ -127,8 +147,21 @@ fun MovieHomeWidget(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(start = 8.dp, end = 8.dp, bottom = 12.dp)
                     ) {
+                        if (pagingData.loadState.refresh is LoadState.Loading) {
+                            item {
+                                LoadingWidget(modifier = Modifier
+                                    .fillParentMaxWidth()
+                                )
+                            }
+                        }
                         items(pagingData) { movie ->
                             movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
+                        }
+                        if (pagingData.loadState.append is LoadState.Loading) {
+                            item {
+                                LoadingWidget(modifier = Modifier
+                                    .fillParentMaxHeight())
+                            }
                         }
                     }
                 }
