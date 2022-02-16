@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -49,12 +47,42 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
         composeHome.setContent {
             MovieHuntTheme {
                 val upcomingMovieList by movieViewModel.upcomingMovieList.observeAsState()
-                MovieHomeWidget(
-                    pagingItemsMap = buildMovieCarouselsForEachCategory(),
-                    upcomingMovieList = upcomingMovieList,
-                    movieClickListener = this,
-                    onSeeAllClicked = ::onViewAllClicked
-                )
+                val pagingItemsMap = buildMovieCarouselsForEachCategory()
+
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    pagingItemsMap.forEach { entry ->
+                        item {
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                TitleWidget(title = stringResource(id = entry.key.strRes),
+                                    onClickListener = {
+                                        onViewAllClicked(entry.key)
+                                    })
+                            }
+                            // It makes the app ANR here when getting the paging loading state, why?
+                            // Timber.wtf("${pagingData.loadState.refresh}")
+
+                            HorizontalMovieList(
+                                movieCategory = entry.key,
+                                pagingItems = entry.value,
+                                movieClickListener = this@MovieHomeFragment
+                            )
+                        }
+                    }
+
+                    if (upcomingMovieList?.isNotEmpty() == true) {
+                        item {
+                            ListSeparatorWidget()
+                            ListSeparatorWidget()
+                            TitleWidget(title = stringResource(id = MovieCategory.UPCOMING.strRes))
+                        }
+                        items(items = upcomingMovieList!!) { movie ->
+                            Column {
+                                ListSeparatorWidget()
+                                movie.LandscapeWidget(onClick = this@MovieHomeFragment::onMovieClicked)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -72,7 +100,8 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
     private fun buildMovieCarouselsForEachCategory(): Map<MovieCategory, LazyPagingItems<MovieModel>> {
         val pagingItemsMap = mutableMapOf<MovieCategory, LazyPagingItems<MovieModel>>()
         MovieCategory.values().filterNot { it == MovieCategory.UPCOMING }.forEach { movieCategory ->
-            pagingItemsMap[movieCategory] = movieViewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
+            pagingItemsMap[movieCategory] =
+                movieViewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
         }
         return pagingItemsMap
     }
@@ -94,96 +123,50 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
 }
 
 @Composable
-fun MovieHomeWidget(
-    pagingItemsMap: Map<MovieCategory, LazyPagingItems<MovieModel>>,
-    upcomingMovieList: List<MovieModel>?,
-    movieClickListener: MovieClickListener,
-    onSeeAllClicked: (MovieCategory) -> Unit
+fun HorizontalMovieList(
+    movieCategory: MovieCategory,
+    pagingItems: LazyPagingItems<MovieModel>,
+    movieClickListener: MovieClickListener
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        pagingItemsMap.forEach { entry ->
+    LazyRow(
+        // We have to specify the height for nested row regarding performance issue.
+        // Source: https://stackoverflow.com/a/70081188/2279285
+        modifier = Modifier
+            .height(
+                if (movieCategory == MovieCategory.NOW_PLAYING) MHDimensions.showcaseHeight.dp
+                else MHDimensions.portraitHeight.dp
+            )
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding =
+        if (movieCategory == MovieCategory.NOW_PLAYING) PaddingValues(horizontal = 8.dp)
+        else PaddingValues(start = 8.dp, end = 8.dp, bottom = 12.dp)
+    ) {
+        if (pagingItems.loadState.refresh is LoadState.Loading) {
             item {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    TitleWidget(title = stringResource(id = entry.key.strRes),
-                        onClickListener = {
-                            onSeeAllClicked(entry.key)
-                        })
-                }
-                // It makes the app ANR here when getting the paging loading state, why?
-                // Timber.wtf("${pagingData.loadState.refresh}")
-
-                if (entry.key == MovieCategory.NOW_PLAYING) {
-                    LazyRow(
-                        // We have to specify the height for nested row regarding performance issue.
-                        // Source: https://stackoverflow.com/a/70081188/2279285
-                        modifier = Modifier
-                            .height(MHDimensions.showcaseHeight.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(horizontal = 8.dp)
-                    ) {
-                        if (entry.value.loadState.refresh is LoadState.Loading) {
-                            item {
-                                LoadingWidget(modifier = Modifier
-                                    .fillParentMaxWidth()
-                                )
-                            }
-                        }
-                        items(entry.value) { movie ->
-                            movie?.ShowcaseWidget(onClick = movieClickListener::onMovieClicked)
-                        }
-                        if (entry.value.loadState.append is LoadState.Loading) {
-                            item {
-                                LoadingWidget(modifier = Modifier
-                                    .fillParentMaxHeight())
-                            }
-                        }
-                    }
-                    ListSeparatorWidget()
-
-                } else {
-                    LazyRow(
-                        modifier = Modifier
-                            .height(MHDimensions.portraitHeight.dp)
-                            .fillMaxWidth(),
-                        // Add item padding
-                        // Source: https://stackoverflow.com/a/66715644/2279285
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(start = 8.dp, end = 8.dp, bottom = 12.dp)
-                    ) {
-                        if (entry.value.loadState.refresh is LoadState.Loading) {
-                            item {
-                                LoadingWidget(modifier = Modifier
-                                    .fillParentMaxWidth()
-                                )
-                            }
-                        }
-                        items(entry.value) { movie ->
-                            movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
-                        }
-                        if (entry.value.loadState.append is LoadState.Loading) {
-                            item {
-                                LoadingWidget(modifier = Modifier
-                                    .fillParentMaxHeight())
-                            }
-                        }
-                    }
-                }
+                LoadingWidget(
+                    modifier = Modifier
+                        .fillParentMaxWidth()
+                )
             }
         }
-
-        if (upcomingMovieList?.isNotEmpty() == true) {
-            item {
-                ListSeparatorWidget()
-                ListSeparatorWidget()
-                TitleWidget(title = stringResource(id = MovieCategory.UPCOMING.strRes))
-            }
-            items(items = upcomingMovieList) { movie ->
-                Column {
-                    ListSeparatorWidget()
-                    movie.LandscapeWidget(onClick = movieClickListener::onMovieClicked)
-                }
+        items(pagingItems) { movie ->
+            if (movieCategory == MovieCategory.NOW_PLAYING) {
+                movie?.ShowcaseWidget(onClick = movieClickListener::onMovieClicked)
+            } else {
+                movie?.PortraitWidget(onClick = movieClickListener::onMovieClicked)
             }
         }
+        if (pagingItems.loadState.append is LoadState.Loading) {
+            item {
+                LoadingWidget(
+                    modifier = Modifier
+                        .fillParentMaxHeight()
+                )
+            }
+        }
+    }
+    if (movieCategory == MovieCategory.NOW_PLAYING) {
+        ListSeparatorWidget()
     }
 }
