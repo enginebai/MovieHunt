@@ -102,7 +102,7 @@ fun MovieDetail(
 
     val horizontalArrangement = Arrangement.spacedBy(8.dp)
     val horizontalContentPadding =
-        PaddingValues(horizontal = MHDimensions.pagePadding, vertical = 12.dp)
+        PaddingValues(horizontal = MHDimensions.pagePadding.dp, vertical = 12.dp)
     val paddingAboveTitle = 16.dp
 
     @Composable

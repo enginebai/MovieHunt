@@ -41,7 +41,7 @@ dependencies {
     implementation(Dependencies.Room.rxjava2)
     "kapt"(Dependencies.Room.annotation)
 
-    implementation(Dependencies.androidBase)
+    implementation(project(":base"))
     implementation(Dependencies.snapHelper)
 
     implementation(Dependencies.okhttp)
@@ -59,4 +59,6 @@ dependencies {
     implementation(Dependencies.JetpackCompose.activity)
     implementation(Dependencies.JetpackCompose.appCompatTheme)
     implementation(Dependencies.JetpackCompose.ratingBar)
+    implementation(Dependencies.JetpackCompose.paging)
+    implementation(Dependencies.JetpackCompose.swipeRefresh)
 }

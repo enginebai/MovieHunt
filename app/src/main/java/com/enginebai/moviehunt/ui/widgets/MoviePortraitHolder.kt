@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -96,15 +95,19 @@ fun MoviePortraitWidget(
     onClickListener: (String) -> Unit = {}
 ) {
     Card(
-        shape = RoundedCornerShape(MHDimensions.corner),
+        shape = RoundedCornerShape(MHDimensions.corner.dp),
         backgroundColor = MHColors.cardBackground,
-        modifier = Modifier.clickable {
-            onClickListener(movieId)
-        }
+        modifier = Modifier
+            .height(MHDimensions.portraitHeight.dp)
+            .clickable {
+                onClickListener(movieId)
+            }
     ) {
-        Column(modifier = Modifier
-            .padding(bottom = 12.dp)
-            .width(128.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(bottom = 12.dp)
+                .width(128.dp)
+        ) {
             Image(
                 painter = rememberImagePainter(data = posterUrl), contentDescription = null,
                 modifier = Modifier.aspectRatio(9f.div(16)),
@@ -112,7 +115,10 @@ fun MoviePortraitWidget(
             )
             Text(
                 movieName ?: "",
-                style = MHStyle.body1, modifier = Modifier.padding(8.dp),
+                style = MHStyle.body1, modifier = Modifier.padding(
+                    top = 8.dp,
+                    start = 8.dp, end = 8.dp, bottom = 4.dp
+                ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -125,8 +131,10 @@ fun MoviePortraitWidget(
             )
             if (rating != null || ratingTotalCountText?.isNotBlank() == true) {
                 Spacer(modifier = Modifier.height(4.dp))
-                Row(modifier = Modifier.padding(start = 8.dp),
-                verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.padding(start = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_star),
                         contentDescription = null

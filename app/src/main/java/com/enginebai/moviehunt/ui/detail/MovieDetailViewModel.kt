@@ -3,6 +3,7 @@ package com.enginebai.moviehunt.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.local.MovieModel
 import com.enginebai.moviehunt.data.remote.CastListing
@@ -10,6 +11,7 @@ import com.enginebai.moviehunt.data.remote.Review
 import com.enginebai.moviehunt.data.remote.Video
 import com.enginebai.moviehunt.data.repo.MovieRepo
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class MovieDetailViewModel : BaseViewModel() {
@@ -44,13 +46,9 @@ class MovieDetailViewModel : BaseViewModel() {
             .subscribe()
             .disposeOnCleared()
 
-        movieRepo.fetchMovieReviews(id)
-            .subscribeOn(Schedulers.io())
-            .doOnSuccess {
-                _movieReviews.postValue(it)
-            }
-            .subscribe()
-            .disposeOnCleared()
+        viewModelScope.launch {
+            _movieReviews.value = movieRepo.fetchMovieReviews(id)
+        }
 
         movieRepo.fetchMovieCasts(id)
             .subscribeOn(Schedulers.io())

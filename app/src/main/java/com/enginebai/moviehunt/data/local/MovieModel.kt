@@ -9,8 +9,10 @@ import com.enginebai.moviehunt.data.remote.Genre
 import com.enginebai.moviehunt.data.remote.ImageApi
 import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.ui.list.MovieCategory
+import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidget
+import com.enginebai.moviehunt.ui.widgets.MovieShowcaseWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.format
 import com.enginebai.moviehunt.utils.formatHourMinutes
@@ -80,9 +82,37 @@ fun MovieModel.PortraitWidget(onClick: (String) -> Unit) {
         posterUrl = ImageApi.getFullUrl(this.posterPath, ImageSize.W500),
         movieName = this.displayTitle(),
         rating = this.display5StarsRating(),
-        ratingTotalCountText = this.displayVoteCount(),
+        ratingTotalCountText = "(${this.displayVoteCount()})",
         genre = this.genreList?.firstOrNull()?.name,
         releaseYear = this.releaseDate?.get(Calendar.YEAR),
+        onClickListener = onClick
+    )
+}
+
+@Composable
+fun MovieModel.LandscapeWidget(onClick: (String) -> Unit) {
+    MovieLandscapeWidget(
+        movieId = id,
+        imagePoster = ImageApi.getFullUrl(posterPath, ImageSize.W500),
+        textTitle = displayTitle(),
+        rating = display5StarsRating(),
+        ratingTotalCountText = displayVoteCount(),
+        genre = genreList?.map { it.name }?.joinToString(),
+        releaseDateText = releaseDate?.format(),
+        itemClickListener = onClick
+    )
+}
+
+@Composable
+fun MovieModel.ShowcaseWidget(onClick: (String) -> Unit) {
+    MovieShowcaseWidget(
+        movieId = id,
+        backgroundImageUrl = ImageApi.getFullUrl(this.posterPath, ImageSize.W780),
+        backdropUrl = ImageApi.getFullUrl(this.backdropPath, ImageSize.W780),
+        movieName = this.displayTitle(),
+        rating = this.display5StarsRating(),
+        genres = this.genreList?.map { it.name }?.joinToString(","),
+        ratingTotalCountText = this.displayVoteCount(),
         onClickListener = onClick
     )
 }

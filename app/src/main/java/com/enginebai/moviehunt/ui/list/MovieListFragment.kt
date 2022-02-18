@@ -4,20 +4,35 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.enginebai.base.view.BaseFragment
 import com.enginebai.moviehunt.R
+import com.enginebai.moviehunt.data.local.LandscapeWidget
+import com.enginebai.moviehunt.data.local.MovieModel
+import com.enginebai.moviehunt.resources.MHColors
+import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.detail.MovieDetailFragment
+import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.utils.openFragment
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.android.synthetic.main.fragment_movie_list.*
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 class MovieListFragment : BaseFragment(), MovieClickListener {
 
@@ -25,7 +40,6 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     private val movieCategory: MovieCategory by lazy {
         arguments?.getSerializable(FIELD_LIST_CATEGORY) as MovieCategory
     }
-    private lateinit var controller: MovieLandscapeController
 
     override fun getLayoutId() = R.layout.fragment_movie_list
 
@@ -33,11 +47,6 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupList()
-        subscribePagingDataFromRemote()
-    }
-
-    override fun onMovieClicked(movieId: String) {
-        activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,34 +74,18 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
     }
 
     private fun setupList() {
-        activity?.let {
-            controller = MovieLandscapeController(this)
-        }
-        with(listMovie) {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            setController(controller)
-            setItemSpacingRes(R.dimen.size_8)
-        }
-        swipeRefresh.setOnRefreshListener {
-            controller.refresh()
+        listMovie.setContent {
+            MovieHuntTheme {
+                MovieListWidget(
+                    movies = viewModel.fetchPagingData(movieCategory),
+                    clickListener = this,
+                )
+            }
         }
     }
 
-    private fun subscribePagingDataFromRemote() {
-        val pagingData = viewModel.fetchPagingData(movieCategory)
-        pagingData.doOnNext {
-            // TODO: double check if this coroutine runs correctly.
-            lifecycleScope.launch {
-                controller.submitData(it)
-            }
-        }.subscribe()
-            .disposeOnDestroy()
-
-        controller.addLoadStateListener {
-            Timber.d("Source.append=${it.source.append}\nSource.refresh=${it.source.refresh}\nAppend=${it.append}\nRefresh=${it.refresh}")
-            swipeRefresh.isRefreshing = (it.refresh == LoadState.Loading)
-            controller.loadingMore = (it.append == LoadState.Loading)
-        }
+    override fun onMovieClicked(movieId: String) {
+        activity?.openFragment(MovieDetailFragment.newInstance(movieId), true)
     }
 
     companion object {
@@ -100,6 +93,53 @@ class MovieListFragment : BaseFragment(), MovieClickListener {
 
         fun newInstance(category: MovieCategory): MovieListFragment = MovieListFragment().apply {
             arguments = bundleOf(FIELD_LIST_CATEGORY to category)
+        }
+    }
+}
+
+@Composable
+fun MovieListWidget(
+    movies: Flow<PagingData<MovieModel>>,
+    clickListener: MovieClickListener
+) {
+    val lazyMovieItems = movies.collectAsLazyPagingItems()
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(
+            isRefreshing = lazyMovieItems.loadState.refresh == LoadState.Loading
+        ),
+        onRefresh = { lazyMovieItems.refresh() },
+        indicator = { state, refreshTrigger ->
+            SwipeRefreshIndicator(
+                state = state, refreshTriggerDistance = refreshTrigger,
+                backgroundColor = Color.White
+            )
+        }
+    ) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            if (lazyMovieItems.loadState.refresh is LoadState.Loading) {
+                item {
+                    LoadingWidget(
+                        modifier = Modifier
+                            .fillParentMaxWidth()
+                            .fillParentMaxHeight()
+                    )
+                }
+            }
+
+            items(lazyMovieItems) { movie ->
+                movie?.run {
+                    movie.LandscapeWidget(onClick = { clickListener.onMovieClicked(movie.id) })
+                }
+            }
+
+            if (lazyMovieItems.loadState.append is LoadState.Loading) {
+                item {
+                    LoadingWidget(modifier = Modifier.background(MHColors.cardBackground))
+                }
+            }
         }
     }
 }

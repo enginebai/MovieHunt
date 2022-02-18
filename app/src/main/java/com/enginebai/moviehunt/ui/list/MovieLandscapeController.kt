@@ -13,6 +13,7 @@ import com.enginebai.moviehunt.ui.MovieClickListener
 import com.enginebai.moviehunt.ui.widgets.MovieLandscapeHolder_
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 
+@Deprecated("To remove after post writing.")
 class MovieLandscapeController(
     private val clickListener: MovieClickListener
 ) : PagingDataEpoxyController<MovieModel>(diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()) {

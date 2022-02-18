@@ -130,7 +130,7 @@ fun MovieInfoWidget(
                 )
             }
         }
-        Column(modifier = Modifier.padding(start = MHDimensions.pagePadding, end = 8.dp)) {
+        Column(modifier = Modifier.padding(start = MHDimensions.pagePadding.dp, end = 8.dp)) {
             Row(
                 modifier = Modifier
                     .padding(top = 12.dp)

@@ -111,23 +111,21 @@ fun MovieLandscapeWidget(
 ) {
     Card(
         modifier = Modifier
-            .background(MHColors.cardBackground)
-            .clickable {
-                itemClickListener(movieId)
-            }
+            .clickable { itemClickListener(movieId) },
+        backgroundColor = MHColors.cardBackground
     ) {
         Row(
             modifier = Modifier
                 .padding(start = 12.dp, bottom = 12.dp, end = 8.dp)
         ) {
             Card(
-                shape = RoundedCornerShape(MHDimensions.corner),
+                shape = RoundedCornerShape(MHDimensions.corner.dp),
                 modifier = Modifier.padding(end = 12.dp, top = 8.dp)
             ) {
                 Image(
                     painter = rememberImagePainter(data = imagePoster), contentDescription = null,
                     modifier = Modifier
-                        .height(MHDimensions.posterHeight)
+                        .height(MHDimensions.posterHeight.dp)
                         .aspectRatio(9f.div(16f)),
                     contentScale = ContentScale.Crop
                 )

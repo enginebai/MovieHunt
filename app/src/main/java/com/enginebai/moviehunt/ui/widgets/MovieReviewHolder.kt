@@ -101,11 +101,11 @@ fun MovieReviewWidget(
     comment: String? = null
 ) {
     Column(
-        Modifier.padding(
-            start = MHDimensions.pagePadding,
-            end = MHDimensions.pagePadding,
-            top = 8.dp,
-            bottom = 4.dp
+        Modifier.background(MHColors.cardBackground).padding(
+            start = MHDimensions.pagePadding.dp,
+            end = MHDimensions.pagePadding.dp,
+            top = 12.dp,
+            bottom = 12.dp
         )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -117,8 +117,8 @@ fun MovieReviewWidget(
                     }),
                 contentDescription = null,
                 modifier = Modifier
-                    .width(MHDimensions.avatarReview)
-                    .height(MHDimensions.avatarReview)
+                    .width(MHDimensions.avatarReview.dp)
+                    .height(MHDimensions.avatarReview.dp)
                     .background(MHColors.cardBackground, shape = CircleShape)
             )
             Spacer(modifier = Modifier.size(12.dp))

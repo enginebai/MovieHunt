@@ -1,41 +1,39 @@
 package com.enginebai.moviehunt.data.remote
 
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxPagingSource
 import com.enginebai.moviehunt.ui.list.MovieCategory
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ApiPagingSource<T : Any> : RxPagingSource<Int, T>(), KoinComponent {
+abstract class ApiPagingSource<T : Any> : PagingSource<Int, T>(), KoinComponent {
 
     private val api: MovieApiService by inject()
 
-    abstract fun apiFetch(page: Int): Single<TmdbApiResponse<T>>
+    abstract suspend fun apiFetch(page: Int): TmdbApiResponse<T>
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, T>> {
-        val currentPage = params.key ?: 1
-        return apiFetch(currentPage)
-            .subscribeOn(Schedulers.io())
-            .onErrorReturn { TmdbApiResponse() }
-            .map { tmdbApiResponse ->
-                tmdbApiResponse.results?.let { list ->
-                    val nextKey = if (list.isEmpty()) null else currentPage + 1
-                    LoadResult.Page(
-                        data = list,
-                        prevKey = null,
-                        nextKey = nextKey
-                    )
-                } ?: let {
-                    LoadResult.Page(
-                        data = emptyList(),
-                        prevKey = null,
-                        nextKey = null
-                    )
-                }
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
+        return try {
+            val currentPage = params.key ?: 1
+            val tmdbApiResponse = apiFetch(currentPage)
+            tmdbApiResponse.results?.let { list ->
+                val nextKey = if (list.isEmpty()) null else currentPage + 1
+                LoadResult.Page(
+                    data = list,
+                    prevKey = null,
+                    nextKey = nextKey
+                )
+            } ?: let {
+                LoadResult.Page(
+                    data = emptyList(),
+                    prevKey = null,
+                    nextKey = null
+                )
             }
-        // TODO: error handling
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
     }
 
     override fun getRefreshKey(state: PagingState<Int, T>): Int? {
@@ -50,12 +48,12 @@ class MovieListPagingSource(
     private val category: MovieCategory
 ) : ApiPagingSource<MovieListResponse>() {
     private val api: MovieApiService by inject()
-    override fun apiFetch(page: Int) = api.fetchMovieList(category.key, page)
+    override suspend fun apiFetch(page: Int) = api.fetchMovieList(category.key, page)
 }
 
 class MovieReviewPagingSource(
     private val movieId: String
 ) : ApiPagingSource<Review>() {
     private val api: MovieApiService by inject()
-    override fun apiFetch(page: Int) = api.fetchMovieReviews(movieId, page)
+    override suspend fun apiFetch(page: Int) = api.fetchMovieReviews(movieId, page)
 }

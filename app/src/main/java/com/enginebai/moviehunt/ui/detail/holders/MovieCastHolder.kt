@@ -75,12 +75,12 @@ fun MovieCastWidget(
             ),
             contentDescription = null,
             modifier = Modifier
-                .size(MHDimensions.avatarCast)
+                .size(MHDimensions.avatarCast.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.height(MHDimensions.avatarCast)
+            modifier = Modifier.height(MHDimensions.avatarCast.dp)
         ) {
             actorName?.let {
                 Text(it, style = MHStyle.subtitle2)

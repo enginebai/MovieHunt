@@ -15,7 +15,6 @@ object Dependencies {
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
 
-    const val androidBase = "com.github.enginebai:AndroidBase:${Versions.androidBase}"
     const val coil = "io.coil-kt:coil:${Versions.coil}"
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.coil}"
     const val snapHelper = "com.github.rubensousa:gravitysnaphelper:${Versions.snapHelper}"
@@ -86,8 +85,10 @@ object Dependencies {
         const val rxjava2 = "androidx.compose.runtime:runtime-rxjava2:${Versions.JetpackCompose.jetpackCompose}"
         const val activity = "androidx.activity:activity-compose:${Versions.JetpackCompose.activity}"
         const val appCompatTheme = "com.google.accompanist:accompanist-appcompat-theme:${Versions.JetpackCompose.appCompatTheme}"
+        const val paging = "androidx.paging:paging-compose:${Versions.JetpackCompose.paging}"
 
         const val ratingBar = "com.github.a914-gowtham:compose-ratingbar:${Versions.JetpackCompose.ratingBar}"
+        const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.JetpackCompose.swipeRefresh}"
     }
 }
 
