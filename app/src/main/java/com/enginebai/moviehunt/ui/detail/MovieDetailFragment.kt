@@ -24,16 +24,15 @@ import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.resources.MHDimensions
 import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.MovieClickListener
-import com.enginebai.moviehunt.ui.detail.holders.MovieCastWidget
-import com.enginebai.moviehunt.ui.detail.holders.MovieInfoWidget
-import com.enginebai.moviehunt.ui.detail.holders.MovieTrailerWidget
+import com.enginebai.moviehunt.ui.detail.widgets.MovieCastWidget
+import com.enginebai.moviehunt.ui.detail.widgets.MovieInfoWidget
+import com.enginebai.moviehunt.ui.detail.widgets.MovieTrailerWidget
 import com.enginebai.moviehunt.ui.reviews.MovieReviewsFragment
 import com.enginebai.moviehunt.ui.widgets.MovieReviewWidget
 import com.enginebai.moviehunt.ui.widgets.TitleWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailFragment : BaseFragment(), MovieClickListener {

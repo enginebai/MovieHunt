@@ -1,7 +1,5 @@
-package com.enginebai.moviehunt.ui.detail.holders
+package com.enginebai.moviehunt.ui.detail.widgets
 
-import android.view.View
-import android.widget.ImageView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,47 +15,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.airbnb.epoxy.EpoxyAttribute
-import com.airbnb.epoxy.EpoxyHolder
-import com.airbnb.epoxy.EpoxyModelClass
-import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.enginebai.moviehunt.R
 import com.enginebai.moviehunt.resources.MHDimensions
-import com.enginebai.moviehunt.utils.loadImage
-import kotlinx.android.synthetic.main.holder_movie_trailer.view.*
-import timber.log.Timber
-
-@EpoxyModelClass(layout = R.layout.holder_movie_trailer)
-abstract class MovieTrailerHolder : EpoxyModelWithHolder<MovieTrailerHolder.Holder>() {
-
-    @EpoxyAttribute
-    var thumbnail: String? = null
-
-    @EpoxyAttribute
-    var trailerUrl: String? = null
-
-    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
-    var onTrailerPlayed: (String) -> Unit = {}
-
-    override fun bind(holder: Holder) {
-        super.bind(holder)
-        holder.imageTrailerThumbnail.loadImage(thumbnail)
-        holder.imageTrailerThumbnail.setOnClickListener {
-            trailerUrl?.let {
-                onTrailerPlayed(it)
-            }
-        }
-    }
-
-    class Holder : EpoxyHolder() {
-        lateinit var imageTrailerThumbnail: ImageView
-
-        override fun bindView(itemView: View) {
-            this.imageTrailerThumbnail = itemView.imageTrailerThumbnail
-        }
-
-    }
-}
 
 @Composable
 fun MovieTrailerWidget(

@@ -35,7 +35,7 @@ import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListener {
+class MovieHomeFragment : BaseFragment(), MovieClickListener {
 
     private val movieViewModel: MovieHomeViewModel by viewModel()
 
@@ -55,7 +55,10 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
                             Column(modifier = Modifier.fillMaxWidth()) {
                                 TitleWidget(title = stringResource(id = entry.key.strRes),
                                     onClickListener = {
-                                        onViewAllClicked(entry.key)
+                                        activity?.openFragment(
+                                            MovieListFragment.newInstance(entry.key),
+                                            true
+                                        )
                                     })
                             }
                             // It makes the app ANR here when getting the paging loading state, why?
@@ -111,10 +114,6 @@ class MovieHomeFragment : BaseFragment(), MovieClickListener, OnHeaderClickListe
             // TODO: refresh each category
         }
         refreshUpcomingMovieList()
-    }
-
-    override fun onViewAllClicked(category: MovieCategory) {
-        activity?.openFragment(MovieListFragment.newInstance(category), true)
     }
 
     override fun onMovieClicked(movieId: String) {

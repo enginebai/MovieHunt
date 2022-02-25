@@ -10,7 +10,6 @@ import com.enginebai.moviehunt.data.remote.ImageApi
 import com.enginebai.moviehunt.data.remote.ImageSize
 import com.enginebai.moviehunt.ui.list.MovieCategory
 import com.enginebai.moviehunt.ui.widgets.MovieLandscapeWidget
-import com.enginebai.moviehunt.ui.widgets.MoviePortraitHolder_
 import com.enginebai.moviehunt.ui.widgets.MoviePortraitWidget
 import com.enginebai.moviehunt.ui.widgets.MovieShowcaseWidget
 import com.enginebai.moviehunt.utils.DateTimeFormatter.format
@@ -65,15 +64,6 @@ fun MovieModel.displayVoteCount(): String = this.voteCount?.format() ?: PLACEHOL
 fun MovieModel.displayDuration(): String = this.runtime?.formatHourMinutes() ?: PLACEHOLDER
 fun MovieModel.displayReleaseDate(): String = this.releaseDate?.format() ?: PLACEHOLDER
 fun MovieModel.displayOverview(): String = this.overview ?: PLACEHOLDER
-
-fun MovieModel.toPortraitHolder(): MoviePortraitHolder_ = MoviePortraitHolder_()
-    .movieId(this.id)
-    .posterUrl(ImageApi.getFullUrl(this.posterPath, ImageSize.W500))
-    .movieName(this.displayTitle())
-    .rating(this.display5StarsRating())
-    .ratingTotalCountText(this.displayVoteCount())
-    .genre(this.genreList?.firstOrNull()?.name)
-    .releaseYear(this.releaseDate?.get(Calendar.YEAR))
 
 @Composable
 fun MovieModel.PortraitWidget(onClick: (String) -> Unit) {

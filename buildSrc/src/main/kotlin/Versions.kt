@@ -16,8 +16,6 @@ object Versions {
     const val timber = "5.0.1"
     const val logger = "2.2.0"
 
-    const val epoxy = "4.6.3"
-
     const val coil = "1.4.0"
     const val snapHelper = "2.2.2"
 
