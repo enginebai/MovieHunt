@@ -11,14 +11,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private val disposables = CompositeDisposable()
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
-    }
-
     override fun onDestroy() {
         disposables.clear()
         super.onDestroy()

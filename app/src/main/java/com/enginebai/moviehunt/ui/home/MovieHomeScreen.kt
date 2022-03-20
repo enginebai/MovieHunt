@@ -33,7 +33,76 @@ import com.enginebai.moviehunt.ui.widgets.LoadingWidget
 import com.enginebai.moviehunt.ui.widgets.TitleWidget
 import com.enginebai.moviehunt.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_movie_home.*
+import org.koin.androidx.compose.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+@Composable
+fun MovieHomeScreen() {
+    val movieViewModel: MovieHomeViewModel by viewModel()
+
+    fun refreshUpcomingMovieList() {
+        movieViewModel.fetchUpcomingMovieList()
+    }
+
+    @Composable
+    fun buildMovieCarouselsForEachCategory(): Map<MovieCategory, LazyPagingItems<MovieModel>> {
+        val pagingItemsMap = mutableMapOf<MovieCategory, LazyPagingItems<MovieModel>>()
+        MovieCategory.values().filterNot { it == MovieCategory.UPCOMING }.forEach { movieCategory ->
+            pagingItemsMap[movieCategory] =
+                movieViewModel.fetchPagingData(movieCategory).collectAsLazyPagingItems()
+        }
+        return pagingItemsMap
+    }
+
+    refreshUpcomingMovieList()
+    val upcomingMovieList by movieViewModel.upcomingMovieList.observeAsState()
+    val pagingItemsMap = buildMovieCarouselsForEachCategory()
+
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        pagingItemsMap.forEach { entry ->
+            item {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    TitleWidget(title = stringResource(id = entry.key.strRes),
+                        onClickListener = {
+                            // TODO: open movie list screen
+//                            activity?.openFragment(
+//                                MovieListFragment.newInstance(entry.key),
+//                                true
+//                            )
+                        })
+                }
+                // It makes the app ANR here when getting the paging loading state, why?
+                // Timber.wtf("${pagingData.loadState.refresh}")
+
+                HorizontalMovieList(
+                    movieCategory = entry.key,
+                    pagingItems = entry.value,
+                    movieClickListener = object : MovieClickListener {
+                        override fun onMovieClicked(movieId: String) {
+
+                        }
+                    }
+                )
+            }
+        }
+
+        if (upcomingMovieList?.isNotEmpty() == true) {
+            item {
+                ListSeparatorWidget()
+                ListSeparatorWidget()
+                TitleWidget(title = stringResource(id = MovieCategory.UPCOMING.strRes))
+            }
+            items(items = upcomingMovieList!!) { movie ->
+                Column {
+                    ListSeparatorWidget()
+                    movie.LandscapeWidget(onClick = {
+
+                    })
+                }
+            }
+        }
+    }
+}
 
 class MovieHomeFragment : BaseFragment(), MovieClickListener {
 

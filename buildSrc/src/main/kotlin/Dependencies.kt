@@ -41,7 +41,7 @@ object Dependencies {
 
     object Koin {
         const val android = "io.insert-koin:koin-android:${Versions.koin}"
-        const val test = "io.insert-koin:koin-test:${Versions.koin}"
+        const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
     }
 
     object Retrofit {
@@ -114,6 +114,7 @@ fun Project.importCommonDependencies() {
         implementation(Dependencies.material)
 
         implementation(Dependencies.Koin.android)
+        implementation(Dependencies.Koin.compose)
 
         implementation(Dependencies.Logging.logger)
         implementation(Dependencies.Logging.timber)

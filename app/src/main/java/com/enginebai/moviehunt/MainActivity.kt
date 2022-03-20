@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.compose.setContent
+import androidx.compose.material.Text
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.enginebai.base.view.BaseActivity
 import com.enginebai.base.view.BaseViewModel
 import com.enginebai.moviehunt.data.repo.ConfigRepo
+import com.enginebai.moviehunt.resources.MovieHuntTheme
 import com.enginebai.moviehunt.ui.home.MovieHomeFragment
+import com.enginebai.moviehunt.ui.home.MovieHomeScreen
 import com.enginebai.moviehunt.ui.home.SplashFragment
 import com.enginebai.moviehunt.utils.ExceptionHandler
 import com.enginebai.moviehunt.utils.openFragment
@@ -29,20 +33,25 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel.fetchGenreList()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {
-                openFragment(SplashFragment(), false)
+        setContent {
+            MovieHuntTheme {
+                MovieHomeScreen()
             }
-            .doOnComplete {
-                openFragment(MovieHomeFragment(), false)
-            }
-            .doOnError {
-                it.printStackTrace()
-            }
-            .subscribe()
-            .disposeOnDestroy()
+        }
+//        mainViewModel.fetchGenreList()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnSubscribe {
+//                openFragment(SplashFragment(), false)
+//            }
+//            .doOnComplete {
+//                openFragment(MovieHomeFragment(), false)
+//            }
+//            .doOnError {
+//                it.printStackTrace()
+//            }
+//            .subscribe()
+//            .disposeOnDestroy()
     }
 
     override fun onStart() {
@@ -59,8 +68,6 @@ class MainActivity : BaseActivity() {
     override fun handleErrorMessage(message: String) {
         displayCustomToast(message)
     }
-
-    override fun getLayoutId() = R.layout.activity_main
 
     private fun displayCustomToast(message: String) {
         if (message.isBlank()) return
